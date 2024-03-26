@@ -1,0 +1,57 @@
+$n: 15;  /* control the granularity */
+$s: 0.5; /* speed factor */
+
+@for $i from 0 through ($n - 1) {
+  @for $j from 0 through ($n - 1) {
+    @property --c-#{$i}-#{$j} {
+      syntax: "<percentage>";
+      initial-value: 100%;
+      inherits: true;
+    }
+  }
+}
+/* uncomment the function you want to use */
+@function transition($i,$j) {
+  //@return (($s*($i+$j))/($x+$y))+s (($s*($i+$j))/($x+$y))+s; /* diagonal */
+  //@return (($s*$i)/$x)+s (($s*$j)/$y)+s; /* left to right */
+  //@return (($s*$j)/$y)+s (($s*$i)/$x)+s; /* top to bottom */
+  //@return  ($s*random())+s (($s*$j)/$y)+s; /* top to bottom random */
+  //@return  ($s*random())+s (($s*$i)/$y)+s; /* left to right random */
+  //@return  ($s*random())+s (($s*($i+$j))/($x+$y))+s; /* diagonal random */
+  @return ($s*random())+s ($s*random())+s; /* full random*/
+}
+
+img {
+  $t: ();
+  $m: ();
+  @for $i from 0 through ($n - 1) {
+    @for $j from 0 through ($n - 1) {
+      $t: append($t, --c-#{$i}-#{$j} transition($i,$j), comma);
+      $m: append($m, linear-gradient(rgb(0 0 0/var(--c-#{$i}-#{$j})) 0 0) calc(#{$i}*100%/(#{$n} - 1)) calc(#{$j}*100%/(#{$n} - 1)), comma);
+    }
+  }
+  transition: $t;
+  mask: $m;
+  mask-size: calc(100%/#{$n}) calc(100%/#{$n});
+  mask-repeat: no-repeat;
+  cursor: pointer;
+}
+
+img:hover {
+  @for $i from 0 through ($n - 1) {
+    @for $j from 0 through ($n - 1) {
+      --c-#{$i}-#{$j}: 0%;
+    }
+  }
+}
+
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-content: center;
+  grid-auto-flow: column;
+  gap: 40px;
+  background: #C5E0DC;
+}
