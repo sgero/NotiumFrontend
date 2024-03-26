@@ -1,216 +1,179 @@
-@import "normalize.css";
+@import url('https://fonts.googleapis.com/css?family=Abel');
 
-/* Aquí puedes agregar tu propio CSS personalizado */
-
-
-@font-face {
-  font-family: "Geist Sans";
-  src: url("https://assets.codepen.io/605876/GeistVF.ttf") format("truetype");
+html, body {
+  background: #FCEEB5;
+  font-family: Abel, Arial, Verdana, sans-serif;
 }
 
-:root {
-  --bg: hsl(246 44% 7%);
-  --border: hsl(280 10% 50% / 1);
-  --card: hsl(237 36% 10%);
-  --color: hsl(240 18% 80%);
-  --border-width: 2px;
-  --border-radius: 12px;
-  --gradient: conic-gradient(from 180deg at 50% 70%,hsla(0,0%,98%,1) 0deg,#eec32d 72.0000010728836deg,#ec4b4b 144.0000021457672deg,#709ab9 216.00000858306885deg,#4dffbf 288.0000042915344deg,hsla(0,0%,98%,1) 1turn);
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
 }
 
-*,
-*:after,
-*:before {
-  box-sizing: border-box;
-}
-
-@property --start {
-  syntax: '<number>';
-  inherits: true;
-  initial-value: 0;
-}
-
-body {
-  background: var(--bg);
-  display: grid;
-  place-items: center;
-  min-height: 100vh;
-  font-family:  "Geist Sans", "SF Pro Text", "SF Pro Icons", "AOS Icons", "Helvetica Neue", Helvetica, Arial, sans-serif, system-ui;
-  font-weight: 70;
-  color: var(--color);
-}
-
-.container {
-  --spread: 60;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: var(--direction);
-  gap: calc(var(--gap) * 1px);
-  margin: 0 auto;
-  justify-content: center;
-  place-items: center;
+.card {
+  width: 450px;
+  height: 250px;
+  background-color: #fff;
+  background: linear-gradient(#f8f8f8, #fff);
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius: 6px;
+  overflow: hidden;
   position: relative;
-  padding: 2rem;
-  touch-action: none;
+  margin: 1.5rem;
 }
 
-article {
-  --active: 0.15;
-  --start: 0;
+.card h1 {
+  text-align: center;
+}
+
+.card .additional {
+  position: absolute;
+  width: 150px;
   height: 100%;
-  background: var(--card);
-  padding: 2rem;
-  aspect-ratio: 330 / 400;
-  border-radius: var(--border-radius);
-  min-width: 280px;
-  max-width: 280px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  position: relative;
-}
-
-article:is(:hover, :focus-visible) {
+  background: linear-gradient(#dE685E, #EE786E);
+  transition: width 0.4s;
+  overflow: hidden;
   z-index: 2;
 }
 
-.glows {
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  filter: blur(calc(var(--blur) * 1px));
+.card.green .additional {
+  background: linear-gradient(#92bCa6, #A2CCB6);
 }
 
-.glows::after,
-.glows::before {
-  --alpha: 0;
-  content: "";
-  background: var(--gradient);
-  background-attachment: fixed;
-  position: absolute;
-  inset: -5px;
-  border: 10px solid transparent;
-  border-radius: var(--border-radius);
-  mask:
-    linear-gradient(#0000, #0000),
-    conic-gradient(from calc((var(--start) - (var(--spread) * 0.5)) * 1deg), #000 0deg, #fff, #0000 calc(var(--spread) * 1deg));
-  mask-composite: intersect;
-  mask-clip: padding-box, border-box;
-  opacity: var(--active);
-  transition: opacity 1s;
+
+.card:hover .additional {
+  width: 100%;
+  border-radius: 0 5px 5px 0;
 }
 
-article::before {
-  position: absolute;
-  inset: 0;
-  border: var(--border-width) solid transparent;
-  content: "";
-  border-radius: var(--border-radius);
-  pointer-events: none;
-  background: var(--border);
-  background-attachment: fixed;
-  border-radius: var(--border-radius);
-  mask:
-    linear-gradient(#0000, #0000),
-    conic-gradient(
-        from calc(((var(--start) + (var(--spread) * 0.25)) - (var(--spread) * 1.5)) * 1deg),
-        hsl(0 0% 100% / 0.15) 0deg,
-        white,
-        hsl(0 0% 100% / 0.15) calc(var(--spread) * 2.5deg));
-  mask-clip: padding-box, border-box;
-  mask-composite: intersect;
-  opacity: var(--active);
-  transition: opacity 1s;
-}
-
-article::after {
-  --bg-size: 100%;
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  background: var(--gradient);
-  background-attachment: fixed;
-  border-radius: var(--border-radius);
-  opacity: var(--active, 0);
-  transition: opacity 1s;
-  --alpha: 0;
-  inset: 0;
-  border: var(--border-width) solid transparent;
-  mask:
-    linear-gradient(#0000, #0000),
-    conic-gradient(from calc(((var(--start) + (var(--spread) * 0.25)) - (var(--spread) * 0.5)) * 1deg), #0000 0deg, #fff, #0000 calc(var(--spread) * 0.5deg));
-  filter: brightness(1.5);
-  mask-clip: padding-box, border-box;
-  mask-composite: intersect;
-}
-
-.badge {
-  border: 2px solid var(--border);
-  align-self: start;
-  border-radius: 100px;
-  padding: 0.5rem 0.7rem;
-  font-size: 0.675rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-weight: 50;
-}
-
-a {
-  color: var(--color);
-  text-decoration: none;
-  opacity: 0.5;
-  display: inline-block;
-  align-self: start;
-  transition: opacity 0.2s;
-}
-
-a:is(:hover, :focus-visible) {
-  opacity: 1;
-}
-
-article h2 {
-  margin: 0;
-  padding: 1rem 0;
-  font-weight: 100;
-  font-size: 1.5rem;
-}
-
-.header {
+.card .additional .user-card {
+  width: 150px;
+  height: 100%;
   position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
+  float: left;
 }
 
-.header svg {
-  --count: 4;
-  width: 106px;
-}
-
-.header svg:nth-of-type(2),
-.header svg:nth-of-type(3),
-.header svg:nth-of-type(4) {
+.card .additional .user-card::after {
+  content: "";
+  display: block;
   position: absolute;
-  z-index: calc(var(--count) - var(--index));
-  translate: calc(var(--index) * 30%) 0;
-  opacity: calc(var(--count) / (2 * (var(--index) * 10)));
+  top: 10%;
+  right: -2px;
+  height: 80%;
+  border-left: 2px solid rgba(0,0,0,0.025);
 }
 
-.header svg:nth-of-type(2) {
-  --index: 1;
-}
-.header svg:nth-of-type(3) {
-  --index: 2;
-}
-.header svg:nth-of-type(4) {
-  --index: 3;
+.card .additional .user-card .level,
+.card .additional .user-card .points {
+  top: 15%;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  font-weight: bold;
+  background: rgba(0,0,0,0.15);
+  padding: 0.125rem 0.75rem;
+  border-radius: 100px;
+  white-space: nowrap;
 }
 
-.badge svg {
-  width: 16px;
+.card .additional .user-card .points {
+  top: 85%;
 }
 
-.dg.ac {
-  z-index: 99999 !important;
+.card .additional .user-card svg {
+  top: 50%;
 }
+
+.card .additional .more-info {
+  width: 300px;
+  float: left;
+  position: absolute;
+  left: 150px;
+  height: 100%;
+}
+
+.card .additional .more-info h1 {
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.card.green .additional .more-info h1 {
+  color: #224C36;
+}
+
+.card .additional .coords {
+  margin: 0 1rem;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.card.green .additional .coords {
+  color: #325C46;
+}
+
+.card .additional .coords span + span {
+  float: right;
+}
+
+.card .additional .stats {
+  font-size: 2rem;
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #fff;
+}
+
+.card.green .additional .stats {
+  color: #325C46;
+}
+
+.card .additional .stats > div {
+  flex: 1;
+  text-align: center;
+}
+
+.card .additional .stats i {
+  display: block;
+}
+
+.card .additional .stats div.title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card .additional .stats div.value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.card .additional .stats div.value.infinity {
+  font-size: 2.5rem;
+}
+
+.card .general {
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 1rem;
+  padding-top: 0;
+}
+
+.card .general .more {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.9em;
+}
+
+
