@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  imports: [HeaderComponent, FooterComponent],
+  standalone: true
 })
 export class HomeComponent  implements OnInit {
 
@@ -26,20 +31,7 @@ export class HomeComponent  implements OnInit {
 
   ngOnInit() {}
 
-  onToggleButtonClick() {
 
-    console.log('Se hizo clic en el botón Toggle');
-  }
-
-  onRegisterButtonClick() {
-
-    console.log('Se hizo clic en el botón Register');
-  }
-
-  onLoginButtonClick() {
-
-      console.log('Se hizo clic en el botón Login');
-  }
 }
 
 
