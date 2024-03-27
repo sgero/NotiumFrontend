@@ -185,7 +185,7 @@ html, body {
   padding: 1rem;
   padding-top: 0;
   color: #fff;
-  background-color: #9d9fa6;
+  background: linear-gradient(#575656, #989898);
   font-size: 0.85em;
 }
 
@@ -196,4 +196,27 @@ html, body {
   font-size: 0.9em;
 }
 
+.botonentrar {
+  background: linear-gradient(#989898, #575656);
+  border: none;
+  color: white !important;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  margin-left: 5rem;
+  margin-right: 5rem;
+  margin-top: 3.5rem;
+  font-size: 1.5rem;
+}
 
+
+.botonentrar:hover {
+  background: linear-gradient(#575656, #989898);
+}
