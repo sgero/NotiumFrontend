@@ -26,6 +26,20 @@ export class HomeComponent  implements OnInit {
 
   ngOnInit() {}
 
+  onToggleButtonClick() {
+
+    console.log('Se hizo clic en el botón Toggle');
+  }
+
+  onRegisterButtonClick() {
+
+    console.log('Se hizo clic en el botón Register');
+  }
+
+  onLoginButtonClick() {
+
+      console.log('Se hizo clic en el botón Login');
+  }
 }
 
 
