@@ -75,3 +75,27 @@
   margin-left: auto; /* Mover la imagen hacia el extremo derecho del contenedor */
 }
 
+
+
+//.footer {
+//  position: fixed;
+//  bottom: 0;
+//  width: 100%;
+//
+//}
+
+.home-container {
+  min-height: calc(100vh - 100px); /* Ajusta el valor 100px según la altura de tu footer */
+  margin-bottom: 500px; /* Espacio entre el contenido y el footer */
+  display: flex; /* Opcional: utiliza flexbox para organizar el contenido */
+  flex-direction: column; /* Opcional: organiza el contenido en una columna */
+
+}
+
+.app-footer {
+  height: 100px; /* Altura del footer */
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  background-color: #f8f9fa; /* Ajusta el color de fondo según tu diseño */
+}

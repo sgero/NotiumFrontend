@@ -26,6 +26,7 @@
     "@capacitor/haptics": "5.0.7",
     "@capacitor/keyboard": "5.0.8",
     "@capacitor/status-bar": "5.0.7",
+    "@fortawesome/fontawesome-free": "^6.5.1",
     "@ionic/angular": "^7.5.0",
     "ionicons": "^7.2.1",
     "normalize.css": "^8.0.1",
