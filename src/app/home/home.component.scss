@@ -32,14 +32,14 @@ html, body {
   position: absolute;
   width: 150px;
   height: 100%;
-  background: linear-gradient(#dE685E, #EE786E);
+  background: linear-gradient(#275b43, #4db685);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
 }
 
 .card.green .additional {
-  background: linear-gradient(#92bCa6, #A2CCB6);
+  background: linear-gradient(#40325c, #b000ff);
 }
 
 
@@ -100,7 +100,7 @@ html, body {
 }
 
 .card.green .additional .more-info h1 {
-  color: #224C36;
+  color: #ffffff;
 }
 
 .card .additional .coords {
@@ -109,8 +109,25 @@ html, body {
   font-size: 1rem;
 }
 
+.user-card {
+  display: flex;
+  justify-content: center;
+}
+.card img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  border-radius: 25%;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 1rem;
+}
+
 .card.green .additional .coords {
-  color: #325C46;
+  color: #ffffff;
 }
 
 .card .additional .coords span + span {
@@ -129,7 +146,7 @@ html, body {
 }
 
 .card.green .additional .stats {
-  color: #325C46;
+  color: #ffffff;
 }
 
 .card .additional .stats > div {
@@ -167,6 +184,9 @@ html, body {
   box-sizing: border-box;
   padding: 1rem;
   padding-top: 0;
+  color: #fff;
+  background-color: #9d9fa6;
+  font-size: 0.85em;
 }
 
 .card .general .more {
