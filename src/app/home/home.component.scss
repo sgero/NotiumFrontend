@@ -33,14 +33,14 @@ html, body {
   position: absolute;
   width: 150px;
   height: 100%;
-  background: linear-gradient(#524723, #b6984d);
+  background: linear-gradient(#41361c, #efd591);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
 }
 
-.card.green .additional {
-  background: linear-gradient(#40325c, #b000ff);
+.card.purple .additional {
+  background: linear-gradient(#521852, #714983);
 }
 
 

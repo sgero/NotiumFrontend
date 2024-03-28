@@ -1,5 +1,5 @@
 .footer {
-  background-color: #333;
+  background-color: #151515;
   color: #fff;
   padding: 50px 0;
 }
@@ -26,7 +26,8 @@
 }
 
 .footer-section.about p{
-  color: #dfc5ec;
+  //color: #68596c;
+  color: #a6a6a6;
 }
 
 .footer-section.about .contact span {
@@ -50,13 +51,13 @@
 }
 
 .footer-section.links a {
-  color: #bc63e5;
+  color: #714983;
   text-decoration: none;
   font-size: 16px;
 }
 
 .footer-section.links a:hover {
-  color: fuchsia;
+  color: #521852;
 }
 
 .footer-section.contact-form form {
@@ -78,7 +79,7 @@
   border: none;
   //background-color: #e91e63;
   //background-color: #1e65e9;
-  background-color: #bc63e5;
+  background-color: #714983;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -86,7 +87,7 @@
 
 .footer-section.contact-form button:hover {
   //background-color: #c2185b;
-  background-color: fuchsia;
+  background-color: #521852;
 }
 
 
@@ -106,13 +107,13 @@
 
 .contact .mail {
   cursor: pointer;
-  color: #bc63e5;
+  color: #714983;
 }
 
 .contact .mail:hover {
   //color: #e91e63;
   //color: fuchsia;
-  color: fuchsia;
+  color: #521852;
 }
 
 
