@@ -7,9 +7,10 @@ html, body {
 
 .center {
   position: absolute;
-  top: 50%;
+  top: 35%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
+  z-index: 2;
 }
 
 .card {
@@ -185,9 +186,10 @@ html, body {
   padding: 1rem;
   padding-top: 0;
   color: #fff;
-  background: linear-gradient(#101010, #7a7a7a);
+  background: linear-gradient(#000000, #232323);
   font-size: 0.85em;
   text-align: center;
+  //border: 2px solid fuchsia;
 }
 
 
@@ -215,7 +217,7 @@ html, body {
   //border-radius: 12px;
   margin-left: 5.5rem;
   margin-right: 5rem;
-  margin-top: 2.5rem;
+  margin-top: 5.5rem;
   //font-size: 1.5rem;
   //background-color: #1a1a1a; /* Color de fondo */
   //border: none; /* Sin borde */
@@ -248,6 +250,7 @@ html, body {
   border-radius: 12px; /* Borde redondeado */
   transition-duration: 0.4s; /* Duración de la transición */
   cursor: pointer; /* Cursor al pasar sobre el botón */
+
 }
 
 .enter-button {
@@ -272,7 +275,30 @@ h1 {
 }
 
 
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #1a1a1a;
+  color: white;
+  //top: 15%;
+  //margin-top: 600px;
 
 
 
+}
 
+
+.subtitulo {
+  margin-top: 2rem;
+
+  font-size: 4.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+//
+//.general {
+//  align-items: center;
+//  align-content: center;
+//}
