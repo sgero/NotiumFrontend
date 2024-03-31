@@ -1,0 +1,120 @@
+.footer {
+  background-color: #151515;
+  color: #fff;
+  padding: 10px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.footer-section {
+  padding: 20px;
+  flex: 1;
+}
+
+.footer-section h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.footer-section p {
+  font-size: 1vh;
+  line-height: 1.5;
+}
+
+.footer-section.about p{
+  //color: #68596c;
+  color: #a6a6a6;
+}
+
+.footer-section.about .contact span {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.footer-section.about .socials a {
+  color: #fff;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.footer-section.links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section.links li {
+  margin-bottom: 10px;
+}
+
+.footer-section.links a {
+  color: #714983;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.footer-section.links a:hover {
+  color: #521852;
+}
+
+.footer-section.contact-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-section.contact-form input,
+.footer-section.contact-form textarea {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #fff;
+  background-color: transparent;
+  color: #fff;
+}
+
+.footer-section.contact-form button {
+  padding: 10px 20px;
+  border: none;
+  //background-color: #e91e63;
+  //background-color: #1e65e9;
+  background-color: #714983;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.footer-section.contact-form button:hover {
+  //background-color: #c2185b;
+  background-color: #521852;
+}
+
+
+.contact .span .fa fa-envelope .a {
+  color: #fff;
+  font-size: 20px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+
+
+.contact__icon {
+  //font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.contact .mail {
+  cursor: pointer;
+  color: #714983;
+}
+
+.contact .mail:hover {
+  //color: #e91e63;
+  //color: fuchsia;
+  color: #521852;
+}
+
+
+
