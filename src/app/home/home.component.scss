@@ -5,12 +5,19 @@ html, body {
   font-family: Abel, Arial, Verdana, sans-serif;
 }
 
+.ion-page {
+  background: #FCEEB5;
+}
+
 .center {
   position: absolute;
-  top: 35%;
+  top: 45%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   z-index: 2;
+  background: #151515;
+  border-radius: 25px;
+  padding: 3rem;
 }
 
 .card {
