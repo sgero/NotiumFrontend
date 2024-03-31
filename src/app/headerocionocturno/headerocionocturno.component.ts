@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-headerocionocturno',
   templateUrl: './headerocionocturno.component.html',
   styleUrls: ['./headerocionocturno.component.scss'],
+  standalone: true
 })
 export class HeaderocionocturnoComponent  implements OnInit {
 

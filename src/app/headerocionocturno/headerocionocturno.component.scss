@@ -1,6 +1,7 @@
 
 .topbar {
-  background-color: #151515FF;
+  background: linear-gradient(90deg, #322748 0%, #2a032a 100%);
+
   color: white;
   padding: 1rem;
   text-align: center;
@@ -31,7 +32,7 @@
   width: 100px;
   height: 100px;
   margin-right: 1rem;
-  border: 2px solid #521852;
+  border: 2px solid #322748;
 }
 
 
@@ -116,3 +117,5 @@
   margin-right: 1rem;
 
 }
+
+

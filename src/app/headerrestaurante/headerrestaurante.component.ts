@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-headerrestaurante',
   templateUrl: './headerrestaurante.component.html',
   styleUrls: ['./headerrestaurante.component.scss'],
+  standalone: true
 })
 export class HeaderrestauranteComponent  implements OnInit {
 

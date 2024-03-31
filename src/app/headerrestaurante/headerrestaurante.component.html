@@ -1,3 +1,23 @@
-<p>
-  headerrestaurante works!
-</p>
+<div class="topbar">
+
+  <div class="toggle" (click)="onToggleButtonClick()">
+    <i class="fa fa-bars  "></i>
+
+  </div>
+  <div class="search">
+    <input class="search__input" type="text" placeholder="Search">
+
+    <i class="fa fa-search search_icon" ></i>
+  </div>
+  <!--  <div class="reglog">-->
+  <!--    <button class="register-button" (click)="onRegisterButtonClick()">Sign Up</button>-->
+  <!--    <span> | </span>-->
+  <!--    <button class="login-button" (click)="onLoginButtonClick()">Sign In</button>-->
+  <!--  </div>-->
+  <div class="user">
+    <button class="register-button" (click)="onRegisterButtonClick()">Sign Up</button>
+    <span> | </span>
+    <button class="login-button" (click)="onLoginButtonClick()">Sign In</button>
+    <img src="assets/images/n.png" alt="User">
+  </div>
+</div>
