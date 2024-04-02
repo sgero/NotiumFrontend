@@ -1,10 +1,10 @@
 import {Routes} from '@angular/router';
-import {HomeComponent} from "./home/home.component";
-import {ErrorComponent} from "./error/error.component";
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
-import {HomerestauranteComponent} from "./homerestaurante/homerestaurante.component";
-import {HomeocionocturnoComponent} from "./homeocionocturno/homeocionocturno.component";
+import {HomeComponent} from "./components/home/home.component";
+import {ErrorComponent} from "./components/error/error.component";
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import {HomerestauranteComponent} from "./components/homerestaurante/homerestaurante.component";
+import {HomeocionocturnoComponent} from "./components/homeocionocturno/homeocionocturno.component";
 
 export const routes: Routes = [
   // {
