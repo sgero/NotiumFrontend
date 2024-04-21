@@ -193,7 +193,7 @@ app-home.ion-page {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 2;
   box-sizing: border-box;
   padding: 1rem;
   padding-top: 0;
@@ -329,7 +329,7 @@ h1 {
   margin-left: 5rem;
   margin-right: 2rem;
   margin-bottom: 2rem;
-  z-index:2;
+  z-index:1;
   position: absolute ! important;
 
 }
