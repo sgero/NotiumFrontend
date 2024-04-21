@@ -45,14 +45,14 @@ app-home.ion-page {
   position: absolute;
   width: 150px;
   height: 100%;
-  background: linear-gradient(#41361c, #efd591);
+  background: linear-gradient(#8d753e, #efd591);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
 }
 
 .card.purple .additional {
-  background: linear-gradient(#521852, #714983);
+  background: linear-gradient(#521852, #ae71c9);
 }
 
 
@@ -198,7 +198,7 @@ app-home.ion-page {
   padding: 1rem;
   padding-top: 0;
   color: #fff;
-  background: linear-gradient(#000000, #232323);
+  background: linear-gradient(#97969d, #c8c5d5);
   font-size: 0.85em;
   text-align: center;
   //border: 2px solid fuchsia;
@@ -251,7 +251,7 @@ app-home.ion-page {
   //border-radius: 12px; /* Borde redondeado */
   //transition-duration: 0.4s; /* Duración de la transición */
   //cursor: pointer; /* Cursor al pasar sobre el botón */
-  border: 2px solid #1a1a1a; /* Borde sólido */
+  border: 2px solid #333232; /* Borde sólido */
   color: #ffffff; /* Color del texto */
   background-color: transparent; /* Fondo transparente */
   padding: 12px 24px; /* Espacio alrededor del texto */
@@ -277,7 +277,7 @@ app-home.ion-page {
 .botonentrar:hover {
   //background: linear-gradient(#575656, #989898);
   //background-color: #3a3a3a;
-  background-color: #1a1a1a; /* Cambio de color de fondo al pasar el ratón */
+  background-color: #2f3033; /* Cambio de color de fondo al pasar el ratón */
   color: #ffffff; /* Cambio de color del texto al pasar el ratón */
 }
 
@@ -323,3 +323,18 @@ h1 {
 //  align-items: center;
 //  align-content: center;
 //}
+
+.calendario {
+  margin-top: 20.3rem;
+  margin-left: 5rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+  z-index:2;
+  position: absolute ! important;
+
+}
+
+
+.calendario .datetime-calendar {
+background-color: #62696c ! important;
+}
