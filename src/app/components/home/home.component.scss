@@ -59,6 +59,7 @@ app-home.ion-page {
 .card:hover .additional {
   width: 100%;
   border-radius: 0 5px 5px 0;
+  z-index: 6;
 }
 
 .card .additional .user-card {
@@ -214,43 +215,14 @@ app-home.ion-page {
 }
 
 .botonentrar {
-  //background: linear-gradient(#989898, #575656);
-  //border: none;
-  //color: white !important;
-  //padding: 15px 32px;
-  //text-align: center;
-  //text-decoration: none;
-  //display: flex;
-  //align-content: center;
-  //align-items: center;
-  //justify-content: center;
-  //margin: 4px 2px;
-  //cursor: pointer;
-  //border-radius: 12px;
+
   margin-left: 5.5rem;
   margin-right: 5rem;
   margin-top: 5.5rem;
-  //font-size: 1.5rem;
-  //background-color: #1a1a1a; /* Color de fondo */
-  //border: none; /* Sin borde */
-  //color: white; /* Color del texto */
-  //padding: 15px 32px; /* Espacio alrededor del texto */
-  //text-align: center; /* Alineación del texto */
-  //text-decoration: none; /* Sin subrayado */
-  //display: inline-block; /* Mostrar como bloque */
-  //transition-duration: 0.4s; /* Duración de la transición */
+
   align-content: center;
   align-items: center;
-  //border: 2px solid #1a1a1a; /* Borde sólido */
-  //color: #1a1a1a; /* Color del texto */
-  //padding: 12px 24px; /* Espacio alrededor del texto */
-  //text-align: center; /* Alineación del texto */
-  //text-decoration: none; /* Sin subrayado */
-  //display: inline-block; /* Mostrar como bloque */
-  //font-size: 1.5rem; /* Tamaño de fuente */
-  //border-radius: 12px; /* Borde redondeado */
-  //transition-duration: 0.4s; /* Duración de la transición */
-  //cursor: pointer; /* Cursor al pasar sobre el botón */
+
   border: 2px solid #333232; /* Borde sólido */
   color: #ffffff; /* Color del texto */
   background-color: transparent; /* Fondo transparente */
@@ -266,17 +238,14 @@ app-home.ion-page {
 }
 
 .enter-button {
-  //margin-left: 5rem;
-  //margin-right: 5rem;
-  //margin-top: 3.5rem;
+
   background-color: transparent; /* Color de fondo */
   align-items: center;
   align-content: center;
 }
 
 .botonentrar:hover {
-  //background: linear-gradient(#575656, #989898);
-  //background-color: #3a3a3a;
+
   background-color: #2f3033; /* Cambio de color de fondo al pasar el ratón */
   color: #ffffff; /* Cambio de color del texto al pasar el ratón */
 }
@@ -293,8 +262,6 @@ h1 {
   width: 100%;
   background-color: #1a1a1a;
   color: white;
-  //top: 15%;
-  //margin-top: 600px;
 
 
 
@@ -318,11 +285,11 @@ h1 {
   text-align: center;
 }
 
-//
-//.general {
-//  align-items: center;
-//  align-content: center;
-//}
+
+.general {
+  align-items: center;
+  align-content: center;
+}
 
 .calendario {
   margin-top: 20.3rem;
