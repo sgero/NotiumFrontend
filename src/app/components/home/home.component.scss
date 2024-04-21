@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
 
 html, body {
-  background: #FCEEB5;
+  background: #fcfbf9;
   font-family: Abel, Arial, Verdana, sans-serif;
 }
 
+app-home.ion-page {
+  background-color: #fcfbf9 ! important; /* Cambia este color al color claro que desees */
+}
+
 .ion-page {
-  background: #FCEEB5;
+  background: #fcfbf9;
 }
 
 .center {
@@ -14,10 +18,11 @@ html, body {
   top: 45%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-  z-index: 2;
-  background: #151515;
+  //z-index: 2;
+  background: #f7f5fd;;
   border-radius: 25px;
-  padding: 3rem;
+  //padding: 3rem;
+  padding: 5000rem;
 }
 
 .card {
@@ -293,6 +298,15 @@ h1 {
 
 
 
+}
+
+.header {
+  z-index:1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #1a1a1a;
+  color: white;
 }
 
 
