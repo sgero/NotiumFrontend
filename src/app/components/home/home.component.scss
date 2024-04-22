@@ -10,7 +10,7 @@ app-home.ion-page {
 }
 
 .ion-page {
-  background: #fcfbf9;
+  background: #fcfbf9 !important;
 }
 
 .center {
@@ -22,7 +22,8 @@ app-home.ion-page {
   background: #f7f5fd;;
   border-radius: 25px;
   //padding: 3rem;
-  padding: 5000rem;
+  padding: 2rem;
+  margin-top:25px;
 }
 
 .card {
