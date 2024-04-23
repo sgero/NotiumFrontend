@@ -1,12 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Abel');
 
 html, body {
-  background: #FCEEB5;
+  background: #fcfbf9;
   font-family: Abel, Arial, Verdana, sans-serif;
 }
 
+app-home.ion-page {
+  background-color: #fcfbf9 ! important; /* Cambia este color al color claro que desees */
+}
+
 .ion-page {
-  background: #FCEEB5;
+  background: #fcfbf9 !important;
 }
 
 .center {
@@ -14,10 +18,12 @@ html, body {
   top: 45%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
-  z-index: 2;
-  background: #151515;
+  //z-index: 2;
+  background: #f7f5fd;;
   border-radius: 25px;
-  padding: 3rem;
+  //padding: 3rem;
+  padding: 2rem;
+  margin-top:25px;
 }
 
 .card {
@@ -40,20 +46,21 @@ html, body {
   position: absolute;
   width: 150px;
   height: 100%;
-  background: linear-gradient(#41361c, #efd591);
+  background: linear-gradient(#8d753e, #efd591);
   transition: width 0.4s;
   overflow: hidden;
   z-index: 2;
 }
 
 .card.purple .additional {
-  background: linear-gradient(#521852, #714983);
+  background: linear-gradient(#521852, #ae71c9);
 }
 
 
 .card:hover .additional {
   width: 100%;
   border-radius: 0 5px 5px 0;
+  z-index: 6;
 }
 
 .card .additional .user-card {
@@ -188,12 +195,12 @@ html, body {
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 1;
+  z-index: 2;
   box-sizing: border-box;
   padding: 1rem;
   padding-top: 0;
   color: #fff;
-  background: linear-gradient(#000000, #232323);
+  background: linear-gradient(#97969d, #c8c5d5);
   font-size: 0.85em;
   text-align: center;
   //border: 2px solid fuchsia;
@@ -209,44 +216,15 @@ html, body {
 }
 
 .botonentrar {
-  //background: linear-gradient(#989898, #575656);
-  //border: none;
-  //color: white !important;
-  //padding: 15px 32px;
-  //text-align: center;
-  //text-decoration: none;
-  //display: flex;
-  //align-content: center;
-  //align-items: center;
-  //justify-content: center;
-  //margin: 4px 2px;
-  //cursor: pointer;
-  //border-radius: 12px;
+
   margin-left: 5.5rem;
   margin-right: 5rem;
   margin-top: 5.5rem;
-  //font-size: 1.5rem;
-  //background-color: #1a1a1a; /* Color de fondo */
-  //border: none; /* Sin borde */
-  //color: white; /* Color del texto */
-  //padding: 15px 32px; /* Espacio alrededor del texto */
-  //text-align: center; /* Alineación del texto */
-  //text-decoration: none; /* Sin subrayado */
-  //display: inline-block; /* Mostrar como bloque */
-  //transition-duration: 0.4s; /* Duración de la transición */
+
   align-content: center;
   align-items: center;
-  //border: 2px solid #1a1a1a; /* Borde sólido */
-  //color: #1a1a1a; /* Color del texto */
-  //padding: 12px 24px; /* Espacio alrededor del texto */
-  //text-align: center; /* Alineación del texto */
-  //text-decoration: none; /* Sin subrayado */
-  //display: inline-block; /* Mostrar como bloque */
-  //font-size: 1.5rem; /* Tamaño de fuente */
-  //border-radius: 12px; /* Borde redondeado */
-  //transition-duration: 0.4s; /* Duración de la transición */
-  //cursor: pointer; /* Cursor al pasar sobre el botón */
-  border: 2px solid #1a1a1a; /* Borde sólido */
+
+  border: 2px solid #333232; /* Borde sólido */
   color: #ffffff; /* Color del texto */
   background-color: transparent; /* Fondo transparente */
   padding: 12px 24px; /* Espacio alrededor del texto */
@@ -261,18 +239,15 @@ html, body {
 }
 
 .enter-button {
-  //margin-left: 5rem;
-  //margin-right: 5rem;
-  //margin-top: 3.5rem;
+
   background-color: transparent; /* Color de fondo */
   align-items: center;
   align-content: center;
 }
 
 .botonentrar:hover {
-  //background: linear-gradient(#575656, #989898);
-  //background-color: #3a3a3a;
-  background-color: #1a1a1a; /* Cambio de color de fondo al pasar el ratón */
+
+  background-color: #2f3033; /* Cambio de color de fondo al pasar el ratón */
   color: #ffffff; /* Cambio de color del texto al pasar el ratón */
 }
 
@@ -288,11 +263,18 @@ h1 {
   width: 100%;
   background-color: #1a1a1a;
   color: white;
-  //top: 15%;
-  //margin-top: 600px;
 
 
 
+}
+
+.header {
+  z-index:1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #1a1a1a;
+  color: white;
 }
 
 
@@ -304,8 +286,23 @@ h1 {
   text-align: center;
 }
 
-//
-//.general {
-//  align-items: center;
-//  align-content: center;
-//}
+
+.general {
+  align-items: center;
+  align-content: center;
+}
+
+.calendario {
+  margin-top: 20.3rem;
+  margin-left: 5rem;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+  z-index:1;
+  position: absolute ! important;
+
+}
+
+
+.calendario .datetime-calendar {
+background-color: #62696c ! important;
+}
