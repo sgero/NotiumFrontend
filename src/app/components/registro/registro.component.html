@@ -1,4 +1,50 @@
-<form>
-  <!-- Campos del formulario de registro -->
-  <button (click)="registrarUsuario()">Registrar</button>
-</form>
+<div class="signup__container">
+  <div class="container__child signup__thumbnail">
+    <div class="thumbnail__logo">
+      <h1 class="logo__text">Spectre</h1>
+    </div>
+    <div class="thumbnail__content text-center">
+      <h1 class="heading--primary">Welcome to MI6.</h1>
+      <h2 class="heading--secondary">Are you ready to join the elite?</h2>
+    </div>
+    <div class="thumbnail__links">
+      <ul class="list-inline m-b-0 text-center">
+        <li><a href="http://notium.com/" target="_blank"><i class="fa fa-globe"></i></a></li>
+        <li><a href="https://www.behance.net/notium" target="_blank"></a></li>
+        <li><a href="https://github.com/notium" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a href="https://twitter.com/notium" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      </ul>
+    </div>
+    <div class="signup__overlay"></div>
+  </div>
+  <div class="container__child signup__form">
+    <form action="#" >
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input class="form-control" type="text" name="username" id="username" [(ngModel)]="usuario.username" placeholder="james.bond" required  />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" type="text" name="email" id="email" [(ngModel)]="usuario.email" placeholder="james.bond@spectre.com" required />
+      </div>
+      <div class="form-group">
+        <label for="contraseña">Contraseña</label>
+        <input class="form-control" type="password" name="contraseña" id="contraseña" [(ngModel)]="usuario.password" placeholder="********" required />
+      </div>
+      <div class="form-group">
+        <label for="repitecontraseña">Repite Contraseña</label>
+        <input class="form-control" type="password" name="repitecontraseña" id="repitecontraseña" placeholder="********" required />
+      </div>
+      <div class="m-t-lg">
+        <ul class="list-inline">
+          <li>
+            <input class="btn btn--form" type="submit" value="Register" />
+          </li>
+          <li>
+            <a class="signup__link" href="/login">Ya soy miembro de Notium.</a>
+          </li>
+        </ul>
+      </div>
+    </form>
+  </div>
+</div>

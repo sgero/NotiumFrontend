@@ -1,37 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import {Router} from "@angular/router";
+import {Usuario} from "../../models/Usuario";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
   styleUrls: ['./registro.component.scss'],
+  imports: [
+    FormsModule
+  ],
   standalone: true
 })
 export class RegistroComponent   {
 
-  // quitado el Implements OnInit
+  usuario = new Usuario();
 
-  // constructor() { }
-  //
-  // ngOnInit() {}
+  constructor(private usuarioService : UsuarioService, private router : Router) { }
 
-  nuevoUsuario: any = {};
+  verificarContrasenas(): void{
 
-  constructor(private usuarioService: UsuarioService) { }
+    let contraseña1 = document.getElementById("contraseña");
+    let contraseña2 = document.getElementById("repitecontraseña");
 
-  registrarUsuario(): void {
-    this.usuarioService.registrarUsuario(this.nuevoUsuario)
-      .subscribe(
-        response => {
-          console.log('Usuario registrado exitosamente:', response);
-          // Aquí podrías redireccionar al usuario a otra página o mostrar un mensaje de éxito
-        },
-        error => {
-          console.error('Error al registrar usuario:', error);
-          // Aquí podrías mostrar un mensaje de error al usuario en tu frontend
-        }
-      );
+    if (contraseña1 !== contraseña2) {
+
+      console.error("Las contraseñas no coinciden.");
+
+    }else {
+
+      this.registrar()
+
+    }
   }
+
+  registrar(){
+
+    this.usuarioService.registrarUsuario(this.usuario).subscribe(data=>{
+
+      console.log(data)
+
+    })
+
+  }
+
 }
-
-

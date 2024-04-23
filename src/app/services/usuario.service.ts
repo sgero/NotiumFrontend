@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Usuario} from "../models/Usuario";
 
 @Injectable({
   providedIn: 'root'
@@ -18,19 +19,17 @@ export class UsuarioService {
 
   }
 
-  registrarUsuario(usuario: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/registrarUsuario`, usuario);
+  registrarUsuario(data: Usuario) {
+    return this.http.post<any>(`${this.apiUrl}/auth/register`, data);
   }
 
-  loginUsuario(usuario: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, usuario);
+  loginUsuario(data: Usuario) {
+    return this.http.post<any>(`${this.apiUrl}/auth/login`, data);
   }
 
   logoutUsuario(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/logout`);
   }
-
-
 
   // ADMINS desde panel de control (Pestaña de administración)
   getUsuario(): Observable<any> {
