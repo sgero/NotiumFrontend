@@ -6,6 +6,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import {HomerestauranteComponent} from "./components/homerestaurante/homerestaurante.component";
 import {HomeocionocturnoComponent} from "./components/homeocionocturno/homeocionocturno.component";
 import {RegistroComponent} from "./components/registro/registro.component";
+import {LoginComponent} from "./components/login/login.component";
 
 export const routes: Routes = [
   // {
@@ -19,6 +20,7 @@ export const routes: Routes = [
   },
   {path: 'notium', component: HomeComponent},
   {path: 'registrar', component: RegistroComponent},
+  {path: 'login', component: LoginComponent},
   {path: 'error', component: ErrorComponent},
   {path: 'header', component: HeaderComponent},
   {path: 'footer', component: FooterComponent},

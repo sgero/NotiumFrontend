@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   onToggleButtonClick() {
 
@@ -18,11 +19,14 @@ export class HeaderComponent  implements OnInit {
   onRegisterButtonClick() {
 
     console.log('Se hizo clic en el botón Register');
+    this.router.navigate(['/registrar']);
   }
 
   onLoginButtonClick() {
 
     console.log('Se hizo clic en el botón Login');
+    this.router.navigate(['/login']);
+
   }
   ngOnInit() {}
 

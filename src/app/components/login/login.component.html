@@ -18,32 +18,23 @@
     <div class="signup__overlay"></div>
   </div>
   <div class="container__child signup__form">
-    <form action="#" (submit)="verificarContrasenas()">
+    <form action="#" (submit)="login()">
       <div class="form-group">
         <label for="username">Username</label>
         <input class="form-control" type="text" name="username" id="username" [(ngModel)]="usuario.username" placeholder="james.bond" required  />
       </div>
       <div class="form-group">
-        <label for="email">Email</label>
-        <input class="form-control" type="text" name="email" id="email" [(ngModel)]="usuario.email" placeholder="james.bond@spectre.com" required />
-      </div>
-      <div class="form-group">
         <label for="contraseña">Contraseña</label>
-        <input class="form-control" (input)="validarContrasena()" type="password" name="contraseña" id="contraseña" [(ngModel)]="usuario.password" placeholder="********" required />
+        <input class="form-control" type="password" name="contraseña" id="contraseña"  [(ngModel)]="usuario.password" placeholder="********" required />
         <div id="mensajeContraseña"></div>
-      </div>
-      <div class="form-group">
-        <label for="repitecontraseña">Repite Contraseña</label>
-        <input class="form-control" type="password" name="repitecontraseña" id="repitecontraseña" placeholder="********" required />
-        <div id="repiteContraseña"></div>
       </div>
       <div class="m-t-lg">
         <ul class="list-inline">
           <li>
-            <input class="btn btn--form" type="submit" value="REGISTRAR" />
+            <input class="btn btn--form" type="submit" value="LOGIN" />
           </li>
           <li>
-            <a class="signup__link" href="/login">Ya soy miembro de Notium.</a>
+            <a class="signup__link" href="/registrar">Todavía no soy miembro de Notium.</a>
           </li>
         </ul>
       </div>
