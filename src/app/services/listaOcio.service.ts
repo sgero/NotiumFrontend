@@ -6,7 +6,7 @@ import {RespuestaDTO} from "../models/RespuestaDTO";
   providedIn: 'root'
 })
 export class ListaOcioService{
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private apiUrl = 'http://127.0.0.1:8000';
   constructor(private http: HttpClient) { }
 
   getActivos(){

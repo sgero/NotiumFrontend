@@ -9,7 +9,7 @@ import {RespuestaDTO} from "../models/RespuestaDTO";
 })
 
 export class OcioNocturnoService{
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private apiUrl = 'http://127.0.0.1:8080';
   constructor(private http: HttpClient) { }
   getAll(){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/listarTodos`);
