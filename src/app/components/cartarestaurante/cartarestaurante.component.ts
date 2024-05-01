@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {CartarestauranteService} from "../../services/cartarestaurante.service";
+import {HeaderrestauranteComponent} from "../headerrestaurante/headerrestaurante.component";
+import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante.component";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-cartarestaurante',
   templateUrl: './cartarestaurante.component.html',
   styleUrls: ['./cartarestaurante.component.scss'],
+  imports: [
+    HeaderrestauranteComponent,
+    FooterrestauranteComponent,
+    NgForOf
+  ],
+  standalone: true
 })
 export class CartarestauranteComponent  implements OnInit {
 
   producto = {nombre: '',tipoCategoria: '',idCartaRestaurante: +''}
   token = {token: ''}
+  productos: any;
   constructor(private cartarestauranteService : CartarestauranteService, private router : Router) { }
 
   ngOnInit() {
@@ -20,12 +30,14 @@ export class CartarestauranteComponent  implements OnInit {
     }
     this.cartarestauranteService.listarProducto(this.token).subscribe(data =>{
       console.log(data);
+      this.productos = data;
     })
   }
 
   crearProducto(){
       this.cartarestauranteService.crearProducto(this.producto).subscribe(data =>{
         console.log(data);
+
       })
   }
 

@@ -3,7 +3,7 @@
   <app-headerrestaurante></app-headerrestaurante>
   <div class="row">
     <div class="col-md-12">
-      <h1>homerestaurante</h1>
+
     </div>
   </div>
 
@@ -13,7 +13,34 @@
       ACTUALIZA TU CARTA
     </h1>
     <div class="carta">
-
+      <div class="producto" *ngFor="let p of productos">
+        <div><span>{{p.nombre}}</span></div>
+        <div class="formatos">
+          <div class="formato">
+            <span>Tapa</span>
+            <button></button>
+            <input type="number">
+            <input type="submit" value="ok!">
+          </div>
+          <div class="formato">
+            <span>Media</span>
+            <button></button>
+            <input type="number">
+            <input type="submit" value="ok!">
+          </div>
+          <div class="formato">
+            <span>Ración</span>
+            <button></button>
+            <input type="number">
+            <input type="submit" value="ok!">
+          </div>
+        </div>
+      </div>
+      <div class="form"><h1>rellenalo</h1></div>
+      <div class="anyadir"><span>Si quieres añadir un nuevo producto pulsa:</span>
+        <button class="anyadeproducto" src="./assets/images/plus.png"></button>
+        <span>Después de añadirlo indica el formato y precio.</span>
+      </div>
     </div>
   </div>
 

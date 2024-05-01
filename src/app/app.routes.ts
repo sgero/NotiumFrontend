@@ -7,6 +7,7 @@ import {HomerestauranteComponent} from "./components/homerestaurante/homerestaur
 import {HomeocionocturnoComponent} from "./components/homeocionocturno/homeocionocturno.component";
 import {RegistroComponent} from "./components/registro/registro.component";
 import {LoginComponent} from "./components/login/login.component";
+import {CartarestauranteComponent} from "./components/cartarestaurante/cartarestaurante.component";
 
 export const routes: Routes = [
   // {
@@ -26,6 +27,7 @@ export const routes: Routes = [
   {path: 'footer', component: FooterComponent},
   {path: 'restaurante', component: HomerestauranteComponent},
   {path: 'ocionocturno', component: HomeocionocturnoComponent},
+  {path: 'cartaRestaurante', component: CartarestauranteComponent},
 
 
 ];
