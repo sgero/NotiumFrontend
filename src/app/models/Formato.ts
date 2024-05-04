@@ -1,5 +1,4 @@
-
 export  class Formato{
-  id?: number;
-  formato?: string;
+    id?: number;
+    formato?: string;
 }

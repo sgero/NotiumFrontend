@@ -1,4 +1,3 @@
-import {Usuario} from "./Usuario";
 import {Producto} from "./Producto";
 import {Formato} from "./Formato";
 
