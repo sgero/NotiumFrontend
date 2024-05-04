@@ -6,6 +6,8 @@ import {Evento} from "../../models/Evento";
 import {DatePipe, NgForOf} from "@angular/common";
 import {error} from "@angular/compiler-cli/src/transformers/util";
 import {IonicModule} from "@ionic/angular";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-homeocionocturno',
@@ -16,7 +18,9 @@ import {IonicModule} from "@ionic/angular";
     HeaderocionocturnoComponent,
     NgForOf,
     IonicModule,
-    DatePipe
+    DatePipe,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true
 })
