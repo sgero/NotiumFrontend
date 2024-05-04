@@ -1,6 +1,4 @@
-
-export class Formato{
-
-  id?:number;
-  formato?: string = '';
+export  class Formato{
+    id?: number;
+    formato?: string;
 }

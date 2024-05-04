@@ -1,17 +1,8 @@
-
-export class Producto{
-
+export  class Producto{
   id?: number;
-  nombre?: string='';
-
-/*  private TipoCategoria tipoCategoria;*/
-
-  activo?: boolean = true;
-
-/*  idCartaOcio;
-  idCartaRestaurante;*/
-
-
-
-
+  nombre?: string;
+  tipoCategoria?: string;
+  activo?: boolean;
+  idCartaOcio?: number;
+  idCartaRestaurante?: number;
 }

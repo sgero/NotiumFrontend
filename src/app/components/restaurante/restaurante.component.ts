@@ -5,6 +5,7 @@ import {RestauranteUserComponent} from "./restaurante-user/restaurante-user.comp
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {IonicModule} from "@ionic/angular";
+import {RestauranteAdminComponent} from "./restaurante-admin/restaurante-admin.component";
 
 @Component({
   selector: 'app-restaurante',
@@ -13,18 +14,12 @@ import {IonicModule} from "@ionic/angular";
   imports: [
     HeaderrestauranteComponent,
     FooterrestauranteComponent,
+    RestauranteUserComponent,
+    RestauranteAdminComponent
   ],
   standalone: true
 })
 
-@NgModule({
-  imports:[
-    CommonModule,
-    FormsModule,
-    IonicModule,
-
-  ]
-})
 
 
 export class RestauranteComponent  implements OnInit {

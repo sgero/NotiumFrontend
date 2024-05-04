@@ -1,0 +1,3 @@
+export enum DiasARepetirCicloEventoOcio {
+  MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
