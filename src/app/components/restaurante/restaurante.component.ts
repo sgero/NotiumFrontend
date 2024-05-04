@@ -22,6 +22,7 @@ import {IonicModule} from "@ionic/angular";
     CommonModule,
     FormsModule,
     IonicModule,
+
   ]
 })
 
