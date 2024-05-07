@@ -3,15 +3,19 @@ import {HeaderrestauranteComponent} from "../headerrestaurante/headerrestaurante
 import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante.component";
 import {RestauranteUserComponent} from "./restaurante-user/restaurante-user.component";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 import {IonicModule} from "@ionic/angular";
 import {RestauranteAdminComponent} from "./restaurante-admin/restaurante-admin.component";
+import {RestauranteService} from "../../services/restaurante.service";
+import {ActivatedRoute} from "@angular/router";
+import {Restaurante} from "../../models/Restaurante";
 
 @Component({
   selector: 'app-restaurante',
   templateUrl: './restaurante.component.html',
   styleUrls: ['./restaurante.component.scss'],
   imports: [
+    CommonModule,
+    IonicModule,
     HeaderrestauranteComponent,
     FooterrestauranteComponent,
     RestauranteUserComponent,
@@ -21,12 +25,32 @@ import {RestauranteAdminComponent} from "./restaurante-admin/restaurante-admin.c
 })
 
 
-
 export class RestauranteComponent  implements OnInit {
 
-  current: any;
-  constructor() { }
+  //Variabales
+  restaurantePorID = new Restaurante();
+  id_restaurante: any
 
-  ngOnInit() {}
+  constructor(private restauranteService: RestauranteService,
+              private _route: ActivatedRoute,) {
+    this.id_restaurante = this._route.snapshot.paramMap.get('id');
+  }
+  ngOnInit() {
+
+    this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (responseData) => {
+        this.restaurantePorID = responseData;
+      },
+      error: (error) => {
+        console.error('Error al obtener el restaurante por ID:', error);
+      },
+      complete: () => {
+        console.log('Restaurante captado por id', this.restaurantePorID);
+      }
+    });
+
+    //Funciones externas
+
+  }
 
 }

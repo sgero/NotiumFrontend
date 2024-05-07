@@ -1,21 +1,80 @@
+.info-rest-user{
+  display: flex;
+  flex-direction: column;
+  min-height: 20rem;
+}
 
-.restaurante-user{
+.btnes_restaurantes{
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+}
+
+.btn_rest{
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  color: rgba(87, 76, 76, 0.52);
+  border-bottom: 5px solid rgba(87, 76, 76, 0.52);
+}
+
+.btn_rest:hover {
+  color: rgba(28, 17, 17, 0.52);
+  border-bottom: 5px solid rgba(28, 17, 17, 0.52);
+}
+
+.estilo1_info{
+  border-bottom: 5px black solid;
+  color: black;
+}
+
+.estilo2_info{
+  color: rgba(87, 76, 76, 0.52);
+  border-bottom: 5px solid rgba(87, 76, 76, 0.52);
+}
+
+.estilo1_carta{
+  border-bottom: 5px black solid;
+  color: black;
+
+}
+
+.estilo2_carta{
+  color: rgba(23, 0, 0, 0.52);
+  border-bottom: 5px solid rgba(23, 0, 0, 0.52);
+}
+
+.restaurante_user{
+  display: flex;
+  flex-direction: row;
   margin-top: 60px;
 }
 
-.info-direccion{
+.posicion_btn{
+  width: 33.3%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
 }
 
-.btn{
+.btn_info{
   border: 4px solid black;
   padding: 5px;
   background-color: #2a2a2a;
   color: white;
   cursor: pointer;
+}
+
+.info-direccion{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33.3%;
+}
+
+.dispo_info{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end !important;
 }

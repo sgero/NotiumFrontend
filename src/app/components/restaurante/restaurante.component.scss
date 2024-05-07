@@ -20,8 +20,6 @@
 
 .container{
   position: relative;
-  border: 0.5px solid black;
-  border-radius: 2rem 2rem 0rem 0rem;
   margin: 2rem 4rem;
 }
 
@@ -29,15 +27,15 @@
   background-color: #c4a971;
   border-radius: 2rem 2rem 0rem 0rem;
   border: 0.5px solid black;
-  margin: 1rem 2rem;
+  margin: 1rem 2rem 0rem 2rem;
   height: 20rem;
 }
 
 .profile-img{
   //Posicionamiento
   position: absolute;
-  top: 55%;
-  left: 48%;
+  top: 32%;
+  left: 44%;
 
   //Estilo
   border-radius: 50%;
@@ -48,112 +46,14 @@
 .info-concreta{
   border-radius: 0rem 0rem 2rem 2rem;
   border: 0.5px solid black;
-  margin: 1rem 2rem;
+  margin: 0rem 2rem 1rem 2rem;
+  min-height: 20rem;
 }
 
 
-
-
-//profile card container
-/*.container {
-  overflow: hidden;
-  box-shadow: 0px 2px 8px 0px var(--clr-gray-light);
-  border: 0.5px solid black;
-  background-color: white;
-  text-align: center;
-  border-radius: 2rem 2rem 0rem 0rem;
-  position: relative;
-  margin: 2rem 4rem;
-}
-
-//background image in card
-.banner-img {
-  position: absolute;
-  background-color: #795f4a;
-  width: 100%;
-  height: 100vh;
-}
-
-//circle profile image on top
-.profile-img {
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 8rem;
-  height: 8rem;
-  border-radius: 50%;
-
-
+.restaurante-similares {
+  display: flex;
+  flex-direction: column;
+  margin: 0rem 5rem;
 
 }
-
-//name
-.name {
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-//paragraph description
-.description {
-  margin: 1rem 2rem;
-  font-size: 0.9rem;
-}
-
-//primary button at bottom
-.btn {
-  width: 100%;
-  border: none;
-  font-size: 1rem;
-  font-weight: bold;
-  color: white;
-  padding: 1rem;
-  background-color: var(--clr-primary);
-}
-
-.valoraciones{
-  position: absolute;
-  top: 84%;
-  left: 10%;
-  text-decoration: none;
-  transition: 1s;
-
-a {
-  -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-  -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-  transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-  display: block;
-  text-decoration: none;
-  border-radius: 4px;
-  padding: 20px 30px;
-}
-
-a.valoraciones {
-  color: rgba(30, 22, 54, 0.6);
-  box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
-}
-
-a.valoraciones:hover {
-  color: rgba(255, 255, 255, 0.85);
-  box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
-}
-
-
-
-//Responsive Tablet
-@media screen and (min-width: 500px) {
-  .wrapper-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-//Responsive Desktop
-@media screen and (min-width: 760px) {
-  .wrapper-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-//Termna
-*/

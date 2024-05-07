@@ -8,12 +8,16 @@ import { Restaurante } from "../models/Restaurante";
 })
 export class RestauranteService {
 
-  private apiUrl = 'http://127.0.0.1:8000';
+  private apiUrl = 'http://127.0.0.1:8080';
   constructor(private  http:HttpClient) { }
 
 
   listarRestaurantes(): Observable<Restaurante[]>{
     return this.http.get<Restaurante[]>(`${this.apiUrl}/restaurante/listar`);
+  }
+
+  getRestauranteByID(id: number): Observable<Restaurante>{
+    return this.http.get<Restaurante>(`${this.apiUrl}/restaurante/porID?id=${id}`);
   }
 
 }

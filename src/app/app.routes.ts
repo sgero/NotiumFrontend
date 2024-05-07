@@ -28,7 +28,7 @@ export const routes: Routes = [
   {path: 'footer', component: FooterComponent},
   {path: 'restaurante', component: HomerestauranteComponent},
   {path: 'ocionocturno', component: HomeocionocturnoComponent},
-  {path: 'restaurante/1', component: RestauranteComponent},
+  {path: 'restaurante/:id', component: RestauranteComponent},
   {path: 'restaurante/user', component: RestauranteUserComponent},
   {
     path: 'prueba',

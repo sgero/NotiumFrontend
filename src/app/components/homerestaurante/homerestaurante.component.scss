@@ -1,3 +1,17 @@
 html {
   background-color: #f5f093;
 }
+
+.restau{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn{
+  padding: 2rem;
+  background-color: #2dd36f;
+  color: white;
+  margin-bottom: 10px;
+}
