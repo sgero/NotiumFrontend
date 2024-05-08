@@ -37,6 +37,10 @@ export class CartarestauranteComponent  implements OnInit {
   }
 
   crearProducto(){
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.producto.username = token;
+    }
       this.cartarestauranteService.crearProducto(this.producto).subscribe(data =>{
         console.log(data);
 
