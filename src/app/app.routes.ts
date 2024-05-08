@@ -31,12 +31,13 @@ export const routes: Routes = [
   {path: 'ocionocturno', component: HomeocionocturnoComponent},
   {path: 'restaurante/:id', component: RestauranteComponent},
   {path: 'restaurante/user', component: RestauranteUserComponent},
+  {path: 'cartaRestaurante', component: CartarestauranteComponent},
   {
     path: 'prueba',
     loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
   }
 
-  {path: 'cartaRestaurante', component: CartarestauranteComponent},
+
 
 
 ];
