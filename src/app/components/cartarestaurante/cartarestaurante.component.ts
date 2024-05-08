@@ -4,6 +4,7 @@ import {CartarestauranteService} from "../../services/cartarestaurante.service";
 import {HeaderrestauranteComponent} from "../headerrestaurante/headerrestaurante.component";
 import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante.component";
 import {NgForOf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-cartarestaurante',
@@ -12,13 +13,14 @@ import {NgForOf} from "@angular/common";
   imports: [
     HeaderrestauranteComponent,
     FooterrestauranteComponent,
-    NgForOf
+    NgForOf,
+    FormsModule
   ],
   standalone: true
 })
 export class CartarestauranteComponent  implements OnInit {
 
-  producto = {nombre: '',tipoCategoria: '',idCartaRestaurante: +''}
+  producto = {nombre: '',tipoCategoria: '',username: ''}
   token = {token: ''}
   productos: any;
   constructor(private cartarestauranteService : CartarestauranteService, private router : Router) { }
