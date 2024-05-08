@@ -9,6 +9,7 @@ import {RegistroComponent} from "./components/registro/registro.component";
 import {LoginComponent} from "./components/login/login.component";
 import {RestauranteComponent} from "./components/restaurante/restaurante.component";
 import {RestauranteUserComponent} from "./components/restaurante/restaurante-user/restaurante-user.component";
+import {CartarestauranteComponent} from "./components/cartarestaurante/cartarestaurante.component";
 
 export const routes: Routes = [
   // {
@@ -35,6 +36,7 @@ export const routes: Routes = [
     loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
   }
 
+  {path: 'cartaRestaurante', component: CartarestauranteComponent},
 
 
 ];

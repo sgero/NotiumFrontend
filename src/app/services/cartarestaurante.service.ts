@@ -9,7 +9,7 @@ import {Token} from "../models/Token";
 })
 export class CartarestauranteService {
 
-  private apiUrl = 'http://127.0.0.1:8000';
+  private apiUrl = 'http://localhost:8080';
   constructor(private  http:HttpClient) { }
 
   crearProducto(data: Producto){

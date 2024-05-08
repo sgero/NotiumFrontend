@@ -5,4 +5,5 @@ export  class Producto{
   activo?: boolean;
   idCartaOcio?: number;
   idCartaRestaurante?: number;
+  username?: string;
 }
