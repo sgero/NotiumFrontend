@@ -1,52 +1,147 @@
-<div class="signup__container">
-  <div class="container__child signup__thumbnail">
-    <div class="thumbnail__logo">
-      <h1 class="logo__text">NOTIUM</h1>
-    </div>
-    <div class="thumbnail__content text-center">
-      <h1 class="heading--primary">Bienvenido a Notium.</h1>
-      <h2 class="heading--secondary">¿Estás preparado para unirte a la élite?</h2>
-    </div>
-    <div class="thumbnail__links">
-      <ul class="list-inline m-b-0 text-center">
-        <li><a href="http://notium.com/" target="_blank"><i class="fa fa-globe"></i></a></li>
-        <li><a href="https://www.behance.net/notium" target="_blank"></a></li>
-        <li><a href="https://github.com/notium" target="_blank"><i class="fa fa-github"></i></a></li>
-        <li><a href="https://twitter.com/notium" target="_blank"><i class="fa fa-twitter"></i></a></li>
-      </ul>
-    </div>
-    <div class="signup__overlay"></div>
-  </div>
-  <div class="container__child signup__form">
-    <form action="#" (submit)="verificarContrasenas()">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input class="form-control" type="text" name="username" id="username" [(ngModel)]="usuario.username" placeholder="james.bond" required  />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input class="form-control" type="text" name="email" id="email" [(ngModel)]="usuario.email" placeholder="james.bond@spectre.com" required />
-      </div>
-      <div class="form-group">
-        <label for="contraseña">Contraseña</label>
-        <input class="form-control" (input)="validarContrasena()" type="password" name="contraseña" id="contraseña" [(ngModel)]="usuario.password" placeholder="********" required />
-        <div id="mensajeContraseña"></div>
-      </div>
-      <div class="form-group">
-        <label for="repitecontraseña">Repite Contraseña</label>
-        <input class="form-control" type="password" name="repitecontraseña" id="repitecontraseña" placeholder="********" required />
-        <div id="repiteContraseña"></div>
-      </div>
-      <div class="m-t-lg">
-        <ul class="list-inline">
-          <li>
-            <input class="btn btn--form" type="submit" value="REGISTRAR" />
-          </li>
-          <li>
-            <a class="signup__link" href="/login">Ya soy miembro de Notium.</a>
-          </li>
-        </ul>
-      </div>
-    </form>
-  </div>
-</div>
+<ion-content>
+  <ion-grid>
+
+    <ion-row *ngIf="paso === 1">
+      <ion-col size="12">
+        <ion-card>
+
+          <ion-card-header>
+            <ion-card-title>Registro - Paso 1/3</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-list lines="full">
+              <ion-radio-group [(ngModel)]="selectedRole">
+                <ion-item>
+                  <ion-label>Cliente</ion-label>
+                  <ion-radio value="cliente"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Restaurante</ion-label>
+                  <ion-radio value="restaurante"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label>Ocio nocturno</ion-label>
+                  <ion-radio value="ocio-nocturno"></ion-radio>
+                </ion-item>
+              </ion-radio-group>
+            </ion-list>
+
+            <ion-button expand="block" (click)="siguientePaso()">Siguiente</ion-button>
+
+          </ion-card-content>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="paso === 2">
+      <ion-col size="12">
+        <ion-card>
+
+          <ion-card-header>
+            <ion-card-title>Registro - Paso 2/3</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-list lines="full">
+              <ion-item>
+                <ion-label>Username</ion-label>
+                <ion-input type="text" [(ngModel)]="usuarioCliente.username" required></ion-input>
+              </ion-item>
+              <ion-item>
+
+                <ion-label>Email</ion-label>
+                <ion-input type="email" [(ngModel)]="usuarioCliente.email" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Contraseña</ion-label>
+                <ion-input id="contrasena" type="password" [(ngModel)]="usuarioCliente.password" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Repite Contraseña</ion-label>
+                <ion-input id="repitecontrasena" type="password" [(ngModel)]="repiteContrasena" required></ion-input>
+              </ion-item>
+            </ion-list>
+
+            <div id="repiteContraseña"></div>
+
+            <div class="botones">
+              <ion-button expand="block" (click)="pasoAtras()">Atrás</ion-button>
+              <ion-button expand="block" (click)="siguientePaso()">Siguiente</ion-button>
+            </div>
+
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="paso === 3">
+      <ion-col size="12">
+        <ion-card>
+
+          <ion-card-header>
+            <ion-card-title>Registro - Paso 3/3</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+
+            <ion-list lines="full" *ngIf="selectedRole === 'cliente'">
+              <ion-item>
+                <ion-label>Nombre</ion-label>
+                <ion-input type="text" [(ngModel)]="usuarioCliente.nombre" required></ion-input>
+              </ion-item>
+              <ion-item>
+
+                <ion-label>Apellidos</ion-label>
+                <ion-input type="text" [(ngModel)]="usuarioCliente.apellidos" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Dni</ion-label>
+                <ion-input type="text" [(ngModel)]="usuarioCliente.dni" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Telefono</ion-label>
+                <ion-input type="tel" [(ngModel)]="usuarioCliente.telefono" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Fecha Nacimiento</ion-label>
+                <ion-datetime
+                  displayFormat="DD/MM/YYYY"
+                  [(ngModel)]="usuarioCliente.fecha_nacimiento"
+                  required
+                  [max]="maxDate">
+                </ion-datetime>
+              </ion-item>
+            </ion-list>
+
+            <ion-item *ngIf="selectedRole === 'restaurante'">
+              <ion-label>Nombre del restaurante</ion-label>
+              <ion-input type="text" [(ngModel)]="restaurante.nombre" required></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="selectedRole === 'ocio-nocturno'">
+              <ion-label>Nombre del establecimiento nocturno</ion-label>
+              <ion-input type="text" [(ngModel)]="ocio_nocturno.nombre" required></ion-input>
+            </ion-item>
+
+            <div class="botones">
+              <ion-button expand="block" (click)="pasoAtras()">Atrás</ion-button>
+              <ion-button expand="block" (click)="registrar()">Registrate</ion-button>
+            </div>
+
+          </ion-card-content>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

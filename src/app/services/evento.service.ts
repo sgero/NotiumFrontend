@@ -3,6 +3,8 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import {CrearEvento} from "../models/CrearEvento";
 import {CrearEventoCiclico} from "../models/CrearEventoCiclico";
 import {RespuestaDTO} from "../models/RespuestaDTO";
+import {OcioNocturno} from "../models/OcioNocturno";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,12 @@ export class EventoService {
   constructor(private http: HttpClient) { }
   getAll(){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/listarTodos`);
+  }
+
+  crearOcioNocturno(ocioNocturno: OcioNocturno){
+
+    return this.http.post<any>(`${this.apiUrl}/ocio_nocturno/crear`, ocioNocturno);
+
   }
 
   getActivos(){

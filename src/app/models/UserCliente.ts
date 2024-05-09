@@ -1,15 +1,19 @@
-import {Usuario} from "./Usuario";
 import {Direccion} from "./Direccion";
 
-export class Cliente{
+export class UserCliente{
   id?: number;
+
+  username: string = '';
+  email?: string = '';
+  password?: string = '';
+  rol?: number;
+
   nombre: string = '';
   apellidos?: string = '';
   dni?: string = '';
   telefono?: string = '';
   fecha_nacimiento?: string = '';
   ubicacion_actual?: string = '';
-  usuario: Usuario = new Usuario();
   direccion: Direccion = new Direccion();
   activo?: boolean = true;
   token_verificacion?: string = '';

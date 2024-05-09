@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {IonicModule} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -13,24 +14,24 @@ import {IonicModule} from "@ionic/angular";
 })
 export class HomeComponent  implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   onEnterButtonClickRest(): void {
-    // Lógica para lo que sucede al hacer clic en el botón "Enter"
+
+    this.router.navigate(['/notium/restaurante']);
 
 
-    console.log('Se hizo clic en el botón Enter');
   }
 
   onEnterButtonClickOcioN(): void {
-    // Lógica para lo que sucede al hacer clic en el botón "Enter"
+
+    this.router.navigate(['/notium/ocionocturno']);
 
 
-    console.log('Se hizo clic en el botón Enter');
   }
 
 
-  ngOnInit() {}
+  ngOnInit() {return null;}
 
 
 }

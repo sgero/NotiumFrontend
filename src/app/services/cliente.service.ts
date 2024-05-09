@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {Cliente} from "../models/Cliente";
+import {UserCliente} from "../models/UserCliente";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,12 @@ export class ClienteService {
   getClientes() :Observable<JSON> {
 
     return this.http.get<JSON>(`${this.apiUrl}/cliente`);
+
+  }
+
+  crearYModificarCliente(usuarioCliente:UserCliente) {
+
+    return this.http.post<any>(`${this.apiUrl}/cliente/crear`, usuarioCliente);
 
   }
 

@@ -22,21 +22,20 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {path: 'notium', component: HomeComponent},
-  {path: 'registrar', component: RegistroComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'error', component: ErrorComponent},
+  {path: 'notium/registrar', component: RegistroComponent},
+  {path: 'notium/login', component: LoginComponent},
+  {path: 'notium/error', component: ErrorComponent},
   {path: 'header', component: HeaderComponent},
   {path: 'footer', component: FooterComponent},
-  {path: 'restaurante', component: HomerestauranteComponent},
-  {path: 'ocionocturno', component: HomeocionocturnoComponent},
-  {path: 'restaurante/:id', component: RestauranteComponent},
-  {path: 'restaurante/user', component: RestauranteUserComponent},
   {path: 'cartaRestaurante', component: CartarestauranteComponent},
+  {path: 'notium/restaurante', component: HomerestauranteComponent},
+  {path: 'notium/ocionocturno', component: HomeocionocturnoComponent},
+  {path: 'notium/restaurante/:id', component: RestauranteComponent},
+  {path: 'notium/restaurante/user', component: RestauranteUserComponent},
   {
     path: 'prueba',
     loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
   }
-
 
 
 
