@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="main-container" >
+<div class="main-container">
   <ion-card>
     <ion-card-header>
       <ion-card-title>Eventos Activos</ion-card-title>
@@ -23,4 +23,26 @@
     </ion-card-content>
   </ion-card>
 </div>
+<ion-datetime presentation="date" locale="es-ES" [(ngModel)]="fechaSeleccionada" (ionChange)="fecha" (click)="getEventosEntreFechas(fechaSeleccionada!)"></ion-datetime>
+<ion-card>
+  <ion-card-content >
+    <ion-list  *ngFor="let x of eventosEntreFechas">
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+        </ion-thumbnail>
+        <ion-label>{{x.nombre}}</ion-label>
+        <ion-label style="margin-right: 60px !important;">{{x.descripcion}}</ion-label>
+        <ion-label>{{x.fecha | date: 'yyyy-MM-dd'}}</ion-label>
+        <ion-label>Aforo: {{x.aforo}}</ion-label>
+        <ion-label>Edad Mínima: {{x.edadMinimaOcio}}</ion-label>
+        <ion-label>Código: {{x.codigoVestimentaOcio}}</ion-label>
+        <ion-label>Temática: {{x.tematica}}</ion-label>
+        <ion-label>Discoteca: {{x.ocioNocturnoDTO?.nombre}}</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+</ion-card>
+
+
 <app-footer></app-footer>
