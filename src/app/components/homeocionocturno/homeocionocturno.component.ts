@@ -3,7 +3,7 @@ import {FooterocionocturnoComponent} from "../footerocionocturno/footerocionoctu
 import {HeaderocionocturnoComponent} from "../headerocionocturno/headerocionocturno.component";
 import {EventoService} from "../../services/evento.service";
 import {Evento} from "../../models/Evento";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
@@ -18,7 +18,6 @@ import {FormsModule} from "@angular/forms";
     HeaderocionocturnoComponent,
     NgForOf,
     IonicModule,
-    DatePipe,
     HeaderComponent,
     FooterComponent,
     NgIf,
@@ -53,7 +52,7 @@ export class HomeocionocturnoComponent  implements OnInit {
   getEventosEntreFechas(fecha:Date){
     let fechaInicio = this.convertirFechaAStringFormatoYYYYMMDD(fecha.toString());
     let fechaFin = this.obtenerSiguienteDia(fechaInicio);
-    let fechaFinal = this.convertirFechaAStringFormatoYYYYMMDD(fechaFin.toISOString());
+    let fechaFinal = this.formatDate(fechaFin);
     const params = {
       fechaInicio: fechaInicio,
       fechaFin: fechaFinal,
@@ -66,6 +65,16 @@ export class HomeocionocturnoComponent  implements OnInit {
         console.error(e);
       }
     })
+  }
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = this.padZero(date.getMonth() + 1);
+    const day = this.padZero(date.getDate());
+
+    return `${year}/${month}/${day}`;
+  }
+  padZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
   }
 
   obtenerSiguienteDia(fecha: string): Date {
