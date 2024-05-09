@@ -5,10 +5,11 @@ export class OcioNocturno {
   id?: number;
   nombre?: string;
   cif?: string;
-  horaApertura?: string;
-  horaCierre?: string;
+  telefono?: string;
+  hora_apertura?: string;
+  hora_cierre?: string;
   aforo?: number;
-  imagenMarca?: string;
-  userDTO?: Usuario;
-  direccionDTO?:Direccion;
+  imagen_arca?: string;
+  usuario?: Usuario;
+  direccion?:Direccion;
 }

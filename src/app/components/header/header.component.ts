@@ -13,21 +13,20 @@ export class HeaderComponent  implements OnInit {
 
   onToggleButtonClick() {
 
-    console.log('Se hizo clic en el botón Toggle');
   }
 
   onRegisterButtonClick() {
 
-    console.log('Se hizo clic en el botón Register');
-    this.router.navigate(['/registrar']);
+    this.router.navigate(['/notium/registrar']);
+
   }
 
   onLoginButtonClick() {
 
-    console.log('Se hizo clic en el botón Login');
-    this.router.navigate(['/login']);
+    this.router.navigate(['/notium/login']);
+
 
   }
-  ngOnInit() {}
+  ngOnInit() {return null}
 
 }
