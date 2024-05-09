@@ -3,7 +3,7 @@ import {FooterocionocturnoComponent} from "../footerocionocturno/footerocionoctu
 import {HeaderocionocturnoComponent} from "../headerocionocturno/headerocionocturno.component";
 import {EventoService} from "../../services/evento.service";
 import {Evento} from "../../models/Evento";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
@@ -21,7 +21,8 @@ import {FormsModule} from "@angular/forms";
     HeaderComponent,
     FooterComponent,
     NgIf,
-    FormsModule
+    FormsModule,
+    DatePipe
   ],
   standalone: true
 })

@@ -10,9 +10,8 @@ import {Restaurante} from "../../models/Restaurante";
 import {OcioNocturno} from "../../models/OcioNocturno";
 import {ClienteService} from "../../services/cliente.service";
 import {RestauranteService} from "../../services/restaurante.service";
-import {OcioNocturnoService} from "../../services/ocioNocturno.service";
 import {UserCliente} from "../../models/UserCliente";
-
+import {OcionocturnoService} from "../../services/ocionocturno.service";
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -38,7 +37,8 @@ export class RegistroComponent implements OnInit {
   }
 
   maxDate: string;
-  constructor(private usuarioService : UsuarioService, private router : Router, private clienteService: ClienteService, private restauranteService: RestauranteService, private ocioNocturnoService: OcioNocturnoService) {
+  constructor(private usuarioService : UsuarioService, private router : Router, private clienteService: ClienteService,
+              private restauranteService: RestauranteService, private ocioNocturnoService: OcionocturnoService) {
 
     // Configurar la fecha máxima como el día de hoy
     this.maxDate = new Date().toISOString();
