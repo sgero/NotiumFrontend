@@ -1,3 +1,20 @@
-<p>
-  hacer-valoracion works!
-</p>
+<mat-dialog-content class="container-valoracion">
+  <p>Haz tu valoración</p>
+  <mat-form-field class="formularios">
+    <mat-label>Diganos como fue su experiencia</mat-label>
+    <input matInput [(ngModel)]="valoracion.texto" name="texto">
+  </mat-form-field>
+  <mat-form-field class="formularios">
+    <mat-label>Evalue de 0 a 5 su experiencia</mat-label>
+    <input matInput [(ngModel)]="valoracion.valoracion" name="valoracion">
+  </mat-form-field>
+  <mat-form-field class="formularios">
+    <mat-label >Indique su código de reserva</mat-label>
+    <input matInput [(ngModel)]="valoracion.codigoReserva" name="codigoReserva">
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="cerrarModal">No Thanks</button>
+  <button mat-button [mat-dialog-close]="valoracion" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>
