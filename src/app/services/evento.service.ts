@@ -17,11 +17,6 @@ export class EventoService {
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/listarTodos`);
   }
 
-  crearOcioNocturno(ocioNocturno: OcioNocturno){
-
-    return this.http.post<any>(`${this.apiUrl}/ocio_nocturno/crear`, ocioNocturno);
-
-  }
 
   getActivos(){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/activos`);

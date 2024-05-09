@@ -18,11 +18,11 @@ import {FormsModule} from "@angular/forms";
     HeaderocionocturnoComponent,
     NgForOf,
     IonicModule,
-    DatePipe,
     HeaderComponent,
     FooterComponent,
     NgIf,
-    FormsModule
+    FormsModule,
+    DatePipe
   ],
   standalone: true
 })
@@ -53,7 +53,7 @@ export class HomeocionocturnoComponent  implements OnInit {
   getEventosEntreFechas(fecha:Date){
     let fechaInicio = this.convertirFechaAStringFormatoYYYYMMDD(fecha.toString());
     let fechaFin = this.obtenerSiguienteDia(fechaInicio);
-    let fechaFinal = this.convertirFechaAStringFormatoYYYYMMDD(fechaFin.toISOString());
+    let fechaFinal = this.formatDate(fechaFin);
     const params = {
       fechaInicio: fechaInicio,
       fechaFin: fechaFinal,
@@ -66,6 +66,16 @@ export class HomeocionocturnoComponent  implements OnInit {
         console.error(e);
       }
     })
+  }
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = this.padZero(date.getMonth() + 1);
+    const day = this.padZero(date.getDate());
+
+    return `${year}/${month}/${day}`;
+  }
+  padZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
   }
 
   obtenerSiguienteDia(fecha: string): Date {
