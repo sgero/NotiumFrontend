@@ -14,25 +14,40 @@
     </h1>
     <div class="carta">
       <div class="producto" *ngFor="let p of productos">
-        <div><span>{{p.nombre}}</span></div>
+        <div><span>{{p.producto.nombre}}</span></div>
         <div class="formatos">
           <div class="formato">
             <span>Tapa</span>
+            <div class="precioactual" *ngFor="let pr of p.formatos">
+              <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+            </div>
             <button></button>
-            <input type="number">
+            <form id="f1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+            <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
             <input type="submit" value="ok!">
+            </form>
           </div>
           <div class="formato">
             <span>Media</span>
+            <div class="precioactual" *ngFor="let pr of p.formatos">
+              <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+            </div>
             <button></button>
-            <input type="number">
-            <input type="submit" value="ok!">
+            <form id="f2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+              <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+              <input type="submit" value="ok!">
+            </form>
           </div>
           <div class="formato">
             <span>Ración</span>
+            <div class="precioactual" *ngFor="let pr of p.formatos">
+              <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+            </div>
             <button></button>
-            <input type="number">
-            <input type="submit" value="ok!">
+            <form id="f3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+              <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+              <input type="submit" value="ok!">
+            </form>
           </div>
         </div>
       </div>

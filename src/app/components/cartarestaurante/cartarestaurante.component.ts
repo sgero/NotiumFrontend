@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {CartarestauranteService} from "../../services/cartarestaurante.service";
 import {HeaderrestauranteComponent} from "../headerrestaurante/headerrestaurante.component";
 import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante.component";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 
 @Component({
@@ -14,7 +14,8 @@ import {FormsModule} from "@angular/forms";
     HeaderrestauranteComponent,
     FooterrestauranteComponent,
     NgForOf,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   standalone: true
 })
@@ -23,6 +24,9 @@ export class CartarestauranteComponent  implements OnInit {
   producto = {nombre: '',tipoCategoria: '',username: ''}
   token = {token: ''}
   productos: any;
+  productoF = {id: +''}
+  FormatoP = {id: +''}
+  productoFormato = {precio: +'', productoDTO: this.productoF, formatoDTO: this.FormatoP}
   constructor(private cartarestauranteService : CartarestauranteService, private router : Router) { }
 
   ngOnInit() {
@@ -45,6 +49,14 @@ export class CartarestauranteComponent  implements OnInit {
         console.log(data);
 
       })
+  }
+
+  crearProductoFormato(idp:number,idf:number){
+    this.productoF.id = idp;
+    this.FormatoP.id = idf;
+    this.cartarestauranteService.crearProductoFormato(this.productoFormato).subscribe(data =>{
+      console.log(data)
+    })
   }
 
 }
