@@ -27,6 +27,9 @@ export class CartarestauranteComponent  implements OnInit {
   productoF = {id: +''}
   FormatoP = {id: +''}
   productoFormato = {precio: +'', productoDTO: this.productoF, formatoDTO: this.FormatoP}
+  precioMenu: any;
+  formulario: any;
+
   constructor(private cartarestauranteService : CartarestauranteService, private router : Router) { }
 
   ngOnInit() {
@@ -57,6 +60,27 @@ export class CartarestauranteComponent  implements OnInit {
     this.cartarestauranteService.crearProductoFormato(this.productoFormato).subscribe(data =>{
       console.log(data)
     })
+  }
+  mostrarPrecio(id: string){
+    if (this.precioMenu){this.precioMenu.style.display = 'none';}
+    this.precioMenu = document.getElementById(id);
+    this.precioMenu.style.display = 'flex';
+  }
+  ocultarPrecio(){
+    this.cartarestauranteService.listarProducto(this.token).subscribe(data =>{
+
+      this.productos = data;
+    })
+    //this.precioMenu.style.display = 'none';
+  }
+  mostrarForm(){
+    this.formulario = document.getElementById('fporducto');
+      this.formulario.style.display = 'flex';
+  }
+
+  ocultarForm(){
+    this.formulario = document.getElementById('fporducto');
+    this.formulario.style.display = 'none';
   }
 
 }

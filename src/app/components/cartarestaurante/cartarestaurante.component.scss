@@ -11,7 +11,7 @@
   width: 100%;
   height: auto;
   background-image: url("https://i.pinimg.com/474x/b4/7c/93/b47c93522bfa3074b0d5616f3405200d.jpg");
-  background-size: cover;
+  background-size: contain;
    /* Añade una barra de desplazamiento vertical si el contenido es más grande */
   display: flex;
   flex-direction: column;
@@ -92,7 +92,7 @@
   box-shadow: inset 0px 0px 7px 1px rgba(0,0,0,0.49);
 }
 .formato>form{
-  display: flex;
+  display: none;
   flex-direction: column;
   width: 60px;
   padding: 1px;
@@ -103,6 +103,7 @@
   margin: 2px;
 }
 .form{
+  display: none;
   width: 100%;
 }
 .form>form{
