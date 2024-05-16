@@ -50,8 +50,9 @@ export class CartarestauranteComponent  implements OnInit {
     }
       this.cartarestauranteService.crearProducto(this.producto).subscribe(data =>{
         console.log(data);
-
+        this.ocultarPrecio();
       })
+
   }
 
   crearProductoFormato(idp:number,idf:number){
