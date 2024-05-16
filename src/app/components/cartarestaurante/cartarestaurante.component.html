@@ -13,7 +13,9 @@
       ACTUALIZA TU CARTA
     </h1>
     <div class="carta">
-      <div class="producto" *ngFor="let p of productos">
+      <h1><I><U>ENTRANTES</U></I></h1>
+      <section *ngFor="let p of productos">
+      <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE'">
         <div><span>{{p.producto.nombre}}</span></div>
         <div class="formatos">
           <div class="formato">
@@ -51,6 +53,421 @@
           </div>
         </div>
       </div>
+      </section>
+      <h1><I><U>CARNES</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CARNE'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>PESCADOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'PESCADO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>GUISOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'GUISO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>REVUELTOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REVUELTO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>FRITOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'FRITO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>OTROS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'OTROS'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>POSTRES</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'POSTRE'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+
+            <div class="formato">
+              <span>Precio</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>VINOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'VINO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'5')"></button>
+              <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>CERVEZAS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CERVEZA'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Vaso</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'7')"></button>
+              <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Pinta</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 8">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'8')"></button>
+              <form id="{{p.producto.id}}8" (ngSubmit)="crearProductoFormato(p.producto.id,8)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Jarra</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 6">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'6')"></button>
+              <form id="{{p.producto.id}}6" (ngSubmit)="crearProductoFormato(p.producto.id,6)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>REFRESCOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REFRESCO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Vaso</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'7')"></button>
+              <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>AGUA</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'AGUA'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'7')"></button>
+              <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>COCTELES</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'COCTEL'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'5')"></button>
+              <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1><I><U>BEBIDAS ALCOHÓLICAS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'BEBIDA_ALCOHOLICA'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Chupito</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 4">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'4')"></button>
+              <form id="{{p.producto.id}}4" (ngSubmit)="crearProductoFormato(p.producto.id,4)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'5')"></button>
+              <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
       <div class="form" id="fporducto"><form (ngSubmit)="crearProducto()">
         <h2>CREAR PRODUCTO</h2>
         <div>
