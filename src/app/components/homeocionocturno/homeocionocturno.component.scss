@@ -5,11 +5,85 @@ height: 100%;
 }
 
 .main-container {
+  display: flex;
+  flex-direction: row;
   overflow-y: auto;
+  justify-content: center;
+  padding: 1rem;
+  align-items: center;
+}
+ion-item{
+  width: 100%;
+}
+
+ion-card{
+  width: 38%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: 400px;
+}
+.calendar-event{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 ion-label{
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.middle-content{
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.tarjeta-evento{
+  width: 50%;
+  max-width: 400px;
+  display: grid;
+
+}
+.tarjeta-evento img {
+  max-height: 30px;
+}
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  letter-spacing: 0.5px;
+  color: #0c0b1f;
+  overflow-y: auto;
+  min-height: 100vh;
+
+}
+.event-charged:hover{
+  transform: scale(1.01);
+  cursor: pointer;
+}
+.event a{
+  text-align: center;
+}
+.detail{
+  margin: 5px;
+  width: 18rem;
+  padding-left: 0 !important;
+  padding-right: 0!important;
+}
+.text{
+  max-width: 245px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card-row{
+  margin-left: 50px;
+  display: flex;
+  justify-content: center;
+}
+.entradas-generales{
+  cursor: pointer !important;
 }

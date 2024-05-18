@@ -1,0 +1,99 @@
+body {
+  font-family: "Noto Sans JP", sans-serif !important;
+  letter-spacing: 0.5px;
+  color: #0c0b1f;
+  overflow-y: auto;
+  min-height: 100vh;
+  font-size: math;
+
+}
+.card-ev{
+  display: flex;
+  flex-direction: row;
+}
+.ev-detail{
+  margin-left: 100px;
+  margin-top: 1rem !important;
+  margin-bottom: 1rem !important;
+}
+.tags{
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+.tags ion-badge{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 28px;
+}
+.detail{
+  margin: 5px;
+  width: 18rem;
+  padding-left: 0 !important;
+  padding-right: 0!important;
+  cursor: pointer;
+}
+ .second{
+  margin-left: 5px;
+   display: flex;
+   align-items: center;
+}
+.mini-detail{
+  display: flex;
+  align-items: center;
+  color: #4d4d4d;
+  text-decoration: none;
+}
+.info-detail{
+  display: flex;
+  flex-direction: row;
+}
+.tarifa{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+.tarifa h5{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+}
+
+.card-style :hover{
+  transition: 0.5s;
+  background: #efefef;
+}
+.select-cantidad{
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between;
+}
+.select-cantidad ion-select{
+  margin-left:15px;
+  display: flex;
+  justify-content: center;
+}
+ion-modal{
+  --width: 60%;
+}
+.form-content{
+  display: flex !important;
+}
+slot{
+  display: flex !important;
+}
+.dispo{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.resumen{
+  display: flex;
+  justify-content: space-between;
+}

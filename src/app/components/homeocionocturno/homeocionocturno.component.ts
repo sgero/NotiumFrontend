@@ -4,10 +4,11 @@ import {HeaderocionocturnoComponent} from "../headerocionocturno/headerocionoctu
 import {EventoService} from "../../services/evento.service";
 import {Evento} from "../../models/Evento";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {IonicModule} from "@ionic/angular";
+import {InfiniteScrollCustomEvent, IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {FormsModule} from "@angular/forms";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-homeocionocturno',
@@ -22,7 +23,8 @@ import {FormsModule} from "@angular/forms";
     FooterComponent,
     NgIf,
     FormsModule,
-    DatePipe
+    DatePipe,
+    RouterLink
   ],
   standalone: true
 })
@@ -33,16 +35,28 @@ export class HomeocionocturnoComponent  implements OnInit {
   esCliente?: boolean;
   fecha: Date = new Date();
   fechaSeleccionada?: Date ;
+  noHayEventos?: boolean;
+  items:Evento[] = [];
+  finalPaginado:boolean = false;
 
   constructor(private ocioService : EventoService) { }
 
   ngOnInit() {
-    this.getEventos();
+    this.getEventos(5,0);
   }
-  getEventos(){
-    this.ocioService.getActivos().subscribe({
+  getEventos(numElem:number, numPag:number){
+    const params = {
+      numElem: numElem,
+      numPag: numPag,
+    };
+    this.ocioService.getActivos(params).subscribe({
       next: value => {
         this.eventosActivos = value.object as Evento[];
+        if (this.eventosActivos.length != 0){
+          this.eventosActivos.forEach(e => this.items.push(e));
+        }else {
+          this.finalPaginado = true;
+        }
       },
       error: e => {
         console.error(e);
@@ -61,6 +75,7 @@ export class HomeocionocturnoComponent  implements OnInit {
     this.ocioService.entreDosFechas(params).subscribe({
       next: value => {
         this.eventosEntreFechas = value.object as Evento[];
+        this.noHayEventos = this.eventosEntreFechas.length == 0;
       },
       error: e => {
         console.error(e);
@@ -91,5 +106,18 @@ export class HomeocionocturnoComponent  implements OnInit {
 
     return fecha;
   }
+  private generateItems() {
+    const count = this.items.length ;
+    this.getEventos(5,  count);
+  }
 
+  onScroll(event:any) {
+    const element = event.target;
+    const atBottom = element.scrollHeight - element.scrollTop <= element.clientHeight + 1;
+
+    if (atBottom) {
+      this.generateItems();
+
+    }
+  }
 }

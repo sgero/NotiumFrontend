@@ -1,7 +1,13 @@
 .footer {
   background: linear-gradient(90deg, #322748 0%, #2a032a 100%);
   color: #fff;
-  padding: 10px 0;
+  clear: both;
+  bottom: 0;
+  width: 100%;
+  max-height: 250px;
+  margin-top: 27vh;
+  display: table;
+  height: 13vh;
 }
 
 .footer-content {
@@ -26,7 +32,6 @@
 }
 
 .footer-section.about p{
-  //color: #68596c;
   color: #a6a6a6;
 }
 
@@ -117,4 +122,8 @@
 }
 
 
-
+@media (max-width: 679px) {
+  footer{
+    margin-top: 180vh;
+  }
+}

@@ -9,6 +9,7 @@ export class Evento {
   tematica?: string;
   fecha?: string;
   aforo?: number;
+  cartel?:string;
   codigoVestimentaOcio?: CodigoVestimentaOcio;
   edadMinimaOcio?: EdadMinimaOcio;
   ocioNocturnoDTO?:OcioNocturno;

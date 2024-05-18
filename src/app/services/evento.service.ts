@@ -17,9 +17,20 @@ export class EventoService {
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/listarTodos`);
   }
 
+  getById(id:number){
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/${id}`);
+  }
 
-  getActivos(){
-    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/activos`);
+  getInfoEntradas(id:number){
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/${id}/entradas`);
+  }
+
+  getActivos(params:any){
+    let httpParams = new HttpParams();
+    Object.keys(params).forEach(key => {
+      httpParams = httpParams.append(key, params[key]);
+    });
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/activos`, {params:httpParams});
   }
 
   entreDosFechas(params:any){

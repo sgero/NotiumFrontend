@@ -1,0 +1,217 @@
+<body>
+<app-headerocionocturno></app-headerocionocturno>
+<div class="middle-content">
+  <div class="container py-5 card-ev">
+      <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="height: 100%">
+          <img src="{{evento?.cartel}}" class="card-img-top" alt="...">
+          <div class="card-body event">
+              <h2 class="card-title"><b>Información</b></h2>
+              <p class=" text">{{evento?.nombre}}</p>
+              <p class=" text">{{evento?.descripcion}}</p>
+              <p class=" text">Temática: {{evento?.tematica}}</p>
+              <h2 class="card-title"><b>Ubicación</b></h2>
+              <p class=" text">{{evento?.ocioNocturnoDTO?.nombre}}</p>
+              <p class=" text">
+                  {{evento?.ocioNocturnoDTO?.direccionDTO?.calle}},
+                  {{evento?.ocioNocturnoDTO?.direccionDTO?.codigoPostal}},
+                  {{evento?.ocioNocturnoDTO?.direccionDTO?.ciudad}},
+                  {{evento?.ocioNocturnoDTO?.direccionDTO?.provincia}},
+                  {{evento?.ocioNocturnoDTO?.direccionDTO?.pais}}
+              </p>
+          </div>
+      </div>
+
+      <div class="ev-detail">
+          <div class="info-detail">
+           <h3> <a style="display: flex;align-items: center !important;"><ion-icon name="calendar"></ion-icon>{{fechaEvento}} /</a>
+              <a class="mini-detail">
+                <ion-icon name="watch"></ion-icon>{{evento?.ocioNocturnoDTO?.horaApertura}}<ion-icon name="arrow-forward"></ion-icon>{{evento?.ocioNocturnoDTO?.horaCierre}}
+              </a></h3>
+          </div>
+          <div>
+              <h1 style="font-size: xx-large">{{evento?.nombre}}</h1>
+          </div>
+          <div class="tags">
+              <ion-badge color="secondary" slot="start">+{{edadMinima}}</ion-badge>
+              <ion-badge color="secondary" slot="start" class="second"><ion-icon name="shirt-outline"></ion-icon>{{codigoVestimenta}}</ion-badge>
+          </div>
+          <div class="entradas-generales">
+            <div class="row card-row card-style">
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;" (click)="setOpenGeneral(true)">
+                <div class="card-body event">
+                  <div class="tarifa">
+                    <h1>GENERAL {{evento?.nombre}}</h1>
+                    <div class="info">
+                      <button class="button is-large is-light" style="padding: .4rem !important;margin-right: .5rem !important;">
+                        {{informacionTiposEntrada?.entradaOcioDTO?.precio}}€
+                      </button>
+                      <button class="button is-large is-link"><ion-icon name="arrow-forward"></ion-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="content">
+                    <p class=" text">{{informacionTiposEntrada?.entradaOcioDTO?.detalleEntrada}}</p>
+                    <p class=" text">Precio: {{informacionTiposEntrada?.entradaOcioDTO?.precio}}€</p>
+                    <p class=" text">Incluye {{informacionTiposEntrada?.entradaOcioDTO?.consumiciones}} consumición/es.</p>
+                    <p class=" text">Incluye acceso al establecimiento.</p>
+                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ion-modal [isOpen]="isModalOpen">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title>GENERAL {{evento?.nombre}}</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="setOpenGeneral(false)" style="padding: 0 !important;"><ion-icon name="close-outline"></ion-icon></ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="form-content ion-padding ">
+                <div class="dispo">
+
+                  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+                    <mat-step [stepControl]="firstFormGroup">
+                      <form [formGroup]="firstFormGroup">
+                        <ng-template matStepLabel style="width: 100%">
+                          <div class="select-cantidad">
+                            <mat-form-field>
+                              <mat-label>Seleccionar cantidad</mat-label>
+                              <mat-select>
+                                @for (d of disponibilidad; track d) {
+                                <mat-option [value]="d" (click)="actualizarCantidadGeneral(d)">{{d}}</mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </ng-template>
+                      </form>
+                    </mat-step>
+                    @if (cantidad != 0 ){
+                      @for (c of datosARellenar; track c; let first = $first){
+                        <mat-step [stepControl]="secondFormGroup">
+                        <form [formGroup]="secondFormGroup">
+
+                            <ng-template matStepLabel>Datos del asistente {{ c + 1 }}</ng-template>
+                            <mat-form-field>
+
+                              <mat-label>Address</mat-label>
+                              <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                                     required>
+
+                          </mat-form-field>
+                          <div>
+                            <button mat-button matStepperPrevious>Back</button>
+                            <button mat-button matStepperNext>Next</button>
+                          </div>
+
+                        </form>
+                      </mat-step>
+                      }
+                      <mat-step>
+                        <ng-template matStepLabel>Finalizar y pagar</ng-template>
+                        <div>
+                          <button mat-button (click)="stepper.reset()">Pagar</button>
+                        </div>
+                      </mat-step>
+                    }
+                  </mat-stepper>
+
+                <div class="card" style="width: 18rem;height: 100%">
+                  <div class="card-body">
+                    <h1 class="card-title">RESUMEN COMPRA</h1>
+                    <h3 class="resumen card-subtitle mb-2 text-body-secondary">
+                      <div>
+                        x{{cantidad}} {{evento?.nombre}}
+                      </div>
+                      <div>
+                        {{informacionTiposEntrada?.entradaOcioDTO?.precio}}€
+                      </div>
+                    </h3>
+                    <h4 class="resumen card-subtitle mb-2 text-body-secondary">
+                      <div>Subtotal</div>
+                      <div>{{subtotal}}€</div>
+                    </h4>
+                    <h4 class="resumen card-subtitle mb-2 text-body-secondary">
+                      <div>Promociones</div>
+                      <div>{{promociones}}€</div>
+                    </h4>
+                    <hr>
+                    <h1 class="resumen card-subtitle mb-2 text-body-secondary">
+                      <div>TOTAL</div>
+                      <div>{{precioFinal}}€</div>
+                    </h1>
+                  </div>
+                </div>
+
+                </div>
+
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+
+          <div class="reservados">
+            <div class="row card-row card-style">
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   style="width: 100%;"
+                   [routerLink]="['/notium/ocionocturno/evento/104/reservado/', informacionTiposEntrada?.reservadoOcioDTO?.id]">
+                <div class="card-body event">
+                  <div class="tarifa">
+                    <h1>RESERVADO {{evento?.nombre}}</h1>
+                    <div class="info">
+                      <button class="button is-large is-light bg-gray-300/30" style="padding: .4rem !important;margin-right: .5rem !important;">
+                        {{informacionTiposEntrada?.reservadoOcioDTO?.precio}}€
+                      </button>
+                      <button class="button is-large is-link"><ion-icon name="arrow-forward"></ion-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="content">
+                    <p class=" text">{{informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado}}</p>
+                    <p class=" text">Precio: {{informacionTiposEntrada?.reservadoOcioDTO?.precio}}€</p>
+                    <p class=" text">Incluye {{informacionTiposEntrada?.reservadoOcioDTO?.botellas}} botella/s.</p>
+                    <p class=" text">Incluye acceso al establecimiento.</p>
+                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="listas">
+            <div class="row card-row card-style">
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;" [routerLink]="['/notium/ocionocturno/evento/104/lista/', informacionTiposEntrada?.listaOcioDTO?.id]">
+                <div class="card-body event">
+                  <div class="tarifa">
+                    <h1>LISTA {{evento?.nombre}}</h1>
+                    <div class="info">
+                      <button class="button is-large is-light bg-gray-300/30" style="padding: .4rem !important;margin-right: .5rem !important;">
+                        {{informacionTiposEntrada?.listaOcioDTO?.precio}}€
+                      </button>
+                      <button class="button is-large is-link"><ion-icon name="arrow-forward"></ion-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="content">
+                    <p class=" text">LISTA DE {{informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre}} {{informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos}}</p>
+                    <p class=" text">{{informacionTiposEntrada?.listaOcioDTO?.detalleLista}}</p>
+                    <p class=" text">Precio: {{informacionTiposEntrada?.listaOcioDTO?.precio}}€</p>
+                    <p class=" text">Incluye {{informacionTiposEntrada?.listaOcioDTO?.consumiciones}} consumición/es.</p>
+                    <p class=" text">Incluye acceso al establecimiento.</p>
+                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+</div>
+<app-footerocionocturno></app-footerocionocturno>
+</body>
