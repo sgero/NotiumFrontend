@@ -38,6 +38,7 @@ export class HomeocionocturnoComponent  implements OnInit {
   noHayEventos?: boolean;
   items:Evento[] = [];
   finalPaginado:boolean = false;
+  fechaActual : string = new Date().toString();
 
   constructor(private ocioService : EventoService) { }
 

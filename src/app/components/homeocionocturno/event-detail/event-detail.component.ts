@@ -4,22 +4,27 @@ import {EventoService} from "../../../services/evento.service";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FooterocionocturnoComponent} from "../../footerocionocturno/footerocionocturno.component";
 import {HeaderocionocturnoComponent} from "../../headerocionocturno/headerocionocturno.component";
-import {IonicModule} from "@ionic/angular";
+import {IonicModule, LoadingController, ToastController} from "@ionic/angular";
 import {NgForOf, NgIf} from "@angular/common";
 import {EdadMinimaOcio} from "../../../models/EdadMinimaOcio";
 import {arrowForward, calendar, closeOutline, pricetags, shirtOutline, watch} from "ionicons/icons";
 import {addIcons} from "ionicons";
 import {InformacionTiposEntradasEvento} from "../../../models/InformacionTiposEntradasEvento";
-import {DetalleCompraComponent} from "./detalle-compra/detalle-compra.component";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatError, MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {PromocionService} from "../../../services/promocion.service";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {Promocion} from "../../../models/Promocion";
+import {DatosComprador} from "../../../models/DatosComprador";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatIcon} from "@angular/material/icon";
+import {Cliente} from 'src/app/models/Cliente';
+import {Genero} from "../../../models/Genero";
+import {EntradaOcioCliente} from "../../../models/EntradaOcioCliente";
 
 const IonIcons = {
   shirtOutline,
@@ -39,7 +44,6 @@ const IonIcons = {
     IonicModule,
     NgForOf,
     RouterLink,
-    DetalleCompraComponent,
     NgIf,
     MatFormField,
     MatSelect,
@@ -53,7 +57,14 @@ const IonIcons = {
     MatButton,
     MatStepperNext,
     MatStepperPrevious,
-    FormsModule
+    FormsModule,
+    MatDatepickerInput,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatNativeDateModule,
+    MatIcon,
+    MatHint,
+    MatError
   ],
   standalone: true
 })
@@ -74,16 +85,31 @@ export class EventDetailComponent  implements OnInit {
   disponibilidad:number[] = [1,2,3,4,5];
   datosARellenar:number[] = [];
   promocionesActivas: Promocion[] = [];
+  codigoPromocion!:string;
+  idPromocionElegida!:number;
+  datosAsistentes:EntradaOcioCliente[] = [];
+  cliente?:Cliente;
+  generos: string[] = Object.keys(Genero).filter(key => isNaN(Number(key))) as string[];
+  fechaActual: string = new Date().toString();
+  pagar = false;
 
   firstFormGroup = this.formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
-  secondFormGroup = this.formBuilder.group({
-    secondCtrl: ['', Validators.required],
+  datosCompradores = this.formBuilder.group({
+    nombre: ['', Validators.required],
+    apellidos: ['', Validators.required],
+    email: ['', Validators.required, Validators.email],
+    fecha: ['', Validators.required],
+    genero: ['', Validators.required],
+    telefono: ['', Validators.required],
   });
   isLinear = false;
   promociones: number = 0;
-  constructor(private eventoService : EventoService, private route:ActivatedRoute, private formBuilder : FormBuilder, private promocionService:PromocionService) {
+  cantidadADescontar: number = 0;
+  promocionElegida!: Promocion;
+  verPromocion = false;
+  constructor(private toastController: ToastController,private loadingCtrl: LoadingController,private eventoService : EventoService, private route:ActivatedRoute, private formBuilder : FormBuilder, private promocionService:PromocionService) {
     addIcons(IonIcons);
   }
 
@@ -154,15 +180,18 @@ export class EventDetailComponent  implements OnInit {
       this.subtotal = 0;
       this.promociones = 0;
       this.precioFinal = 0;
+      this.codigoPromocion = '';
+      this.datosARellenar = [0];
     }
   }
 
   actualizarCantidadGeneral(cantidad:number){
     const precio = this.informacionTiposEntrada?.entradaOcioDTO?.precio;
     this.subtotal = precio! * cantidad;
+    this.datosARellenar = [0];
     this.cantidad = cantidad;
     this.precioFinal = this.subtotal - this.promociones;
-    for (let x = 0 ; x! < cantidad; x!++){
+    for (let x = 1 ; x! < cantidad; x!++){
       this.datosARellenar.push(x!);
     }
   }
@@ -179,5 +208,84 @@ export class EventDetailComponent  implements OnInit {
   }
 
 
+  async validarPromocion() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Validando Código...',
+      duration: 500,
+    });
+    const toast = await this.toastController.create({
+      message: 'El código promocional introducido no es correcto.',
+      duration: 1500,
+      position: "top"
+    });
+    const params = {
+      codigo: this.codigoPromocion
+    };
+    if (this.codigoPromocion) {
+      this.promocionService.verificarCodigo(this.idPromocionElegida, params).subscribe({
+        next: async value => {
+          this.cantidadADescontar = value.object as number;
+          if (this.cantidadADescontar != 0) {
+            await loading.present();
+            this.actualizarTotal();
+            this.datosAsistentes.push(this.promocionElegida);
+          } else {
+            this.promociones = 0;
+            this.precioFinal = this.subtotal;
+            await toast.present();
+          }
+        },
+        error: async error => {
+          await toast.present();
+          console.error(error);
+        }
+      })
+    }else {
+      await toast.present();
+    }
+  }
 
+  promocion(promocion: Promocion) {
+    this.idPromocionElegida = promocion.id!;
+    this.promocionElegida = promocion!;
+  }
+
+  actualizarTotal() {
+    if (this.cantidadADescontar > 0 && this.cantidadADescontar < 100){
+      this.promociones = Math.round( (this.subtotal * this.cantidadADescontar) / 100);
+      this.precioFinal = Math.round( this.subtotal - this.promociones );
+    }else if (this.cantidadADescontar == 100){
+      this.promociones = this.subtotal;
+      this.precioFinal = 0;
+    }
+  }
+
+  addForm() {
+    const formValues = this.datosCompradores.value;
+
+    const nuevoComprador: DatosComprador = {
+      nombre: formValues.nombre || '',
+      apellidos: formValues.apellidos || '',
+      email: formValues.email || '',
+      fecha: formValues.fecha || '',
+      genero: formValues.genero || '',
+      telefono: formValues.telefono || ''
+    };
+
+    this.datosAsistentes.push(nuevoComprador);
+
+    if (this.cantidad == this.datosAsistentes.length){
+      this.verPromocion = true;
+    }
+  }
+
+
+  addGeneroToForm(g: string) {
+    this.datosCompradores.value.genero = g;
+  }
+
+
+  pagarOpen() {
+    this.pagar = true;
+  }
 }

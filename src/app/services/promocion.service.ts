@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Promocion} from "../models/Promocion";
+import {RespuestaDTO} from "../models/RespuestaDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -14,4 +15,14 @@ export class PromocionService{
   getActivas(){
     return this.http.get<Promocion[]>(`${this.apiUrl}/promocion`);
   }
+
+  verificarCodigo(idPromocion:number, params:any){
+    let httpParams = new HttpParams();
+    Object.keys(params).forEach(key => {
+      httpParams = httpParams.append(key, params[key]);
+    });
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/promocion/${idPromocion}/verificarCodigo`, {params:httpParams});
+  }
+
+
 }
