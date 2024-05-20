@@ -17,6 +17,10 @@ export class EventoService {
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/listarTodos`);
   }
 
+  getAllByOcio(id:number){
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/listarByOcio/${id}`);
+  }
+
 
   getActivos(){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/activos`);

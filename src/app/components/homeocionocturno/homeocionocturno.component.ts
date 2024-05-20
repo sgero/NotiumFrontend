@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FooterocionocturnoComponent} from "../footerocionocturno/footerocionocturno.component";
 import {HeaderocionocturnoComponent} from "../headerocionocturno/headerocionocturno.component";
 import {EventoService} from "../../services/evento.service";
@@ -8,6 +8,8 @@ import {IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {FormsModule} from "@angular/forms";
+import {OcionocturnoService} from "../../services/ocionocturno.service";
+import {OcioNocturno} from "../../models/OcioNocturno";
 
 @Component({
   selector: 'app-homeocionocturno',
@@ -22,7 +24,7 @@ import {FormsModule} from "@angular/forms";
     FooterComponent,
     NgIf,
     FormsModule,
-    DatePipe
+    DatePipe,
   ],
   standalone: true
 })
@@ -30,19 +32,35 @@ export class HomeocionocturnoComponent  implements OnInit {
 
   eventosActivos: Evento[] = [];
   eventosEntreFechas: Evento[] = [];
+  ocios: OcioNocturno[] = [];
   esCliente?: boolean;
   fecha: Date = new Date();
   fechaSeleccionada?: Date ;
 
-  constructor(private ocioService : EventoService) { }
+
+  constructor(private ocioService : EventoService,
+              private ocioNocturnoService : OcionocturnoService) { }
 
   ngOnInit() {
     this.getEventos();
+    this.getOcios();
   }
+
   getEventos(){
     this.ocioService.getActivos().subscribe({
       next: value => {
         this.eventosActivos = value.object as Evento[];
+      },
+      error: e => {
+        console.error(e);
+      }
+    })
+  }
+
+  getOcios(){
+    this.ocioNocturnoService.listarOcioNocturno().subscribe({
+      next: value => {
+        this.ocios = value as OcioNocturno[] ;
       },
       error: e => {
         console.error(e);
@@ -91,5 +109,7 @@ export class HomeocionocturnoComponent  implements OnInit {
 
     return fecha;
   }
+
+  get
 
 }

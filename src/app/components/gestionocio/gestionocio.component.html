@@ -1,0 +1,155 @@
+<app-headerocionocturno></app-headerocionocturno>
+
+<ion-content>
+  <div class="banner-container">
+  <!-- Banner de fondo con la imagen de la marca de la discoteca -->
+    <div class="banner" [style.background-image]="'url('+ ocio.imagenMarca +')'">
+      <!-- Contenido opcional dentro del banner -->
+<!--      <h1> {{ocio.nombre}} </h1>-->
+<!--      <p>{{ocio.direccionDTO.ciudad}}</p>-->
+    </div>
+  </div>
+  <div class="buttons">
+    <ion-button shape="round" (click)="Eventos()">Eventos</ion-button>
+    <ion-button shape="round" (click)="Staff()">Staff</ion-button>
+    <ion-button shape="round" (click)="Galeria()">Galería</ion-button>
+  </div>
+  <div *ngIf="eventosInfo == 'eventosInfo'">
+    <div class="eventos">
+      <ion-card>
+<!--        <ion-card-header>-->
+<!--          <ion-card-title>Eventos</ion-card-title>-->
+<!--        </ion-card-header>-->
+        <ion-card-content >
+          <ion-list  *ngFor="let e of eventos">
+            <ion-item>
+              <ion-thumbnail slot="start">
+                <img alt="Silhouette of mountains" src="{{e.cartel}}" />
+              </ion-thumbnail>
+              <ion-label>{{e.nombre}}</ion-label>
+              <ion-label style="margin-right: 60px !important;">{{e.descripcion}}</ion-label>
+              <ion-label>{{e.fecha | date: 'yyyy-MM-dd'}}</ion-label>
+              <ion-label>Aforo: {{e.aforo}}</ion-label>
+              <ion-label>Edad Mínima: {{e.edadMinimaOcio}}</ion-label>
+              <ion-label>Código: {{e.codigoVestimentaOcio}}</ion-label>
+              <ion-label>Temática: {{e.tematica}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <div *ngIf="eventosInfo == 'staff'">
+    <div class="staff">
+      <ion-card>
+<!--        <ion-card-header>-->
+<!--          <ion-card-title>Staff</ion-card-title>-->
+<!--        </ion-card-header>-->
+        <ion-card-content >
+          <ion-list  *ngFor="let r of rpps" >
+            <ion-item>
+              <ion-thumbnail slot="start">
+                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+              </ion-thumbnail>
+              <ion-label>{{r.nombre}}</ion-label>
+              <ion-button class="icon" shape="round" (click)="deleteRpp()">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+              <ion-button class="icon" shape="round" (click)="getListas()">
+                <ion-icon name="clipboard"></ion-icon>
+              </ion-button>
+                <div class="listas">
+                  <ion-card>
+                    <!--        <ion-card-header>-->
+                    <!--          <ion-card-title>Eventos</ion-card-title>-->
+                    <!--        </ion-card-header>-->
+                    <ion-card-content >
+                      <ion-list  *ngFor="let l of listas">
+                        <ion-item>
+                          <ion-thumbnail slot="start">
+                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                          </ion-thumbnail>
+                          <ion-label>{{l.total_invitaciones}}</ion-label>
+                          <ion-label>{{l.precio}}</ion-label>
+                        </ion-item>
+                      </ion-list>
+                    </ion-card-content>
+                  </ion-card>
+                </div>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+    <ion-content class="ion-padding">
+      <ion-button id="open-modal" expand="block">Añadir Rpp</ion-button>
+      <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="start">
+                <ion-button (click)="cancelar()">Cancelar</ion-button>
+              </ion-buttons>
+              <ion-title>Registra tu Rpp</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="confirmar()" [strong]="true">Confirmar</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-item>
+              <ion-input
+                label="Nombre"
+                labelPlacement="stacked"
+                type="text"
+                [(ngModel)]="newRpp.nombre"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                label="Apellidos"
+                labelPlacement="stacked"
+                type="text"
+                [(ngModel)]="newRpp.apellidos"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                label="DNI"
+                labelPlacement="stacked"
+                type="email"
+                [(ngModel)]="newRpp.dni"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                label="Teléfono"
+                labelPlacement="stacked"
+                type="text"
+                [(ngModel)]="newRpp.telefono"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                label="Fecha de nacimiento"
+                labelPlacement="stacked"
+                type=date
+                [(ngModel)]="newRpp.fecha_nacimiento"
+              ></ion-input>
+            </ion-item>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-content>
+  </div>
+
+  <div *ngIf="eventosInfo == 'galeria'">
+    <div class="galeria">
+      <p>Aqui saldrian las fotos</p>
+    </div>
+  </div>
+</ion-content>
+
+
+<app-footerocionocturno></app-footerocionocturno>
+
