@@ -48,7 +48,7 @@
         <div class="entradas-generales">
           <div class="row card-row card-style">
             <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
-                 (click)="setOpenGeneral(true)">
+                 (click)="setOpenGeneral(true, true, false, false)">
               <div class="card-body event">
                 <div class="tarifa">
                   <h1>GENERAL {{ evento?.nombre }}</h1>
@@ -76,13 +76,87 @@
           </div>
         </div>
 
+        <div class="reservados">
+          <div class="row card-row card-style">
+            <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                 style="width: 100%;"
+                 (click)="setOpenGeneral(true, false, true, false)">
+              <div class="card-body event">
+                <div class="tarifa">
+                  <h1>RESERVADO {{ evento?.nombre }}</h1>
+                  <div class="info">
+                    <button class="button is-large is-light bg-gray-300/30"
+                            style="padding: .4rem !important;margin-right: .5rem !important;">
+                      {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
+                    </button>
+                    <button class="button is-large is-link">
+                      <ion-icon name="arrow-forward"></ion-icon>
+                    </button>
+                  </div>
+                </div>
+                <hr>
+                <div class="content">
+                  <p class=" text">{{ informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado }}</p>
+                  <p class=" text">Precio: {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€</p>
+                  <p class=" text">Incluye {{ informacionTiposEntrada?.reservadoOcioDTO?.botellas }} botella/s.</p>
+                  <p class=" text">Incluye acceso al establecimiento.</p>
+                  <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="listas">
+          <div class="row card-row card-style">
+            <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
+                 (click)="setOpenGeneral(true, false, false, true)">
+              <div class="card-body event">
+                <div class="tarifa">
+                  <h1>LISTA {{ evento?.nombre }}</h1>
+                  <div class="info">
+                    <button class="button is-large is-light bg-gray-300/30"
+                            style="padding: .4rem !important;margin-right: .5rem !important;">
+                      {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
+                    </button>
+                    <button class="button is-large is-link">
+                      <ion-icon name="arrow-forward"></ion-icon>
+                    </button>
+                  </div>
+                </div>
+                <hr>
+                <div class="content">
+                  <p class=" text">LISTA
+                    DE {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}</p>
+                  <p class=" text">{{ informacionTiposEntrada?.listaOcioDTO?.detalleLista }}</p>
+                  <p class=" text">Precio: {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€</p>
+                  <p class=" text">Incluye {{ informacionTiposEntrada?.listaOcioDTO?.consumiciones }}
+                    consumición/es.</p>
+                  <p class=" text">Incluye acceso al establecimiento.</p>
+                  <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <ion-modal [isOpen]="isModalOpen">
           <ng-template>
             <ion-header>
               <ion-toolbar>
-                <ion-title>GENERAL {{ evento?.nombre }}</ion-title>
+                @if (isGeneral) {
+                  <ion-title>GENERAL {{ evento?.nombre }}</ion-title>
+                } @else if (isReservado) {
+                  <ion-title>RESERVADO {{ evento?.nombre }}</ion-title>
+                } @else if (isLista) {
+                  <ion-title>
+                    LISTA {{ evento?.nombre }},
+                    CREADA
+                    POR: {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}
+                  </ion-title>
+                }
                 <ion-buttons slot="end">
-                  <ion-button (click)="setOpenGeneral(false)" style="padding: 0 !important;">
+                  <ion-button (click)="setOpenGeneral(false, false, false, false)" style="padding: 0 !important;">
                     <ion-icon name="close-outline"></ion-icon>
                   </ion-button>
                 </ion-buttons>
@@ -92,22 +166,41 @@
               <div class="dispo">
 
                 <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-                  <mat-step [stepControl]="firstFormGroup">
-                    <form [formGroup]="firstFormGroup">
-                      <ng-template matStepLabel style="width: 100%">
-                        <div class="select-cantidad">
-                          <mat-form-field>
-                            <mat-label>Seleccionar cantidad</mat-label>
-                            <mat-select>
-                              @for (d of disponibilidad; track d) {
-                                <mat-option [value]="d" (click)="actualizarCantidadGeneral(d)">{{ d }}</mat-option>
-                              }
-                            </mat-select>
-                          </mat-form-field>
-                        </div>
-                      </ng-template>
-                    </form>
-                  </mat-step>
+                  @if (isGeneral || isLista) {
+                    <mat-step [stepControl]="firstFormGroup">
+                      <form [formGroup]="firstFormGroup">
+                        <ng-template matStepLabel style="width: 100%">
+                          <div class="select-cantidad">
+                            <mat-form-field>
+                              <mat-label>Seleccionar cantidad</mat-label>
+                              <mat-select>
+                                @for (d of disponibilidad; track d) {
+                                  <mat-option [value]="d" (click)="actualizarCantidadGeneral(d)">{{ d }}</mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </ng-template>
+                      </form>
+                    </mat-step>
+                  } @else if (isReservado) {
+                    <mat-step [stepControl]="firstFormGroup">
+                      <form [formGroup]="firstFormGroup">
+                        <ng-template matStepLabel style="width: 100%">
+                          <div class="select-cantidad">
+                            <mat-form-field>
+                              <mat-label>Seleccionar cantidad</mat-label>
+                              <mat-select>
+                                @for (d of disponibilidadReservado; track d) {
+                                  <mat-option [value]="d" (click)="actualizarPersonasReservado(d)">{{ d }}</mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </ng-template>
+                      </form>
+                    </mat-step>
+                  }
                   @if (cantidad != 0) {
                     @for (c of datosARellenar; track c; let first = $first) {
                       <mat-step [stepControl]="datosCompradores">
@@ -155,15 +248,12 @@
                               <input matInput formControlName="telefono" value="{{cliente?.telefono}}">
                             </mat-form-field>
 
-                            <!--                              @if (datosCompradores.valid) {-->
                             <div>
-                              <button mat-button matStepperNext (click)="addForm()">Next</button>
+                              <button mat-button matStepperNext (click)="addForm(c)">Añadir</button>
+                              <button mat-button matStepperNext>Next</button>
                             </div>
-                            <!--                              }-->
-
 
                           } @else {
-
 
                             <mat-form-field>
                               <mat-label>Nombre</mat-label>
@@ -206,7 +296,8 @@
                             </mat-form-field>
 
                             <div>
-                              <button mat-button matStepperNext (click)="addForm()">Next</button>
+                              <button mat-button matStepperNext (click)="addForm(c)">Añadir</button>
+                              <button mat-button matStepperNext>Next</button>
                             </div>
                           }
 
@@ -255,9 +346,19 @@
                       <div>
                         x{{ cantidad }} {{ evento?.nombre }}
                       </div>
-                      <div>
-                        {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
-                      </div>
+                      @if (isGeneral) {
+                        <div>
+                          {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
+                        </div>
+                      } @else if (isReservado){
+                        <div>
+                          {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
+                        </div>
+                      } @else if (isLista){
+                        <div>
+                          {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
+                        </div>
+                      }
                     </h3>
                     <h4 class="resumen card-subtitle mb-2 text-body-secondary">
                       <div>Subtotal</div>
@@ -281,68 +382,7 @@
           </ng-template>
         </ion-modal>
 
-        <div class="reservados">
-          <div class="row card-row card-style">
-            <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
-                 style="width: 100%;"
-                 [routerLink]="['/notium/ocionocturno/evento/104/reservado/', informacionTiposEntrada?.reservadoOcioDTO?.id]">
-              <div class="card-body event">
-                <div class="tarifa">
-                  <h1>RESERVADO {{ evento?.nombre }}</h1>
-                  <div class="info">
-                    <button class="button is-large is-light bg-gray-300/30"
-                            style="padding: .4rem !important;margin-right: .5rem !important;">
-                      {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
-                    </button>
-                    <button class="button is-large is-link">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-                <hr>
-                <div class="content">
-                  <p class=" text">{{ informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado }}</p>
-                  <p class=" text">Precio: {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€</p>
-                  <p class=" text">Incluye {{ informacionTiposEntrada?.reservadoOcioDTO?.botellas }} botella/s.</p>
-                  <p class=" text">Incluye acceso al establecimiento.</p>
-                  <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="listas">
-          <div class="row card-row card-style">
-            <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
-                 [routerLink]="['/notium/ocionocturno/evento/104/lista/', informacionTiposEntrada?.listaOcioDTO?.id]">
-              <div class="card-body event">
-                <div class="tarifa">
-                  <h1>LISTA {{ evento?.nombre }}</h1>
-                  <div class="info">
-                    <button class="button is-large is-light bg-gray-300/30"
-                            style="padding: .4rem !important;margin-right: .5rem !important;">
-                      {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
-                    </button>
-                    <button class="button is-large is-link">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-                <hr>
-                <div class="content">
-                  <p class=" text">LISTA
-                    DE {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}</p>
-                  <p class=" text">{{ informacionTiposEntrada?.listaOcioDTO?.detalleLista }}</p>
-                  <p class=" text">Precio: {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€</p>
-                  <p class=" text">Incluye {{ informacionTiposEntrada?.listaOcioDTO?.consumiciones }}
-                    consumición/es.</p>
-                  <p class=" text">Incluye acceso al establecimiento.</p>
-                  <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
       } @else {
         <p class=" text">Este evento ya ha ocurrido.</p>
       }
