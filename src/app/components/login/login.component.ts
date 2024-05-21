@@ -3,6 +3,7 @@ import {Usuario} from "../../models/Usuario";
 import {UsuarioService} from "../../services/usuario.service";
 import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -29,5 +30,19 @@ export class LoginComponent {
     })
 
   }
+
+  // username: string | undefined;
+  // password: string | undefined;
+  //
+  // constructor(private authService: AuthService) { }
+  //
+  // login() {
+  //   this.authService.login(this.username, this.password).subscribe(response => {
+  //     console.log('Logged in with role:', response.role);
+  //     // Aquí puedes redirigir al usuario a la página correspondiente según su rol, si es necesario
+  //   }, error => {
+  //     console.error('Login failed', error);
+  //   });
+  // }
 
 }

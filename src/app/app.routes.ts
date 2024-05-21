@@ -1,8 +1,8 @@
 import {Routes} from '@angular/router';
 import {HomeComponent} from "./components/home/home.component";
 import {ErrorComponent} from "./components/error/error.component";
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import {HeaderComponent} from './components/header/header.component';
+import {FooterComponent} from './components/footer/footer.component';
 import {HomerestauranteComponent} from "./components/homerestaurante/homerestaurante.component";
 import {HomeocionocturnoComponent} from "./components/homeocionocturno/homeocionocturno.component";
 import {RegistroComponent} from "./components/registro/registro.component";
@@ -13,9 +13,7 @@ import {CartarestauranteComponent} from "./components/cartarestaurante/cartarest
 import {BuyTicketComponent} from "./components/homeocionocturno/buy-ticket/buy-ticket.component";
 import {OcioDetailComponent} from "./components/homeocionocturno/ocio-detail/ocio-detail.component";
 import {EventDetailComponent} from "./components/homeocionocturno/event-detail/event-detail.component";
-import {
-  DetalleCompraComponent
-} from "./components/homeocionocturno/event-detail/detalle-compra/detalle-compra.component";
+import {DetalleCompraComponent} from "./components/homeocionocturno/event-detail/detalle-compra/detalle-compra.component";
 
 export const routes: Routes = [
   // {
@@ -45,9 +43,8 @@ export const routes: Routes = [
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
   {
     path: 'prueba',
-    loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
+    loadComponent: () => import('./components/restaurante/prueba/prueba.page').then(m => m.PruebaPage)
   }
-
 
 
 ];
