@@ -10,7 +10,7 @@ import {EdadMinimaOcio} from "../../../models/EdadMinimaOcio";
 import {arrowForward, calendar, closeOutline, pricetags, shirtOutline, watch} from "ionicons/icons";
 import {addIcons} from "ionicons";
 import {InformacionTiposEntradasEvento} from "../../../models/InformacionTiposEntradasEvento";
-import {DetalleCompraComponent} from "./detalle-compra/detalle-compra.component";
+// import {DetalleCompraComponent} from "./detalle-compra/detalle-compra.component";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
@@ -39,7 +39,7 @@ const IonIcons = {
     IonicModule,
     NgForOf,
     RouterLink,
-    DetalleCompraComponent,
+    // DetalleCompraComponent,
     NgIf,
     MatFormField,
     MatSelect,
