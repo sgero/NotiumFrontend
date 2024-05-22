@@ -5,6 +5,7 @@ import {IonicModule, ModalController} from "@ionic/angular";
 import { MatDialog, MAT_DIALOG_DATA,
         MatDialogModule} from "@angular/material/dialog";
 
+import {  } from "@angular/material/dialog";
 
 //Imports de componentes
 import {PruebaPage} from "../prueba/prueba.page";
@@ -45,6 +46,7 @@ export class RestauranteUserComponent  implements OnInit {
   restaurante = new Restaurante();
   id_restaurante: any;
   inicio: boolean = false;
+  valoracion_restaurante: number = 0.0;
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,
@@ -54,9 +56,7 @@ export class RestauranteUserComponent  implements OnInit {
     this.id_restaurante = this._route.snapshot.paramMap.get('id');
   }
 
-
   //Funciones modales
-
   abrirModalValoraciones(){
      const dialogRef = this.dialogRef.open(HacerValoracionComponent);
 
@@ -65,12 +65,9 @@ export class RestauranteUserComponent  implements OnInit {
     });
   }
 
+  abrirModalReserva(){ this.dialogRef.open(HacerReservaComponent); }
 
-  abrirModalReserva(){
-    this.dialogRef.open(HacerReservaComponent);
-  }
-
-
+  setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 
   captarRestaurantePorId(){
     this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
@@ -78,12 +75,16 @@ export class RestauranteUserComponent  implements OnInit {
         this.restaurante = responseData;
         this.sharedService.setRestaurante(this.restaurante)
       },
-      error: (error) => {
-        console.error('Error al obtener el restaurante por ID:', error);
-      },
-      complete: () => {
-        console.log('Restaurante captado por id', this.restaurante);
-      }
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
+    });
+  }
+
+  valoracionRestaurante(){
+    this.restauranteService.getValoracionRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (valoracion_capada) => { this.valoracion_restaurante = valoracion_capada; },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Valoración del restaurante', this.valoracion_restaurante); }
     });
   }
 
@@ -91,15 +92,15 @@ export class RestauranteUserComponent  implements OnInit {
 
     //Funciones externas
     this.captarRestaurantePorId();
+    this.valoracionRestaurante();
+    this.setearIDParams();
     this.inicio = true;
-
   }
 
   Info(){
     this.estilo2_info = true;
     this.estilo2_carta = false;
     this.info = 'info';
-
   }
 
   Carta(){
@@ -109,7 +110,7 @@ export class RestauranteUserComponent  implements OnInit {
     this.estilo1_carta = false;
     this.estilo2_carta = true
     this.info = 'Carta';
-
   }
-
 }
+
+

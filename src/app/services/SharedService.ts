@@ -8,6 +8,7 @@ import {Restaurante} from "../models/Restaurante";
 export class SharedService {
 
   restaurante = new Restaurante();
+  id_restaurante: number | undefined;
 
   constructor() {}
 
@@ -18,6 +19,15 @@ export class SharedService {
 
   getRestaurante(){
     return this.restaurante;
+  }
+
+  /*Obtener ID de parametro Restaurante*/
+  setIdParamsRestaurante(data: number){
+    this.id_restaurante=data;
+  }
+
+  getIdParamsRestaurante(){
+    return this.id_restaurante;
   }
 
 
