@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import {IonicModule} from "@ionic/angular";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.scss'],
   imports: [
-    IonicModule
+    IonicModule,
+    CommonModule
   ],
   standalone: true
 })

@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {AdminPanelComponent} from "../admin-panel/admin-panel.component";
 import {IonicModule} from "@ionic/angular";
+import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,8 @@ import {IonicModule} from "@ionic/angular";
   styleUrls: ['./header.component.scss'],
   imports: [
     AdminPanelComponent,
-    IonicModule
+    IonicModule,
+    CommonModule
   ],
   standalone: true
 })
