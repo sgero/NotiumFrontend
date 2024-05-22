@@ -32,7 +32,9 @@
         <div class="card-body event">
           <h5 class="card-title">{{x.ocioNocturnoDTO?.nombre}}</h5>
           <p class=" text">{{x.nombre}}</p>
-          <a href="#" class="btn btn-primary" [routerLink]="['/notium/ocionocturno/evento/', x.id]">Más información</a>
+          @if (x.fecha! > fechaActual){
+            <a href="#" class="btn btn-primary" [routerLink]="['/notium/ocionocturno/evento/', x.id]">Más información</a>
+          }
         </div>
       </div>
     </div>
