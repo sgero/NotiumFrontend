@@ -9,6 +9,12 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private isLoggedIn = false;
   private userRole: string | null = null;
+  isAdmin = false;
+  isClient = false;
+  isRestaurant = false;
+  isOcioNocturno = false;
+  isRpp = false;
+
 
   constructor(private http: HttpClient) { }
 

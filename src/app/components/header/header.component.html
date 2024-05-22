@@ -30,19 +30,19 @@
   <ng-container *ngIf="authService.isUserLoggedIn()">
     <ion-buttons slot="end">
       <ng-container *ngIf="isAdmin">
-        <ion-button (click)="openAdminPanel()">Admin Panel</ion-button>
+        <ion-button (click)="openAdminPanel()">Panel de Admin</ion-button>
       </ng-container>
       <ng-container *ngIf="isClient">
-        <ion-button (click)="openClientPanel()">Client Panel</ion-button>
+        <ion-button (click)="openClientPanel()">Panel de Cliente</ion-button>
       </ng-container>
       <ng-container *ngIf="isRestaurant">
-        <ion-button (click)="openRestaurantPanel()">Client Panel</ion-button>
+        <ion-button (click)="openRestaurantPanel()">Panel de Restaurante</ion-button>
       </ng-container>
       <ng-container *ngIf="isOcioNocturno">
-        <ion-button (click)="openOcioNocturnoPanel()">Client Panel</ion-button>
+        <ion-button (click)="openOcioNocturnoPanel()">Panel de Ocio Nocturno</ion-button>
       </ng-container>
       <ng-container *ngIf="isRpp">
-        <ion-button (click)="openRppPanel()">Client Panel</ion-button>
+        <ion-button (click)="openRppPanel()">Panel de RPP</ion-button>
       </ng-container>
       <!-- Agrega más botones para otros roles si es necesario -->
       <ion-button (click)="logout()">Logout</ion-button> <!-- Botón de Logout -->
