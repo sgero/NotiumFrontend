@@ -1,22 +1,24 @@
 
-<div class="info-rest-user">
+<div class="info-rest-user" *ngIf="inicio">
     <div class="btnes_restaurantes">
         <a class="btn_rest" [ngClass]="{'estilo1_info': estilo2_info}" (click)="Info()"><h1>Información general</h1></a>
         <a class="btn_rest" [ngClass]="{'estilo1_carta': estilo2_carta}"(click)="Carta()"><h1>Carta</h1></a>
     </div>
 
-    <div *ngIf="info == 'info'; else visCarta">
-      <div class="restaurante_user">
-        <div class="posicion_btn"><a class="valoraciones btn_info"><!--(click)="modalValoracion()"--><h2>Nº de valoraciones</h2></a></div>
-        <div class="posicion_btn"><a class="reservas btn_info"><!--(click)="modalReserva()"--><h2>¡Reserva ya!</h2></a></div>
+    <div *ngIf="info == 'info'; else visCarta" class="restaurante_user">
+
+        <div class="posicion_btn"><a class="valoraciones btn_info" (click)="abrirModalValoraciones()"><h2>Nº de valoraciones</h2></a></div>
+        <div class="posicion_btn"><a class="reservas btn_info" (click)="abrirModalReserva()"><h2>¡Reserva ya!</h2></a></div>
         <div class="info-direccion">
-          <div class="dispo_info">
-            <h2>Calle Su Pae</h2>
-            <h2>Marchena(Sevilla)</h2>
-            <h2>999 999 999</h2>
+          <div class="dispo_info" *ngIf="restaurante && restaurante.direccion && restaurante.direccion.ciudad &&
+          restaurante.direccion.provincia && restaurante.telefono && restaurante.hora_apertura && restaurante.hora_cierre">
+            <h3>Calle {{restaurante.direccion.calle}}</h3>
+            <h3>{{restaurante.direccion.ciudad}}({{restaurante.direccion.provincia}})</h3>
+            <h3>{{restaurante.telefono}}</h3>
+            <h3>{{restaurante.hora_apertura}} - {{restaurante.hora_cierre}}</h3>
+            <h3>La valoración media de este restaurante: {{valoracion_restaurante}}/5</h3>
           </div>
       </div>
-    </div>
     </div>
 
     <ng-template #visCarta>

@@ -2,10 +2,23 @@ import {Component, Input, NgModule, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {IonicModule, ModalController} from "@ionic/angular";
+import { MatDialog, MAT_DIALOG_DATA,
+        MatDialogModule} from "@angular/material/dialog";
+
+import {  } from "@angular/material/dialog";
+
+//Imports de componentes
 import {PruebaPage} from "../prueba/prueba.page";
 import {restaurant} from "ionicons/icons";
 import {HacerValoracionComponent} from "../hacer-valoracion/hacer-valoracion.component";
 import {HacerReservaComponent} from "../hacer-reserva/hacer-reserva.component";
+import {SharedService} from "../../../services/SharedService";
+import {Restaurante} from "../../../models/Restaurante";
+import {ActivatedRoute} from "@angular/router";
+import {RestauranteService} from "../../../services/restaurante.service";
+import {MatFormField} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'app-restaurante-user',
@@ -13,7 +26,8 @@ import {HacerReservaComponent} from "../hacer-reserva/hacer-reserva.component";
   styleUrls: ['./restaurante-user.component.scss'],
   imports: [
     IonicModule,
-    CommonModule
+    CommonModule,
+    MatFormField, MatInputModule, FormsModule, MatButtonModule
   ],
   standalone: true
 })
@@ -28,45 +42,65 @@ export class RestauranteUserComponent  implements OnInit {
   estilo1_carta: boolean = true;
   estilo2_carta: boolean = false;
 
-  constructor(private modalController: ModalController) {
+  //Variabales
+  restaurante = new Restaurante();
+  id_restaurante: any;
+  inicio: boolean = false;
+  valoracion_restaurante: number = 0.0;
+
+  constructor(private modalController: ModalController,
+              private sharedService: SharedService,
+              private restauranteService: RestauranteService,
+              private _route: ActivatedRoute,
+              private dialogRef: MatDialog) {
+    this.id_restaurante = this._route.snapshot.paramMap.get('id');
   }
 
   //Funciones modales
-  async modalValoracion(){
-    const modalValoracion = await this.modalController.create({
-      component: HacerValoracionComponent
-    });
-    return await modalValoracion.present();
-  }
+  abrirModalValoraciones(){
+     const dialogRef = this.dialogRef.open(HacerValoracionComponent);
 
-  dismissValoracion(){
-    this.modalController.dismiss({
-      'dismissed':true
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Chat cerrado');
     });
   }
 
-  async modalReserva(){
-    const modalReserva = await this.modalController.create({
-      component: HacerReservaComponent
+  abrirModalReserva(){ this.dialogRef.open(HacerReservaComponent); }
+
+  setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
+
+  captarRestaurantePorId(){
+    this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (responseData) => {
+        this.restaurante = responseData;
+        this.sharedService.setRestaurante(this.restaurante)
+      },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
     });
-    return await modalReserva.present();
   }
 
-  dismissReserva(){
-    this.modalController.dismiss({
-      'dismissed':true
+  valoracionRestaurante(){
+    this.restauranteService.getValoracionRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (valoracion_capada) => { this.valoracion_restaurante = valoracion_capada; },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Valoración del restaurante', this.valoracion_restaurante); }
     });
   }
 
+  ngOnInit() {
 
-
-  ngOnInit() {}
+    //Funciones externas
+    this.captarRestaurantePorId();
+    this.valoracionRestaurante();
+    this.setearIDParams();
+    this.inicio = true;
+  }
 
   Info(){
     this.estilo2_info = true;
     this.estilo2_carta = false;
     this.info = 'info';
-
   }
 
   Carta(){
@@ -76,8 +110,7 @@ export class RestauranteUserComponent  implements OnInit {
     this.estilo1_carta = false;
     this.estilo2_carta = true
     this.info = 'Carta';
-
   }
-
-  protected readonly restaurant = restaurant;
 }
+
+

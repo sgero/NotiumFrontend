@@ -18,6 +18,6 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes),
-    provideHttpClient(withFetch()), provideAnimationsAsync(), provideAnimationsAsync(),
+    provideHttpClient(withFetch()), provideAnimationsAsync(),
   ],
 });
