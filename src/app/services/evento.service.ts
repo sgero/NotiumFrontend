@@ -62,4 +62,8 @@ export class EventoService {
     return this.http.post<RespuestaDTO>(`${this.apiUrl}/eventos/eliminar`, id);
   }
 
+  getInfoRestantes(id:number){
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/restante/${id}`);
+  }
+
 }

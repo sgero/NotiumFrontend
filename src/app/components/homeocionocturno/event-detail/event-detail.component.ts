@@ -26,6 +26,10 @@ import {Cliente} from 'src/app/models/Cliente';
 import {Genero} from "../../../models/Genero";
 import {EntradaOcioCliente} from "../../../models/EntradaOcioCliente";
 import {ReservadoOcioCliente} from "../../../models/ReservadoOcioCliente";
+import {ListaOcioCliente} from "../../../models/ListaOcioCliente";
+import {ComprarReservadoDTO} from "../../../models/ComprarReservadoDTO";
+import {ComprarService} from "../../../services/comprar.service";
+import {CantidadesRestantesDTO} from "../../../models/CantidadesRestantesDTO";
 
 const IonIcons = {
   shirtOutline,
@@ -81,16 +85,15 @@ export class EventDetailComponent implements OnInit {
   cantidad: number = 0;
   precioFinal: number = 0;
   subtotal: number = 0;
-  entrada: boolean = false;
-  reservado: boolean = false;
-  lista: boolean = false;
   disponibilidad: number[] = [1, 2, 3, 4, 5];
   disponibilidadReservado: number[] = [];
   datosARellenar: number[] = [];
   promocionesActivas: Promocion[] = [];
   codigoPromocion!: string;
   idPromocionElegida!: number;
-  datosAsistentes: EntradaOcioCliente[] = [];
+  datosAsistentesEOC: EntradaOcioCliente[] = [];
+  datosAsistentesLOC: ListaOcioCliente[] = [];
+  datosAsistentesROC?: ComprarReservadoDTO;
   yaEnviado: number[] = [];
   cliente?: Cliente;
   generos: string[] = Object.keys(Genero).filter(key => isNaN(Number(key))) as string[];
@@ -117,9 +120,22 @@ export class EventDetailComponent implements OnInit {
   isGeneral = false;
   isReservado = false;
   isLista = false;
+  entradasCompradasExito = false;
+  cantidadesRestantes!: CantidadesRestantesDTO;
+  aforoEvento?: number;
+  entradasVendidas?: number;
+  reservadosVendidos?: number;
+  personasTotalesReservadosVendidos?: number;
+  invitacionesTotalesLista?: number;
+  clientesApuntadosALista?: number;
+  totalAsistentes?: number;
 
 
-  constructor(private toastController: ToastController, private loadingCtrl: LoadingController, private eventoService: EventoService, private route: ActivatedRoute, private formBuilder: FormBuilder, private promocionService: PromocionService) {
+  constructor(private toastController: ToastController, private loadingCtrl: LoadingController,
+              private eventoService: EventoService, private route: ActivatedRoute,
+              private formBuilder: FormBuilder, private promocionService: PromocionService,
+              private comprarService: ComprarService
+  ) {
     addIcons(IonIcons);
   }
 
@@ -129,6 +145,7 @@ export class EventDetailComponent implements OnInit {
       if (id) {
         this.getById(id);
         this.getTiposEntradasInfo(id);
+        this.getInfoRestantes(id);
       }
     });
     this.getPromocionesActivas();
@@ -192,7 +209,6 @@ export class EventDetailComponent implements OnInit {
     this.isReservado = isReservado;
     this.isLista = isLista;
     this.isModalOpen = isOpen;
-    this.entrada = isOpen;
     if (!isOpen) {
       this.cantidad = 0;
       this.subtotal = 0;
@@ -200,6 +216,9 @@ export class EventDetailComponent implements OnInit {
       this.precioFinal = 0;
       this.codigoPromocion = '';
       this.datosARellenar = [0];
+      this.datosAsistentesROC = new ComprarReservadoDTO;
+      this.datosAsistentesLOC = [];
+      this.datosAsistentesEOC = [];
     }
     if (isReservado) {
       for (let x = 0; x < this.informacionTiposEntrada?.reservadoOcioDTO?.personasMaximasPorReservado!; x++) {
@@ -265,9 +284,10 @@ export class EventDetailComponent implements OnInit {
             await loading.present();
             this.actualizarTotal();
             if (this.isReservado) {
-              this.reservadoOcioCliente.promocionDTO = this.promocionElegida
+              this.reservadoOcioCliente.promocionDTO = this.promocionElegida;
             } else {
-              this.datosAsistentes.push(this.promocionElegida);
+              this.datosAsistentesEOC.push(this.promocionElegida);
+              this.reservadoOcioCliente.promocionDTO = undefined;
             }
           } else {
             this.promociones = 0;
@@ -300,16 +320,11 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
-  addForm(c:number) {
-    if (this.cantidad == this.datosAsistentes.length) {
+  addForm(c: number) {
+    if (this.cantidad == this.datosAsistentesEOC.length) {
       this.verPromocion = true;
-    }else {
-      if (this.yaEnviado.includes(c)){
-
-      }
-
+    } else {
       const formValues = this.datosCompradores.value;
-
       const nuevoComprador: DatosComprador = {
         nombre: formValues.nombre || '',
         apellidos: formValues.apellidos || '',
@@ -318,16 +333,25 @@ export class EventDetailComponent implements OnInit {
         genero: formValues.genero || '',
         telefono: formValues.telefono || ''
       };
+      if (this.isGeneral) {
+        this.datosAsistentesEOC.push(nuevoComprador);
+      } else if (this.isLista) {
+        this.datosAsistentesLOC.push(nuevoComprador);
+      } else if (this.isReservado) {
+        this.datosAsistentesROC?.datosCompradorDTOS?.push(nuevoComprador);
+        if (this.datosAsistentesROC?.reservadoOcioClienteDTO) {
+          this.datosAsistentesROC.reservadoOcioClienteDTO.promocionDTO = this.promocionElegida;
+          this.datosAsistentesROC.reservadoOcioClienteDTO.cantidad_personas = this.reservadoOcioCliente.cantidad_personas;
+        }
 
-      this.datosAsistentes.push(nuevoComprador);
+      }
+      this.yaEnviado.push(c);
     }
   }
-
 
   addGeneroToForm(g: string) {
     this.datosCompradores.value.genero = g;
   }
-
 
   pagarOpen() {
     this.pagar = true;
@@ -337,4 +361,98 @@ export class EventDetailComponent implements OnInit {
     this.reservadoOcioCliente.cantidad_personas! = numPersonas!;
     this.actualizarCantidadGeneral(1);
   }
+
+  datoYaEnviado(c: number): boolean {
+    return this.yaEnviado.includes(c);
+  }
+
+  comprar() {
+    const params = {
+      idCliente: this.cliente?.id
+    };
+    if (this.isGeneral) {
+      this.comprarService.comprarEntradaGeneral(
+        params,
+        this.evento?.id!,
+        this.informacionTiposEntrada?.entradaOcioDTO?.id!,
+        this.datosAsistentesEOC).subscribe({
+        next: value => {
+          if (value) {
+            this.entradasCompradasExito = true;
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+    } else if (this.isReservado) {
+      this.comprarService.comprarReservado(
+        params,
+        this.evento?.id!,
+        this.informacionTiposEntrada?.reservadoOcioDTO?.id!,
+        this.datosAsistentesROC!).subscribe({
+        next: value => {
+          if (value) {
+            this.entradasCompradasExito = true;
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+    } else if (this.isLista) {
+      this.comprarService.comprarLista(
+        params,
+        this.evento?.id!,
+        this.informacionTiposEntrada?.listaOcioDTO?.id!,
+        this.datosAsistentesLOC!).subscribe({
+        next: value => {
+          if (value) {
+            this.entradasCompradasExito = true;
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+    }
+  }
+
+  getInfoRestantes(id:number){
+    this.eventoService.getInfoRestantes(id).subscribe({
+      next: value => {
+        this.cantidadesRestantes = value.object as CantidadesRestantesDTO;
+        this.aforoEvento = this.cantidadesRestantes.aforoEvento;
+        this.entradasVendidas = this.cantidadesRestantes.entradasVendidas;
+        this.reservadosVendidos = this.cantidadesRestantes.reservadosVendidos;
+        this.personasTotalesReservadosVendidos = this.cantidadesRestantes.personasTotalesReservadosVendidos;
+        this.invitacionesTotalesLista = this.cantidadesRestantes.invitacionesTotalesLista;
+        this.clientesApuntadosALista = this.cantidadesRestantes.clientesApuntadosALista;
+        this.totalAsistentes = this.entradasVendidas! + this.personasTotalesReservadosVendidos! + this.clientesApuntadosALista!;
+
+        // if (!CollectionUtils.isEmpty(entradasOcioCliente)){
+        //   return entradasVendidas < entradaOcio.getTotalEntradas()
+        //     && (entradasOcioCliente.size() + entradasVendidas) < entradaOcio.getTotalEntradas()
+        //     && (entradasOcioCliente.size() + entradasVendidas) < aforoEvento;
+        // }else if (reservadoOcioCliente != null && reservadoOcioCliente.getCantidad_personas() != null){
+        //   return reservadoOcioCliente.getCantidad_personas() < reservadoOcio.getPersonasMaximasPorReservado()
+        //     && reservadosVendidos < reservadoOcio.getReservadosDisponibles()
+        //     && (reservadoOcioCliente.getCantidad_personas() + ( personasTotalesReservadosVendidos != null ? personasTotalesReservadosVendidos : 0) ) < aforoEvento;
+        // }else if (!CollectionUtils.isEmpty(listaOcioCliente)){
+        //   return clientesApuntadosALista < invitacionesTotalesLista
+        //     && (listaOcioCliente.size() + clientesApuntadosALista) < invitacionesTotalesLista
+        //     && (listaOcioCliente.size() + clientesApuntadosALista) < aforoEvento;
+        // }
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
+  }
+
+  sePuedenComprarEntradas():boolean{
+    return this.entradasVendidas! < this.informacionTiposEntrada?.entradaOcioDTO?.totalEntradas!
+      && this.entradasVendidas! < this.aforoEvento!;
+  }
+
 }
