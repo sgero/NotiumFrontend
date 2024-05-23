@@ -189,7 +189,7 @@
                         <ng-template matStepLabel style="width: 100%">
                           <div class="select-cantidad">
                             <mat-form-field>
-                              <mat-label>Seleccionar cantidad</mat-label>
+                              <mat-label>Seleccionar número de personas</mat-label>
                               <mat-select>
                                 @for (d of disponibilidadReservado; track d) {
                                   <mat-option [value]="d" (click)="actualizarPersonasReservado(d)">{{ d }}</mat-option>
@@ -249,7 +249,11 @@
                             </mat-form-field>
 
                             <div>
-                              <button mat-button matStepperNext (click)="addForm(c)">Añadir</button>
+                              @if (datoYaEnviado(c)){
+                                <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                              }@else{
+                                <button mat-button (click)="addForm(c)">Añadir</button>
+                              }
                               <button mat-button matStepperNext>Next</button>
                             </div>
 
@@ -332,7 +336,7 @@
                       <mat-step>
                         <ng-template matStepLabel>Finalizar y pagar</ng-template>
                         <div>
-                          <button mat-button (click)="stepper.reset()">Pagar</button>
+                          <button mat-button (click)="comprar()">Pagar</button>
                         </div>
                       </mat-step>
                     }
