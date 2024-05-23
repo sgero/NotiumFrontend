@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-headerrestaurante',
@@ -8,22 +9,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderrestauranteComponent  implements OnInit {
 
-  constructor() { }
-
-  onToggleButtonClick() {
-
-    console.log('Se hizo clic en el botón Toggle');
-  }
+  constructor(private router: Router) { }
 
   onRegisterButtonClick() {
 
-    console.log('Se hizo clic en el botón Register');
+    this.router.navigate(['/notium/registrar']);
+
   }
 
   onLoginButtonClick() {
 
-    console.log('Se hizo clic en el botón Login');
+    this.router.navigate(['/notium/login']);
+
+
   }
-  ngOnInit() {}
+  ngOnInit() {return null}
 
 }

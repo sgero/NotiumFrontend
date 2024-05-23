@@ -2,7 +2,7 @@
 <div class="info-rest-user" *ngIf="inicio">
     <div class="btnes_restaurantes">
         <a class="btn_rest" [ngClass]="{'estilo1_info': estilo2_info}" (click)="Info()"><h1>Información general</h1></a>
-        <a class="btn_rest" [ngClass]="{'estilo1_carta': estilo2_carta}"(click)="Carta()"><h1>Carta</h1></a>
+        <a class="btn_rest" [ngClass]="{'estilo1_carta': estilo2_carta}" (click)="Carta()"><h1>Carta</h1></a>
     </div>
 
     <div *ngIf="info == 'info'; else visCarta" class="restaurante_user">

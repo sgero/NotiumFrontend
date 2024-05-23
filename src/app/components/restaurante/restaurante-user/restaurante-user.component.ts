@@ -19,6 +19,7 @@ import {RestauranteService} from "../../../services/restaurante.service";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
+import {UsuarioService} from "../../../services/usuario.service";
 
 @Component({
   selector: 'app-restaurante-user',
@@ -45,12 +46,14 @@ export class RestauranteUserComponent  implements OnInit {
   //Variabales
   restaurante = new Restaurante();
   id_restaurante: any;
+  usuario: any;
   inicio: boolean = false;
   valoracion_restaurante: number = 0.0;
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,
               private restauranteService: RestauranteService,
+              private usuarioService: UsuarioService,
               private _route: ActivatedRoute,
               private dialogRef: MatDialog) {
     this.id_restaurante = this._route.snapshot.paramMap.get('id');
@@ -88,12 +91,24 @@ export class RestauranteUserComponent  implements OnInit {
     });
   }
 
+  getUsuarioPorToken(){
+
+    this.usuarioService.getUsuarioToken().subscribe( {
+      next: (usuario) => { this.usuario = usuario; },
+      error: (error) => { console.error('Error al obtener el Usuario:', error); },
+      complete: () => { console.log('Usuario', this.usuario); }
+    });
+
+
+  }
+
   ngOnInit() {
 
     //Funciones externas
     this.captarRestaurantePorId();
     this.valoracionRestaurante();
     this.setearIDParams();
+    this.getUsuarioPorToken();
     this.inicio = true;
   }
 

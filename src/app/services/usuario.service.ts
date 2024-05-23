@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Usuario} from "../models/Usuario";
 
@@ -7,11 +7,27 @@ import {Usuario} from "../models/Usuario";
   providedIn: 'root'
 })
 
-export class UsuarioService {
+export class UsuarioService{
 
   private apiUrl = 'http://127.0.0.1:8080';
 
   constructor(private http: HttpClient) { }
+
+  autorizarPeticion(){
+    const localToken = localStorage.getItem('token');
+
+    const headers = new HttpHeaders({
+      ContentType: 'application/json',
+      Authorization : `Bearer ${localToken}`
+    });
+
+    return {headers:headers}
+  }
+
+  getUsuarioToken() :Observable<any> {
+    const header = this.autorizarPeticion();
+    return this.http.get(`${this.apiUrl}/auth/getusuario`, header);
+  }
 
   getUsuarios() :Observable<JSON> {
 

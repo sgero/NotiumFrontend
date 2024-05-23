@@ -11,10 +11,6 @@ export class HeaderComponent  implements OnInit {
 
   constructor(private router: Router) { }
 
-  onToggleButtonClick() {
-
-  }
-
   onRegisterButtonClick() {
 
     this.router.navigate(['/notium/registrar']);
