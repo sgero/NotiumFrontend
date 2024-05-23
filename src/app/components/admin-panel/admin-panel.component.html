@@ -1,0 +1,5 @@
+<!-- admin-panel.component.html -->
+<ion-button (click)="toggleAdminPanel()">Admin</ion-button>
+<ion-list *ngIf="isAdminPanelOpen">
+  <ion-item *ngFor="let option of adminOptions">{{ option }}</ion-item>
+</ion-list>
