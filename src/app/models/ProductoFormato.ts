@@ -4,6 +4,6 @@ import {Formato} from "./Formato";
 export  class ProductoFormato{
   id?: number;
   precio?: number;
-  producto?: Producto = new Producto();
-  formato?: Formato = new Formato();
+  productoDTO?: Producto = new Producto();
+  formatoDTO?: Formato = new Formato();
 }
