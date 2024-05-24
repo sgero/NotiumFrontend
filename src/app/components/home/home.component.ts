@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {IonicModule} from "@ionic/angular";
 import {Router} from "@angular/router";
+import {UsuarioService} from "../../services/usuario.service";
 
 
 @Component({
@@ -12,9 +13,12 @@ import {Router} from "@angular/router";
   imports: [HeaderComponent, FooterComponent, IonicModule],
   standalone: true
 })
-export class HomeComponent  implements OnInit {
+export class HomeComponent implements OnInit {
+  usuarioLogueado: any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private usuarioService: UsuarioService) {
+  }
 
   onEnterButtonClickRest(): void {
 
@@ -23,16 +27,35 @@ export class HomeComponent  implements OnInit {
 
   }
 
-  onEnterButtonClickOcioN(): void {
 
-    this.router.navigate(['/notium/ocionocturno']);
-
-
+  ngOnInit() {
+    this.getUsuario();
   }
 
+  getUsuario() {
+    this.usuarioService.getUsuarioToken().subscribe({
+      next: value => {
+        this.usuarioLogueado = value;
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
+  }
 
-  ngOnInit() {return null;}
-
+  onEnterButtonClickOcioN(usuario: any) {
+    if (usuario) {
+      if (usuario.rol == "CLIENTE") {
+        this.router.navigate(["notium/ocionocturno"])
+      } else if (usuario.rol == "OCIONOCTURNO") {
+        this.router.navigate(["notium/error"])
+      } else {
+        this.router.navigate(["notium/error"])
+      }
+    } else {
+      this.router.navigate(["notium/error"])
+    }
+  }
 
 }
 

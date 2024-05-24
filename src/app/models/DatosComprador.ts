@@ -7,7 +7,7 @@ export class DatosComprador{
   apellidos?:string;
   email?:string;
   telefono?:string;
-  fecha?:string;
+  fechaNacimiento?:string;
   genero?:string;
   reservadoOcioClienteDTO?:ReservadoOcioCliente;
 }

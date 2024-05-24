@@ -24,9 +24,9 @@ export class UsuarioService{
     return {headers:headers}
   }
 
-  getUsuarioToken() :Observable<any> {
+  getUsuarioToken()  {
     const header = this.autorizarPeticion();
-    return this.http.get(`${this.apiUrl}/auth/getusuario`, header);
+    return this.http.get<Usuario>(`${this.apiUrl}/auth/getusuario`, header);
   }
 
   getUsuarios() :Observable<JSON> {

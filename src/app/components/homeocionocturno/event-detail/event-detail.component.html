@@ -45,100 +45,139 @@
       </div>
 
       @if (evento?.fecha! < fechaActual) {
-        <div class="entradas-generales">
-          <div class="row card-row card-style">
-            <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
-                 (click)="setOpenGeneral(true, true, false, false)">
-              <div class="card-body event">
-                <div class="tarifa">
-                  <h1>GENERAL {{ evento?.nombre }}</h1>
-                  <div class="info">
-                    <button class="button is-large is-light"
-                            style="padding: .4rem !important;margin-right: .5rem !important;">
-                      {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
-                    </button>
-                    <button class="button is-large is-link">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
+        @if (comprarEntradas) {
+          <div class="entradas-generales">
+            <div class="row card-row card-style">
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
+                   (click)="setOpenGeneral(true, true, false, false)">
+                <div class="card-body event">
+                  <div class="tarifa">
+                    <div><h1 style="margin: 0 !important;">GENERAL {{ evento?.nombre }}</h1>
+                      @if (disponiblesGeneral! <= 15) {
+                        <div style="display: flex;color: red">
+                          <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
+                            <ion-icon name="flame-outline"></ion-icon>
+                            ¡Quedan menos de 15 entradas generales!
+                          </h3>
+                        </div>
+                      }
+                    </div>
+                    <div class="info">
+                      <button class="button is-large is-light"
+                              style="padding: .4rem !important;margin-right: .5rem !important;">
+                        {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
+                      </button>
+                      <button class="button is-large is-link">
+                        <ion-icon name="arrow-forward"></ion-icon>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <hr>
-                <div class="content">
-                  <p class=" text">{{ informacionTiposEntrada?.entradaOcioDTO?.detalleEntrada }}</p>
-                  <p class=" text">Precio: {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€</p>
-                  <p class=" text">Incluye {{ informacionTiposEntrada?.entradaOcioDTO?.consumiciones }}
-                    consumición/es.</p>
-                  <p class=" text">Incluye acceso al establecimiento.</p>
-                  <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  <hr>
+                  <div class="content">
+                    <p class=" text">{{ informacionTiposEntrada?.entradaOcioDTO?.detalleEntrada }}</p>
+                    <p class=" text">Precio: {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€</p>
+                    <p class=" text">Incluye {{ informacionTiposEntrada?.entradaOcioDTO?.consumiciones }}
+                      consumición/es.</p>
+                    <p class=" text">Incluye acceso al establecimiento.</p>
+                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        } @else {
+          <p>Se han agotado las entradas generales para este evento.</p>
+        }
 
-        <div class="reservados">
-          <div class="row card-row card-style">
-            <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
-                 style="width: 100%;"
-                 (click)="setOpenGeneral(true, false, true, false)">
-              <div class="card-body event">
-                <div class="tarifa">
-                  <h1>RESERVADO {{ evento?.nombre }}</h1>
-                  <div class="info">
-                    <button class="button is-large is-light bg-gray-300/30"
-                            style="padding: .4rem !important;margin-right: .5rem !important;">
-                      {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
-                    </button>
-                    <button class="button is-large is-link">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
+        @if (comprarReservado) {
+          <div class="reservados">
+            <div class="row card-row card-style">
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   style="width: 100%;"
+                   (click)="setOpenGeneral(true, false, true, false)">
+                <div class="card-body event">
+                  <div class="tarifa">
+                    <div><h1 style="margin: 0 !important;">RESERVADO {{ evento?.nombre }}</h1>
+                      @if (disponiblesReservado! <= 2) {
+                        <div style="display: flex;color: red">
+                          <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
+                            <ion-icon name="flame-outline"></ion-icon>
+                            ¡Quedan menos de 2 reservados disponibles!
+                          </h3>
+                        </div>
+                      }
+                    </div>
+                    <div class="info">
+                      <button class="button is-large is-light bg-gray-300/30"
+                              style="padding: .4rem !important;margin-right: .5rem !important;">
+                        {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
+                      </button>
+                      <button class="button is-large is-link">
+                        <ion-icon name="arrow-forward"></ion-icon>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <hr>
-                <div class="content">
-                  <p class=" text">{{ informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado }}</p>
-                  <p class=" text">Precio: {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€</p>
-                  <p class=" text">Incluye {{ informacionTiposEntrada?.reservadoOcioDTO?.botellas }} botella/s.</p>
-                  <p class=" text">Incluye acceso al establecimiento.</p>
-                  <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  <hr>
+                  <div class="content">
+                    <p class=" text">{{ informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado }}</p>
+                    <p class=" text">Precio: {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€</p>
+                    <p class=" text">Incluye {{ informacionTiposEntrada?.reservadoOcioDTO?.botellas }} botella/s.</p>
+                    <p class=" text">Incluye acceso al establecimiento.</p>
+                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        } @else {
+          <p>Se han agotado los reservados para este evento.</p>
+        }
 
-        <div class="listas">
-          <div class="row card-row card-style">
-            <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
-                 (click)="setOpenGeneral(true, false, false, true)">
-              <div class="card-body event">
-                <div class="tarifa">
-                  <h1>LISTA {{ evento?.nombre }}</h1>
-                  <div class="info">
-                    <button class="button is-large is-light bg-gray-300/30"
-                            style="padding: .4rem !important;margin-right: .5rem !important;">
-                      {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
-                    </button>
-                    <button class="button is-large is-link">
-                      <ion-icon name="arrow-forward"></ion-icon>
-                    </button>
+        @if (comprarLista) {
+          <div class="listas">
+            <div class="row card-row card-style">
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
+                   (click)="setOpenGeneral(true, false, false, true)">
+                <div class="card-body event">
+                  <div class="tarifa">
+                    <div><h1 style="margin: 0 !important;">LISTA {{ evento?.nombre }}</h1>
+                      @if (disponiblesLista! <= 5) {
+                        <div style="display: flex;color: red">
+                          <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
+                            <ion-icon name="flame-outline"></ion-icon>
+                            ¡Quedan menos de 5 entradas por lista!
+                          </h3>
+                        </div>
+                      }
+                    </div>
+                    <div class="info">
+                      <button class="button is-large is-light bg-gray-300/30"
+                              style="padding: .4rem !important;margin-right: .5rem !important;">
+                        {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
+                      </button>
+                      <button class="button is-large is-link">
+                        <ion-icon name="arrow-forward"></ion-icon>
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <hr>
-                <div class="content">
-                  <p class=" text">LISTA
-                    DE {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}</p>
-                  <p class=" text">{{ informacionTiposEntrada?.listaOcioDTO?.detalleLista }}</p>
-                  <p class=" text">Precio: {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€</p>
-                  <p class=" text">Incluye {{ informacionTiposEntrada?.listaOcioDTO?.consumiciones }}
-                    consumición/es.</p>
-                  <p class=" text">Incluye acceso al establecimiento.</p>
-                  <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  <hr>
+                  <div class="content">
+                    <p class=" text">LISTA
+                      DE {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}</p>
+                    <p class=" text">{{ informacionTiposEntrada?.listaOcioDTO?.detalleLista }}</p>
+                    <p class=" text">Precio: {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€</p>
+                    <p class=" text">Incluye {{ informacionTiposEntrada?.listaOcioDTO?.consumiciones }}
+                      consumición/es.</p>
+                    <p class=" text">Incluye acceso al establecimiento.</p>
+                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        } @else {
+          <p>Se han agotado las entradas por lista para este evento.</p>
+        }
 
         <ion-modal [isOpen]="isModalOpen">
           <ng-template>
@@ -166,28 +205,29 @@
               <div class="dispo">
 
                 <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
-                  @if (isGeneral || isLista) {
-                    <mat-step [stepControl]="firstFormGroup">
-                      <form [formGroup]="firstFormGroup">
-                        <ng-template matStepLabel style="width: 100%">
-                          <div class="select-cantidad">
+                  <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                      <ng-template matStepLabel style="width: 100%">
+                        <div class="select-cantidad">
+                          @if (isGeneral) {
                             <mat-form-field>
                               <mat-label>Seleccionar cantidad</mat-label>
                               <mat-select>
-                                @for (d of disponibilidad; track d) {
+                                @for (d of disponibilidadGeneral; track d) {
                                   <mat-option [value]="d" (click)="actualizarCantidadGeneral(d)">{{ d }}</mat-option>
                                 }
                               </mat-select>
                             </mat-form-field>
-                          </div>
-                        </ng-template>
-                      </form>
-                    </mat-step>
-                  } @else if (isReservado) {
-                    <mat-step [stepControl]="firstFormGroup">
-                      <form [formGroup]="firstFormGroup">
-                        <ng-template matStepLabel style="width: 100%">
-                          <div class="select-cantidad">
+                          } @else if (isLista) {
+                            <mat-form-field>
+                              <mat-label>Seleccionar cantidad</mat-label>
+                              <mat-select>
+                                @for (d of disponibilidadLista; track d) {
+                                  <mat-option [value]="d" (click)="actualizarCantidadGeneral(d)">{{ d }}</mat-option>
+                                }
+                              </mat-select>
+                            </mat-form-field>
+                          } @else if (isReservado) {
                             <mat-form-field>
                               <mat-label>Seleccionar número de personas</mat-label>
                               <mat-select>
@@ -196,114 +236,69 @@
                                 }
                               </mat-select>
                             </mat-form-field>
-                          </div>
-                        </ng-template>
-                      </form>
-                    </mat-step>
-                  }
+                          }
+                        </div>
+                      </ng-template>
+                    </form>
+                  </mat-step>
                   @if (cantidad != 0) {
                     @for (c of datosARellenar; track c; let first = $first) {
                       <mat-step [stepControl]="datosCompradores">
-                        <form [formGroup]="datosCompradores">
+                        <form [formGroup]="datosCompradores" style="width: 700px !important;">
                           <ng-template matStepLabel>Datos del asistente {{ c + 1 }}</ng-template>
 
-                          @if (first) {
-                            <mat-form-field>
-                              <mat-label>Nombre</mat-label>
-                              <input matInput formControlName="nombre" required value="{{cliente?.nombre}}">
-                            </mat-form-field>
+                          <mat-form-field>
+                            <mat-label>Nombre</mat-label>
+                            <input matInput formControlName="nombre" required>
+                          </mat-form-field>
 
-                            <mat-form-field>
-                              <mat-label>Apellidos</mat-label>
-                              <input matInput formControlName="apellidos" required value="{{cliente?.apellidos}}">
-                            </mat-form-field>
+                          <mat-form-field>
+                            <mat-label>Apellidos</mat-label>
+                            <input matInput formControlName="apellidos" required>
+                          </mat-form-field>
 
-                            <mat-form-field>
-                              <mat-label>Email</mat-label>
-                              <input matInput formControlName="email" required type="email">
-                            </mat-form-field>
+                          <mat-form-field>
+                            <mat-label>Email</mat-label>
+                            <input matInput formControlName="email" required type="email">
+                          </mat-form-field>
 
 
-                            <mat-form-field>
-                              <mat-label>Fecha Nacimiento</mat-label>
-                              <input matInput [matDatepicker]="picker" formControlName="fecha"
-                                     value="{{cliente?.fecha_nacimiento}}">
-                              <mat-datepicker-toggle matIconSuffix [for]="picker">
-                                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-                              </mat-datepicker-toggle>
-                              <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
+                          <mat-form-field>
+                            <mat-label>Fecha Nacimiento</mat-label>
+                            <input matInput placeholder="YYYY/MM/DD" formControlName="fecha">
+                            <mat-datepicker-toggle matIconSuffix [for]="picker">
+                              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
 
-                            <mat-form-field>
-                              <mat-label>Genero</mat-label>
-                              <mat-select>
-                                @for (g of generos; track g) {
-                                  <mat-option (click)="addGeneroToForm(g)" value="{{g}}">{{ g }}</mat-option>
-                                }
-                              </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field>
-                              <mat-label>Teléfono</mat-label>
-                              <input matInput formControlName="telefono" value="{{cliente?.telefono}}">
-                            </mat-form-field>
-
-                            <div>
-                              @if (datoYaEnviado(c)){
-                                <button [disabled]="true" mat-button matStepperNext>Añadir</button>
-                              }@else{
-                                <button mat-button (click)="addForm(c)">Añadir</button>
+                          <mat-form-field>
+                            <mat-label>Genero</mat-label>
+                            <mat-select formControlName="genero">
+                              @for (g of generos; track g) {
+                                <mat-option [value]="g">{{ g }}</mat-option>
                               }
+                            </mat-select>
+                          </mat-form-field>
+
+
+                          <mat-form-field>
+                            <mat-label>Teléfono</mat-label>
+                            <input matInput formControlName="telefono">
+                          </mat-form-field>
+
+                          <div>
+                            @if (datoYaEnviado(c)) {
+                              <button [disabled]="true" mat-button matStepperNext>Añadir</button>
                               <button mat-button matStepperNext>Next</button>
-                            </div>
-
-                          } @else {
-
-                            <mat-form-field>
-                              <mat-label>Nombre</mat-label>
-                              <input matInput formControlName="nombre" required>
-                            </mat-form-field>
-
-                            <mat-form-field>
-                              <mat-label>Apellidos</mat-label>
-                              <input matInput formControlName="apellidos" required>
-                            </mat-form-field>
-
-                            <mat-form-field>
-                              <mat-label>Email</mat-label>
-                              <input matInput formControlName="email" required type="email">
-                            </mat-form-field>
-
-
-                            <mat-form-field>
-                              <mat-label>Fecha Nacimiento</mat-label>
-                              <input matInput [matDatepicker]="picker" formControlName="fecha">
-                              <mat-datepicker-toggle matIconSuffix [for]="picker">
-                                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-                              </mat-datepicker-toggle>
-                              <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-
-                            <mat-form-field>
-                              <mat-label>Genero</mat-label>
-                              <mat-select>
-                                @for (g of generos; track g) {
-                                  <mat-option [value]="g">{{ g }}</mat-option>
-                                }
-                              </mat-select>
-                            </mat-form-field>
-
-
-                            <mat-form-field>
-                              <mat-label>Teléfono</mat-label>
-                              <input matInput formControlName="telefono">
-                            </mat-form-field>
-
-                            <div>
-                              <button mat-button matStepperNext (click)="addForm(c)">Añadir</button>
-                              <button mat-button matStepperNext>Next</button>
-                            </div>
-                          }
+                            } @else {
+                              @if (verifyForm()) {
+                                <button mat-button matStepperNext (click)="addForm(c)">Añadir</button>
+                              } @else {
+                                <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                              }
+                            }
+                          </div>
 
 
                         </form>
@@ -354,11 +349,11 @@
                         <div>
                           {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
                         </div>
-                      } @else if (isReservado){
+                      } @else if (isReservado) {
                         <div>
                           {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
                         </div>
-                      } @else if (isLista){
+                      } @else if (isLista) {
                         <div>
                           {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
                         </div>
