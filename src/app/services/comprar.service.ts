@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {RespuestaDTO} from "../models/RespuestaDTO";
 import {EntradaOcioCliente} from "../models/EntradaOcioCliente";
 import {ListaOcioCliente} from "../models/ListaOcioCliente";
@@ -12,28 +12,16 @@ export class ComprarService{
   private apiUrl = 'http://127.0.0.1:8080/comprar';
   constructor(private http: HttpClient) { }
 
-  comprarEntradaGeneral(params:any, idEvento:number, idEntradaOcio:number, entradasOcioClienteLista: EntradaOcioCliente[]){
-    let httpParams = new HttpParams();
-    Object.keys(params).forEach(key => {
-      httpParams = httpParams.append(key, params[key]);
-    });
-    return this.http.post<RespuestaDTO>(`${this.apiUrl}/${idEvento}/entrada/${idEntradaOcio}`, entradasOcioClienteLista,{params:httpParams});
+  comprarEntradaGeneral(idCliente:number, idEvento:number, idEntradaOcio:number, entradasOcioClienteLista: EntradaOcioCliente[]){
+    return this.http.post<RespuestaDTO>(`${this.apiUrl}/${idEvento}/entrada/${idEntradaOcio}?idCliente=${idCliente}`, entradasOcioClienteLista,);
   }
 
-  comprarReservado(params:any, idEvento:number, idReservadoOcio:number, comprarReservadoDTO: ComprarReservadoDTO){
-    let httpParams = new HttpParams();
-    Object.keys(params).forEach(key => {
-      httpParams = httpParams.append(key, params[key]);
-    });
-    return this.http.post<RespuestaDTO>(`${this.apiUrl}/${idEvento}/entrada/${idReservadoOcio}`, comprarReservadoDTO,{params:httpParams});
+  comprarReservado(idCliente:number, idEvento:number, idReservadoOcio:number, comprarReservadoDTO: ComprarReservadoDTO){
+    return this.http.post<RespuestaDTO>(`${this.apiUrl}/${idEvento}/reservado/${idReservadoOcio}?idCliente=${idCliente}`, comprarReservadoDTO);
   }
 
-  comprarLista(params:any, idEvento:number, idListaOcio:number, listaOcioClienteDTOS: ListaOcioCliente[]){
-    let httpParams = new HttpParams();
-    Object.keys(params).forEach(key => {
-      httpParams = httpParams.append(key, params[key]);
-    });
-    return this.http.post<RespuestaDTO>(`${this.apiUrl}/${idEvento}/entrada/${idListaOcio}`, listaOcioClienteDTOS,{params:httpParams});
+  comprarLista(idCliente:number, idEvento:number, idListaOcio:number, listaOcioClienteDTOS: ListaOcioCliente[]){
+    return this.http.post<RespuestaDTO>(`${this.apiUrl}/${idEvento}/lista/${idListaOcio}?idCliente=${idCliente}`, listaOcioClienteDTOS);
   }
 
 }
