@@ -5,6 +5,7 @@ import {HeaderrestauranteComponent} from "../headerrestaurante/headerrestaurante
 import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {UsuarioService} from "../../services/usuario.service";
 
 @Component({
   selector: 'app-cartarestaurante',
@@ -45,13 +46,12 @@ export class CartarestauranteComponent  implements OnInit {
   otros: boolean = false;
   bajaP = {id: +''};
 
-  constructor(private cartarestauranteService : CartarestauranteService, private router : Router) { }
+
+  constructor(private cartarestauranteService : CartarestauranteService, private router : Router, private usuarioservice: UsuarioService) { }
 
   ngOnInit() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.token.token = token;
-    }
+    this.usuarioservice.getUsuarioToken().subscribe(data=>{
+      this.token.token = data.username;
     this.cartarestauranteService.listarProducto(this.token).subscribe(data =>{
       console.log(data);
       data.forEach(item =>{
@@ -103,18 +103,17 @@ export class CartarestauranteComponent  implements OnInit {
       });
       this.productos = data;
     })
+    })
   }
 
   crearProducto(){
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.producto.username = token;
-    }
+    this.usuarioservice.getUsuarioToken().subscribe(data=>{
+      this.producto.username = data.username;
       this.cartarestauranteService.crearProducto(this.producto).subscribe(data =>{
         console.log(data);
         this.ocultarPrecio();
       })
-
+    })
   }
 
   crearProductoFormato(idp:number,idf:number){
