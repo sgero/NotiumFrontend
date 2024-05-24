@@ -25,4 +25,8 @@ export class CartarestauranteService {
   crearProductoFormato(data: ProductoFormato){
     return this.http.post<ProductoFormato>(this.apiUrl+"/productoFormato/crear", data)
   }
+
+  bajaProducto(data: Producto){
+    return this.http.put(this.apiUrl+"/producto/baja",data, { responseType: 'text' })
+  }
 }

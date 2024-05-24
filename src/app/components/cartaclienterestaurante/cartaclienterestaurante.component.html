@@ -1,0 +1,321 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+
+    </div>
+  </div>
+
+  <div class="main-container">
+
+    <h1>
+      CARTA DE "nombre"
+    </h1>
+    <div class="carta">
+      <h1 *ngIf="entrante"><I><U>ENTRANTES</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="carne"><I><U>CARNES</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CARNE'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="pescado"><I><U>PESCADOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'PESCADO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="guiso"><I><U>GUISOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'GUISO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="revuelto"><I><U>REVUELTOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REVUELTO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="frito"><I><U>FRITOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'FRITO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="otros"><I><U>OTROS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'OTROS'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="postre"><I><U>POSTRES</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'POSTRE'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+
+            <div class="formato">
+              <span>Precio</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="vino"><I><U>VINOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'VINO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="cerveza"><I><U>CERVEZAS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CERVEZA'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Vaso</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Pinta</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 8">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Jarra</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 6">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="refresco"><I><U>REFRESCOS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REFRESCO'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Vaso</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="agua"><I><U>AGUA</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'AGUA'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="coctel"><I><U>COCTELES</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'COCTEL'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <h1 *ngIf="bebidaAlcoholica"><I><U>BEBIDAS ALCOHÓLICAS</U></I></h1>
+      <section *ngFor="let p of productos">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'BEBIDA_ALCOHOLICA'">
+          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Chupito</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 4">{{ pr.precio }} €</div>
+              </div>
+            </div>
+            <div class="formato">
+              <span>Copa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+
+</div>

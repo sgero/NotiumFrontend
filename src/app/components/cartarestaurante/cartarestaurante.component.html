@@ -13,10 +13,10 @@
       ACTUALIZA TU CARTA
     </h1>
     <div class="carta">
-      <h1><I><U>ENTRANTES</U></I></h1>
+      <h1 *ngIf="entrante"><I><U>ENTRANTES</U></I></h1>
       <section *ngFor="let p of productos">
       <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE'">
-        <div><span>{{p.producto.nombre}}</span></div>
+        <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
         <div class="formatos">
           <div class="formato">
             <span>Tapa</span>
@@ -54,10 +54,10 @@
         </div>
       </div>
       </section>
-      <h1><I><U>CARNES</U></I></h1>
+      <h1 *ngIf="carne"><I><U>CARNES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'CARNE'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -95,10 +95,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>PESCADOS</U></I></h1>
+      <h1 *ngIf="pescado"><I><U>PESCADOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'PESCADO'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -136,10 +136,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>GUISOS</U></I></h1>
+      <h1 *ngIf="guiso"><I><U>GUISOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'GUISO'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -177,10 +177,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>REVUELTOS</U></I></h1>
+      <h1 *ngIf="revuelto"><I><U>REVUELTOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'REVUELTO'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -218,10 +218,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>FRITOS</U></I></h1>
+      <h1 *ngIf="frito"><I><U>FRITOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'FRITO'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -259,10 +259,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>OTROS</U></I></h1>
+      <h1 *ngIf="otros"><I><U>OTROS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'OTROS'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -300,10 +300,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>POSTRES</U></I></h1>
+      <h1 *ngIf="postre"><I><U>POSTRES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'POSTRE'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
 
             <div class="formato">
@@ -320,10 +320,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>VINOS</U></I></h1>
+      <h1 *ngIf="vino"><I><U>VINOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'VINO'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
 
             <div class="formato">
@@ -340,10 +340,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>CERVEZAS</U></I></h1>
+      <h1 *ngIf="cerveza"><I><U>CERVEZAS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'CERVEZA'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Vaso</span>
@@ -381,10 +381,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>REFRESCOS</U></I></h1>
+      <h1 *ngIf="refresco"><I><U>REFRESCOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'REFRESCO'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Vaso</span>
@@ -400,10 +400,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>AGUA</U></I></h1>
+      <h1 *ngIf="agua"><I><U>AGUA</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'AGUA'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Copa</span>
@@ -419,10 +419,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>COCTELES</U></I></h1>
+      <h1 *ngIf="coctel"><I><U>COCTELES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'COCTEL'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Copa</span>
@@ -438,10 +438,10 @@
           </div>
         </div>
       </section>
-      <h1><I><U>BEBIDAS ALCOHÓLICAS</U></I></h1>
+      <h1 *ngIf="bebidaAlcoholica"><I><U>BEBIDAS ALCOHÓLICAS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'BEBIDA_ALCOHOLICA'">
-          <div><span>{{p.producto.nombre}}</span></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Chupito</span>
