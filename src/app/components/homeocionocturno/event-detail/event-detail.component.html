@@ -44,7 +44,7 @@
         </ion-badge>
       </div>
 
-      @if (evento?.fecha! < fechaActual) {
+      @if (evento?.fecha!.substring(0, 10) > fechaActual) {
         @if (comprarEntradas) {
           <div class="entradas-generales">
             <div class="row card-row card-style">
@@ -263,11 +263,10 @@
                           </mat-form-field>
 
 
-                          <mat-form-field>
+                          <mat-form-field style="width: 213px">
                             <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput placeholder="YYYY/MM/DD" formControlName="fecha">
+                            <input matInput placeholder="YYYY/MM/DD" formControlName="fecha"  [matDatepicker]="picker">
                             <mat-datepicker-toggle matIconSuffix [for]="picker">
-                              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>

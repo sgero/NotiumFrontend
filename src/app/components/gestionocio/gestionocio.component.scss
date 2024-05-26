@@ -79,3 +79,14 @@ ion-label, .staff ion-label{
 
 
 
+.but{
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.but div button{
+  margin: 5px;
+}
+ion-modal{
+  --width: 63%;
+}

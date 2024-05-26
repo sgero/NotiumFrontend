@@ -1,6 +1,136 @@
 <app-headerocionocturno></app-headerocionocturno>
 
 <ion-content>
+  <section class="but">
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" (click)="openM(true)" >Crear Evento</button>
+    </div>
+  </section>
+
+
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+            <ion-title>Crear Evento</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="openM(false)" style="padding: 0 !important;">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="form-content ion-padding ">
+        <div class="dispo">
+
+          <mat-stepper orientation="vertical"  #stepper>
+            <mat-step>
+              <form >
+                <ng-template matStepLabel style="width: 100%">
+                  <div class="select-cantidad">
+                    <mat-form-field>
+                      <mat-label>Seleccionar tipo de evento</mat-label>
+                      <mat-select>
+                        <mat-option value="Evento Único" (click)="eventoUnico(true)">Evento Único</mat-option>
+                        <mat-option value="Evento Cíclico" (click)="eventoUnico(false)">Evento Cíclico</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </ng-template>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="datosEvento">
+              <form [formGroup]="datosEvento">
+                <ng-template matStepLabel>Datos del evento</ng-template>
+                <mat-form-field>
+                  <mat-label>Nombre</mat-label>
+                  <input matInput formControlName="nombre" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Descripción</mat-label>
+                  <input matInput formControlName="descripcion" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Temática</mat-label>
+                  <input matInput formControlName="tematica" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Fecha</mat-label>
+                  <input matInput formControlName="fecha"  [matDatepicker]="picker">
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Cartel</mat-label>
+                  <input matInput formControlName="cartel" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Código de Vestimenta</mat-label>
+                  <mat-select formControlName="codigoVestimentaOcio">
+                    @for (c of vestimentas; track c) {
+                      <mat-option [value]="c">{{ c.charAt(0) + c.substring(1, 20).toLowerCase() }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Edad Mínima</mat-label>
+                  <mat-select formControlName="edadMinimaOcio">
+                    @for (e of edadMinima; track e) {
+                      <mat-option [value]="e">{{ e.charAt(0) + e.substring(1, 20).toLowerCase()}}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Aforo</mat-label>
+                  <input matInput formControlName="aforo" required>
+                </mat-form-field>
+              </form>
+            </mat-step>
+
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Personalizar Entradas</ng-template>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Personalizar Reservados</ng-template>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Personalizar Listas</ng-template>
+              </form>
+            </mat-step>
+
+            @if (!unico){
+              <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                  <ng-template matStepLabel>Repetir Evento</ng-template>
+                </form>
+              </mat-step>
+            }
+
+            <mat-step>
+              <form>
+                <ng-template matStepLabel>Guardar</ng-template>
+              </form>
+            </mat-step>
+
+          </mat-stepper>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
   <div class="banner-container">
   <!-- Banner de fondo con la imagen de la marca de la discoteca -->
     <div class="banner" [style.background-image]="'url('+ ocio.imagenMarca +')'">

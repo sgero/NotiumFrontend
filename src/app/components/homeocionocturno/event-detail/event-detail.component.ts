@@ -5,22 +5,27 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {IonicModule, LoadingController, ToastController} from "@ionic/angular";
 import {FooterocionocturnoComponent} from "../../footerocionocturno/footerocionocturno.component";
 import {HeaderocionocturnoComponent} from "../../headerocionocturno/headerocionocturno.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {EdadMinimaOcio} from "../../../models/EdadMinimaOcio";
 import {arrowForward, calendar, closeOutline, flameOutline, pricetags, shirtOutline, watch} from "ionicons/icons";
 import {addIcons} from "ionicons";
 import {InformacionTiposEntradasEvento} from "../../../models/InformacionTiposEntradasEvento";
-import {MatError, MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
+import {MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatInput} from "@angular/material/input";
+import {MatInput, MatInputModule} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {PromocionService} from "../../../services/promocion.service";
 import {Promocion} from "../../../models/Promocion";
 import {DatosComprador} from "../../../models/DatosComprador";
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
+import {MatNativeDateModule, provideNativeDateAdapter} from "@angular/material/core";
 import {MatIcon} from "@angular/material/icon";
 import {Cliente} from 'src/app/models/Cliente';
 import {Genero} from "../../../models/Genero";
@@ -76,8 +81,16 @@ const IonIcons = {
     MatIcon,
     MatHint,
     MatError,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule
   ],
   standalone: true,
+  providers: [
+    DatePipe,
+    provideNativeDateAdapter()
+
+  ]
 })
 
 export class EventDetailComponent implements OnInit {
@@ -103,7 +116,7 @@ export class EventDetailComponent implements OnInit {
   yaEnviado: number[] = [];
   cliente?: Cliente;
   generos: string[] = Object.keys(Genero).filter(key => isNaN(Number(key))) as string[];
-  fechaActual: string = new Date().toString();
+  fechaActual = new Date().toString();
   pagar = false;
   reservadoOcioCliente = new ReservadoOcioCliente();
 
@@ -142,7 +155,6 @@ export class EventDetailComponent implements OnInit {
   disponiblesGeneral?: number;
   disponiblesReservado?: number;
   disponiblesLista?: number;
-  genero = '';
 
 
   constructor(private toastController: ToastController, private loadingCtrl: LoadingController,
@@ -150,7 +162,8 @@ export class EventDetailComponent implements OnInit {
               private formBuilder: FormBuilder, private promocionService: PromocionService,
               private comprarService: ComprarService, private usuarioService: UsuarioService,
               private router: Router, private clienteService: ClienteService,
-              private ocioService: OcionocturnoService, private pdfService : PdfService
+              private ocioService: OcionocturnoService, private pdfService : PdfService,
+              private datePipe: DatePipe
   ) {
     addIcons(IonIcons);
   }
@@ -165,6 +178,7 @@ export class EventDetailComponent implements OnInit {
       }
     });
     this.getPromocionesActivas();
+    this.fechaActual = <string>this.datePipe.transform(this.fechaActual, 'yyyy-MM-dd');
   }
 
   getById(id: number) {
@@ -217,7 +231,6 @@ export class EventDetailComponent implements OnInit {
     } else if (edad.toString() == 'VEINTIUNO') {
       this.edadMinima = 21;
     } else if (edad.toString() == 'VEINTICINCO') {
-      this.edadMinima = 25
     }
   }
 
@@ -346,11 +359,13 @@ export class EventDetailComponent implements OnInit {
 
   addForm(c: number) {
     const formValues = this.datosCompradores.value;
+    let fecha = formValues.fecha!;
+    fecha =  <string>this.datePipe.transform(fecha, 'yyyy-mm-dd');
     const nuevoComprador: DatosComprador = {
       nombre: formValues.nombre || '',
       apellidos: formValues.apellidos || '',
       email: formValues.email || '',
-      fechaNacimiento: formValues.fecha!.replace(/\//g, '-') || '',
+      fechaNacimiento: fecha,
       genero: formValues.genero || '',
       telefono: formValues.telefono || ''
     };
