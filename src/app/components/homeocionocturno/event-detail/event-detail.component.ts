@@ -33,7 +33,7 @@ import {CantidadesRestantesDTO} from "../../../models/CantidadesRestantesDTO";
 import {UsuarioService} from "../../../services/usuario.service";
 import {ClienteService} from "../../../services/cliente.service";
 import {OcionocturnoService} from "../../../services/ocionocturno.service";
-import {ListaOcio} from "../../../models/ListaOcio";
+import {PdfService} from "../../../services/pdf.service";
 
 const IonIcons = {
   shirtOutline,
@@ -75,9 +75,9 @@ const IonIcons = {
     MatNativeDateModule,
     MatIcon,
     MatHint,
-    MatError
+    MatError,
   ],
-  standalone: true
+  standalone: true,
 })
 
 export class EventDetailComponent implements OnInit {
@@ -150,7 +150,7 @@ export class EventDetailComponent implements OnInit {
               private formBuilder: FormBuilder, private promocionService: PromocionService,
               private comprarService: ComprarService, private usuarioService: UsuarioService,
               private router: Router, private clienteService: ClienteService,
-              private ocioService: OcionocturnoService
+              private ocioService: OcionocturnoService, private pdfService : PdfService
   ) {
     addIcons(IonIcons);
   }
@@ -408,8 +408,11 @@ export class EventDetailComponent implements OnInit {
         next: async value => {
           await loading.present();
           if (value.object as EntradaOcioCliente[]) {
+            let compra = value.object as EntradaOcioCliente[];
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
+            this.pdfService.downloadPdf(compra, new ComprarReservadoDTO(), []);
+            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -429,9 +432,12 @@ export class EventDetailComponent implements OnInit {
         this.datosAsistentesROC!).subscribe({
         next: async value => {
           await loading.present();
-          if (value.object as ReservadoOcioCliente) {
+          if (value.object as ComprarReservadoDTO) {
+            let compra = value.object as ComprarReservadoDTO;
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
+            this.pdfService.downloadPdf([], compra, []);
+            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -452,8 +458,11 @@ export class EventDetailComponent implements OnInit {
         next: async value => {
           await loading.present();
           if (value.object as ListaOcioCliente[]) {
+            let compra = value.object as ListaOcioCliente[];
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
+            this.pdfService.downloadPdf([], new ComprarReservadoDTO(), compra);
+            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -491,7 +500,7 @@ export class EventDetailComponent implements OnInit {
 
   sePuedenComprarEntradas() {
     this.disponiblesGeneral = this.informacionTiposEntrada?.entradaOcioDTO?.totalEntradas! - this.entradasVendidas!
-    let total = this.evento?.aforo! - this.disponiblesGeneral;
+    let total = this.disponiblesGeneral;
 
     if (total > 0) {
       for (let x = 0; x < this.disponiblesGeneral; x++) {
@@ -515,7 +524,7 @@ export class EventDetailComponent implements OnInit {
 
   sePuedenComprarListas() {
     this.disponiblesLista = this.informacionTiposEntrada?.listaOcioDTO?.total_invitaciones! - this.clientesApuntadosALista!
-    let total = this.evento?.aforo! - this.disponiblesLista;
+    let total = this.disponiblesLista;
 
     if (total > 0) {
       for (let x = 0; x < this.disponiblesLista; x++) {
