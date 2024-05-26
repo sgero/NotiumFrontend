@@ -20,6 +20,10 @@ export class EventoService {
   getById(id:number){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/${id}`);
   }
+  getAllByOcio(id:number){
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/listarByOcio/${id}`);
+  }
+
 
   getInfoEntradas(id:number){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/${id}/entradas`);

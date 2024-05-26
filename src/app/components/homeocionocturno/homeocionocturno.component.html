@@ -2,6 +2,23 @@
 <app-headerocionocturno></app-headerocionocturno>
 <div class="main-container">
   <ion-card (scroll)="onScroll($event)">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Establecimientos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content >
+      <ion-list  *ngFor="let o of ocios">
+        <ion-item>
+          <ion-thumbnail slot="start">
+            <img alt="logo_ocio_nocturno" src="{{o.imagenMarca}}" />
+          </ion-thumbnail>
+          <ion-label>{{o.nombre}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
     <ion-card-header>
       <ion-card-title>Eventos Activos</ion-card-title>
     </ion-card-header>

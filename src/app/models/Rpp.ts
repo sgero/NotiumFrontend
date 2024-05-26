@@ -9,7 +9,7 @@ export class Rpp  {
   dni?: string;
   telefono?: string;
   fecha_nacimiento?: number;
-  userDTO?: Usuario;
-  direccionDTO?:Direccion;
+  userDTO?: Usuario | null;
+  direccionDTO?:Direccion | null;
   ocioNocturnoDTO?:OcioNocturno;
 }

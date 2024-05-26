@@ -8,6 +8,8 @@ import {InfiniteScrollCustomEvent, IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {FormsModule} from "@angular/forms";
+import {OcionocturnoService} from "../../services/ocionocturno.service";
+import {OcioNocturno} from "../../models/OcioNocturno";
 import {RouterLink} from "@angular/router";
 
 @Component({
@@ -32,6 +34,7 @@ export class HomeocionocturnoComponent  implements OnInit {
 
   eventosActivos: Evento[] = [];
   eventosEntreFechas: Evento[] = [];
+  ocios: OcioNocturno[] = [];
   esCliente?: boolean;
   fecha: Date = new Date();
   fechaSeleccionada?: Date ;
@@ -40,10 +43,13 @@ export class HomeocionocturnoComponent  implements OnInit {
   finalPaginado:boolean = false;
   fechaActual : string = new Date().toString();
 
-  constructor(private ocioService : EventoService) { }
+
+  constructor(private ocioService : EventoService,
+              private ocioNocturnoService : OcionocturnoService) { }
 
   ngOnInit() {
     this.getEventos(5,0);
+    this.getOcios();
   }
   getEventos(numElem:number, numPag:number){
     const params = {
@@ -58,6 +64,17 @@ export class HomeocionocturnoComponent  implements OnInit {
         }else {
           this.finalPaginado = true;
         }
+      },
+      error: e => {
+        console.error(e);
+      }
+    })
+  }
+
+  getOcios(){
+    this.ocioNocturnoService.listarOcioNocturno().subscribe({
+      next: value => {
+        this.ocios = value as OcioNocturno[] ;
       },
       error: e => {
         console.error(e);
