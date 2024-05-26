@@ -12,10 +12,13 @@ import {RppService} from "../../services/rpp.service";
 import {Rpp} from "../../models/Rpp";
 import {ListaOcio} from "../../models/ListaOcio";
 import {ListaOcioService} from "../../services/listaOcio.service";
-import { FormsModule } from '@angular/forms';
-import { OverlayEventDetail } from '@ionic/core';
+import {FormsModule} from '@angular/forms';
+import {OverlayEventDetail} from '@ionic/core';
 import {Direccion} from "../../models/Direccion";
 import {Usuario} from "../../models/Usuario";
+import {CartaocioComponent} from "../cartaocio/cartaocio.component";
+import {CartaOcio} from "../../models/CartaOcio";
+import {CartaOcioService} from "../../services/cartaOcio.service";
 
 @Component({
   selector: 'app-gestionocio',
@@ -24,6 +27,7 @@ import {Usuario} from "../../models/Usuario";
   imports: [
     HeaderocionocturnoComponent,
     FooterocionocturnoComponent,
+    CartaocioComponent,
     IonicModule,
     DatePipe,
     NgForOf,
@@ -35,23 +39,25 @@ import {Usuario} from "../../models/Usuario";
 export class GestionocioComponent  implements OnInit {
 
   @ViewChild(IonModal) modal!: IonModal;
-  message = 'Rpp creado con éxito';
-
   eventosInfo: string = 'eventosInfo';
   ocio: OcioNocturno = new OcioNocturno();
   eventos: Evento[] = [];
   rpps: Rpp[] = [];
   rppDeleted: Rpp = new Rpp();
   newRpp: Rpp = new Rpp();
-  direccion: Direccion = new Direccion();
-  usuario: Usuario = new Usuario();
   listas: ListaOcio[] = [];
+  mostrarCarta: boolean = false;
+  isDisable = false;
+  cartaOcio: CartaOcio = new CartaOcio();
   constructor(
     private ocioNocturnoService : OcionocturnoService,
     private eventoService : EventoService,
     private rppService : RppService,
     private listaService : ListaOcioService,
-    private route:ActivatedRoute) { }
+    private cartaOcioService: CartaOcioService,
+    private route:ActivatedRoute
+  ) {this.newRpp.direccionDTO = new Direccion();
+    this.newRpp.userDTO = new Usuario(); }
 
   ngOnInit() {
     this.getOcio()
@@ -147,32 +153,42 @@ export class GestionocioComponent  implements OnInit {
     this.getRpps()
   }
 
+  Carta() {
+    this.eventosInfo = 'carta';
+  }
+
   Galeria() {
     this.eventosInfo = 'galeria';
   }
 
   RegistrarRpp() {
-    this.rppService.guardarRpp(this.newRpp).subscribe({
-      next: value => {
-       // this.newRpp.direccionDTO = this.direccion;
-        // this.newRpp.userDTO = this.usuario;
-        this.newRpp = value as Rpp;
-        console.log(value);
-      },
-      error: e => {
-        console.error("no funciona",e);
-      }
-    })
+    if (!this.newRpp.direccionDTO) {
+      this.newRpp.direccionDTO = new Direccion();
+    }
+    if (!this.newRpp.userDTO) {
+      this.newRpp.userDTO = new Usuario();
+    }
+    this.route.params.subscribe(params => {
+      const ocioID = +params['id'];
+      if (ocioID) {
+        this.rppService.guardarRpp(ocioID, this.newRpp).subscribe({
+          next: value => {
+
+            this.newRpp = value as Rpp;
+            console.log(value);
+          },
+          error: e => {
+            console.error("no funciona",e);
+          }
+    })}})
   }
 
   onWillDismiss($event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<Rpp>>;
     if (ev.detail.role === 'confirmar') {
-      this.message;
       this.RegistrarRpp()
     }
   }
-
 
   cancelar() {
     this.modal.dismiss(null, 'cancelar')
@@ -180,6 +196,50 @@ export class GestionocioComponent  implements OnInit {
 
   confirmar() {
     this.modal.dismiss(this.newRpp, 'confirmar')
+  }
+
+  guardarCarta(){
+    this.route.params.subscribe(params => {
+      const ocioID = +params['id'];
+      if (ocioID) {
+        this.cartaOcioService.guardarCarta(ocioID, this.cartaOcio).subscribe({
+          next: value => {
+            this.cartaOcio = value as CartaOcio;
+          },
+          error: e => {
+            console.error(e);
+          }
+        })
+      }
+    })
+  }
+  eliminarCarta(){
+    this.route.params.subscribe(params => {
+      const cartaId = +params['id'];
+      if (cartaId) {
+        this.cartaOcioService.eliminarCarta(cartaId).subscribe({
+          next: value => {
+            this.cartaOcio = value as CartaOcio;
+          },
+          error: e => {
+            console.error(e);
+          }
+        })
+      }
+    })
+  }
+
+
+  saveCarta() {
+    this.mostrarCarta = true;
+    this.isDisable  = true;
+    this.guardarCarta()
+  }
+
+  deleteCarta() {
+    this.mostrarCarta = false;
+    this.isDisable  = false;
+    this.eliminarCarta();
   }
 }
 

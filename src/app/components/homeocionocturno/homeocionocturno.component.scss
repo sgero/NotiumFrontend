@@ -13,3 +13,58 @@ ion-label{
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.carrusel{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.slideshow{
+  margin: 30px;
+  padding-top: 10px;
+  height: 1000px;
+  box-sizing: border-box;
+}
+.content{
+  margin: auto;
+  width: 250px;
+  perspective: 1000px;
+  position: relative;
+  padding-top: 10px;
+}
+.content-carrusel{
+  width: 100%;
+  position: absolute;
+  float: right;
+  animation: rotar 15s infinite linear;
+  transform-style: preserve-3d;
+}
+.content-carrusel:hover{
+  animation-play-state: paused;
+  cursor: pointer;
+}
+.content-carrusel figure{
+  width: 100%;
+  height: 200px;
+  border: 1px solid #4d444d;
+  overflow: hidden;
+  position: absolute;
+}
+
+.shadow{
+  position: absolute;
+  box-shadow: 0 0 20px 0 #000;
+  border-radius: 5px;
+}
+.content-carrusel img{
+  image-rendering: auto;
+  //transition: all 300ms;
+  width: 100%;
+  height: 100%;
+}
+.content-carrusel img:hover{
+  transform: scale(1.2);
+  transition: all 300ms;
+}
+

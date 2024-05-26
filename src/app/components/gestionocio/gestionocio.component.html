@@ -12,6 +12,7 @@
   <div class="buttons">
     <ion-button shape="round" (click)="Eventos()">Eventos</ion-button>
     <ion-button shape="round" (click)="Staff()">Staff</ion-button>
+    <ion-button shape="round" (click)="Carta()">Carta</ion-button>
     <ion-button shape="round" (click)="Galeria()">Galería</ion-button>
   </div>
   <div *ngIf="eventosInfo == 'eventosInfo'">
@@ -82,7 +83,7 @@
       </ion-card>
     </div>
     <ion-content class="ion-padding">
-      <ion-button id="open-modal" expand="block">Añadir Rpp</ion-button>
+      <ion-button id="open-modal" shape="round">Añadir RRPP</ion-button>
       <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
         <ng-template>
           <ion-header>
@@ -134,15 +135,89 @@
                 label="Fecha de nacimiento"
                 labelPlacement="stacked"
                 type=date
-                [(ngModel)]="newRpp.fecha_nacimiento"
+                [(ngModel)]="newRpp.fechaNacimiento"
               ></ion-input>
             </ion-item>
+            <div *ngIf="newRpp.direccionDTO">
+              <ion-item>
+                <ion-input
+                  label="Calle"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.direccionDTO.calle"
+                ></ion-input>
+                <ion-input
+                  label="Código Postal"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.direccionDTO.codigoPostal"
+                ></ion-input>
+                <ion-input
+                  label="Ciudad"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.direccionDTO.ciudad"
+                ></ion-input>
+                <ion-input
+                  label="Provincia"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.direccionDTO.provincia"
+                ></ion-input>
+                <ion-input
+                  label="País"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.direccionDTO.pais"
+                ></ion-input>
+              </ion-item>
+            </div>
+
+            <div *ngIf="newRpp.userDTO">
+              <ion-item>
+                <ion-input
+                  label="Username"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.userDTO.username"
+                ></ion-input>
+                <ion-input
+                  label="Password"
+                  labelPlacement="stacked"
+                  type="password"
+                  required="true"
+                  [(ngModel)]="newRpp.userDTO.password"
+                ></ion-input>
+                <ion-input
+                  label="Email"
+                  labelPlacement="stacked"
+                  type="email"
+                  required="true"
+                  [(ngModel)]="newRpp.userDTO.email"
+                ></ion-input>
+                <ion-select label="Rol" required="true"[(ngModel)]="newRpp.userDTO.rol">
+                  <ion-select-option value="RPP">RPP</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </div>
           </ion-content>
         </ng-template>
       </ion-modal>
     </ion-content>
   </div>
-
+  <div *ngIf="eventosInfo == 'carta'">
+    <div class="carta">
+      <ion-button class="icon" shape="round" (click)="saveCarta()" [disabled]="isDisable">Crear Carta<ion-icon name="trash-outline"></ion-icon></ion-button>
+      <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
+      <ion-button class="icon" shape="round" (click)="deleteCarta()">Eliminar Carta<ion-icon name="trash-outline"></ion-icon></ion-button>
+    </div>
+  </div>
   <div *ngIf="eventosInfo == 'galeria'">
     <div class="galeria">
       <p>Aqui saldrian las fotos</p>

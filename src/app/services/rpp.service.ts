@@ -1,8 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Rpp} from "../models/Rpp";
-import {OcioNocturno} from "../models/OcioNocturno";
-import {RespuestaDTO} from "../models/RespuestaDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +24,8 @@ export class RppService {
     return this.http.get<Rpp[]>(`${this.apiUrl}/rpps/listarByOcio/${id}`);
   }
 
-  guardarRpp(rpp : Rpp){
-    return this.http.post<Rpp>(`${this.apiUrl}/rpps/guardar`, rpp);
+  guardarRpp(id:number, rpp : Rpp){
+    return this.http.post<[number, Rpp]>(`${this.apiUrl}/rpps/guardar/${id}`, rpp);
   }
 
   eliminarRpp(id:number){
