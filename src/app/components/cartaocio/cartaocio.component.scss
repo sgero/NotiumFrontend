@@ -1,0 +1,120 @@
+.container{
+  background-image: url('~src/assets/images/cartaOcioNocturno.jpg');
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%; /* Ajusta el tamaño según sea necesario */
+  height: 300vh; /* Ajusta el tamaño según sea necesario */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  //align-content: center;
+  align-items: center;
+  //padding: 20%;
+  position: relative;
+}
+
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2; /* Asegura que los botones estén por encima de la imagen */
+  background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para mayor visibilidad */
+  padding: 200px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  margin: 10px;
+}
+
+.ion-padding {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 3; /* Asegura que el contenido del modal esté por encima de otros elementos */
+}
+
+//ion-modal {
+//  z-index: 4; /* Asegura que el modal esté por encima de todos los demás elementos */
+//}
+
+ion-button.icon {
+  --background: #2a032a;
+  --background-hover: #2a032a;
+  --background-activated: #2a032a;
+  --background-focused: #2a032a;
+  --color: white;
+  --border-radius: 1%;
+  --border-color: #000;
+  --border-style: solid;
+  --border-width: 1px;
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+  --ripple-color: deeppink;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+}
+
+//.ion-padding{
+//  display: flex;
+//  flex-direction: row;
+//  justify-content: center;
+//  z-index: 2;
+//}
+
+//.buttons{
+//  display: flex;
+//  flex-direction: row;
+//  justify-content: center;
+//  margin-top: 20px; /* Ajusta según sea necesario */
+//  z-index: 1; /* Asegura que los botones estén por encima de la imagen */
+//
+//}
+//
+//.buttons ion-button {
+//  margin-left: 15px;
+//  --background: #2a032a;
+//  --background-hover: #2a032a;
+//  --background-activated: #2a032a;
+//  --background-focused: #2a032a;
+//
+//  --color: white;
+//
+//  --border-radius: 1%;
+//  --border-color: #000;
+//  --border-style: solid;
+//  --border-width: 1px;
+//
+//  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+//
+//  --ripple-color: deeppink;
+//
+//  --padding-top: 10px;
+//  --padding-bottom: 10px;
+//}
+
+// ion-button .icon{
+//  color: white;
+//}
+//
+//ion-modal {
+//  z-index: 2; /* Asegura que el modal esté por encima de todos los demás elementos */
+//}
+//
+//
+//ion-label, .staff ion-label{
+//  max-width: 300px;
+//  overflow: hidden;
+//  text-overflow: ellipsis;
+//  white-space: nowrap;
+//}
+//
+//.listas ion_label{
+//  max-width: 800px;
+//  overflow: hidden;
+//  text-overflow: ellipsis;
+//  white-space: nowrap;
+//}
+

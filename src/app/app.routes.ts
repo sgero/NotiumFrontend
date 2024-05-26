@@ -12,6 +12,7 @@ import {RestauranteUserComponent} from "./components/restaurante/restaurante-use
 import {CartarestauranteComponent} from "./components/cartarestaurante/cartarestaurante.component";
 import {EventDetailComponent} from "./components/homeocionocturno/event-detail/event-detail.component";
 import {GestionocioComponent} from "./components/gestionocio/gestionocio.component";
+import {CartaocioComponent} from "./components/cartaocio/cartaocio.component";
 
 export const routes: Routes = [
   // {
@@ -36,6 +37,7 @@ export const routes: Routes = [
   {path: 'notium/restaurante/user', component: RestauranteUserComponent},
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
   {path: 'notium/ocionocturno/:id', component: GestionocioComponent},
+  {path: 'cartaOcio', component: CartaocioComponent},
   {
     path: 'prueba',
     loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)

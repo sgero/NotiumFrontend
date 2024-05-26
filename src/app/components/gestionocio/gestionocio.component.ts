@@ -34,6 +34,9 @@ import {addIcons} from "ionicons";
 import {CodigoVestimentaOcio} from "../../models/CodigoVestimentaOcio";
 import {EdadMinimaOcio} from "../../models/EdadMinimaOcio";
 import {provideNativeDateAdapter} from "@angular/material/core";
+import {CartaocioComponent} from "../cartaocio/cartaocio.component";
+import {CartaOcio} from "../../models/CartaOcio";
+import {CartaOcioService} from "../../services/cartaOcio.service";
 
 const IonIcons = {
   shirtOutline,
@@ -51,6 +54,7 @@ const IonIcons = {
   imports: [
     HeaderocionocturnoComponent,
     FooterocionocturnoComponent,
+    CartaocioComponent,
     IonicModule,
     DatePipe,
     NgForOf,
@@ -83,17 +87,16 @@ const IonIcons = {
 export class GestionocioComponent  implements OnInit {
 
   @ViewChild(IonModal) modal!: IonModal;
-  message = 'Rpp creado con éxito';
-
   eventosInfo: string = 'eventosInfo';
   ocio: OcioNocturno = new OcioNocturno();
   eventos: Evento[] = [];
   rpps: Rpp[] = [];
   rppDeleted: Rpp = new Rpp();
   newRpp: Rpp = new Rpp();
-  direccion: Direccion = new Direccion();
-  usuario: Usuario = new Usuario();
   listas: ListaOcio[] = [];
+  mostrarCarta: boolean = false;
+  isDisable = false;
+  cartaOcio: CartaOcio = new CartaOcio();
   isModalOpen = false;
   firstFormGroup = this.formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -118,8 +121,12 @@ export class GestionocioComponent  implements OnInit {
     private rppService : RppService,
     private listaService : ListaOcioService,
     private route:ActivatedRoute,
-    private formBuilder: FormBuilder) {
+    private formBuilder: FormBuilder,
+    private cartaOcioService: CartaOcioService,
+  ) {
     addIcons(IonIcons);
+    this.newRpp.direccionDTO = new Direccion();
+    this.newRpp.userDTO = new Usuario();
   }
 
   ngOnInit() {
@@ -216,32 +223,42 @@ export class GestionocioComponent  implements OnInit {
     this.getRpps()
   }
 
+  Carta() {
+    this.eventosInfo = 'carta';
+  }
+
   Galeria() {
     this.eventosInfo = 'galeria';
   }
 
   RegistrarRpp() {
-    this.rppService.guardarRpp(this.newRpp).subscribe({
-      next: value => {
-       // this.newRpp.direccionDTO = this.direccion;
-        // this.newRpp.userDTO = this.usuario;
-        this.newRpp = value as Rpp;
-        console.log(value);
-      },
-      error: e => {
-        console.error("no funciona",e);
-      }
-    })
+    if (!this.newRpp.direccionDTO) {
+      this.newRpp.direccionDTO = new Direccion();
+    }
+    if (!this.newRpp.userDTO) {
+      this.newRpp.userDTO = new Usuario();
+    }
+    this.route.params.subscribe(params => {
+      const ocioID = +params['id'];
+      if (ocioID) {
+        this.rppService.guardarRpp(ocioID, this.newRpp).subscribe({
+          next: value => {
+
+            this.newRpp = value as Rpp;
+            console.log(value);
+          },
+          error: e => {
+            console.error("no funciona",e);
+          }
+    })}})
   }
 
   onWillDismiss($event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<Rpp>>;
     if (ev.detail.role === 'confirmar') {
-      this.message;
       this.RegistrarRpp()
     }
   }
-
 
   cancelar() {
     this.modal.dismiss(null, 'cancelar')
@@ -249,6 +266,50 @@ export class GestionocioComponent  implements OnInit {
 
   confirmar() {
     this.modal.dismiss(this.newRpp, 'confirmar')
+  }
+
+  guardarCarta(){
+    this.route.params.subscribe(params => {
+      const ocioID = +params['id'];
+      if (ocioID) {
+        this.cartaOcioService.guardarCarta(ocioID, this.cartaOcio).subscribe({
+          next: value => {
+            this.cartaOcio = value as CartaOcio;
+          },
+          error: e => {
+            console.error(e);
+          }
+        })
+      }
+    })
+  }
+  eliminarCarta(){
+    this.route.params.subscribe(params => {
+      const cartaId = +params['id'];
+      if (cartaId) {
+        this.cartaOcioService.eliminarCarta(cartaId).subscribe({
+          next: value => {
+            this.cartaOcio = value as CartaOcio;
+          },
+          error: e => {
+            console.error(e);
+          }
+        })
+      }
+    })
+  }
+
+
+  saveCarta() {
+    this.mostrarCarta = true;
+    this.isDisable  = true;
+    this.guardarCarta()
+  }
+
+  deleteCarta() {
+    this.mostrarCarta = false;
+    this.isDisable  = false;
+    this.eliminarCarta();
   }
 
   openM(isOpen: boolean) {
