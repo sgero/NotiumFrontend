@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { HacerReservaComponent } from './hacer-reserva.component';
+import { CrearReservaComponent } from './crear-reserva.component';
 
-describe('HacerReservaComponent', () => {
-  let component: HacerReservaComponent;
-  let fixture: ComponentFixture<HacerReservaComponent>;
+describe('CrearReservaComponent', () => {
+  let component: CrearReservaComponent;
+  let fixture: ComponentFixture<CrearReservaComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ HacerReservaComponent ],
+      declarations: [ CrearReservaComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(HacerReservaComponent);
+    fixture = TestBed.createComponent(CrearReservaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

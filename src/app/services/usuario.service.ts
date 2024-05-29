@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {map, Observable} from "rxjs";
 import {Usuario} from "../models/Usuario";
 
 @Injectable({
@@ -28,6 +28,7 @@ export class UsuarioService{
     const header = this.autorizarPeticion();
     return this.http.get<Usuario>(`${this.apiUrl}/auth/getusuario`, header);
   }
+
 
   getUsuarios() :Observable<JSON> {
 

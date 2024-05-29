@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear Reserva</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Fecha</ion-label>
+    <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fecha"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Número de Personas</ion-label>
+    <ion-input type="number" [(ngModel)]="numPersonas" min="1"></ion-input>
+  </ion-item>
+
+  <ion-button expand="full" (click)="buscarTurnos()">Buscar Turnos Disponibles</ion-button>
+
+  <ion-list *ngIf="turnosDisponibles.length > 0">
+    <ion-list-header>
+      <ion-label>Turnos Disponibles</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let turno of turnosDisponibles" [class.selected]="turnoSeleccionado === turno" (click)="seleccionarTurno(turno)">
+        {{ turno.hora_inicio }} a {{ turno.hora_fin }}
+      <ion-button slot="end" (click)="seleccionarTurno(turno)">Seleccionar</ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="hacerReserva()" [disabled]="!turnoSeleccionado">Hacer Reserva</ion-button>
+</ion-content>

@@ -11,7 +11,7 @@ import {  } from "@angular/material/dialog";
 import {PruebaPage} from "../prueba/prueba.page";
 import {restaurant} from "ionicons/icons";
 import {HacerValoracionComponent} from "../hacer-valoracion/hacer-valoracion.component";
-import {HacerReservaComponent} from "../hacer-reserva/hacer-reserva.component";
+import {CrearReservaComponent} from "../crear-reserva/crear-reserva.component";
 import {SharedService} from "../../../services/SharedService";
 import {Restaurante} from "../../../models/Restaurante";
 import {ActivatedRoute} from "@angular/router";
@@ -28,7 +28,7 @@ import {UsuarioService} from "../../../services/usuario.service";
   imports: [
     IonicModule,
     CommonModule,
-    MatFormField, MatInputModule, FormsModule, MatButtonModule
+    MatDialogModule
   ],
   standalone: true
 })
@@ -68,7 +68,21 @@ export class RestauranteUserComponent  implements OnInit {
     });
   }
 
-  abrirModalReserva(){ this.dialogRef.open(HacerReservaComponent); }
+
+  abrirModalReserva() {
+    const dialogRef = this.dialogRef.open(CrearReservaComponent, {
+      width: '1000px',
+      height: '1000px' ,
+      data: {
+        restauranteId: this.id_restaurante
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('El modal de reserva se ha cerrado');
+      // Puedes realizar acciones después de cerrar el modal si es necesario
+    });
+  }
 
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 

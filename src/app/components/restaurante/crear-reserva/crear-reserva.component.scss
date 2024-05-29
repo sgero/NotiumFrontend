@@ -1,0 +1,79 @@
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.alert-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.alert-body {
+  margin-bottom: 20px;
+}
+
+.alert-button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.alert-button:hover {
+  background: #0056b3;
+}
+
+.container {
+  padding: 20px;
+}
+
+
+
+ion-item.selected {
+  background-color: #f0f0f0; /* Cambia el color de fondo */
+  border: 1px solid #ccc; /* Agrega un borde */
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="date"],
+input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+h2 {
+  margin-top: 20px;
+}

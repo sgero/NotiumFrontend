@@ -4,6 +4,7 @@ import {map, Observable} from "rxjs";
 import { Restaurante } from "../models/Restaurante";
 import {OcioNocturno} from "../models/OcioNocturno";
 import {RespuestaDTO} from "../models/RespuestaDTO";
+import {Usuario} from "../models/Usuario";
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,18 @@ export class RestauranteService {
   }
 
 
+
+  getTurnosDisponibles(numPersonas: number, fecha: string, restauranteId: number): Observable<any> {
+    const disponibilidadRequest = {
+      numPersonas,
+      fecha,
+      restauranteId
+    };
+    return this.http.post<any>(`${this.apiUrl}/turno/disponibilidad`, disponibilidadRequest);
+  }
+
+  crearReserva(reserva: any ): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/reserva/crear`, reserva);
+  }
 
 }

@@ -10,6 +10,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {RestauranteComponent} from "./components/restaurante/restaurante.component";
 import {RestauranteUserComponent} from "./components/restaurante/restaurante-user/restaurante-user.component";
 import {CartarestauranteComponent} from "./components/cartarestaurante/cartarestaurante.component";
+import {CrearReservaComponent} from "./components/restaurante/crear-reserva/crear-reserva.component";
 import {EventDetailComponent} from "./components/homeocionocturno/event-detail/event-detail.component";
 
 export const routes: Routes = [
@@ -34,6 +35,7 @@ export const routes: Routes = [
   {path: 'notium/restaurante/:id', component: RestauranteComponent},
   {path: 'notium/restaurante/user', component: RestauranteUserComponent},
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
+  {path: 'notium/reservar/:restauranteId', component: CrearReservaComponent},
   {
     path: 'prueba',
     loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
