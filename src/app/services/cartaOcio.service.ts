@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {CartaOcio} from "../models/CartaOcio";
 import {Producto} from "../models/Producto";
 import {Token} from "../models/Token";
+import {ProductoFormato} from "../models/ProductoFormato";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class CartaOcioService {
 //TODO aqui debo comprobar q los productos qme mande pertenezcan a la cartaOcio asociada al ocioNocturno
   listarProducto(producto: Token){
     return this.http.post<Producto[]>(this.apiUrl+"/producto/listar",producto)
+  }
+
+  crearProductoFormato(productoFormato: ProductoFormato){
+    return this.http.post<ProductoFormato>(this.apiUrl+"/productoFormato/crear", productoFormato)
   }
 
 }

@@ -21,6 +21,7 @@
                 label="Nombre"
                 labelPlacement="stacked"
                 type="text"
+                [required]="true"
                 [(ngModel)]="newProducto.nombre"
               ></ion-input>
             </ion-item>
@@ -29,11 +30,12 @@
                 label="Precio"
                 labelPlacement="stacked"
                 type="text"
+                [required]="true"
                 [(ngModel)]="newProductoFormato.precio"
               ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO">
+              <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO" [required]="true">
                 <ion-select-option value="chupito">CHUPITO</ion-select-option>
                 <ion-select-option value="copa">COPA</ion-select-option>
                 <ion-select-option value="botella">BOTELLA</ion-select-option>
@@ -44,7 +46,7 @@
       </ion-modal>
     </ion-content>
   </div>
-<!--  <div>-->
+  <div>
 <!--    <div class="demo-button-container">-->
 <!--      <button mat-raised-button (click)="addData()" class="demo-button">-->
 <!--        Add data-->
@@ -86,5 +88,5 @@
 <!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
 <!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
 <!--    </table>-->
-<!--</div>-->
+</div>
 </div>
