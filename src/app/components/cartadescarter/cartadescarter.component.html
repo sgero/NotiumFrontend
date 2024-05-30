@@ -10,55 +10,55 @@
   <div class="main-container">
 
     <h1>
-      <b>ACTUALIZA TU CARTA</b>
+      <b>PLATOS DESCARTADOS</b>
     </h1>
-    <a class="descartes" href="/cartaRDescarte">Lista de descartes</a>
+    <a class="descartes" href="/cartaRestaurante">Volver a la carta</a>
     <div class="carta">
       <h1 *ngIf="entrante"><I><U>ENTRANTES</U></I></h1>
       <section *ngFor="let p of productos">
-      <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE'">
-        <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
-        <div class="formatos">
-          <div class="formato">
-            <span>Tapa</span>
-            <div class="precioactual" *ngFor="let pr of p.formatos">
-              <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE'">
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="formatos">
+            <div class="formato">
+              <span>Tapa</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
             </div>
-            <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
-            <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
-            <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-            <input type="submit" value="ok!" (click)="ocultarPrecio()">
-            </form>
-          </div>
-          <div class="formato">
-            <span>Media</span>
-            <div class="precioactual" *ngFor="let pr of p.formatos">
-              <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+            <div class="formato">
+              <span>Media</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
             </div>
-            <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
-            <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
-              <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-              <input type="submit" value="ok!" (click)="ocultarPrecio()">
-            </form>
-          </div>
-          <div class="formato">
-            <span>Ración</span>
-            <div class="precioactual" *ngFor="let pr of p.formatos">
-              <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+            <div class="formato">
+              <span>Ración</span>
+              <div class="precioactual" *ngFor="let pr of p.formatos">
+                <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
+              </div>
+              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
+                <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
+                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              </form>
             </div>
-            <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
-            <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
-              <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-              <input type="submit" value="ok!" (click)="ocultarPrecio()">
-            </form>
           </div>
         </div>
-      </div>
       </section>
       <h1 *ngIf="carne"><I><U>CARNES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'CARNE'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -99,7 +99,7 @@
       <h1 *ngIf="pescado"><I><U>PESCADOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'PESCADO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -140,7 +140,7 @@
       <h1 *ngIf="guiso"><I><U>GUISOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'GUISO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -181,7 +181,7 @@
       <h1 *ngIf="revuelto"><I><U>REVUELTOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'REVUELTO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -222,7 +222,7 @@
       <h1 *ngIf="frito"><I><U>FRITOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'FRITO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -263,7 +263,7 @@
       <h1 *ngIf="otros"><I><U>OTROS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'OTROS'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
@@ -304,7 +304,7 @@
       <h1 *ngIf="postre"><I><U>POSTRES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'POSTRE'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
 
             <div class="formato">
@@ -324,7 +324,7 @@
       <h1 *ngIf="vino"><I><U>VINOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'VINO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
 
             <div class="formato">
@@ -344,7 +344,7 @@
       <h1 *ngIf="cerveza"><I><U>CERVEZAS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'CERVEZA'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Vaso</span>
@@ -385,7 +385,7 @@
       <h1 *ngIf="refresco"><I><U>REFRESCOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'REFRESCO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Vaso</span>
@@ -404,7 +404,7 @@
       <h1 *ngIf="agua"><I><U>AGUA</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'AGUA'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Copa</span>
@@ -423,7 +423,7 @@
       <h1 *ngIf="coctel"><I><U>COCTELES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'COCTEL'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Copa</span>
@@ -442,7 +442,7 @@
       <h1 *ngIf="bebidaAlcoholica"><I><U>BEBIDAS ALCOHÓLICAS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'BEBIDA_ALCOHOLICA'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Descartar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
           <div class="formatos">
             <div class="formato">
               <span>Chupito</span>
@@ -469,39 +469,8 @@
           </div>
         </div>
       </section>
-      <div class="form" id="fporducto"><form (ngSubmit)="crearProducto()">
-        <h2>CREAR PRODUCTO</h2>
-        <div>
-          <span>Ponle un nombre a su plato aquí:</span>
-          <input type="text" id="nombre" name="nombre" placeholder="Nombre del producto" [(ngModel)]="producto.nombre" required>
-        </div>
-        <div>
-          <span>Selecciona una categoría aquí:</span>
-        <select id="tipoCategoria" name="tipoCategoria" [(ngModel)]="producto.tipoCategoria" required>
-          <option value="ENTRANTE">ENTRANTE</option>
-          <option value="GUISO">GUISO</option>
-          <option value="FRITO">FRITO</option>
-          <option value="REVUELTO">REVUELTO</option>
-          <option value="CARNE">CARNE</option>
-          <option value="PESCADO">PESCADO</option>
-          <option value="POSTRE">POSTRE</option>
-          <option value="VINO">VINO</option>
-          <option value="REFRESCO">REFRESCO</option>
-          <option value="AGUA">AGUA</option>
-          <option value="CERVEZA">CERVEZA</option>
-          <option value="BEBIDA_ALCOHOLICA">BEBIDA_ALCOHOLICA</option>
-          <option value="COCTEL">COCTEL</option>
-          <option value="OTROS">OTROS</option>
-        </select>
-        </div>
-        <div>
-        <button type="submit">Crear</button> <button type="reset" (click)="ocultarForm()">Cancelar</button>
-        </div>
-      </form></div>
-      <div class="anyadir"><span>Si quieres añadir un nuevo producto pulsa:</span>
-        <button class="anyadeproducto" (click)="mostrarForm()"></button>
-        <span>Después de añadirlo indica el formato y precio.</span>
-      </div>
+
+
     </div>
   </div>
 
