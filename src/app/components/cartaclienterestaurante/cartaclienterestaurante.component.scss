@@ -11,7 +11,7 @@
   width: 100%;
   height: auto;
   background-image: url("https://i.pinimg.com/474x/b4/7c/93/b47c93522bfa3074b0d5616f3405200d.jpg");
-  background-size: cover;
+  background-size: contain;
   /* Añade una barra de desplazamiento vertical si el contenido es más grande */
   display: flex;
   flex-direction: column;
@@ -143,4 +143,7 @@ section{width: 100%;
   border: solid black 1px;
   border-radius: 5px;
   margin: 10px;
+}
+.precioactual{
+  width: 10vh;
 }
