@@ -64,7 +64,7 @@ export class PdfService {
       }
       yOffset = addText(`Código para acceder al establecimiento:`, 10, yOffset, doc.internal.pageSize.width - 20);
       await addQRCode(`${d.codigo}` + `${d.id}`, 10, yOffset);
-      yOffset += 30;
+      yOffset += 40;
       if (yOffset > pageHeight - 120) {
         doc.addPage();
         yOffset = 10;

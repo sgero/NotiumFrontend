@@ -88,5 +88,17 @@ ion-label, .staff ion-label{
   margin: 5px;
 }
 ion-modal{
-  --width: 63%;
+  --width: 40%;
+}
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  letter-spacing: 0.5px;
+  color: #0c0b1f;
+  overflow-y: auto;
+  min-height: 100vh;
+
+}
+.crear{
+  display: grid;
+  align-items: center;
 }

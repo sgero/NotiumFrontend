@@ -13,7 +13,15 @@ import {InformacionTiposEntradasEvento} from "../../../models/InformacionTiposEn
 import {MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
 import {MatInput, MatInputModule} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {PromocionService} from "../../../services/promocion.service";
@@ -126,9 +134,9 @@ export class EventDetailComponent implements OnInit {
   datosCompradores = this.formBuilder.group({
     nombre: ['', Validators.required],
     apellidos: ['', Validators.required],
-    email: ['', Validators.required, Validators.email],
-    fecha: [''],
-    genero: [''],
+    email: ['', [Validators.required, Validators.email]],
+    fecha: ['', [Validators.required, this.dateValidator()]],
+    genero: ['', Validators.required],
     telefono: ['', Validators.required],
   });
   isLinear = false;
@@ -155,7 +163,7 @@ export class EventDetailComponent implements OnInit {
   disponiblesGeneral?: number;
   disponiblesReservado?: number;
   disponiblesLista?: number;
-
+  permisosParaEditar = false;
 
   constructor(private toastController: ToastController, private loadingCtrl: LoadingController,
               private eventoService: EventoService, private route: ActivatedRoute,
@@ -163,7 +171,8 @@ export class EventDetailComponent implements OnInit {
               private comprarService: ComprarService, private usuarioService: UsuarioService,
               private router: Router, private clienteService: ClienteService,
               private ocioService: OcionocturnoService, private pdfService : PdfService,
-              private datePipe: DatePipe
+              private datePipe: DatePipe, private ocioNocturnoService: OcionocturnoService,
+
   ) {
     addIcons(IonIcons);
   }
@@ -232,6 +241,22 @@ export class EventDetailComponent implements OnInit {
       this.edadMinima = 21;
     } else if (edad.toString() == 'VEINTICINCO') {
     }
+    return this.edadMinima;
+  }
+
+  dateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const inputDate = new Date(control.value);
+      const date = new Date();
+      let edadMinima = this.edadMinima;
+
+      date.setFullYear(date.getFullYear() - edadMinima!);
+
+      if (inputDate.setHours(0, 0, 0, 0) >= date.setHours(0, 0, 0, 0)) {
+        return { futureDate: true };
+      }
+      return null;
+    };
   }
 
   setOpenGeneral(isOpen: boolean, isGeneral: boolean, isReservado: boolean, isLista: boolean) {
@@ -577,7 +602,21 @@ export class EventDetailComponent implements OnInit {
           console.error(err);
         }
       })
-    } else {
+    } else if (usuario.rol == "OCIONOCTURNO"){
+      this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
+        next: value => {
+          if (value.id != this.evento?.ocioNocturnoDTO?.id) {
+            this.router.navigate(["notium/error"])
+          } else {
+            this.permisosParaEditar = true;
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+    }
+    else {
       this.router.navigate(["notium/error"])
     }
   }

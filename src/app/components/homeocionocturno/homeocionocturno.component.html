@@ -11,8 +11,8 @@
     }
   </div>
 </section>
-  @if (ver) {
     <div class="main-container">
+      @if (ver) {
       <ion-card (scroll)="onScroll($event)">
         <ion-card-header>
           <ion-card-title>Eventos Activos</ion-card-title>
@@ -32,6 +32,23 @@
           <div *ngIf="finalPaginado"><p>Has llegado al final.</p></div>
         </ion-card-content>
       </ion-card>
+      } @else {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Establecimientos</ion-card-title>
+          </ion-card-header>
+          <ion-card-content >
+            <ion-list  *ngFor="let o of ocios">
+              <ion-item  class="event-charged" [routerLink]="['/notium/ocionocturno/', o.id]">
+                <ion-thumbnail slot="start">
+                  <img alt="logo_ocio_nocturno" src="{{o.imagenMarca}}" />
+                </ion-thumbnail>
+                <ion-label>{{o.nombre}}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      }
 
       <ion-datetime class="calendar-event" presentation="date" locale="es-ES" [(ngModel)]="fechaSeleccionada"
                     (ionChange)="fecha" (click)="getEventosEntreFechas(fechaSeleccionada!)"></ion-datetime>
@@ -56,28 +73,7 @@
         </div>
       </div>
     </div>
-  } @else  {
-    <div class="main-container">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Establecimientos</ion-card-title>
-        </ion-card-header>
-        <ion-card-content >
-          <ion-list  *ngFor="let o of ocios">
-            <ion-item>
-              <ion-thumbnail slot="start">
-                <img alt="logo_ocio_nocturno" src="{{o.imagenMarca}}" />
-              </ion-thumbnail>
-              <ion-label>{{o.nombre}}</ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
 
-      <ion-datetime class="calendar-event" presentation="date" locale="es-ES" [(ngModel)]="fechaSeleccionada"
-                    (ionChange)="fecha" (click)="getEventosEntreFechas(fechaSeleccionada!)"></ion-datetime>
-    </div>
-  }
 <app-footerocionocturno></app-footerocionocturno>
 </body>
 

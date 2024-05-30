@@ -11,5 +11,5 @@ export class CrearEventoCiclico {
   reservadoOcioDTO?:ReservadoOcio;
   listaOcioDTO?:ListaOcio[];
   repetirCicloEventoOcio?:RepetirCicloEventoOcio;
-  diasARepetirCicloEventoOcioList?:DiasARepetirCicloEventoOcio;
+  diasARepetirCicloEventoOcioList?:DiasARepetirCicloEventoOcio[];
 }
