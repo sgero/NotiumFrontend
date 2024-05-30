@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {HeaderocionocturnoComponent} from "../headerocionocturno/headerocionocturno.component";
 import {FooterocionocturnoComponent} from "../footerocionocturno/footerocionocturno.component";
 import {IonicModule, IonModal} from "@ionic/angular";
@@ -110,13 +110,17 @@ const IonIcons = {
     provideNativeDateAdapter()
   ],
 })
-export class GestionocioComponent  implements OnInit {
+export class GestionocioComponent  implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['imagen', 'nombre', 'opciones'];
+  displayedColumnsListas: string[] = ['Nº invitaciones', 'precio', 'consumiciones', 'evento', 'tematica', 'cartel'];
   dataSource: MatTableDataSource<Rpp> = new MatTableDataSource<Rpp>();
+  dataSourceListas: MatTableDataSource<ListaOcio> = new MatTableDataSource<ListaOcio>();
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('listasPaginator', { static: false }) listasPaginator!: MatPaginator;
+  @ViewChild('listasSort', { static: false }) listasSort!: MatSort;
 
   eventosInfo: string = 'string';
   ocio: OcioNocturno = new OcioNocturno();
@@ -126,6 +130,7 @@ export class GestionocioComponent  implements OnInit {
   newRpp: Rpp = new Rpp();
   listas: ListaOcio[] = [];
   mostrarCarta: boolean = false;
+  mostrarListas: boolean = false;
   isDisable = false;
   cartaOcio: CartaOcio = new CartaOcio();
   isModalOpen = false;
@@ -146,6 +151,7 @@ export class GestionocioComponent  implements OnInit {
   unico = true;
   vestimentas: string[] = Object.keys(CodigoVestimentaOcio).filter(key => isNaN(Number(key))) as string[];
   edadMinima: string[] = Object.keys(EdadMinimaOcio).filter(key => isNaN(Number(key))) as string[];
+
   constructor(
     private ocioNocturnoService : OcionocturnoService,
     private eventoService : EventoService,
@@ -167,6 +173,8 @@ export class GestionocioComponent  implements OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.dataSourceListas.paginator = this.listasPaginator;
+    this.dataSourceListas.sort = this.listasSort;
   }
 
   applyFilter(event: Event) {
@@ -219,7 +227,6 @@ export class GestionocioComponent  implements OnInit {
           next: value => {
             this.rpps = value as Rpp[];
             this.dataSource.data = this.rpps;
-
           },
           error: e => {
             console.error(e);
@@ -230,15 +237,16 @@ export class GestionocioComponent  implements OnInit {
   }
 
   getListas(id:number){
-        this.listaService.getByRppId(id).subscribe({
-          next: value => {
-            this.listas = value as ListaOcio[];
-            console.log("listas del rpp con id"+id)
-          },
-          error: e => {
-            console.error(e);
-          }
-        })
+    this.showList()
+    this.listaService.getByRppId(id).subscribe({
+      next: value => {
+        this.listas = value as ListaOcio[];
+        this.dataSourceListas = new MatTableDataSource(this.listas);
+      },
+      error: e => {
+        console.error(e);
+      }
+    })
   }
 
 
@@ -339,6 +347,10 @@ export class GestionocioComponent  implements OnInit {
         })
       }
     })
+  }
+
+  showList(){
+    this.mostrarListas = true;
   }
 
 

@@ -136,22 +136,17 @@
                   </form>
                 </mat-step>
                 }
-
                 <mat-step>
                   <form>
                     <ng-template matStepLabel>Guardar</ng-template>
                   </form>
                 </mat-step>
-
               </mat-stepper>
             </div>
           </ion-content>
         </ng-template>
       </ion-modal>
       <ion-card>
-<!--        <ion-card-header>-->
-<!--          <ion-card-title>Eventos</ion-card-title>-->
-<!--        </ion-card-header>-->
         <ion-card-content >
           <ion-list  *ngFor="let e of eventos">
             <ion-item>
@@ -178,7 +173,7 @@
           <h1> RPPs </h1>
           <mat-form-field appearance="fill">
             <mat-label>Filter</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar RPPs">
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar RPP">
           </mat-form-field>
         </div>
         <div class="container">
@@ -216,7 +211,51 @@
             </table>
           </div>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
-      </div>
+<!--      </div>-->
+<!--        <div *ngIf="listas.length > 0">-->
+<!--          <h2 *ngFor="let rpp of rpps">Listas de {{rpp.nombre}}</h2>-->
+<!--          <ul>-->
+<!--            <li *ngFor="let lista of listas">-->
+<!--              Nºinvitaciones {{ lista.total_invitaciones }}-->
+<!--              Precio {{ lista.precio }} €-->
+<!--              Evento {{lista.eventoDTO?.nombre}}-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </div>-->
+          <div *ngIf="listas.length > 0 && mostrarListas" >
+            <h2 *ngFor="let rpp of rpps" >Listas de {{rpp.nombre}}</h2>
+            <table mat-table [dataSource]="dataSourceListas" class="mat-elevation-z8">
+              <ng-container matColumnDef="Nº invitaciones">
+                <th mat-header-cell *matHeaderCellDef> Nº invitaciones </th>
+                <td mat-cell *matCellDef="let lista"> {{lista.total_invitaciones}} </td>
+              </ng-container>
+              <ng-container matColumnDef="precio">
+                <th mat-header-cell *matHeaderCellDef> Precio </th>
+                <td mat-cell *matCellDef="let lista"> {{lista.precio}} €</td>
+              </ng-container>
+              <ng-container matColumnDef="consumiciones">
+                <th mat-header-cell *matHeaderCellDef> Consumiciones </th>
+                <td mat-cell *matCellDef="let lista"> {{lista.consumiciones}} </td>
+              </ng-container>
+              <ng-container matColumnDef="evento">
+                <th mat-header-cell *matHeaderCellDef> Evento </th>
+                <td mat-cell *matCellDef="let lista"> {{lista.eventoDTO?.nombre}} </td>
+              </ng-container>
+              <ng-container matColumnDef="tematica">
+                <th mat-header-cell *matHeaderCellDef> Temática </th>
+                <td mat-cell *matCellDef="let lista"> {{lista.eventoDTO?.tematica}} </td>
+              </ng-container>
+              <ng-container matColumnDef="cartel">
+                <th mat-header-cell *matHeaderCellDef> Cartel </th>
+                <td mat-cell *matCellDef="let lista"> src="{{lista.eventoDTO?.cartel}}" </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsListas"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsListas;"></tr>
+            </table>
+          </div>
+          <mat-paginator *ngIf="mostrarListas" #listasPaginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
+        </div>
 
     <ion-content class="ion-padding">
       <ion-button id="open-modal" shape="round">Añadir RRPP</ion-button>
@@ -353,7 +392,7 @@
     </div>
   </div>
   </div>
-</ion-content>
+
   <div *ngIf="eventosInfo === 'carta'">
     <div class="carta">
       <ion-button class="icon" shape="round" (click)="saveCarta()" [disabled]="isDisable">Crear Carta<ion-icon name="trash-outline"></ion-icon></ion-button>
@@ -366,7 +405,7 @@
       <p>Aqui saldrian las fotos</p>
     </div>
   </div>
-
+</ion-content>
 
 
 <app-footerocionocturno></app-footerocionocturno>
