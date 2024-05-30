@@ -10,6 +10,8 @@ import {CrearTurnosComponent} from "./crear-turnos/crear-turnos.component";
 import {ReservaService} from "../../../services/reserva.service";
 import {Reserva} from "../../../models/Reserva";
 import {CommonModule} from "@angular/common";
+import {UsuarioService} from "../../../services/usuario.service";
+import {CartarestauranteService} from "../../../services/cartarestaurante.service";
 
 @Component({
   selector: 'app-restaurante-admin',
@@ -25,11 +27,14 @@ export class RestauranteAdminComponent  implements OnInit {
   turnos: Turno[] = [];
   mesas: Mesa[] = [];
   reservas: Reserva[] = [];
+  usuario={username: ''};
 
   constructor(private turnosService: TurnosService,
               private mesaService: MesaService,
               private reservaService: ReservaService,
-              private dialogRef: MatDialog) { }
+              private dialogRef: MatDialog,
+              private usuarioservice: UsuarioService,
+              private cartaservice: CartarestauranteService) { }
 
 
   //Funciones modales
@@ -39,6 +44,9 @@ export class RestauranteAdminComponent  implements OnInit {
 
   ngOnInit() {
     this.listarReserva();
+    this.usuarioservice.getUsuarioToken().subscribe(data=>{
+      this.usuario.username = data.username;
+    });
   }
 
   listarTurnos(){
@@ -65,5 +73,10 @@ export class RestauranteAdminComponent  implements OnInit {
     });
   }
 
+  crearCartaRes(){
+    this.cartaservice.crearCartaRes(this.usuario).subscribe(data =>{
+      console.log(data);
+    })
+  }
 
 }
