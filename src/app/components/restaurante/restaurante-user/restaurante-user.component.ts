@@ -19,12 +19,14 @@ import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {UsuarioService} from "../../../services/usuario.service";
+import {CartaclienterestauranteComponent} from "../../cartaclienterestaurante/cartaclienterestaurante.component";
 
 @Component({
   selector: 'app-restaurante-user',
   templateUrl: './restaurante-user.component.html',
   styleUrls: ['./restaurante-user.component.scss'],
   imports: [
+    CartaclienterestauranteComponent,
     IonicModule,
     CommonModule,
     MatFormField, MatInputModule, FormsModule, MatButtonModule

@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {CartarestauranteService} from "../../services/cartarestaurante.service";
 import {Router} from "@angular/router";
+import {NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-cartaclienterestaurante',
   templateUrl: './cartaclienterestaurante.component.html',
   styleUrls: ['./cartaclienterestaurante.component.scss'],
+  imports: [
+    NgForOf,
+    FormsModule,
+    NgIf
+  ],
+  standalone: true
 })
 export class CartaclienterestauranteComponent  implements OnInit {
 
