@@ -33,11 +33,7 @@ export const routes: Routes = [
   {path: 'notium/ocionocturno', component: HomeocionocturnoComponent},
   {path: 'notium/restaurante/:id', component: RestauranteComponent},
   {path: 'notium/restaurante/user', component: RestauranteUserComponent},
-  {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
-  {
-    path: 'prueba',
-    loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
-  }
+  {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent}
 
 
 

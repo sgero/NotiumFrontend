@@ -9,6 +9,7 @@ export class SharedService {
 
   restaurante = new Restaurante();
   id_restaurante: number | undefined;
+  usuario: any;
 
   constructor() {}
 
@@ -30,5 +31,13 @@ export class SharedService {
     return this.id_restaurante;
   }
 
+  //Obtener el usuario por el token
+  setUsuarioToken(data: any){
+    this.usuario=data;
+  }
+
+  getUsuarioToken(){
+    return this.usuario;
+  }
 
 }

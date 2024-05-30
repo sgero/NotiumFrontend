@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ModificarMesasComponent } from './modificar-mesas.component';
+import { CrearTurnosComponent } from './crear-turnos.component';
 
-describe('ModificarMesasComponent', () => {
-  let component: ModificarMesasComponent;
-  let fixture: ComponentFixture<ModificarMesasComponent>;
+describe('CrearTurnosComponent', () => {
+  let component: CrearTurnosComponent;
+  let fixture: ComponentFixture<CrearTurnosComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ModificarMesasComponent ],
+      declarations: [ CrearTurnosComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ModificarMesasComponent);
+    fixture = TestBed.createComponent(CrearTurnosComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

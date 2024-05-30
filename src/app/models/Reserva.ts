@@ -8,8 +8,9 @@ export class Reserva{
   id?: number;
   codigo_reserva?: string = '';
   activo?: boolean = true;
-  cliente: Cliente = new Cliente();
-  turno: Turno = new Turno();
-  restaurante: Restaurante = new Restaurante();
-  mesa: Mesa = new Mesa();
+  fecha?: string = '';
+  clienteDTO: Cliente = new Cliente();
+  turnoDTO: Turno = new Turno();
+  restauranteDTO: Restaurante = new Restaurante();
+  mesaDTO: Mesa = new Mesa();
 }
