@@ -29,4 +29,13 @@ export class CartarestauranteService {
   bajaProducto(data: Producto){
     return this.http.put(this.apiUrl+"/producto/baja",data, { responseType: 'text' })
   }
+
+  listarProductoDescarte(data: Token){
+    return this.http.post<ListadoProductos[]>(this.apiUrl+"/producto/listardescarte",data)
+  }
+
+  eliminarProducto(data: Producto){
+    return this.http.post(this.apiUrl+"/producto/eliminarres",data, { responseType: 'text' })
+  }
+
 }
