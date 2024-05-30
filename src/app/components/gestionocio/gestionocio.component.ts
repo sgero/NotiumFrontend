@@ -7,7 +7,7 @@ import {OcioNocturno} from "../../models/OcioNocturno";
 import {ActivatedRoute} from "@angular/router";
 import {Evento} from "../../models/Evento";
 import {EventoService} from "../../services/evento.service";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {RppService} from "../../services/rpp.service";
 import {Rpp} from "../../models/Rpp";
 import {ListaOcio} from "../../models/ListaOcio";
@@ -16,7 +16,7 @@ import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import {OverlayEventDetail} from '@ionic/core';
 import {Direccion} from "../../models/Direccion";
 import {Usuario} from "../../models/Usuario";
-import {MatButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {
   MatDatepicker,
   MatDatepickerInput,
@@ -37,6 +37,17 @@ import {provideNativeDateAdapter} from "@angular/material/core";
 import {CartaocioComponent} from "../cartaocio/cartaocio.component";
 import {CartaOcio} from "../../models/CartaOcio";
 import {CartaOcioService} from "../../services/cartaOcio.service";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatSort} from "@angular/material/sort";
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
+  MatTable,
+  MatTableDataSource
+} from "@angular/material/table";
 
 const IonIcons = {
   shirtOutline,
@@ -47,6 +58,7 @@ const IonIcons = {
   closeOutline,
   flameOutline
 }
+
 @Component({
   selector: 'app-gestionocio',
   templateUrl: './gestionocio.component.html',
@@ -77,7 +89,21 @@ const IonIcons = {
     MatDatepickerInput,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatColumnDef,
+    MatHeaderCell,
+    MatCell,
+    MatIconButton,
+    MatHeaderRow,
+    MatRow,
+    MatTable,
+    MatSort,
+    MatPaginator,
+    MatHeaderRowDef,
+    MatRowDef,
+    MatCellDef,
+    MatHeaderCellDef,
+    NgOptimizedImage
   ],
   standalone: true,
   providers: [
@@ -86,8 +112,13 @@ const IonIcons = {
 })
 export class GestionocioComponent  implements OnInit {
 
+  displayedColumns: string[] = ['imagen', 'nombre', 'opciones'];
+  dataSource: MatTableDataSource<Rpp> = new MatTableDataSource<Rpp>();
   @ViewChild(IonModal) modal!: IonModal;
-  eventosInfo: string = 'eventosInfo';
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  eventosInfo: string = 'string';
   ocio: OcioNocturno = new OcioNocturno();
   eventos: Evento[] = [];
   rpps: Rpp[] = [];
@@ -133,6 +164,20 @@ export class GestionocioComponent  implements OnInit {
     this.getOcio()
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
 
   getOcio(){
     this.route.params.subscribe(params => {
@@ -173,6 +218,8 @@ export class GestionocioComponent  implements OnInit {
         this.rppService.rppsByOcio(ocioID).subscribe({
           next: value => {
             this.rpps = value as Rpp[];
+            this.dataSource.data = this.rpps;
+
           },
           error: e => {
             console.error(e);
@@ -182,37 +229,32 @@ export class GestionocioComponent  implements OnInit {
     })
   }
 
-  getListas(){
-    this.route.params.subscribe(params => {
-      const rppID = +params['id'];
-      if (rppID) {
-        this.listaService.getByRppId(rppID).subscribe({
+  getListas(id:number){
+        this.listaService.getByRppId(id).subscribe({
           next: value => {
             this.listas = value as ListaOcio[];
+            console.log("listas del rpp con id"+id)
           },
           error: e => {
             console.error(e);
           }
         })
-      }
-    })
   }
 
-  deleteRpp(){
-    this.route.params.subscribe(params => {
-      const rppID = +params['id'];
-      if (rppID) {
-        this.rppService.eliminarRpp(rppID).subscribe({
-          next: value => {
-            this.rppDeleted = value as Rpp;
-          },
-          error: e => {
-            console.error(e);
-          }
-        })
+
+  deleteRpp(id: number): void {
+    this.rppService.eliminarRpp(id).subscribe({
+      next: value => {
+        this.rppDeleted = value as Rpp;
+        this.rpps = this.rpps.filter(r => r.id !== id);
+        this.dataSource.data = this.rpps;
+      },
+      error: e => {
+        console.error(e);
       }
-    })
+    });
   }
+
   Eventos() {
     this.eventosInfo = 'eventosInfo';
     this.getEventos()

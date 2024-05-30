@@ -17,7 +17,7 @@
     <ion-button shape="round" (click)="Carta()">Carta</ion-button>
     <ion-button shape="round" (click)="Galeria()">Galería</ion-button>
   </div>
-  <div *ngIf="eventosInfo == 'eventosInfo'">
+  <div *ngIf="eventosInfo === 'eventosInfo'">
     <div class="eventos">
       <section class="but">
         <div class="example-button-row">
@@ -171,48 +171,53 @@
       </ion-card>
     </div>
   </div>
-  <div *ngIf="eventosInfo == 'staff'">
+  <div *ngIf="eventosInfo === 'staff'">
     <div class="staff">
-      <ion-card>
-<!--        <ion-card-header>-->
-<!--          <ion-card-title>Staff</ion-card-title>-->
-<!--        </ion-card-header>-->
-        <ion-card-content >
-          <ion-list  *ngFor="let r of rpps" >
-            <ion-item>
-              <ion-thumbnail slot="start">
-                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-              </ion-thumbnail>
-              <ion-label>{{r.nombre}}</ion-label>
-              <ion-button class="icon" shape="round" (click)="deleteRpp()">
-                <ion-icon name="trash-outline"></ion-icon>
-              </ion-button>
-              <ion-button class="icon" shape="round" (click)="getListas()">
-                <ion-icon name="clipboard"></ion-icon>
-              </ion-button>
-                <div class="listas">
-                  <ion-card>
-                    <!--        <ion-card-header>-->
-                    <!--          <ion-card-title>Eventos</ion-card-title>-->
-                    <!--        </ion-card-header>-->
-                    <ion-card-content >
-                      <ion-list  *ngFor="let l of listas">
-                        <ion-item>
-                          <ion-thumbnail slot="start">
-                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                          </ion-thumbnail>
-                          <ion-label>{{l.total_invitaciones}}</ion-label>
-                          <ion-label>{{l.precio}}</ion-label>
-                        </ion-item>
-                      </ion-list>
-                    </ion-card-content>
-                  </ion-card>
-                </div>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </div>
+      <div class="mat-elevation-z8">
+        <div class="table-header">
+          <h1> RPPs </h1>
+          <mat-form-field appearance="fill">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Buscar RPPs">
+          </mat-form-field>
+        </div>
+        <div class="container">
+          <div class="table-container">
+            <table mat-table [dataSource]="dataSource" matSortActive="name" matSortDirection="asc" matSortDisableClear>
+
+              <ng-container matColumnDef="imagen">
+                <th mat-header-cell *matHeaderCellDef> Imagen </th>
+                <td mat-cell *matCellDef="let element">
+                  <img
+                    ngSrc="https://c1.klipartz.com/pngpicture/84/180/sticker-png-person-icon-avatar-user-profile-icon-design-blog-face-silhouette-head.png"
+                    height="50"width="50">
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef > Nombre </th>
+                <td mat-cell *matCellDef="let rpp "> {{rpp.nombre}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="opciones">
+                <th mat-header-cell *matHeaderCellDef> Opciones </th>
+                <td mat-cell *matCellDef="let rpp">
+                  <button mat-icon-button color="warn" (click)="deleteRpp(rpp.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary" (click)="getListas(rpp.id)">
+                    <mat-icon>list</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
+      </div>
+
     <ion-content class="ion-padding">
       <ion-button id="open-modal" shape="round">Añadir RRPP</ion-button>
       <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
@@ -311,7 +316,6 @@
                 ></ion-input>
               </ion-item>
             </div>
-
             <div *ngIf="newRpp.userDTO">
               <ion-item>
                 <ion-input
@@ -346,21 +350,23 @@
         </ng-template>
       </ion-modal>
     </ion-content>
+    </div>
   </div>
-  <div *ngIf="eventosInfo == 'carta'">
+  </div>
+</ion-content>
+  <div *ngIf="eventosInfo === 'carta'">
     <div class="carta">
       <ion-button class="icon" shape="round" (click)="saveCarta()" [disabled]="isDisable">Crear Carta<ion-icon name="trash-outline"></ion-icon></ion-button>
       <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
       <ion-button class="icon" shape="round" (click)="deleteCarta()">Eliminar Carta<ion-icon name="trash-outline"></ion-icon></ion-button>
     </div>
   </div>
-  <div *ngIf="eventosInfo == 'galeria'">
+  <div *ngIf="eventosInfo === 'galeria'">
     <div class="galeria">
       <p>Aqui saldrian las fotos</p>
     </div>
   </div>
-</ion-content>
+
 
 
 <app-footerocionocturno></app-footerocionocturno>
-
