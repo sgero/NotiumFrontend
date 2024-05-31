@@ -41,10 +41,13 @@ export const routes: Routes = [
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
   {path: 'notium/ocionocturno/:id', component: GestionocioComponent},
   {path: 'cartaOcio', component: CartaocioComponent},
-  {
-    path: 'prueba',
-    loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
-  }
+
+  // Esto me da error porque no existe
+  // {
+  //   path: 'prueba',
+  //   loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
+  // }
+
   {path: 'notium/reservar/:restauranteId', component: CrearReservaComponent},
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent}
 
