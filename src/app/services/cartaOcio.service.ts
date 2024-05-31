@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {CartaOcio} from "../models/CartaOcio";
 import {Producto} from "../models/Producto";
 import {Token} from "../models/Token";
@@ -25,12 +25,8 @@ export class CartaOcioService {
     return this.http.delete<CartaOcio>(`${this.apiUrl}/cartasOcio/${id}`);
   }
 
-  crearProducto(producto: Producto,token: string){
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    });
-    return this.http.post<Producto>(this.apiUrl+"/producto/guardar",producto, { headers: headers })
+  crearProducto(producto: Producto){
+    return this.http.post<Producto>(this.apiUrl+"/producto/crear",producto)
   }
 //TODO aqui debo comprobar q los productos qme mande pertenezcan a la cartaOcio asociada al ocioNocturno
   listarProducto(producto: Token){

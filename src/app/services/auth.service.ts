@@ -55,9 +55,4 @@ export class AuthService {
     this.userRole = localStorage.getItem('userRole');
     return this.userRole;
   }
-
-  getUsername(): string {
-    // Obtener el nombre de usuario desde el almacenamiento local, una cookie, o cualquier otra fuente
-    return localStorage.getItem('username') || '';
-  }
 }
