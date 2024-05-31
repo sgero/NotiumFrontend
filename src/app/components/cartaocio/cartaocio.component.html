@@ -26,6 +26,15 @@
               ></ion-input>
             </ion-item>
             <ion-item>
+              <ion-select label="Categoria" [(ngModel)]="newProducto.tipoCategoria" [required]="true">
+                <ion-select-option value="REFRESCO">REFRESCO</ion-select-option>
+                <ion-select-option value="AGUA">AGUA</ion-select-option>
+                <ion-select-option value="CERVEZA">CERVEZA</ion-select-option>
+                <ion-select-option value="BEBIDA_ALCOHOLICA">BEBIDA ALCOHÓLICA</ion-select-option>
+                <ion-select-option value="COCTEL">CÓCTEL</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
               <ion-input
                 label="Precio"
                 labelPlacement="stacked"
@@ -35,10 +44,10 @@
               ></ion-input>
             </ion-item>
             <ion-item>
-              <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO" [required]="true">
-                <ion-select-option value="chupito">CHUPITO</ion-select-option>
-                <ion-select-option value="copa">COPA</ion-select-option>
-                <ion-select-option value="botella">BOTELLA</ion-select-option>
+              <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">
+                <ion-select-option value="4">CHUPITO</ion-select-option>
+                <ion-select-option value="5">COPA</ion-select-option>
+                <ion-select-option value="10">BOTELLA</ion-select-option>
               </ion-select>
             </ion-item>
           </ion-content>
@@ -46,47 +55,23 @@
       </ion-modal>
     </ion-content>
   </div>
+</div>
   <div>
-<!--    <div class="demo-button-container">-->
-<!--      <button mat-raised-button (click)="addData()" class="demo-button">-->
-<!--        Add data-->
-<!--      </button>-->
-<!--      <button-->
-<!--        mat-raised-button-->
-<!--        [disabled]="!dataSource.length"-->
-<!--        (click)="removeData()"-->
-<!--        class="demo-button">-->
-<!--        Remove data-->
-<!--      </button>-->
-<!--    </div>-->
-
-<!--    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">-->
-<!--      &lt;!&ndash; Position Column &ndash;&gt;-->
-<!--      <ng-container matColumnDef="position">-->
-<!--        <th mat-header-cell *matHeaderCellDef>No.</th>-->
-<!--        <td mat-cell *matCellDef="let element">{{element.position}}</td>-->
-<!--      </ng-container>-->
-
-<!--      &lt;!&ndash; Name Column &ndash;&gt;-->
-<!--      <ng-container matColumnDef="name">-->
-<!--        <th mat-header-cell *matHeaderCellDef>Name</th>-->
-<!--        <td mat-cell *matCellDef="let element">{{element.name}}</td>-->
-<!--      </ng-container>-->
-
-<!--      &lt;!&ndash; Weight Column &ndash;&gt;-->
-<!--      <ng-container matColumnDef="weight">-->
-<!--        <th mat-header-cell *matHeaderCellDef>Weight</th>-->
-<!--        <td mat-cell *matCellDef="let element">{{element.weight}}</td>-->
-<!--      </ng-container>-->
-
-<!--      &lt;!&ndash; Symbol Column &ndash;&gt;-->
-<!--      <ng-container matColumnDef="symbol">-->
-<!--        <th mat-header-cell *matHeaderCellDef>Symbol</th>-->
-<!--        <td mat-cell *matCellDef="let element">{{element.symbol}}</td>-->
-<!--      </ng-container>-->
-
-<!--      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-<!--      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
-<!--    </table>-->
+    <table mat-table [dataSource]="productos" class="mat-elevation-z8">
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
+      </ng-container>
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let element">{{element.precio}}</td>
+      </ng-container>
+      <ng-container matColumnDef="formato">
+        <th mat-header-cell *matHeaderCellDef>Formato</th>
+        <td mat-cell *matCellDef="let element">{{element.formatoDTO}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['nombre', 'precio', 'formato']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['nombre', 'precio', 'formato']"></tr>
+    </table>
 </div>
-</div>
+

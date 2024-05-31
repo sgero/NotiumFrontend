@@ -119,8 +119,8 @@ export class GestionocioComponent  implements OnInit, AfterViewInit {
   @ViewChild(IonModal) modal!: IonModal;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('listasPaginator', { static: false }) listasPaginator!: MatPaginator;
-  @ViewChild('listasSort', { static: false }) listasSort!: MatSort;
+  @ViewChild('listasPaginator') listasPaginator!: MatPaginator;
+  @ViewChild('listasSort') listasSort!: MatSort;
 
   eventosInfo: string = 'string';
   ocio: OcioNocturno = new OcioNocturno();
@@ -227,6 +227,8 @@ export class GestionocioComponent  implements OnInit, AfterViewInit {
           next: value => {
             this.rpps = value as Rpp[];
             this.dataSource.data = this.rpps;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
           },
           error: e => {
             console.error(e);
@@ -242,6 +244,8 @@ export class GestionocioComponent  implements OnInit, AfterViewInit {
       next: value => {
         this.listas = value as ListaOcio[];
         this.dataSourceListas = new MatTableDataSource(this.listas);
+        this.dataSourceListas.paginator = this.listasPaginator;
+        this.dataSourceListas.sort = this.listasSort;
       },
       error: e => {
         console.error(e);
