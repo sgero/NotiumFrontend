@@ -446,13 +446,12 @@ export class EventDetailComponent implements OnInit {
         this.informacionTiposEntrada?.entradaOcioDTO?.id!,
         this.datosAsistentesEOC).subscribe({
         next: async value => {
-          await loading.present();
           if (value.object as EntradaOcioCliente[]) {
+            await loading.present();
             let compra = value.object as EntradaOcioCliente[];
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf(compra, new ComprarReservadoDTO(), []);
-            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -471,13 +470,12 @@ export class EventDetailComponent implements OnInit {
         this.informacionTiposEntrada?.reservadoOcioDTO?.id!,
         this.datosAsistentesROC!).subscribe({
         next: async value => {
-          await loading.present();
           if (value.object as ComprarReservadoDTO) {
+            await loading.present();
             let compra = value.object as ComprarReservadoDTO;
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], compra, []);
-            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -496,13 +494,12 @@ export class EventDetailComponent implements OnInit {
         this.informacionTiposEntrada?.listaOcioDTO?.id!,
         this.datosAsistentesLOC!).subscribe({
         next: async value => {
-          await loading.present();
           if (value.object as ListaOcioCliente[]) {
+            await loading.present();
             let compra = value.object as ListaOcioCliente[];
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], new ComprarReservadoDTO(), compra);
-            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;

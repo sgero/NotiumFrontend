@@ -77,7 +77,7 @@ export class PdfService {
       yOffset = addTextCenter(`${data[0].entradaOcioDTO!.eventoDTO!.nombre}`, yOffset, doc.internal.pageSize.width - 50);
       yOffset += 10;
       addCenteredImage(`${data[0].entradaOcioDTO!.eventoDTO!.cartel}`, 30, yOffset, 50);
-      yOffset += 50;
+      yOffset += 70;
       doc.setFontSize(20);
       yOffset = addTextCenter(`${data[0].entradaOcioDTO!.eventoDTO!.descripcion}`, yOffset, doc.internal.pageSize.width - 20);
       doc.setFontSize(16);
