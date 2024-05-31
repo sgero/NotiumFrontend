@@ -119,7 +119,7 @@ export class PdfService {
       yOffset = addTextCenter(`${data.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO!.nombre}`, yOffset, doc.internal.pageSize.width - 50);
       yOffset += 10;
       addCenteredImage(`${data.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO!.cartel}`, 30, yOffset, 50);
-      yOffset += 50;
+      yOffset += 70;
       doc.setFontSize(20);
       yOffset = addTextCenter(`${data.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO!.descripcion}`, yOffset, doc.internal.pageSize.width - 20);
       doc.setFontSize(16);
@@ -161,7 +161,7 @@ export class PdfService {
       yOffset = addTextCenter(`${data[0].listaOcioDTO!.eventoDTO!.nombre}`, yOffset, doc.internal.pageSize.width - 50);
       yOffset += 10;
       addCenteredImage(`${data[0].listaOcioDTO!.eventoDTO!.cartel}`, 30, yOffset, 50);
-      yOffset += 50;
+      yOffset += 70;
       doc.setFontSize(20);
       yOffset = addTextCenter(`${data[0].listaOcioDTO!.eventoDTO!.descripcion}`, yOffset, doc.internal.pageSize.width - 20);
       doc.setFontSize(16);
