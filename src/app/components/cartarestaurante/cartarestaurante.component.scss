@@ -10,8 +10,12 @@
 .carta {
   width: 100%;
   height: auto;
-  background-image: url("https://i.pinimg.com/474x/b4/7c/93/b47c93522bfa3074b0d5616f3405200d.jpg");
-  background-size: contain;
+  //background-image: url("https://i.pinimg.com/474x/b4/7c/93/b47c93522bfa3074b0d5616f3405200d.jpg");
+  //background-size: contain;
+  background-color: #ddce79;
+  -webkit-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  -moz-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
    /* Añade una barra de desplazamiento vertical si el contenido es más grande */
   display: flex;
   flex-direction: column;
