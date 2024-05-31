@@ -83,7 +83,7 @@ export class HacerValoracionComponent  implements OnInit {
 
   validarCodigo(){
 
-    this.restauranteService.comprobarCodigoReserva(this.id_restaurante, this.codigoReserva).subscribe( {
+    this.restauranteService.comprobarCodigoReservaRestaurante(this.id_restaurante, this.codigoReserva).subscribe( {
       next: (responseData) => {
         this.comprobacionCR = responseData;
       },

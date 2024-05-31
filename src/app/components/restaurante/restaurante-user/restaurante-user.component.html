@@ -16,13 +16,13 @@
             <h3>{{restaurante.direccion.ciudad}}({{restaurante.direccion.provincia}})</h3>
             <h3>{{restaurante.telefono}}</h3>
             <h3>{{restaurante.hora_apertura}} - {{restaurante.hora_cierre}}</h3>
-            <h3>La valoración media de este restaurante: {{valoracion_restaurante}}/5</h3>
+         <!--   <h3>La valoración media de este restaurante: {{valoracion_restaurante}}/5</h3>  -->
           </div>
       </div>
     </div>
 
     <ng-template #visCarta>
-
+      <app-cartaclienterestaurante [restaurante]="restaurante"></app-cartaclienterestaurante>
     </ng-template>
 
 </div>

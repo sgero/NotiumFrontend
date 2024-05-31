@@ -1,11 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CartarestauranteService} from "../../services/cartarestaurante.service";
 import {Router} from "@angular/router";
+import {NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-cartaclienterestaurante',
   templateUrl: './cartaclienterestaurante.component.html',
   styleUrls: ['./cartaclienterestaurante.component.scss'],
+  imports: [
+    NgForOf,
+    FormsModule,
+    NgIf
+  ],
+  standalone: true
 })
 export class CartaclienterestauranteComponent  implements OnInit {
 
@@ -26,14 +34,12 @@ export class CartaclienterestauranteComponent  implements OnInit {
   bebidaAlcoholica: boolean = false;
   coctel: boolean = false;
   otros: boolean = false;
+  @Input() restaurante!: any;
 
   constructor(private cartarestauranteService : CartarestauranteService, private router : Router) { }
 
   ngOnInit() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      this.token.token = token;
-    }
+    this.token.token = this.restaurante.userDTO.username;
     this.ocultarPrecio();
   }
   ocultarPrecio(){

@@ -12,6 +12,7 @@ import {RestauranteUserComponent} from "./components/restaurante/restaurante-use
 import {CartarestauranteComponent} from "./components/cartarestaurante/cartarestaurante.component";
 import {CrearReservaComponent} from "./components/restaurante/crear-reserva/crear-reserva.component";
 import {EventDetailComponent} from "./components/homeocionocturno/event-detail/event-detail.component";
+import {CartadescarterComponent} from "./components/cartadescarter/cartadescarter.component";
 
 export const routes: Routes = [
   // {
@@ -30,16 +31,14 @@ export const routes: Routes = [
   {path: 'header', component: HeaderComponent},
   {path: 'footer', component: FooterComponent},
   {path: 'cartaRestaurante', component: CartarestauranteComponent},
+  {path: 'cartaRDescarte', component: CartadescarterComponent},
   {path: 'notium/restaurante', component: HomerestauranteComponent},
   {path: 'notium/ocionocturno', component: HomeocionocturnoComponent},
   {path: 'notium/restaurante/:id', component: RestauranteComponent},
   {path: 'notium/restaurante/user', component: RestauranteUserComponent},
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
   {path: 'notium/reservar/:restauranteId', component: CrearReservaComponent},
-  {
-    path: 'prueba',
-    loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
-  }
+  {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent}
 
 
 

@@ -5,6 +5,7 @@ import {Producto} from "../models/Producto";
 import {Token} from "../models/Token";
 import {ProductoFormato} from "../models/ProductoFormato";
 import {ListadoProductos} from "../models/ListadoProductos";
+import {Usuario} from "../models/Usuario";
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,16 @@ export class CartarestauranteService {
 
   bajaProducto(data: Producto){
     return this.http.put(this.apiUrl+"/producto/baja",data, { responseType: 'text' })
+  }
+
+  listarProductoDescarte(data: Token){
+    return this.http.post<ListadoProductos[]>(this.apiUrl+"/producto/listardescarte",data)
+  }
+
+  eliminarProducto(data: Producto){
+    return this.http.post(this.apiUrl+"/producto/eliminarres",data, { responseType: 'text' })
+  }
+  crearCartaRes(data: Usuario){
+    return this.http.post(this.apiUrl+"/cartaRestaurante/crear",data, { responseType: 'text' })
   }
 }

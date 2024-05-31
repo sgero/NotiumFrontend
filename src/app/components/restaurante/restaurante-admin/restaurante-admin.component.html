@@ -1,3 +1,29 @@
-<p>
-  restaurante-admin works!
-</p>
+<div class="container-admin">
+  <div class="step">
+    <a CLASS="botoncarta" (click)="crearCartaRes()" >CREA TU CARTA</a>
+  </div>
+  <div class="step">
+    <h2>MESAS</h2>
+    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="listarMesas()"><h2>Visualizar mesas</h2></a></div>
+    <div class="posicion_btn"><a class="valoraciones btn_info"><h2>Crear mesas</h2></a></div>
+    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="abrirModalCrearMesa()"><h2>Crear mesa</h2></a></div>
+  </div>
+  <div class="step">
+    <h2>TURNOS</h2>
+    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="listarTurnos()"><h2>Visualizar turnos</h2></a></div>
+    <div class="posicion_btn"><a class="valoraciones btn_info"><h2>Crear turnos</h2></a></div>
+    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="abrirModalCrearTurno()"><h2>Crear turno</h2></a></div>
+
+  </div>
+  <div class="step-reserva">
+    <h2>RESERVAS</h2>
+    <div  *ngFor="let reserva of reservas" class="reserva">
+      <h3>Nombre: {{reserva.clienteDTO.nombre}}</h3>
+      <h3>Fecha: {{reserva.fecha}}</h3>
+      <h3>Hora: {{reserva.turnoDTO.hora_inicio}}</h3>
+      <h3>Mesa: {{reserva.mesaDTO.id}}</h3>
+      <h3>Numero de plazas: {{reserva.mesaDTO.num_plazas}}</h3>
+    </div>
+  </div>
+
+</div>

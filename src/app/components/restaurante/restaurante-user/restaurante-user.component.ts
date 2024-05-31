@@ -8,7 +8,6 @@ import { MatDialog, MAT_DIALOG_DATA,
 import {  } from "@angular/material/dialog";
 
 //Imports de componentes
-import {PruebaPage} from "../prueba/prueba.page";
 import {restaurant} from "ionicons/icons";
 import {HacerValoracionComponent} from "../hacer-valoracion/hacer-valoracion.component";
 import {CrearReservaComponent} from "../crear-reserva/crear-reserva.component";
@@ -20,12 +19,14 @@ import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {UsuarioService} from "../../../services/usuario.service";
+import {CartaclienterestauranteComponent} from "../../cartaclienterestaurante/cartaclienterestaurante.component";
 
 @Component({
   selector: 'app-restaurante-user',
   templateUrl: './restaurante-user.component.html',
   styleUrls: ['./restaurante-user.component.scss'],
   imports: [
+    CartaclienterestauranteComponent,
     IonicModule,
     CommonModule,
     MatDialogModule
@@ -48,7 +49,7 @@ export class RestauranteUserComponent  implements OnInit {
   id_restaurante: any;
   usuario: any;
   inicio: boolean = false;
-  valoracion_restaurante: number = 0.0;
+
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,
@@ -97,32 +98,11 @@ export class RestauranteUserComponent  implements OnInit {
     });
   }
 
-  valoracionRestaurante(){
-    this.restauranteService.getValoracionRestauranteByID(Number(this.id_restaurante)).subscribe( {
-      next: (valoracion_capada) => { this.valoracion_restaurante = valoracion_capada; },
-      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
-      complete: () => { console.log('Valoración del restaurante', this.valoracion_restaurante); }
-    });
-  }
-
-  getUsuarioPorToken(){
-
-    this.usuarioService.getUsuarioToken().subscribe( {
-      next: (usuario) => { this.usuario = usuario; },
-      error: (error) => { console.error('Error al obtener el Usuario:', error); },
-      complete: () => { console.log('Usuario', this.usuario); }
-    });
-
-
-  }
-
   ngOnInit() {
 
     //Funciones externas
     this.captarRestaurantePorId();
-    this.valoracionRestaurante();
     this.setearIDParams();
-    this.getUsuarioPorToken();
     this.inicio = true;
   }
 

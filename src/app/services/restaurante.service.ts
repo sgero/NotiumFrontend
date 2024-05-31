@@ -29,13 +29,13 @@ export class RestauranteService {
     return this.http.get<Restaurante>(`${this.apiUrl}/restaurante/porID?id=${id}`);
   }
 
-  comprobarCodigoReserva(id: number, codigoReserva: any): Observable<any> {
+  comprobarCodigoReservaRestaurante(id: number, codigoReserva: any): Observable<any> {
     let codigoReser = {
       codigoReserva: codigoReserva,
       id_restaurante: id
     };
 
-    return this.http.post<any>(`${this.apiUrl}/comentario/comprobarCodigo`, codigoReser)
+    return this.http.post<any>(`${this.apiUrl}/comentario/comprobarCodigoRestaurante`, codigoReser)
   }
 
   enviarValoracion(id: number, codigoReserva: string, experiencia: string, evaluacion: number): Observable<any> {
@@ -56,7 +56,9 @@ export class RestauranteService {
     );
   }
 
-
+  getRankingRestaurantes(): Observable<number[]>{
+    return this.http.get<number[]>(`${this.apiUrl}/comentario/rankingRestaurante`);
+  }
 
   getTurnosDisponibles(numPersonas: number, fecha: string, restauranteId: number): Observable<any> {
     const disponibilidadRequest = {

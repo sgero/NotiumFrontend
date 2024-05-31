@@ -1,0 +1,8 @@
+<form (submit)="nuevaMesaCreada()">
+  <mat-form-field class="formularios">
+    <mat-label >Indique el número de plazas</mat-label>
+    <input matInput [(ngModel)]="numeroPlazas" name="numeroPlazas" id="numeroPlazas" required>
+    <mat-checkbox [(ngModel)]="reservada" name="reservada" id="reservada" required>Reservada</mat-checkbox>
+    <button type="submit" id="subir-button">Crear mesa</button>
+  </mat-form-field>
+</form>
