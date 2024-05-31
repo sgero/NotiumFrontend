@@ -22,7 +22,7 @@ import {
   Validators
 } from '@angular/forms';
 import {OverlayEventDetail} from '@ionic/core';
-import {Direccion} from "../../models/Direccion";
+import {DireccionDTO} from "../../models/DireccionDTO";
 import {Usuario} from "../../models/Usuario";
 import {MatButton} from "@angular/material/button";
 import {
@@ -210,7 +210,7 @@ export class GestionocioComponent implements OnInit {
     private loadingCtrl: LoadingController
   ) {
     addIcons(IonIcons);
-    this.newRpp.direccionDTO = new Direccion();
+    this.newRpp.direccionDTO = new DireccionDTO();
     this.newRpp.userDTO = new Usuario();
   }
 
@@ -327,7 +327,7 @@ export class GestionocioComponent implements OnInit {
 
   RegistrarRpp() {
     if (!this.newRpp.direccionDTO) {
-      this.newRpp.direccionDTO = new Direccion();
+      this.newRpp.direccionDTO = new DireccionDTO();
     }
     if (!this.newRpp.userDTO) {
       this.newRpp.userDTO = new Usuario();
