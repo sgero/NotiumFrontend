@@ -1,5 +1,5 @@
 import {Usuario} from "./Usuario";
-import {Direccion} from "./Direccion";
+import {DireccionDTO} from "./DireccionDTO";
 
 export class Cliente{
   id?: number;
@@ -10,7 +10,7 @@ export class Cliente{
   fecha_nacimiento?: string = '';
   ubicacion_actual?: string = '';
   usuario: Usuario = new Usuario();
-  direccion: Direccion = new Direccion();
+  direccion: DireccionDTO = new DireccionDTO();
   activo?: boolean = true;
   token_verificacion?: string = '';
 }

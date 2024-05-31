@@ -1,4 +1,4 @@
-export class Direccion {
+export class DireccionDTO {
     id?: number;
     calle?: string;
     numero?: number;

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient,HttpHeaders} from "@angular/common/http";
 import {map, Observable} from "rxjs";
 import { Restaurante } from "../models/Restaurante";
+import {UserRestaurante} from "../models/UserRestaurante";
 import {OcioNocturno} from "../models/OcioNocturno";
 import {RespuestaDTO} from "../models/RespuestaDTO";
 import {Usuario} from "../models/Usuario";
@@ -16,9 +17,9 @@ export class RestauranteService {
   constructor(private http: HttpClient) {
   }
 
-  crearRestaurante(restaurante: Restaurante) {
+  crearRestaurante(userRestaurante: UserRestaurante) {
 
-    return this.http.post<any>(`${this.apiUrl}/restaurante/crear`, restaurante);
+    return this.http.post<any>(`${this.apiUrl}/restaurante/crear`, userRestaurante);
   }
 
   listarRestaurantes(): Observable<Restaurante[]> {
