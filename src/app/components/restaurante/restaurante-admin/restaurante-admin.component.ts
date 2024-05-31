@@ -4,7 +4,7 @@ import {Turno} from "../../../models/Turno";
 import {MesaService} from "../../../services/mesa.service";
 import {Mesa} from "../../../models/Mesa";
 import {MatDialog} from "@angular/material/dialog";
-import {HacerReservaComponent} from "../hacer-reserva/hacer-reserva.component";
+import {CrearReservaComponent} from "../crear-reserva/crear-reserva.component";
 import {CrearMesasComponent} from "./crear-mesas/crear-mesas.component";
 import {CrearTurnosComponent} from "./crear-turnos/crear-turnos.component";
 import {ReservaService} from "../../../services/reserva.service";

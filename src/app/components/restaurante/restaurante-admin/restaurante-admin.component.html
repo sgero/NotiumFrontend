@@ -18,11 +18,11 @@
   <div class="step-reserva">
     <h2>RESERVAS</h2>
     <div  *ngFor="let reserva of reservas" class="reserva">
-      <h3>Nombre: {{reserva.clienteDTO.nombre}}</h3>
+      <h3>Nombre: {{reserva.clienteDTO?.nombre}}</h3>
       <h3>Fecha: {{reserva.fecha}}</h3>
-      <h3>Hora: {{reserva.turnoDTO.hora_inicio}}</h3>
-      <h3>Mesa: {{reserva.mesaDTO.id}}</h3>
-      <h3>Numero de plazas: {{reserva.mesaDTO.num_plazas}}</h3>
+      <h3>Hora: {{reserva.turnoDTO?.hora_inicio}}</h3>
+      <h3>Mesa: {{reserva.mesaDTO?.id}}</h3>
+      <h3>Numero de plazas: {{reserva.mesaDTO?.num_plazas}}</h3>
     </div>
   </div>
 

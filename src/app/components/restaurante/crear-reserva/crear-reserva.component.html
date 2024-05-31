@@ -7,7 +7,7 @@
 <ion-content>
   <ion-item>
     <ion-label>Fecha</ion-label>
-    <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fecha"></ion-datetime>
+    <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fecha" [min]="minFecha" preferWheel="false" presentation="date"></ion-datetime>
   </ion-item>
 
   <ion-item>
@@ -28,4 +28,5 @@
   </ion-list>
 
   <ion-button expand="full" (click)="hacerReserva()" [disabled]="!turnoSeleccionado">Hacer Reserva</ion-button>
+  <ion-button expand="full" (click)="cancelarReserva()">Cancelar</ion-button>
 </ion-content>
