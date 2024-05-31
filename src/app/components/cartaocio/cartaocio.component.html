@@ -1,4 +1,27 @@
+
 <div class="container">
+  <div class="table">
+    <table mat-table [dataSource]="dataSourceProductos" class="mat-elevation-z8">
+      <ng-container matColumnDef="tipoCategoria">
+        <th mat-header-cell *matHeaderCellDef>Categoría</th>
+        <td mat-cell *matCellDef="let productos">{{productos.tipoCategoria}}</td>
+      </ng-container>
+      <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let productos">{{productos.nombre}}</td>
+      </ng-container>
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef>Precio</th>
+        <td mat-cell *matCellDef="let productos">{{productos.precio}}</td>
+      </ng-container>
+      <ng-container matColumnDef="formato">
+        <th mat-header-cell *matHeaderCellDef>Formato</th>
+        <td mat-cell *matCellDef="let productos">{{productos.formatoDTO}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
   <div class="buttons">
     <ion-content class="ion-padding">
       <ion-button id="open-modal" shape="round">Añadir producto</ion-button>
@@ -56,22 +79,5 @@
     </ion-content>
   </div>
 </div>
-  <div>
-    <table mat-table [dataSource]="productos" class="mat-elevation-z8">
-      <ng-container matColumnDef="nombre">
-        <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let element">{{element.nombre}}</td>
-      </ng-container>
-      <ng-container matColumnDef="precio">
-        <th mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let element">{{element.precio}}</td>
-      </ng-container>
-      <ng-container matColumnDef="formato">
-        <th mat-header-cell *matHeaderCellDef>Formato</th>
-        <td mat-cell *matCellDef="let element">{{element.formatoDTO}}</td>
-      </ng-container>
-      <tr mat-header-row *matHeaderRowDef="['nombre', 'precio', 'formato']"></tr>
-      <tr mat-row *matRowDef="let row; columns: ['nombre', 'precio', 'formato']"></tr>
-    </table>
-</div>
+
 
