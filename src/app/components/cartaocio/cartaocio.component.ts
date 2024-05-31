@@ -16,14 +16,12 @@ import {
   MatHeaderRow,
   MatHeaderRowDef,
   MatRow,
-  MatRowDef,
-  MatTable,
-  MatTableDataSource
+  MatTable
 } from "@angular/material/table";
 import {AuthService} from "../../services/auth.service";
 import {UsuarioService} from "../../services/usuario.service";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
+import {CodigoVestimentaOcio} from "../../models/CodigoVestimentaOcio";
+import {TipoCategoria} from "../../models/TipoCategoria";
 
 @Component({
   selector: 'app-cartaocio',
@@ -44,19 +42,23 @@ import {MatSort} from "@angular/material/sort";
     MatHeaderCellDef,
     MatCellDef,
     MatHeaderRowDef,
-    MatRowDef,
   ],
   standalone: true
 })
 export class CartaocioComponent  implements OnInit {
 
-  displayedColumns: string[] = ['nombre', 'precio', 'formato'];
-  dataSourceProductos: MatTableDataSource<Producto> = new MatTableDataSource<Producto>();
-  @ViewChild('productosPaginator') productosPaginator!: MatPaginator;
-  @ViewChild('productosSort') productosSort!: MatSort;
   @ViewChild(IonModal) modal!: IonModal;
   producto = {nombre: '',tipoCategoria: '',username: ''}
   token = {token: ''}
+  // productos: any;
+  productoF = {id: +''}
+  FormatoP = {id: +''}
+  productoFormato = {precio: +'', productoDTO: this.productoF, formatoDTO: this.FormatoP}
+  refresco: boolean = false;
+  agua: boolean = false;
+  cerveza: boolean = false;
+  bebidaAlcoholica: boolean = false;
+  coctel: boolean = false;
   productos: Producto[] = [];
   newProducto: Producto = new Producto();
   newProductoFormato: ProductoFormato = new ProductoFormato();
@@ -65,15 +67,16 @@ export class CartaocioComponent  implements OnInit {
               private authService: AuthService,
               private usuarioService: UsuarioService) { }
 
-
+  // newProducto: Producto = new Producto();
+  // newProductoFormato:  ProductoFormato = new ProductoFormato();
   ngOnInit() {
-    this.getProductos()
-    this.dataSourceProductos.paginator = this.productosPaginator;
-    this.dataSourceProductos.sort = this.productosSort;
+
+    this.getProducto()
   }
 
   addProducto(producto: Producto) {
-    const token = this.getToken();
+    this.usuarioService.getUsuarioToken().subscribe(usuario => {
+      const token = localStorage.getItem('token');
       if (token){
         this.cartaOcioService.crearProducto(producto, token).subscribe({
           next: createdProduct => {
@@ -95,7 +98,7 @@ export class CartaocioComponent  implements OnInit {
             console.error("Error creating product", error);
           }
         });
-      }
+      }})
   }
 
   resetForm() {
@@ -103,12 +106,7 @@ export class CartaocioComponent  implements OnInit {
     this.newProductoFormato = new ProductoFormato();
   }
 
-  getToken(): string {
-    // Implementa la lógica para obtener el token
-    this.usuarioService.getUsuarioToken().subscribe(usuario => {
-      const token = localStorage.getItem('token');})
-    return localStorage.getItem('token') || '';
-  }
+
 
   onWillDismiss($event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<Producto>>;
@@ -127,37 +125,7 @@ export class CartaocioComponent  implements OnInit {
     this.modal.dismiss(this.newProducto, 'agregar')
   }
 
-  private getProductos() {
-    const token = this.getToken();
-    this.cartaOcioService.listarProductos(token).subscribe({
-      next: value => {
-        this.productos = value as Producto[];
-        console.log('Productos recibidos:', this.productos);
-        this.dataSourceProductos = new MatTableDataSource(this.productos);
-        this.dataSourceProductos.paginator = this.productosPaginator;
-        this.dataSourceProductos.sort = this.productosSort;
-      },
-      error: (error) => {
-        console.error('Error al listar productos', error);
-      }
-    });
+  private getProducto() {
+
   }
-
-  // private getProductos() {
-  //   const token = this.getToken();
-  //   this.cartaOcioService.listarProductos(token).subscribe({
-  //     next: (productos: Producto[]) => {
-  //       this.productos = productos.map(producto => ({
-  //         ...producto,
-  //         precio: producto.formatoDTO ? producto.formatoDTO.precio : null,
-  //         formatoDTO: producto.formatoDTO ? producto.formatoDTO.nombre : null // assuming formatoDTO has a name property
-  //       }));
-  //       this.dataSourceProductos.data = this.productos;
-  //     },
-  //     error: (error) => {
-  //       console.error('Error al listar productos', error);
-  //     }
-  //   });
-  // }
-
 }

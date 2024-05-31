@@ -32,9 +32,9 @@ export class CartaOcioService {
     });
     return this.http.post<Producto>(this.apiUrl+"/producto/guardar",producto, { headers: headers })
   }
-  listarProductos(token: string){
-    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-    return this.http.post<Producto[]>(`${this.apiUrl}/producto/listarTodos`, {}, { headers });
+//TODO aqui debo comprobar q los productos qme mande pertenezcan a la cartaOcio asociada al ocioNocturno
+  listarProducto(producto: Token){
+    return this.http.post<Producto[]>(this.apiUrl+"/producto/listar",producto)
   }
 
   crearProductoFormato(productoFormato: ProductoFormato){
