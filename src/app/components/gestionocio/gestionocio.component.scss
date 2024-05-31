@@ -5,9 +5,9 @@
   margin-top: 50px;
   margin-bottom: 50px;
 }
-/* Estilos para el banner */
+
 .banner {
-  height: 400px; /* Altura del banner */
+  height: 400px;
   width: 75%;
   background-size: cover;
   background-position: center;
@@ -18,12 +18,7 @@
   text-align: center;
   color: white;
 }
-//.banner h1{
-//  font-size: 100px;
-//  font-family: cursive;
-//  background: #2a032a;
-//  background-size: cover;
-//}
+
 .buttons{
   display: flex;
   flex-direction: row;
@@ -31,31 +26,28 @@
 
 }
 
-.buttons ion-button {
-  margin-left: 150px;
-  --background: #2a032a;
-  --background-hover: #2a032a;
-  --background-activated: #2a032a;
-  --background-focused: #2a032a;
-
-  --color: white;
-
-  --border-radius: 1%;
-  --border-color: #000;
-  --border-style: solid;
-  --border-width: 1px;
-
-  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
-
-  --ripple-color: deeppink;
-
-  --padding-top: 10px;
-  --padding-bottom: 10px;
-}
-
-// ion-button .icon{
-//  color: white;
+//.buttons ion-button {
+//  margin-left: 150px;
+//  --background: #2a032a;
+//  --background-hover: #2a032a;
+//  --background-activated: #2a032a;
+//  --background-focused: #2a032a;
+//
+//  --color: white;
+//
+//  --border-radius: 1%;
+//  --border-color: #000;
+//  --border-style: solid;
+//  --border-width: 1px;
+//
+//  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+//
+//  --ripple-color: deeppink;
+//
+//  --padding-top: 10px;
+//  --padding-bottom: 10px;
 //}
+
 
 .eventos, .staff, .listas{
   display: flex;
@@ -102,3 +94,30 @@ body {
   display: grid;
   align-items: center;
 }
+
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 0 20px 0;
+}
+
+.mat-column-imagen img {
+  display: block;
+  margin: 0 auto;
+}
+
+//.carta {
+//  display: flex;
+//  justify-content: center;
+//}
+
+.carta  ion-button .icon{
+  color: white;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
