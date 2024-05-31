@@ -1,5 +1,5 @@
 import {Usuario} from "./Usuario";
-import {Direccion} from "./Direccion";
+import {DireccionDTO} from "./DireccionDTO";
 import {OcioNocturno} from "./OcioNocturno";
 
 export class Rpp  {
@@ -10,6 +10,6 @@ export class Rpp  {
   telefono?: string;
   fecha_nacimiento?: number;
   userDTO?: Usuario;
-  direccionDTO?:Direccion;
+  direccionDTO?:DireccionDTO = new DireccionDTO;
   ocioNocturnoDTO?:OcioNocturno;
 }

@@ -48,22 +48,23 @@
           <ion-card-content>
             <ion-list lines="full">
               <ion-item>
-                <ion-label>Username</ion-label>
-                <ion-input type="text" [(ngModel)]="usuarioCliente.username" required></ion-input>
+                <ion-label class="labelspace">Username</ion-label>
+                <ion-input type="text" [(ngModel)]="user.username" required></ion-input>
               </ion-item>
               <ion-item>
 
-                <ion-label>Email</ion-label>
-                <ion-input type="email" [(ngModel)]="usuarioCliente.email" required></ion-input>
+                <ion-label class="labelspace">Email</ion-label>
+                <ion-input type="email" [(ngModel)]="user.email" required autocomplete></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>Contraseña</ion-label>
-                <ion-input id="contrasena" type="password" [(ngModel)]="usuarioCliente.password" required></ion-input>
+                <ion-label class="labelspace">Contraseña</ion-label>
+                <ion-input (input)="validarContrasena()" id="contrasena" type="password" [(ngModel)]="user.password" required></ion-input>
+                <div id="mensajeContrasena"></div>
               </ion-item>
 
               <ion-item>
-                <ion-label>Repite Contraseña</ion-label>
+                <ion-label class="labelspace">Repite Contraseña</ion-label>
                 <ion-input id="repitecontrasena" type="password" [(ngModel)]="repiteContrasena" required></ion-input>
               </ion-item>
             </ion-list>
@@ -92,45 +93,199 @@
 
             <ion-list lines="full" *ngIf="selectedRole === 'cliente'">
               <ion-item>
-                <ion-label>Nombre</ion-label>
-                <ion-input type="text" [(ngModel)]="usuarioCliente.nombre" required></ion-input>
+                <ion-label class="labelspace">Nombre</ion-label>
+                <ion-input type="text" [(ngModel)]="userCliente.nombre" required></ion-input>
               </ion-item>
               <ion-item>
 
-                <ion-label>Apellidos</ion-label>
-                <ion-input type="text" [(ngModel)]="usuarioCliente.apellidos" required></ion-input>
+                <ion-label class="labelspace">Apellidos</ion-label>
+                <ion-input type="text" [(ngModel)]="userCliente.apellidos" required></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>Dni</ion-label>
-                <ion-input type="text" [(ngModel)]="usuarioCliente.dni" required></ion-input>
+                <ion-label class="labelspace">Dni</ion-label>
+                <ion-input type="text" [(ngModel)]="userCliente.dni" required></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>Telefono</ion-label>
-                <ion-input type="tel" [(ngModel)]="usuarioCliente.telefono" required></ion-input>
+                <ion-label class="labelspace">Telefono</ion-label>
+                <ion-input type="tel" [(ngModel)]="userCliente.telefono" required></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label>Fecha Nacimiento</ion-label>
                 <ion-datetime
                   displayFormat="DD/MM/YYYY"
-                  [(ngModel)]="usuarioCliente.fecha_nacimiento"
+                  [(ngModel)]="userCliente.fecha_nacimiento"
                   required
-                  [max]="maxDate">
+                  [max]="maxDate"
+                  format-options="YYYY-MM-DD"
+                  presentation="date">
                 </ion-datetime>
+              </ion-item>
+
+              <ion-item class="direccion">
+                <ion-label class="labelspace">Calle</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.calle" required></ion-input>
+                <br>
+                <ion-label class="labelspace">Número</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.numero" required></ion-input>
+
+                <ion-label class="labelspace">Puerta</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.puerta" required></ion-input>
+
+                <ion-label class="labelspace">Código Postal</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.codigoPostal" required></ion-input>
+
+                <ion-label class="labelspace">País</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.pais" required></ion-input>
+
+                <ion-label class="labelspace">Ciudad</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.ciudad" required></ion-input>
+
+                <ion-label class="labelspace">Provincia</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.provincia" required></ion-input>
               </ion-item>
             </ion-list>
 
-            <ion-item *ngIf="selectedRole === 'restaurante'">
-              <ion-label>Nombre del restaurante</ion-label>
-              <ion-input type="text" [(ngModel)]="restaurante.nombre" required></ion-input>
-            </ion-item>
+            <ion-list *ngIf="selectedRole === 'restaurante'">
+              <ion-item>
+                <ion-label class="labelspace">Nombre del restaurante</ion-label>
+                <ion-input type="text" [(ngModel)]="userRestaurante.nombre" required></ion-input>
+              </ion-item>
 
-            <ion-item *ngIf="selectedRole === 'ocio-nocturno'">
-              <ion-label>Nombre del establecimiento nocturno</ion-label>
-              <ion-input type="text" [(ngModel)]="ocio_nocturno.nombre" required></ion-input>
-            </ion-item>
+              <ion-item>
+                <ion-label class="labelspace">Teléfono del restaurante</ion-label>
+                <ion-input type="text" [(ngModel)]="userRestaurante.telefono" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">CIF del restaurante</ion-label>
+                <ion-input type="text" [(ngModel)]="userRestaurante.cif" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">Imagen marca del restaurante</ion-label>
+                <ion-input type="text" [(ngModel)]="userRestaurante.imagen_marca" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Hora de apertura del restaurante</ion-label>
+                <ion-datetime
+                  [(ngModel)]="userRestaurante.hora_apertura"
+                  required
+                  presentation="time"
+                  yearValues="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
+                  minuteValues="0,15,30,45">
+                </ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Hora de cierre del restaurante</ion-label>
+                <ion-datetime
+                  [(ngModel)]="userRestaurante.hora_cierre"
+                  required
+                  presentation="time"
+                  yearValues="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
+                  minuteValues="0,15,30,45">
+                </ion-datetime>
+              </ion-item>
+
+              <ion-item class="direccion">
+                <ion-label class="labelspace">Calle</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.calle" required></ion-input>
+                <br>
+                <ion-label class="labelspace">Número</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.numero" required></ion-input>
+
+                <ion-label class="labelspace">Puerta</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.puerta" required></ion-input>
+
+                <ion-label class="labelspace">Código Postal</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.codigoPostal" required></ion-input>
+
+                <ion-label class="labelspace">País</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.pais" required></ion-input>
+
+                <ion-label class="labelspace">Ciudad</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.ciudad" required></ion-input>
+
+                <ion-label class="labelspace">Provincia</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.provincia" required></ion-input>
+              </ion-item>
+            </ion-list>
+
+            <ion-list *ngIf="selectedRole === 'ocio-nocturno'">
+              <ion-item>
+                <ion-label class="labelspace">Nombre del establecimiento nocturno</ion-label>
+                <ion-input type="text" [(ngModel)]="userOcioNocturno.nombre" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">Teléfono del establecimiento nocturno</ion-label>
+                <ion-input type="text" [(ngModel)]="userOcioNocturno.telefono" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">CIF del establecimiento nocturno</ion-label>
+                <ion-input type="text" [(ngModel)]="userOcioNocturno.cif" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">Aforo del establecimiento nocturno</ion-label>
+                <ion-input type="number" [(ngModel)]="userOcioNocturno.aforo" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">Imagen marca del establecimiento nocturno</ion-label>
+                <ion-input type="text" [(ngModel)]="userOcioNocturno.imagen_marca" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Hora de apertura del establecimiento nocturno</ion-label>
+                <ion-datetime
+                  [(ngModel)]="userOcioNocturno.hora_apertura"
+                  required
+                  presentation="time"
+                  yearValues="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
+                  minuteValues="0,15,30,45">
+                </ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>Hora de cierre del establecimiento nocturno</ion-label>
+                <ion-datetime
+                  [(ngModel)]="userOcioNocturno.hora_cierre"
+                  required
+                  presentation="time"
+                  yearValues="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
+                  minuteValues="0,15,30,45">
+                </ion-datetime>
+              </ion-item>
+
+              <ion-item class="direccion">
+                <ion-label class="labelspace">Calle</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.calle" required></ion-input>
+                <br>
+                <ion-label class="labelspace">Número</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.numero" required></ion-input>
+
+                <ion-label class="labelspace">Puerta</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.puerta" required></ion-input>
+
+                <ion-label class="labelspace">Código Postal</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.codigoPostal" required></ion-input>
+
+                <ion-label class="labelspace">País</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.pais" required></ion-input>
+
+                <ion-label class="labelspace">Ciudad</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.ciudad" required></ion-input>
+
+                <ion-label class="labelspace">Provincia</ion-label>
+                <ion-input type="text" [(ngModel)]="direccion.provincia" required></ion-input>
+              </ion-item>
+            </ion-list>
 
             <div class="botones">
               <ion-button expand="block" (click)="pasoAtras()">Atrás</ion-button>

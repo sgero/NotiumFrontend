@@ -10,7 +10,7 @@ import {UserCliente} from "../models/UserCliente";
 
 export class ClienteService {
 
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private apiUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
@@ -20,9 +20,9 @@ export class ClienteService {
 
   }
 
-  crearYModificarCliente(usuarioCliente:UserCliente) {
+  crearYModificarCliente(userCliente:UserCliente) {
 
-    return this.http.post<any>(`${this.apiUrl}/cliente/crear`, usuarioCliente);
+    return this.http.post<any>(`${this.apiUrl}/cliente/crear`, userCliente);
 
   }
 

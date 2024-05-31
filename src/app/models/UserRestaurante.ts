@@ -1,6 +1,6 @@
 import {DireccionDTO} from "./DireccionDTO";
 
-export class UserCliente{
+export class UserRestaurante{
   id?: number;
 
   username: string = '';
@@ -9,12 +9,12 @@ export class UserCliente{
   rol?: number;
 
   nombre: string = '';
-  apellidos?: string = '';
-  dni?: string = '';
   telefono?: string = '';
-  fecha_nacimiento?: string = '';
-  ubicacion_actual?: string = '';
+  cif?: string = '';
+  hora_apertura?: string = '';
+  hora_cierre?: string = '';
+  valoracion?: boolean;
+  disponible?: boolean;
+  imagen_marca?: string = '';
   direccionDTO: DireccionDTO = new DireccionDTO();
-  activo?: boolean = true;
-  token_verificacion?: string = '';
 }

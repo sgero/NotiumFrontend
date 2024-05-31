@@ -1,5 +1,5 @@
 import {Usuario} from "./Usuario";
-import {Direccion} from "./Direccion";
+import {DireccionDTO} from "./DireccionDTO";
 
 export class OcioNocturno {
   id?: number;
@@ -11,5 +11,5 @@ export class OcioNocturno {
   aforo?: number;
   imagen_arca?: string;
   usuarioDTO?: Usuario;
-  direccionDTO?:Direccion;
+  direccionDTO?:DireccionDTO = new DireccionDTO();
 }
