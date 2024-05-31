@@ -1,9 +1,9 @@
-<div class="container">
+<body>
 
   <app-headerrestaurante></app-headerrestaurante>
   <div *ngFor="let restaurante of listaRestaurantes" class="restau">
-    <a class="btn"href="notium/restaurante/{{restaurante.id}}"><h1>{{restaurante.nombre}}</h1></a>
+    <a class="btn" href="notium/restaurante/{{restaurante.id}}"><h1>{{restaurante.nombre}}</h1></a>
   </div>
+  <footer> <app-footerrestaurante></app-footerrestaurante></footer>
 
-  <app-footerrestaurante></app-footerrestaurante>
-</div>
+</body>
