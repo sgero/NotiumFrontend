@@ -1,0 +1,104 @@
+.banner-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+/* Estilos para el banner */
+.banner {
+  height: 400px; /* Altura del banner */
+  width: 75%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+}
+//.banner h1{
+//  font-size: 100px;
+//  font-family: cursive;
+//  background: #2a032a;
+//  background-size: cover;
+//}
+.buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+.buttons ion-button {
+  margin-left: 150px;
+  --background: #2a032a;
+  --background-hover: #2a032a;
+  --background-activated: #2a032a;
+  --background-focused: #2a032a;
+
+  --color: white;
+
+  --border-radius: 1%;
+  --border-color: #000;
+  --border-style: solid;
+  --border-width: 1px;
+
+  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+
+  --ripple-color: deeppink;
+
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+}
+
+// ion-button .icon{
+//  color: white;
+//}
+
+.eventos, .staff, .listas{
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+ion-label, .staff ion-label{
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.listas ion_label{
+  max-width: 800px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+
+.but{
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+.but div button{
+  margin: 5px;
+}
+ion-modal{
+  --width: 40%;
+}
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  letter-spacing: 0.5px;
+  color: #0c0b1f;
+  overflow-y: auto;
+  min-height: 100vh;
+
+}
+.crear{
+  display: grid;
+  align-items: center;
+}

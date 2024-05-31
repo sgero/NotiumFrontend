@@ -10,4 +10,5 @@ export class ListaOcio {
   rppDTO?:Rpp;
   detalleLista?:string;
   consumiciones?:Consumiciones;
+  activo = false;
 }

@@ -44,9 +44,9 @@
         </ion-badge>
       </div>
 
-      @if (evento?.fecha! < fechaActual) {
+      @if (evento?.fecha!.substring(0, 10) >= fechaActual) {
         @if (comprarEntradas) {
-          <div class="entradas-generales">
+          <div class="entradas-generales" style="min-width: 1000px;max-width: 1000px">
             <div class="row card-row card-style">
               <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
                    (click)="setOpenGeneral(true, true, false, false)">
@@ -260,20 +260,25 @@
                           <mat-form-field>
                             <mat-label>Email</mat-label>
                             <input matInput formControlName="email" required type="email">
+                            @if (datosCompradores.get('email')?.hasError('email')){
+                              <mat-error>Email incorrecto.</mat-error>
+                            }
                           </mat-form-field>
 
 
-                          <mat-form-field>
+                          <mat-form-field style="width: 213px">
                             <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput placeholder="YYYY/MM/DD" formControlName="fecha">
+                            <input matInput placeholder="YYYY/MM/DD" formControlName="fecha"  [matDatepicker]="picker">
+                            @if (datosCompradores.get('fecha')?.hasError('futureDate')){
+                              <mat-error>La edad mínima es {{edadMinima}} años.</mat-error>
+                            }
                             <mat-datepicker-toggle matIconSuffix [for]="picker">
-                              <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
                             </mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>
 
                           <mat-form-field>
-                            <mat-label>Genero</mat-label>
+                            <mat-label>Género</mat-label>
                             <mat-select formControlName="genero">
                               @for (g of generos; track g) {
                                 <mat-option [value]="g">{{ g }}</mat-option>
@@ -284,7 +289,7 @@
 
                           <mat-form-field>
                             <mat-label>Teléfono</mat-label>
-                            <input matInput formControlName="telefono">
+                            <input matInput formControlName="telefono" type="number">
                           </mat-form-field>
 
                           <div>

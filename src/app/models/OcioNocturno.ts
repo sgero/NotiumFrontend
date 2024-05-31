@@ -9,7 +9,7 @@ export class OcioNocturno {
   horaApertura?: string;
   horaCierre?: string;
   aforo?: number;
-  imagen_arca?: string;
+  imagenMarca?: string;
   usuarioDTO?: Usuario;
   direccionDTO?:Direccion;
 }

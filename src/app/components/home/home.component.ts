@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
       if (usuario.rol == "CLIENTE") {
         this.router.navigate(["notium/ocionocturno"])
       } else if (usuario.rol == "OCIONOCTURNO") {
-        this.router.navigate(["notium/error"])
+        this.router.navigate(["notium/ocionocturno"])
       } else {
         this.router.navigate(["notium/error"])
       }

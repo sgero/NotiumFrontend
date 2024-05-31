@@ -5,22 +5,35 @@ import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {IonicModule, LoadingController, ToastController} from "@ionic/angular";
 import {FooterocionocturnoComponent} from "../../footerocionocturno/footerocionocturno.component";
 import {HeaderocionocturnoComponent} from "../../headerocionocturno/headerocionocturno.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {EdadMinimaOcio} from "../../../models/EdadMinimaOcio";
 import {arrowForward, calendar, closeOutline, flameOutline, pricetags, shirtOutline, watch} from "ionicons/icons";
 import {addIcons} from "ionicons";
 import {InformacionTiposEntradasEvento} from "../../../models/InformacionTiposEntradasEvento";
-import {MatError, MatFormField, MatHint, MatLabel} from "@angular/material/form-field";
+import {MatError, MatFormField, MatFormFieldModule, MatHint, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
 import {MatStep, MatStepLabel, MatStepper, MatStepperNext, MatStepperPrevious} from "@angular/material/stepper";
-import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {MatInput} from "@angular/material/input";
+import {
+  AbstractControl,
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from "@angular/forms";
+import {MatInput, MatInputModule} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
 import {PromocionService} from "../../../services/promocion.service";
 import {Promocion} from "../../../models/Promocion";
 import {DatosComprador} from "../../../models/DatosComprador";
-import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
+import {MatNativeDateModule, provideNativeDateAdapter} from "@angular/material/core";
 import {MatIcon} from "@angular/material/icon";
 import {Cliente} from 'src/app/models/Cliente';
 import {Genero} from "../../../models/Genero";
@@ -76,8 +89,16 @@ const IonIcons = {
     MatIcon,
     MatHint,
     MatError,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule
   ],
   standalone: true,
+  providers: [
+    DatePipe,
+    provideNativeDateAdapter()
+
+  ]
 })
 
 export class EventDetailComponent implements OnInit {
@@ -103,7 +124,7 @@ export class EventDetailComponent implements OnInit {
   yaEnviado: number[] = [];
   cliente?: Cliente;
   generos: string[] = Object.keys(Genero).filter(key => isNaN(Number(key))) as string[];
-  fechaActual: string = new Date().toString();
+  fechaActual = new Date().toString();
   pagar = false;
   reservadoOcioCliente = new ReservadoOcioCliente();
 
@@ -113,9 +134,9 @@ export class EventDetailComponent implements OnInit {
   datosCompradores = this.formBuilder.group({
     nombre: ['', Validators.required],
     apellidos: ['', Validators.required],
-    email: ['', Validators.required, Validators.email],
-    fecha: [''],
-    genero: [''],
+    email: ['', [Validators.required, Validators.email]],
+    fecha: ['', [Validators.required, this.dateValidator()]],
+    genero: ['', Validators.required],
     telefono: ['', Validators.required],
   });
   isLinear = false;
@@ -142,15 +163,16 @@ export class EventDetailComponent implements OnInit {
   disponiblesGeneral?: number;
   disponiblesReservado?: number;
   disponiblesLista?: number;
-  genero = '';
-
+  permisosParaEditar = false;
 
   constructor(private toastController: ToastController, private loadingCtrl: LoadingController,
               private eventoService: EventoService, private route: ActivatedRoute,
               private formBuilder: FormBuilder, private promocionService: PromocionService,
               private comprarService: ComprarService, private usuarioService: UsuarioService,
               private router: Router, private clienteService: ClienteService,
-              private ocioService: OcionocturnoService, private pdfService : PdfService
+              private ocioService: OcionocturnoService, private pdfService : PdfService,
+              private datePipe: DatePipe, private ocioNocturnoService: OcionocturnoService,
+
   ) {
     addIcons(IonIcons);
   }
@@ -165,6 +187,7 @@ export class EventDetailComponent implements OnInit {
       }
     });
     this.getPromocionesActivas();
+    this.fechaActual = <string>this.datePipe.transform(this.fechaActual, 'yyyy-MM-dd');
   }
 
   getById(id: number) {
@@ -217,8 +240,23 @@ export class EventDetailComponent implements OnInit {
     } else if (edad.toString() == 'VEINTIUNO') {
       this.edadMinima = 21;
     } else if (edad.toString() == 'VEINTICINCO') {
-      this.edadMinima = 25
     }
+    return this.edadMinima;
+  }
+
+  dateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const inputDate = new Date(control.value);
+      const date = new Date();
+      let edadMinima = this.edadMinima;
+
+      date.setFullYear(date.getFullYear() - edadMinima!);
+
+      if (inputDate.setHours(0, 0, 0, 0) >= date.setHours(0, 0, 0, 0)) {
+        return { futureDate: true };
+      }
+      return null;
+    };
   }
 
   setOpenGeneral(isOpen: boolean, isGeneral: boolean, isReservado: boolean, isLista: boolean) {
@@ -346,11 +384,13 @@ export class EventDetailComponent implements OnInit {
 
   addForm(c: number) {
     const formValues = this.datosCompradores.value;
+    let fecha = formValues.fecha!;
+    fecha =  <string>this.datePipe.transform(fecha, 'yyyy-mm-dd');
     const nuevoComprador: DatosComprador = {
       nombre: formValues.nombre || '',
       apellidos: formValues.apellidos || '',
       email: formValues.email || '',
-      fechaNacimiento: formValues.fecha!.replace(/\//g, '-') || '',
+      fechaNacimiento: fecha,
       genero: formValues.genero || '',
       telefono: formValues.telefono || ''
     };
@@ -406,13 +446,12 @@ export class EventDetailComponent implements OnInit {
         this.informacionTiposEntrada?.entradaOcioDTO?.id!,
         this.datosAsistentesEOC).subscribe({
         next: async value => {
-          await loading.present();
           if (value.object as EntradaOcioCliente[]) {
+            await loading.present();
             let compra = value.object as EntradaOcioCliente[];
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf(compra, new ComprarReservadoDTO(), []);
-            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -431,13 +470,12 @@ export class EventDetailComponent implements OnInit {
         this.informacionTiposEntrada?.reservadoOcioDTO?.id!,
         this.datosAsistentesROC!).subscribe({
         next: async value => {
-          await loading.present();
           if (value.object as ComprarReservadoDTO) {
+            await loading.present();
             let compra = value.object as ComprarReservadoDTO;
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], compra, []);
-            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -456,13 +494,12 @@ export class EventDetailComponent implements OnInit {
         this.informacionTiposEntrada?.listaOcioDTO?.id!,
         this.datosAsistentesLOC!).subscribe({
         next: async value => {
-          await loading.present();
           if (value.object as ListaOcioCliente[]) {
+            await loading.present();
             let compra = value.object as ListaOcioCliente[];
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], new ComprarReservadoDTO(), compra);
-            window.location.reload();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -562,7 +599,21 @@ export class EventDetailComponent implements OnInit {
           console.error(err);
         }
       })
-    } else {
+    } else if (usuario.rol == "OCIONOCTURNO"){
+      this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
+        next: value => {
+          if (value.id != this.evento?.ocioNocturnoDTO?.id) {
+            this.router.navigate(["notium/error"])
+          } else {
+            this.permisosParaEditar = true;
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+    }
+    else {
       this.router.navigate(["notium/error"])
     }
   }

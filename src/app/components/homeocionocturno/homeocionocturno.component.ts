@@ -8,7 +8,11 @@ import {InfiniteScrollCustomEvent, IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {FormsModule} from "@angular/forms";
-import {RouterLink} from "@angular/router";
+import {OcionocturnoService} from "../../services/ocionocturno.service";
+import {OcioNocturno} from "../../models/OcioNocturno";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {UsuarioService} from "../../services/usuario.service";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-homeocionocturno',
@@ -24,26 +28,38 @@ import {RouterLink} from "@angular/router";
     NgIf,
     FormsModule,
     DatePipe,
-    RouterLink
+    RouterLink,
+    MatButton
   ],
-  standalone: true
+  standalone: true,
+  providers: [DatePipe]
 })
 export class HomeocionocturnoComponent  implements OnInit {
 
   eventosActivos: Evento[] = [];
   eventosEntreFechas: Evento[] = [];
+  ocios: OcioNocturno[] = [];
   esCliente?: boolean;
   fecha: Date = new Date();
   fechaSeleccionada?: Date ;
   noHayEventos?: boolean;
   items:Evento[] = [];
   finalPaginado:boolean = false;
-  fechaActual : string = new Date().toString();
+  fechaActual = new Date().toString();
+  ver= true;
 
-  constructor(private ocioService : EventoService) { }
+
+  constructor(private ocioService : EventoService,
+              private ocioNocturnoService : OcionocturnoService,
+              private datePipe : DatePipe,
+              private usuarioService : UsuarioService,
+              private router: Router) { }
 
   ngOnInit() {
+    this.getUsuario();
     this.getEventos(5,0);
+    this.getOcios();
+    this.fechaActual = <string>this.datePipe.transform(this.fechaActual, 'yyyy-MM-dd')
   }
   getEventos(numElem:number, numPag:number){
     const params = {
@@ -58,6 +74,17 @@ export class HomeocionocturnoComponent  implements OnInit {
         }else {
           this.finalPaginado = true;
         }
+      },
+      error: e => {
+        console.error(e);
+      }
+    })
+  }
+
+  getOcios(){
+    this.ocioNocturnoService.listarOcioNocturno().subscribe({
+      next: value => {
+        this.ocios = value as OcioNocturno[] ;
       },
       error: e => {
         console.error(e);
@@ -120,5 +147,31 @@ export class HomeocionocturnoComponent  implements OnInit {
       this.generateItems();
 
     }
+  }
+
+  getUsuario() {
+    this.usuarioService.getUsuarioToken().subscribe({
+      next: value => {
+        this.getDTO(value);
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
+  }
+
+  getDTO(usuario: any) {
+    if (usuario.rol == "CLIENTE") {
+      this.esCliente = true;
+    } else if (usuario.rol == "OCIONOCTURNO"){
+      this.esCliente = false;
+    }
+    else {
+      this.router.navigate(["notium/error"])
+    }
+  }
+
+  verEventos(b: boolean) {
+    this.ver = b;
   }
 }

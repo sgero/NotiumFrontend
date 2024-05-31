@@ -8,8 +8,8 @@ export class Rpp  {
   apellidos?: string;
   dni?: string;
   telefono?: string;
-  fecha_nacimiento?: number;
-  userDTO?: Usuario;
-  direccionDTO?:Direccion;
+  fechaNacimiento?: Date;
+  userDTO?: Usuario | null;
+  direccionDTO?:Direccion | null;
   ocioNocturnoDTO?:OcioNocturno;
 }
