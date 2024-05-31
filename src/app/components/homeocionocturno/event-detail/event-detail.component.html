@@ -44,7 +44,7 @@
         </ion-badge>
       </div>
 
-      @if (evento?.fecha!.substring(0, 10) > fechaActual) {
+      @if (evento?.fecha!.substring(0, 10) >= fechaActual) {
         @if (comprarEntradas) {
           <div class="entradas-generales" style="min-width: 1000px;max-width: 1000px">
             <div class="row card-row card-style">
