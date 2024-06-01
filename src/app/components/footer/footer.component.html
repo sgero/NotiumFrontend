@@ -34,10 +34,15 @@
         <form action="#" method="post">
           <input type="email" name="email" class="text-input contact-input" placeholder="Tu dirección de correo">
           <textarea name="message" class="text-input contact-input" placeholder="Tu mensaje"></textarea>
-          <button type="submit" class="btn btn-big contact-btn">
-            <i class="fa fa-envelope"></i>
-            Enviar
-          </button>
+<!--          <button type="submit" class="btn btn-big contact-btn">-->
+<!--            <i class="fa fa-envelope"></i>-->
+<!--            Enviar-->
+          <ion-button (click)="sendEmail()" class="custom-button">
+            Enviar <i class="fa fa-envelope icon-margin"></i>
+          </ion-button>
+
+
+          <!--          </button>-->
         </form>
       </div>
     </div>
