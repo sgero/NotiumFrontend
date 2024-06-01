@@ -26,6 +26,9 @@ export class OcionocturnoService {
   ocioPorId(id: number){
     return this.http.get<OcioNocturno>(`${this.apiUrl}/ocioNocturno/${id}`)
   }
+  ocioPorIdEvento(id: number){
+    return this.http.get<OcioNocturno>(`${this.apiUrl}/ocioNocturno/${id}/evento`)
+  }
 
   getByIdUsuario(idUsuario:number){
     return this.http.get<OcioNocturno>(`${this.apiUrl}/ocioNocturno/usuario/${idUsuario}`);

@@ -31,8 +31,8 @@
 
 }
 
-.buttons ion-button {
-  margin-left: 150px;
+.buttons button {
+  margin: 10px;
   --background: #2a032a;
   --background-hover: #2a032a;
   --background-activated: #2a032a;
@@ -78,17 +78,9 @@ ion-label, .staff ion-label{
 }
 
 
-
-.but{
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-}
-.but div button{
-  margin: 5px;
-}
 ion-modal{
-  --width: 40%;
+  --width: 80%;
+  --height: 80%;
 }
 body {
   font-family: "Noto Sans JP", sans-serif;
@@ -101,4 +93,18 @@ body {
 .crear{
   display: grid;
   align-items: center;
+}
+.ev{
+  display: flex;
+  justify-content: center;
+}
+.spinner {
+  width: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.matspin{
+  height: 30px !important;
+  width: 30px !important;
 }

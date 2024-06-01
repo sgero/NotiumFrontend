@@ -1,0 +1,355 @@
+@if (formularioRellenado) {
+<ion-modal [isOpen]="isModalOpen">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Editar Evento</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="openM(false)" style="padding: 0 !important;">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="form-content ion-padding ">
+      <div class="dispo">
+        <mat-stepper orientation="vertical" #stepper>
+          <mat-step [stepControl]="eventoDTO">
+            <form [formGroup]="eventoDTO" class="crear">
+              <ng-template matStepLabel>Datos del evento</ng-template>
+              <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <textarea matInput formControlName="nombre" required></textarea>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Descripción</mat-label>
+                <textarea matInput formControlName="descripcion" required></textarea>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Temática</mat-label>
+                <textarea matInput formControlName="tematica" required></textarea>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Fecha</mat-label>
+                <input matInput formControlName="fecha" [matDatepicker]="picker">
+                @if (eventoDTO.get('fecha')?.hasError('futureDate')) {
+                  <mat-error>La fecha debe ser superior a la actual</mat-error>
+                }
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Cartel</mat-label>
+                <input matInput formControlName="cartel" required>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Código de Vestimenta</mat-label>
+                <mat-select formControlName="codigoVestimentaOcio">
+                  @for (c of vestimentas; track c) {
+                    <mat-option [value]="c">{{ c.charAt(0) + c.substring(1, 20).toLowerCase() }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Edad Mínima</mat-label>
+                <mat-select formControlName="edadMinimaOcio">
+                  @for (e of edadMinima; track e) {
+                    <mat-option [value]="e">{{ e.charAt(0) + e.substring(1, 20).toLowerCase() }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Aforo</mat-label>
+                <input matInput formControlName="aforo" required>
+                @if (eventoDTO.get('aforo')?.hasError('min')) {
+                  <mat-error>El aforo mínimo es de 5 personas.</mat-error>
+                } @else if (eventoDTO!.controls.aforo!.toString() > ocio.aforo!.toString()) {
+                  <mat-error>El aforo del evento no puede ser mayor al del ocio.</mat-error>
+                }
+              </mat-form-field>
+            </form>
+
+            <div>
+              @if (eventoEnviado) {
+                <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+              } @else {
+                @if (verifyEventoForm()) {
+                  <button mat-button matStepperNext (click)="addEvento()">Añadir</button>
+                } @else {
+                  <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                }
+              }
+            </div>
+
+          </mat-step>
+
+          <mat-step [stepControl]="entradaOcioDTO">
+            <form [formGroup]="entradaOcioDTO" class="crear">
+              <ng-template matStepLabel>Personalizar Entradas</ng-template>
+
+              <mat-form-field>
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="precio" type="number" required>
+                @if (entradaOcioDTO.get('precio')?.hasError('min')) {
+                  <mat-error>El precio no puede ser inferior a 0.</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Entradas a la venta</mat-label>
+                <input matInput formControlName="totalEntradas" type="number" required>
+                @if (entradaOcioDTO.get('totalEntradas')?.hasError('min')) {
+                  <mat-error>El mínimo de entradas generales a la venta son 3.</mat-error>
+                } @else if (entradaOcioDTO.get('totalEntradas')?.hasError('max')) {
+                  <mat-error>El máximo de entradas generales no puede ser superior a {{ eventoAforoNuevo! - 3 }}.
+                  </mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Detalle de la entrada</mat-label>
+                <textarea matInput formControlName="detalleEntrada" required></textarea>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Consumiciones incluidas con la entrada</mat-label>
+                <mat-select formControlName="consumiciones">
+                  @for (con of consumiciones; track con) {
+                    <mat-option [value]="con">{{ con }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <div>
+                @if (entradaEnviada) {
+                  <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                } @else {
+                  @if (entradaOcioDTO.valid) {
+                    <button mat-button matStepperNext (click)="addEntrada()">Añadir</button>
+                  } @else {
+                    <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                  }
+                }
+              </div>
+
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="reservadoOcioDTO">
+            <form [formGroup]="reservadoOcioDTO" class="crear">
+              <ng-template matStepLabel>Personalizar Reservados</ng-template>
+
+              <mat-form-field>
+                <mat-label>Precio</mat-label>
+                <input matInput formControlName="precio" type="number" required>
+                @if (reservadoOcioDTO.get('precio')?.hasError('min')) {
+                  <mat-error>El precio no puede ser inferior a 0.</mat-error>
+                }
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Reservados Disponibles</mat-label>
+                <input matInput formControlName="reservadosDisponibles" type="number" required>
+                @if (reservadoOcioDTO.get('reservadosDisponibles')?.hasError('min')) {
+                  <mat-error>El mínimo de reservados debe ser 1.</mat-error>
+                }
+              </mat-form-field>
+
+              @if (reservadoOcioDTO.get('reservadosDisponibles')?.valid) {
+                @if (setearDisponibilidadReservado(reservadoOcioDTO.get('reservadosDisponibles')?.value)) {
+                  <mat-form-field>
+                    <mat-label>Máximo de personas en un reservado</mat-label>
+                    <input [disabled]="true" matInput formControlName="personasMaximasPorReservado" type="number"
+                           required>
+                    @if (reservadoOcioDTO.get('personasMaximasPorReservado')?.hasError('min')) {
+                      <mat-error>El mínimo de personas por reservado debe ser 2.</mat-error>
+                    } @else if (reservadoOcioDTO.get('personasMaximasPorReservado')?.hasError('max')) {
+                      <mat-error>
+                        El número de personas máximas por reservado no puede ser mayor
+                        de {{ personasMaxPorReservado }}.
+                      </mat-error>
+                    }
+                  </mat-form-field>
+                }
+              }
+
+              <mat-form-field>
+                <mat-label>Detalle del reservado</mat-label>
+                <textarea matInput formControlName="detalleReservado" required></textarea>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Botellas incluidas con el reservado</mat-label>
+                <mat-select formControlName="botellas">
+                  @for (b of botellas; track b) {
+                    <mat-option [value]="b">{{ b }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <div>
+                @if (reservadoEnviado) {
+                  <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                } @else {
+                  @if (entradaOcioDTO.valid) {
+                    <button mat-button matStepperNext (click)="addReservado()">Añadir</button>
+                  } @else {
+                    <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                  }
+                }
+              </div>
+
+            </form>
+          </mat-step>
+          <mat-step [stepControl]="listaOcioDTO">
+            <form [formGroup]="listaOcioDTO" class="crear">
+              <ng-template matStepLabel>Personalizar Listas</ng-template>
+
+
+                @if (informacionEvento?.listaOcioDTO!.length! > 0) {
+                  @for (c of cantidad; track c; let last = $last) {
+                    <mat-form-field>
+                      <mat-label>Precio</mat-label>
+                      <input matInput formControlName="precio" type="number" required>
+                      @if (listaOcioDTO.get('precio')?.hasError('min')) {
+                        <mat-error>El precio no puede ser inferior a 0.</mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Total de Invitaciones</mat-label>
+                      <input matInput formControlName="total_invitaciones" type="number" required>
+                      @if (listaOcioDTO.get('total_invitaciones')?.hasError('min')) {
+                        <mat-error>El mínimo de invitaciones son 1.</mat-error>
+                      } @else if (listaOcioDTO.get('total_invitaciones')?.hasError('max')) {
+                        <mat-error>El máximo de invitaciones no puede ser superior a {{ disponibilidadRestante! }}.
+                        </mat-error>
+                      }
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Detalle de la lista</mat-label>
+                      <textarea matInput formControlName="detalleLista" required></textarea>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Consumiciones incluidas con la lista</mat-label>
+                      <mat-select formControlName="consumiciones">
+                        @for (con of consumiciones; track con) {
+                          <mat-option [value]="con">{{ con }}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Dueño de la lista</mat-label>
+                      <mat-select formControlName="rppDTO">
+                        @for (rpp of rpps; track rpp) {
+                          <mat-option [value]="rpp">{{ rpp.nombre }} {{ rpp.apellidos }}</mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+
+                    <div>
+                      @if (datoYaEnviado(c) && last) {
+                        <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                        <button mat-button matStepperNext>Continuar</button>
+                      } @else if (datoYaEnviado(c)) {
+                        <button [disabled]="true" mat-button matStepperNext>Añadir</button>
+                      } @else {
+                        @if (listaOcioDTO.valid) {
+                          <button mat-button (click)="addLista(c)">Añadir</button>
+                        } @else {
+                          <button [disabled]="true" mat-button>Añadir</button>
+                        }
+                      }
+                    </div>
+                  }
+                }
+
+
+
+            </form>
+          </mat-step>
+
+
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" class="crear">
+              <ng-template matStepLabel>Lista a activar</ng-template>
+              <mat-form-field>
+                <mat-label>¿Qué lista deseas activar?</mat-label>
+                <mat-select>
+                  @for (n of cantidad; track n) {
+                    <mat-option [value]="n" (click)="activarLista(n)">{{ n }}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+
+              <div>
+                @if (listaActivada) {
+                  <button mat-button matStepperNext>Continuar</button>
+                }
+              </div>
+
+            </form>
+          </mat-step>
+
+          @if (!unico) {
+            <mat-step [stepControl]="opcionesEventoCiclico">
+              <form [formGroup]="opcionesEventoCiclico" class="crear">
+                <ng-template matStepLabel>Repetir Evento</ng-template>
+
+                <mat-form-field>
+                  <mat-label>Tiempo durante el que se repetirá el evento</mat-label>
+                  <mat-select formControlName="repetirCicloEventoOcio">
+                    @for (t of repetirCicloEventoOcio; track t) {
+                      <mat-option [value]="t">{{ t.replace("_", " ") }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-label>Días de la semana en los que se repetirá el evento</mat-label>
+                  <mat-select  multiple  formControlName="diasARepetirCicloEventoOcioList">
+                    @for (t of diasARepetirCicloEventoOcioList; track t) {
+                      <mat-option [value]="t">{{ t }}</mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+
+                <div>
+                  @if (opcionesEventoCiclicoBool) {
+                    <button [disabled]="true" mat-button>Añadir</button>
+                    <button mat-button matStepperNext>Continuar</button>
+                  } @else {
+                    <button mat-button (click)="addOpcionesEventoCiclico()">Añadir</button>
+                  }
+                </div>
+
+
+              </form>
+            </mat-step>
+          }
+
+          <mat-step>
+            <form>
+              <ng-template matStepLabel>Guardar</ng-template>
+              <button mat-button (click)="guardarEvento()">Editar Evento</button>
+
+            </form>
+          </mat-step>
+
+
+        </mat-stepper>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+}

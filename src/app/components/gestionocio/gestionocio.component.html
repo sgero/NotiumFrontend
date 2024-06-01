@@ -3,15 +3,25 @@
 <app-headerocionocturno></app-headerocionocturno>
 <ion-content>
 
-  @if (!esCliente && permisosParaEditar) {
-    <section class="but">
-      <div class="example-button-row">
-        <button mat-raised-button color="primary" (click)="openM(true)">Crear Evento</button>
-      </div>
-    </section>
-  }
 
 
+  <div class="banner-container">
+    <!-- Banner de fondo con la imagen de la marca de la discoteca -->
+    <div class="banner" [style.background-image]="'url('+ ocio.imagenMarca +')'">
+      <!-- Contenido opcional dentro del banner -->
+      <!--      <h1> {{ocio.nombre}} </h1>-->
+      <!--      <p>{{ocio.direccionDTO.ciudad}}</p>-->
+    </div>
+  </div>
+  <div class="buttons">
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Eventos()">Ver Eventos</button>
+    @if (!esCliente && permisosParaEditar) {
+      <button mat-raised-button color="primary" style="width: 140px !important" (click)="openM(true)">Crear Evento</button>
+    }
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Staff()">Staff</button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Carta()">Carta</button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Galeria()">Galería</button>
+  </div>
 
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
@@ -394,29 +404,19 @@
     </ng-template>
   </ion-modal>
 
-  <div class="banner-container">
-    <!-- Banner de fondo con la imagen de la marca de la discoteca -->
-    <div class="banner" [style.background-image]="'url('+ ocio.imagenMarca +')'">
-      <!-- Contenido opcional dentro del banner -->
-      <!--      <h1> {{ocio.nombre}} </h1>-->
-      <!--      <p>{{ocio.direccionDTO.ciudad}}</p>-->
-    </div>
-  </div>
-  <div class="buttons">
-    <ion-button shape="round" (click)="Eventos()">Eventos</ion-button>
-    <ion-button shape="round" (click)="Staff()">Staff</ion-button>
-    <ion-button shape="round" (click)="Carta()">Carta</ion-button>
-    <ion-button shape="round" (click)="Galeria()">Galería</ion-button>
-  </div>
-  <div *ngIf="eventosInfo == 'eventosInfo'">
+
+  <div *ngIf="eventosInfo == 'eventosInfo'" class="ev">
     <div class="eventos">
-      <ion-card>
-        <!--        <ion-card-header>-->
-        <!--          <ion-card-title>Eventos</ion-card-title>-->
-        <!--        </ion-card-header>-->
+      @if (noHayEventos){
+        <div class="spinner">
+        <mat-spinner class="matspin"></mat-spinner>
+        </div>
+      }
+      @if (eventos.length != 0){
+      <ion-card  *ngIf="!noHayEventos" style="width: 1400px;">
         <ion-card-content>
           <ion-list *ngFor="let e of eventos">
-            <ion-item>
+            <ion-item [routerLink]="['/notium/ocionocturno/evento/', e.id]">
               <ion-thumbnail slot="start">
                 <img alt="Silhouette of mountains" src="{{e.cartel}}"/>
               </ion-thumbnail>
@@ -431,7 +431,13 @@
           </ion-list>
         </ion-card-content>
       </ion-card>
+      }
+      <div *ngIf="noHayEventosSeleccionado" style="display: flex;justify-content: center;margin-top: 20px;width: 1400px;"><p>No hay eventos en la
+        fecha
+        seleccionada. </p></div>
     </div>
+    <ion-datetime class="calendar-event" presentation="date" locale="es-ES" [(ngModel)]="fechaSeleccionada"
+                  (ionChange)="fecha" (click)="getEventosEntreFechas(fechaSeleccionada!)"></ion-datetime>
   </div>
   <div *ngIf="eventosInfo == 'staff'">
     <div class="staff">
