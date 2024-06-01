@@ -11,11 +11,24 @@
     <div class="titulin">
       <img src="../../../assets/images/OIG4.jpg" alt="Logo">
       <div >
-        <h1><strong>OTIUMⁿ </strong></h1>
+<!--        <h1><strong>OTIUMⁿ </strong></h1>-->
+
+        <div class="fecha">
+          <ion-datetime-button  datetime="datetime"></ion-datetime-button>
+
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="datetime"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </div>
+
         <h2>Ocio a la enésima potencia.</h2>
+
       </div>
 
     </div>
+
 
 
   </div>
@@ -24,6 +37,9 @@
   <!--    <span> | </span>-->
   <!--    <button class="login-button" (click)="onLoginButtonClick()">Sign In</button>-->
   <!--  </div>-->
+
+
+
 
 
 
@@ -53,9 +69,11 @@
 
 
   <div class="user">
-    <button class="register-button" (click)="onRegisterButtonClick()">Sign Up</button>
+    <button class="register-button" (click)="registro()">Regístrate</button>
+<!--    <button class="register-button" (click)="onRegisterButtonClick()">Regístrate</button>-->
     <span> | </span>
-    <button class="login-button" (click)="onLoginButtonClick()">Sign In</button>
+    <button class="login-button" (click)="login()">Login</button>
+<!--    <button class="login-button" (click)="onLoginButtonClick()">Sign In</button>-->
     <!--    <img src="../../../assets/images/notium.jpeg" alt="User">-->
   </div>
 </div>

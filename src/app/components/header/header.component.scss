@@ -145,3 +145,35 @@
   align-items: center;
   flex-direction: row;
 }
+
+
+.fecha {
+  font-size: 1.5rem;
+  color: #521852;
+  margin-top: 1rem;
+  margin-bottom: 0rem;
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: row;
+  max-width: 100%;
+}
+
+
+.ion-activatable {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: row;
+  max-width: 50%;
+  background: #7F448C;
+}
+
+.ion-activatable :host button {
+  background: #7F448C;
+}
+
+#date-button {
+  background: #7F448C;
+}
