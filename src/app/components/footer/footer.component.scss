@@ -117,4 +117,14 @@
 }
 
 
+/* Clase para agregar margen al icono */
+.icon-margin {
+  margin-left: 8px; /* Ajusta el valor según el espacio que desees */
+}
+
+/* Clase personalizada para cambiar el color del botón */
+.custom-button {
+  --background: #521852; /* Color de fondo del botón */
+  --color: white; /* Color del texto */
+}
 

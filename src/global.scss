@@ -37,5 +37,68 @@ ion-content.home-content {
   --background: #f5f3fa;
 }
 
+ion-menu {
+  --width: 300px; /* Ancho del menú */
+  --background: #f5f3fa ! important; /* Color de fondo del menú */
+  --color: #333; /* Color del texto del menú */
+}
 
+ion-toolbar {
+  --background: #f5f3fa; /* Color de fondo del toolbar del menú */
+  --color: #333; /* Color del texto
+}
+
+ion-menu ion-toolbar {
+  --background: #f5f3fa;; /* Color de fondo del toolbar del menú */
+  --color: #333; /* Color del texto del toolbar del menú */
+}
+
+ion-content {
+  --background: #f5f3fa;; /* Color de fondo del contenido del menú */
+  --color: #333; /* Color del texto del contenido del menú */
+}
+
+ion-menu ion-content {
+  --background: #f5f3fa;; /* Color de fondo del contenido del menú */
+  --color: #333; /* Color del texto del contenido del menú */
+}
+
+ion-buttons {
+  --background: #f5f3fa; /* Color de fondo del botón */
+  --color: #333; /* Color del texto del botón */
+}
+
+ion-menu-button {
+  background: rgba(189, 171, 246, 0.44) !important; /* Color de fondo del botón */
+  --color: #333 !important; /* Color del texto del botón */
+}
+
+ion-menu-button:hover {
+  background: rgba(68, 11, 248, 0.44) !important; /* Color de fondo del botón al pasar el mouse */
+  --color: #333 !important; /* Color del texto del botón */
+}
+
+ion-menu ion-list ion-menu-toggle ion-item {
+  --background: #f5f3fa;
+  --color: #333;
+}
+
+
+
+ion-item {
+  --background: #f5f3fa;
+  --color: #333;
+  text-align: center;
+}
+
+
+md button in-toolbar ion-activatable ion-focusable {
+  --background: #f5f3fa; /* Color de fondo del botón */
+  --color: #6b6a6a; /* Color del texto del botón */
+}
+
+
+.custom-toast {
+  --background: #eecd4f !important; /* Cambia este valor al color que desees */
+}
 

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {AdminPanelComponent} from "../admin-panel/admin-panel.component";
-import {IonicModule} from "@ionic/angular";
+import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
+import {LoginComponent} from "../login/login.component";
+import {RegistroComponent} from "../registro/registro.component";
 
 @Component({
   selector: 'app-header',
@@ -18,7 +20,10 @@ import {CommonModule} from "@angular/common";
 })
 export class HeaderComponent  implements OnInit {
 
-  constructor(private router: Router, public authService: AuthService) { }
+  protected username: string | undefined;
+
+  constructor(private router: Router, public authService: AuthService,
+              private modalController: ModalController) { }
 
   onRegisterButtonClick() {
 
@@ -32,7 +37,7 @@ export class HeaderComponent  implements OnInit {
 
 
   }
-  ngOnInit() {return null}
+  // ngOnInit() {return null}
 
 
   get isAdmin() {
@@ -80,4 +85,35 @@ export class HeaderComponent  implements OnInit {
   openRppPanel() {
     this.router.navigate(['/rpp-panel']);
   }
-}
+
+
+  async login() {
+    const modal = await this.modalController.create({
+      component: LoginComponent, // Reemplaza LoginComponent por el nombre de tu componente de inicio de sesión
+      componentProps: {
+        // Puedes pasar cualquier dato necesario al modal
+      }
+    });
+    await modal.present();
+  }
+
+
+  async registro() {
+    const modal = await this.modalController.create({
+      component: RegistroComponent, // Reemplaza LoginComponent por el nombre de tu componente de inicio de sesión
+      componentProps: {
+        // Puedes pasar cualquier dato necesario al modal
+      }
+    });
+    await modal.present();
+  }
+
+
+  ngOnInit() {
+    this.authService.getCurrentUser().subscribe(usuario => {
+      // @ts-ignore
+      this.username = usuario.username; // Suponiendo que el servicio devuelve el nombre de usuario
+    });
+  }
+
+  }

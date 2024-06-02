@@ -15,6 +15,7 @@ import {EventDetailComponent} from "./components/homeocionocturno/event-detail/e
 import {GestionocioComponent} from "./components/gestionocio/gestionocio.component";
 import {CartaocioComponent} from "./components/cartaocio/cartaocio.component";
 import {CartadescarterComponent} from "./components/cartadescarter/cartadescarter.component";
+import {HomepComponent} from "./components/homep/homep.component";
 
 export const routes: Routes = [
   // {
@@ -26,7 +27,7 @@ export const routes: Routes = [
     redirectTo: 'notium',
     pathMatch: 'full',
   },
-  {path: 'notium', component: HomeComponent},
+  {path: 'notium', component: HomepComponent},
   {path: 'notium/registrar', component: RegistroComponent},
   {path: 'notium/login', component: LoginComponent},
   {path: 'notium/error', component: ErrorComponent},
