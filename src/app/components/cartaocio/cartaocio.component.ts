@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {OverlayEventDetail} from "@ionic/core";
 import {IonicModule, IonModal} from "@ionic/angular";
 import {Producto} from "../../models/Producto";
@@ -24,6 +24,10 @@ import {AuthService} from "../../services/auth.service";
 import {UsuarioService} from "../../services/usuario.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-cartaocio',
@@ -45,20 +49,28 @@ import {MatSort} from "@angular/material/sort";
     MatCellDef,
     MatHeaderRowDef,
     MatRowDef,
+    MatPaginator,
+    MatFormField,
+    MatInput,
+    MatLabel,
+    MatIcon,
+    MatIconButton,
   ],
   standalone: true
 })
-export class CartaocioComponent  implements OnInit {
+export class CartaocioComponent  implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['nombre', 'precio', 'formato'];
-  dataSourceProductos: MatTableDataSource<Producto> = new MatTableDataSource<Producto>();
-  @ViewChild('productosPaginator') productosPaginator!: MatPaginator;
-  @ViewChild('productosSort') productosSort!: MatSort;
+  displayedColumns: string[] = ['nombre', 'precio', 'formato', 'opciones'];
+  dataSourceProductos: MatTableDataSource<ProductoFormato> = new MatTableDataSource<ProductoFormato>();
+  @ViewChild(MatPaginator) productosPaginator!: MatPaginator;
+  @ViewChild(MatSort) productosSort!: MatSort;
   @ViewChild(IonModal) modal!: IonModal;
   producto = {nombre: '',tipoCategoria: '',username: ''}
+  formato = {productoDTO: '',precio: '',formatoDTO: ''}
   token = {token: ''}
   productos: Producto[] = [];
   newProducto: Producto = new Producto();
+  formatos: ProductoFormato[] = [];
   newProductoFormato: ProductoFormato = new ProductoFormato();
   constructor(private route:ActivatedRoute,
               private cartaOcioService: CartaOcioService,
@@ -67,9 +79,17 @@ export class CartaocioComponent  implements OnInit {
 
 
   ngOnInit() {
-    this.getProductos()
+    // this.getProductos()
+    this.getFormatos()
+  }
+
+  ngAfterViewInit() {
     this.dataSourceProductos.paginator = this.productosPaginator;
     this.dataSourceProductos.sort = this.productosSort;
+
+    this.dataSourceProductos.filterPredicate = (data: ProductoFormato, filter: string) => {
+      return data.productoDTO!.nombre!.toLowerCase().includes(filter);
+    };
   }
 
   addProducto(producto: Producto) {
@@ -104,7 +124,6 @@ export class CartaocioComponent  implements OnInit {
   }
 
   getToken(): string {
-    // Implementa la lógica para obtener el token
     this.usuarioService.getUsuarioToken().subscribe(usuario => {
       const token = localStorage.getItem('token');})
     return localStorage.getItem('token') || '';
@@ -133,7 +152,24 @@ export class CartaocioComponent  implements OnInit {
       next: value => {
         this.productos = value as Producto[];
         console.log('Productos recibidos:', this.productos);
-        this.dataSourceProductos = new MatTableDataSource(this.productos);
+        // this.dataSourceProductos = new MatTableDataSource(this.productos);
+        // this.dataSourceProductos.paginator = this.productosPaginator;
+        // this.dataSourceProductos.sort = this.productosSort;
+      },
+      error: (error) => {
+        console.error('Error al listar productos', error);
+      }
+    });
+  }
+
+  private getFormatos() {
+    const token = this.getToken();
+    this.cartaOcioService.listarFormatos(token).subscribe({
+      next: value => {
+        this.formatos = value as ProductoFormato[];
+        console.log('Formatos recibidos:', this.formatos);
+        this.formatos.sort((a, b) => a!.productoDTO!.nombre!.localeCompare(b!.productoDTO!.nombre!));
+        this.dataSourceProductos.data = this.formatos;
         this.dataSourceProductos.paginator = this.productosPaginator;
         this.dataSourceProductos.sort = this.productosSort;
       },
@@ -143,21 +179,21 @@ export class CartaocioComponent  implements OnInit {
     });
   }
 
-  // private getProductos() {
-  //   const token = this.getToken();
-  //   this.cartaOcioService.listarProductos(token).subscribe({
-  //     next: (productos: Producto[]) => {
-  //       this.productos = productos.map(producto => ({
-  //         ...producto,
-  //         precio: producto.formatoDTO ? producto.formatoDTO.precio : null,
-  //         formatoDTO: producto.formatoDTO ? producto.formatoDTO.nombre : null // assuming formatoDTO has a name property
-  //       }));
-  //       this.dataSourceProductos.data = this.productos;
-  //     },
-  //     error: (error) => {
-  //       console.error('Error al listar productos', error);
-  //     }
-  //   });
-  // }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceProductos.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceProductos.paginator) {
+      this.dataSourceProductos.paginator.firstPage();
+    }
+  }
+
+  edit(id) {
+
+  }
+
+  deleteProductoFormato(id) {
+
+  }
 }

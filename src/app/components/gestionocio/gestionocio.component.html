@@ -211,17 +211,7 @@
             </table>
           </div>
         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
-<!--      </div>-->
-<!--        <div *ngIf="listas.length > 0">-->
-<!--          <h2 *ngFor="let rpp of rpps">Listas de {{rpp.nombre}}</h2>-->
-<!--          <ul>-->
-<!--            <li *ngFor="let lista of listas">-->
-<!--              Nºinvitaciones {{ lista.total_invitaciones }}-->
-<!--              Precio {{ lista.precio }} €-->
-<!--              Evento {{lista.eventoDTO?.nombre}}-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--        </div>-->
+
           <div *ngIf="listas.length > 0 && mostrarListas" >
             <h2 *ngFor="let rpp of rpps" >Listas de {{rpp.nombre}}</h2>
             <table mat-table [dataSource]="dataSourceListas" class="mat-elevation-z8">
