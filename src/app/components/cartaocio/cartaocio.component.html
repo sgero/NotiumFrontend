@@ -1,32 +1,33 @@
-
-<div class="container">
-  <div class="table-header">
-    <h1> Productos </h1>
-    <mat-form-field appearance="fill">
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar Producto">
-    </mat-form-field>
+<div class="container mat-elevation-z8" style="margin-top: 15px;">
+  <div class="table-header ">
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar Producto">
+      </mat-form-field>
+    </div>
+    <div><button mat-raised-button color="primary" style="width: 180px !important;margin-bottom: 20px" id="open-modal">Añadir producto</button></div>
   </div>
   <div class="table">
-    <table mat-table [dataSource]="dataSourceProductos" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSourceProductos">
       <ng-container matColumnDef="tipoCategoria">
         <th mat-header-cell *matHeaderCellDef>Categoría</th>
-        <td mat-cell *matCellDef="let formatos">{{formatos.productoDTO!.tipoCategoria!}}</td>
+        <td mat-cell *matCellDef="let formatos">{{ formatos.productoDTO!.tipoCategoria! }}</td>
       </ng-container>
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let formatos">{{formatos.productoDTO.nombre!}}</td>
+        <td mat-cell *matCellDef="let formatos">{{ formatos.productoDTO.nombre! }}</td>
       </ng-container>
       <ng-container matColumnDef="precio">
         <th mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let formatos">{{formatos.precio!}} €</td>
+        <td mat-cell *matCellDef="let formatos">{{ formatos.precio! }} €</td>
       </ng-container>
       <ng-container matColumnDef="formato">
         <th mat-header-cell *matHeaderCellDef>Formato</th>
-        <td mat-cell *matCellDef="let formatos">{{formatos.formatoDTO!.formato!}}</td>
+        <td mat-cell *matCellDef="let formatos">{{ formatos.formatoDTO!.formato! }}</td>
       </ng-container>
       <ng-container matColumnDef="opciones">
-        <th mat-header-cell *matHeaderCellDef> Opciones </th>
+        <th mat-header-cell *matHeaderCellDef> Opciones</th>
         <td mat-cell *matCellDef="let formatos">
 
           <button mat-icon-button color="primary" (click)="edit(formatos.id)">
@@ -43,62 +44,57 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
   </div>
-  <div class="buttons">
-    <ion-content class="ion-padding">
-      <ion-button id="open-modal" shape="round">Añadir producto</ion-button>
-      <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-        <ng-template>
-          <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-button (click)="cancelar()">Cancelar</ion-button>
-              </ion-buttons>
-              <ion-title>Registra tu Producto</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="agregar()" [strong]="true">Agregar</ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-padding">
-            <ion-item>
-              <ion-input
-                label="Nombre"
-                labelPlacement="stacked"
-                type="text"
-                [required]="true"
-                [(ngModel)]="newProducto.nombre"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-select label="Categoria" [(ngModel)]="newProducto.tipoCategoria" [required]="true">
-                <ion-select-option value="REFRESCO">REFRESCO</ion-select-option>
-                <ion-select-option value="AGUA">AGUA</ion-select-option>
-                <ion-select-option value="CERVEZA">CERVEZA</ion-select-option>
-                <ion-select-option value="BEBIDA_ALCOHOLICA">BEBIDA ALCOHÓLICA</ion-select-option>
-                <ion-select-option value="COCTEL">CÓCTEL</ion-select-option>
-              </ion-select>
-            </ion-item>
-            <ion-item>
-              <ion-input
-                label="Precio"
-                labelPlacement="stacked"
-                type="text"
-                [required]="true"
-                [(ngModel)]="newProductoFormato!.precio"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">
-                <ion-select-option value="4">CHUPITO</ion-select-option>
-                <ion-select-option value="5">COPA</ion-select-option>
-                <ion-select-option value="10">BOTELLA</ion-select-option>
-              </ion-select>
-            </ion-item>
-          </ion-content>
-        </ng-template>
-      </ion-modal>
-    </ion-content>
-  </div>
+    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <button mat-raised-button color="primary" style="width: 140px !important" (click)="cancelar()">Cancelar</button>
+            </ion-buttons>
+            <ion-title>Registra tu Producto</ion-title>
+            <ion-buttons slot="end">
+              <button mat-raised-button color="primary" style="width: 140px !important" (click)="agregar()">Agregar</button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-input
+              label="Nombre"
+              labelPlacement="stacked"
+              type="text"
+              [required]="true"
+              [(ngModel)]="newProducto.nombre"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select label="Categoria" [(ngModel)]="newProducto.tipoCategoria" [required]="true">
+              <ion-select-option value="REFRESCO">REFRESCO</ion-select-option>
+              <ion-select-option value="AGUA">AGUA</ion-select-option>
+              <ion-select-option value="CERVEZA">CERVEZA</ion-select-option>
+              <ion-select-option value="BEBIDA_ALCOHOLICA">BEBIDA ALCOHÓLICA</ion-select-option>
+              <ion-select-option value="COCTEL">CÓCTEL</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-input
+              label="Precio"
+              labelPlacement="stacked"
+              type="text"
+              [required]="true"
+              [(ngModel)]="newProductoFormato!.precio"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">
+              <ion-select-option value="4">CHUPITO</ion-select-option>
+              <ion-select-option value="5">COPA</ion-select-option>
+              <ion-select-option value="10">BOTELLA</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
 </div>
 
 

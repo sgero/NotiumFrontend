@@ -60,7 +60,6 @@
 .eventos, .staff, .listas{
   display: flex;
   justify-content: center;
-  overflow-y: auto;
 }
 
 ion-label, .staff ion-label{
@@ -107,4 +106,30 @@ body {
 .matspin{
   height: 30px !important;
   width: 30px !important;
+}
+.table-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //margin-bottom: 16px;
+  margin: 20px;
+  flex-direction: row;
+}
+.table-header div {
+  display: flex;
+  margin: 20px;
+  flex-direction: row;
+  align-items: center;
+}
+.tabla{
+  width: 1500px;
+}
+.carta-ocio{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.carta-ocio button {
+  margin: 10px;
 }
