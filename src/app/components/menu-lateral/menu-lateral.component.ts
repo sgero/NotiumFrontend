@@ -28,7 +28,12 @@ export class MenuLateralComponent  implements OnInit {
               private modalController: ModalController) { }
 
   ngOnInit() {
+    // this.isLoggedIn = this.authService.isUserLoggedIn();
+
+
     this.isLoggedIn = this.authService.isUserLoggedIn();
+
+
     this.userRole = this.authService.getUserRole();
   }
 
