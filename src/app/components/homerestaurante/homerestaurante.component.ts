@@ -8,6 +8,8 @@ import {error} from "@angular/compiler-cli/src/transformers/util";
 import {Restaurante} from "../../models/Restaurante";
 import {CommonModule} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-homerestaurante',
@@ -16,7 +18,9 @@ import {ActivatedRoute} from "@angular/router";
   imports: [
     HeaderrestauranteComponent,
     FooterrestauranteComponent,
-    CommonModule
+    CommonModule,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true
 })

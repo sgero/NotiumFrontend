@@ -1,9 +1,46 @@
+<!--<body>-->
+
+<!--  <app-headerrestaurante></app-headerrestaurante>-->
+<!--  <div class="wrapper-rest">-->
+<!--    <div class="restau">-->
+<!--      <h1>Listado Restaurantes</h1>-->
+<!--    </div>-->
+<!--    <br>-->
+<!--  <div *ngFor="let restaurante of listaRestaurantes" class="restau">-->
+<!--    <a class="btn" href="notium/restaurante/{{restaurante.id}}"><h1>{{restaurante.nombre}}</h1></a>-->
+<!--  </div>-->
+<!--  </div>-->
+<!--  <footer> <app-footerrestaurante></app-footerrestaurante></footer>-->
+
+<!--</body>-->
 <body>
 
-  <app-headerrestaurante></app-headerrestaurante>
-  <div *ngFor="let restaurante of listaRestaurantes" class="restau">
-    <a class="btn" href="notium/restaurante/{{restaurante.id}}"><h1>{{restaurante.nombre}}</h1></a>
-  </div>
-  <footer> <app-footerrestaurante></app-footerrestaurante></footer>
 
+<!--<app-headerrestaurante></app-headerrestaurante>-->
+<app-header></app-header>
+
+
+
+
+<div class="wrapper-rest">
+  <div class="header">
+    <h1>Listado Restaurantes</h1>
+  </div>
+  <div class="restau-container">
+    <div *ngFor="let restaurante of listaRestaurantes" class="restau">
+      <a class="btn" href="notium/restaurante/{{restaurante.id}}">
+        <h1>{{restaurante.nombre}}</h1>
+      </a>
+    </div>
+  </div>
+</div>
+<footer>
+
+
+<!--  <app-footerrestaurante></app-footerrestaurante>-->
+  <app-footer></app-footer>
+
+
+
+</footer>
 </body>
