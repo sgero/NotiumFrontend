@@ -20,6 +20,8 @@ import {RegistroComponent} from "../registro/registro.component";
 })
 export class HeaderComponent  implements OnInit {
 
+  protected username: string | undefined;
+
   constructor(private router: Router, public authService: AuthService,
               private modalController: ModalController) { }
 
@@ -35,7 +37,7 @@ export class HeaderComponent  implements OnInit {
 
 
   }
-  ngOnInit() {return null}
+  // ngOnInit() {return null}
 
 
   get isAdmin() {
@@ -106,4 +108,12 @@ export class HeaderComponent  implements OnInit {
     await modal.present();
   }
 
-}
+
+  ngOnInit() {
+    this.authService.getCurrentUser().subscribe(usuario => {
+      // @ts-ignore
+      this.username = usuario.username; // Suponiendo que el servicio devuelve el nombre de usuario
+    });
+  }
+
+  }

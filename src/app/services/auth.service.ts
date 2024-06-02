@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { tap } from 'rxjs/operators';
+import {Usuario} from "../models/Usuario";
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +10,13 @@ import { tap } from 'rxjs/operators';
 export class AuthService {
   private isLoggedIn = false;
   private userRole: string | null = null;
+
   isAdmin = false;
   isClient = false;
   isRestaurant = false;
   isOcioNocturno = false;
   isRpp = false;
+  private currentUser: Usuario | null = null;
 
 
   constructor(private http: HttpClient) { }
@@ -55,4 +58,12 @@ export class AuthService {
     this.userRole = localStorage.getItem('userRole');
     return this.userRole;
   }
+
+
+  getCurrentUser(): Observable<Usuario | null> {
+    // Simulamos una llamada asíncrona para obtener el usuario actual
+    return of(this.currentUser);
+  }
+
+
 }

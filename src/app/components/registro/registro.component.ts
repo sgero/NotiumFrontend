@@ -3,7 +3,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import {Router} from "@angular/router";
 import {Usuario} from "../../models/Usuario";
 import {FormsModule} from "@angular/forms";
-import {IonicModule} from "@ionic/angular";
+import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {ClienteService} from "../../services/cliente.service";
 import {RestauranteService} from "../../services/restaurante.service";
@@ -40,10 +40,12 @@ export class RegistroComponent implements OnInit {
 
   maxDate: string;
   constructor(private usuarioService : UsuarioService, private router : Router, private clienteService: ClienteService,
-              private restauranteService: RestauranteService, private ocioNocturnoService: OcionocturnoService) {
+              private restauranteService: RestauranteService, private ocioNocturnoService: OcionocturnoService,
+              private modalController: ModalController) {
 
     // Configurar la fecha máxima como el día de hoy
     this.maxDate = new Date().toISOString();
+
 
   }
 
@@ -88,8 +90,74 @@ export class RegistroComponent implements OnInit {
 
   }
 
-  registrar(){
+  // registrar(){
+  //
+  //   this.direccion.ciudad = 'Sevilla';
+  //   this.direccion.pais = 'España';
+  //   this.direccion.provincia = 'Sevilla';
+  //
+  //   if (this.selectedRole=="cliente"){
+  //
+  //     this.userCliente.username = this.user.username;
+  //     this.userCliente.password = this.user.password;
+  //     this.userCliente.email = this.user.email;
+  //     this.userCliente.direccionDTO = this.direccion;
+  //
+  //     this.userCliente.rol = 1;
+  //
+  //     // Fecha --> 2021-05-10T20:32:00
+  //     this.clienteService.crearYModificarCliente(this.userCliente).subscribe(data=>{
+  //
+  //       console.log(data)
+  //       this.router.navigate(['/notium/login']);
+  //
+  //     })
+  //
+  //
+  //   }if(this.selectedRole=="restaurante"){
+  //
+  //     this.userRestaurante.username = this.user.username;
+  //     this.userRestaurante.password = this.user.password;
+  //     this.userRestaurante.email = this.user.email;
+  //     this.userRestaurante.direccionDTO = this.direccion;
+  //
+  //     this.userRestaurante.hora_apertura = this.extraerHoraYMinuto(this.userRestaurante.hora_apertura || '');
+  //     this.userRestaurante.hora_cierre = this.extraerHoraYMinuto(this.userRestaurante.hora_cierre || '');
+  //
+  //     this.userRestaurante.rol = 2;
+  //
+  //     this.restauranteService.crearRestaurante(this.userRestaurante).subscribe(data=>{
+  //
+  //       console.log(data)
+  //       this.router.navigate(['/notium/login']);
+  //
+  //     })
+  //
+  //   }if(this.selectedRole=="ocio-nocturno"){
+  //
+  //     this.userOcioNocturno.username = this.user.username;
+  //     this.userOcioNocturno.password = this.user.password;
+  //     this.userOcioNocturno.email = this.user.email;
+  //     this.userOcioNocturno.direccion = this.direccion;
+  //
+  //     this.userOcioNocturno.hora_apertura = this.extraerHoraYMinuto(this.userOcioNocturno.hora_apertura || '');
+  //     this.userOcioNocturno.hora_cierre = this.extraerHoraYMinuto(this.userOcioNocturno.hora_cierre || '');
+  //
+  //     this.userOcioNocturno.rol = 3;
+  //
+  //     this.ocioNocturnoService.crearOcioNocturno(this.userOcioNocturno).subscribe(data=>{
+  //
+  //       console.log(data)
+  //       this.router.navigate(['/notium/login']);
+  //
+  //     })
+  //
+  //   }
+  //
+  // }
 
+
+  registrar() {
     this.direccion.ciudad = 'Sevilla';
     this.direccion.pais = 'España';
     this.direccion.provincia = 'Sevilla';
@@ -103,16 +171,13 @@ export class RegistroComponent implements OnInit {
 
       this.userCliente.rol = 1;
 
-      // Fecha --> 2021-05-10T20:32:00
       this.clienteService.crearYModificarCliente(this.userCliente).subscribe(data=>{
-
-        console.log(data)
+        console.log(data);
         this.router.navigate(['/notium/login']);
+        this.dismissModal(); // Cerrar modal después de registro exitoso
+      });
 
-      })
-
-
-    }if(this.selectedRole=="restaurante"){
+    } else if(this.selectedRole=="restaurante"){
 
       this.userRestaurante.username = this.user.username;
       this.userRestaurante.password = this.user.password;
@@ -125,13 +190,12 @@ export class RegistroComponent implements OnInit {
       this.userRestaurante.rol = 2;
 
       this.restauranteService.crearRestaurante(this.userRestaurante).subscribe(data=>{
-
-        console.log(data)
+        console.log(data);
         this.router.navigate(['/notium/login']);
+        this.dismissModal(); // Cerrar modal después de registro exitoso
+      });
 
-      })
-
-    }if(this.selectedRole=="ocio-nocturno"){
+    } else if(this.selectedRole=="ocio-nocturno"){
 
       this.userOcioNocturno.username = this.user.username;
       this.userOcioNocturno.password = this.user.password;
@@ -144,15 +208,17 @@ export class RegistroComponent implements OnInit {
       this.userOcioNocturno.rol = 3;
 
       this.ocioNocturnoService.crearOcioNocturno(this.userOcioNocturno).subscribe(data=>{
-
-        console.log(data)
+        console.log(data);
         this.router.navigate(['/notium/login']);
-
-      })
-
+        this.dismissModal(); // Cerrar modal después de registro exitoso
+      });
     }
-
   }
+
+  dismissModal() {
+    this.modalController.dismiss();
+  }
+
 
   protected readonly validarContrasena = validarContrasena;
   protected readonly extraerHoraYMinuto = extraerHoraYMinuto;
