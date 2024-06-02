@@ -19,7 +19,7 @@ export class FooterComponent  implements OnInit {
   constructor(private sanitizer: DomSanitizer,
       private emailService: EmailService,
               private toastController: ToastController) {
-    const email = 'info@notium.com'; // Dirección de correo electrónico
+    const email = 'notiumevents@gmail.com'; // Dirección de correo electrónico
     const mailtoLink = `mailto:${email}`;
     this.emailLink = this.sanitizer.bypassSecurityTrustUrl(mailtoLink);
   }
@@ -39,7 +39,7 @@ export class FooterComponent  implements OnInit {
         },
         error: async (error) => {
           const toast = await this.toastController.create({
-            message: 'Error al enviar el correo',
+            message: 'Error al enviar el correo. Necesita estar loggueado.',
             duration: 2000,
             position: 'top',
             color: 'danger'

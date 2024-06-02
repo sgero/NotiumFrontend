@@ -15,14 +15,15 @@ export class EmailService {
   // }
 
 
-  sendEmail(to: string, subject: string, body: string): Observable<any> {
+  sendEmail(to: string, subject: string, text: string): Observable<any> {
     const token = localStorage.getItem('token'); // Obtén el token del almacenamiento local si es necesario
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}` // Ajusta según el esquema de autenticación de tu backend
-    });
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/json',
+    //   'Authorization': `Bearer ${token}` // Ajusta según el esquema de autenticación de tu backend
+    // });
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    const emailData = { to, subject, body };
+    const emailData = { to, subject, text };
     return this.http.post<any>(this.apiUrl, emailData, { headers });
   }
 }
