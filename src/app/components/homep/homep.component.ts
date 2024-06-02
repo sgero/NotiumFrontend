@@ -32,11 +32,31 @@ export class HomepComponent  implements OnInit {
 
 
 
-  onEnterButtonClickRest(): void {
+  // onEnterButtonClickRest(): void {
+  //
+  //   this.router.navigate(['/notium/restaurante']);
+  //
+  //
+  // }
 
-    this.router.navigate(['/notium/restaurante']);
-
-
+  async onEnterButtonClickRest(usuario: any) {
+    if (usuario) {
+      if (usuario.rol == "CLIENTE" || usuario.rol == "OCIONOCTURNO" || usuario.rol == "ADMIN" || usuario.rol == "RPP" || usuario.rol == "RESTAURANTE") {
+        this.router.navigate(["notium/restaurante"]);
+      } else {
+        this.router.navigate(["notium/error"]);
+      }
+    } else {
+      this.router.navigate(["notium/error"]);
+      const toast = await this.toastController.create({
+        message: 'Debes iniciar sesión para acceder a esta página',
+        duration: 4000, // Duración en milisegundos
+        position: 'top', // Posición del toast
+        // cssClass: 'custom-toast'
+        color: "danger"
+      });
+      toast.present(); // Muestra el toast
+    }
   }
 
 
@@ -81,7 +101,7 @@ export class HomepComponent  implements OnInit {
 
   async onEnterButtonClickOcioN(usuario: any) {
     if (usuario) {
-      if (usuario.rol == "CLIENTE" || usuario.rol == "OCIONOCTURNO") {
+      if (usuario.rol == "CLIENTE" || usuario.rol == "OCIONOCTURNO" || usuario.rol == "ADMIN" || usuario.rol == "RPP" || usuario.rol == "RESTAURANTE") {
         this.router.navigate(["notium/ocionocturno"]);
       } else {
         this.router.navigate(["notium/error"]);
@@ -92,11 +112,15 @@ export class HomepComponent  implements OnInit {
         message: 'Debes iniciar sesión para acceder a esta página',
         duration: 4000, // Duración en milisegundos
         position: 'top', // Posición del toast
-        cssClass: 'custom-toast'
+        // cssClass: 'custom-toast'
+        color: "danger"
       });
       toast.present(); // Muestra el toast
     }
   }
+
+
+
 
 }
 

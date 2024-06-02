@@ -39,7 +39,7 @@ export class FooterComponent  implements OnInit {
         },
         error: async (error) => {
           const toast = await this.toastController.create({
-            message: 'Error al enviar el correo. Necesita estar loggueado.',
+            message: 'Error al enviar el correo. Necesita estar logueado.',
             duration: 2000,
             position: 'top',
             color: 'danger'
