@@ -87,21 +87,11 @@ export class RestauranteUserComponent  implements OnInit {
 
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 
-  captarRestaurantePorId(){
-    this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
-      next: (responseData) => {
-        this.restaurante = responseData;
-        this.sharedService.setRestaurante(this.restaurante)
-      },
-      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
-      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
-    });
-  }
+
 
   ngOnInit() {
 
     //Funciones externas
-    this.captarRestaurantePorId();
     this.setearIDParams();
     this.inicio = true;
   }

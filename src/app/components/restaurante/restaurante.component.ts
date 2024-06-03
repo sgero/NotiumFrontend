@@ -8,6 +8,7 @@ import {RestauranteAdminComponent} from "./restaurante-admin/restaurante-admin.c
 import {UsuarioService} from "../../services/usuario.service";
 import {SharedService} from "../../services/SharedService";
 import {RestauranteService} from "../../services/restaurante.service";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-restaurante',
@@ -32,10 +33,13 @@ export class RestauranteComponent  implements OnInit {
   valoracion_restaurante: number = 0.0;
   rankingRestaurante: number[] = [];
   restauranteEnRanking: boolean = false;
-
+  restaurante: any;
+  userup = false;
   constructor(private usuarioService: UsuarioService,
               private sharedService: SharedService,
-              private restauranteService: RestauranteService) {}
+              private restauranteService: RestauranteService,
+              private router : Router,
+              private _route: ActivatedRoute) {this.id_restaurante = this._route.snapshot.paramMap.get('id');}
 
   getUsuarioPorToken(){
 
@@ -72,13 +76,36 @@ export class RestauranteComponent  implements OnInit {
       }
     });
   }
+  setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
+
+  captarRestaurantePorId(){
+    this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (responseData) => {
+        this.restaurante = responseData;
+        this.sharedService.setRestaurante(this.restaurante)
+        if (this.usuario.id !== this.restaurante.userDTO.id){
+          this.userup = true;
+        }
+      },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
+    });
+  }
 
   ngOnInit() {
 
+    if (localStorage.length === 0){
+      this.router.navigate(['/notium']);
+    }
     //Funciones externas
+
     this.getUsuarioPorToken();
     this.valoracionRestaurante();
     this.rankingRestaurantes();
+    this.setearIDParams();
+    this.captarRestaurantePorId();
+
+
   }
 
 }
