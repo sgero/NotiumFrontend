@@ -8,6 +8,9 @@ import {RestauranteAdminComponent} from "./restaurante-admin/restaurante-admin.c
 import {UsuarioService} from "../../services/usuario.service";
 import {SharedService} from "../../services/SharedService";
 import {RestauranteService} from "../../services/restaurante.service";
+import {Restaurante} from "../../models/Restaurante";
+import {Usuario} from "../../models/Usuario";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-restaurante',
@@ -27,24 +30,36 @@ import {RestauranteService} from "../../services/restaurante.service";
 
 export class RestauranteComponent  implements OnInit {
 
-  usuario: any;
+  usuario_loggeado: Usuario = new Usuario();
   id_restaurante: any;
+  restaurante: Restaurante = new Restaurante();
   valoracion_restaurante: number = 0.0;
   rankingRestaurante: number[] = [];
   restauranteEnRanking: boolean = false;
 
   constructor(private usuarioService: UsuarioService,
               private sharedService: SharedService,
-              private restauranteService: RestauranteService) {}
+              private _route: ActivatedRoute,
+              private restauranteService: RestauranteService) {
+                this.id_restaurante = this._route.snapshot.paramMap.get('id');
+
+  }
 
   getUsuarioPorToken(){
+        this.usuario_loggeado = this.sharedService.getUsuarioToken()
+        console.log('El usuario loggeado es: ',this.usuario_loggeado);
+  }
 
-    this.usuarioService.getUsuarioToken().subscribe( {
-      next: (usuario) => {
-        this.usuario = usuario;
-        this.sharedService.setUsuarioToken(usuario)},
-      error: (error) => { console.error('Error al obtener el Usuario:', error); },
-      complete: () => { console.log('Usuario', this.usuario); }
+  setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
+
+  captarRestaurantePorId(){
+    this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (responseData) => {
+        this.restaurante = responseData;
+        this.sharedService.setRestaurante(this.restaurante)
+      },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
     });
   }
 
@@ -76,9 +91,12 @@ export class RestauranteComponent  implements OnInit {
   ngOnInit() {
 
     //Funciones externas
+    this.setearIDParams();
+    this.captarRestaurantePorId();
     this.getUsuarioPorToken();
     this.valoracionRestaurante();
     this.rankingRestaurantes();
+    this.captarRestaurantePorId();
   }
 
 }

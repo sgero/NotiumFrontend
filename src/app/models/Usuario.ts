@@ -3,6 +3,6 @@ export class Usuario{
   username: string = '';
   email?: string = '';
   password?: string = '';
-  rol?: number;
+  rol?: string;
   activo?: boolean = true;
 }

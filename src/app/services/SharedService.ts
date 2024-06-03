@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Restaurante} from "../models/Restaurante";
+import {Usuario} from "../models/Usuario";
 
 
 @Injectable({
@@ -9,7 +10,7 @@ export class SharedService {
 
   restaurante = new Restaurante();
   id_restaurante: number | undefined;
-  usuario: any;
+  usuario: Usuario = new Usuario();
 
   constructor() {}
 
@@ -32,7 +33,7 @@ export class SharedService {
   }
 
   //Obtener el usuario por el token
-  setUsuarioToken(data: any){
+  setUsuarioToken(data: Usuario){
     this.usuario=data;
   }
 

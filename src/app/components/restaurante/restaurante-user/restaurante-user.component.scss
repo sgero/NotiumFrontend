@@ -26,22 +26,25 @@
 
 .estilo1_info{
   border-bottom: 5px black solid;
+  border-right: 5px black solid;
   color: black;
 }
 
 .estilo2_info{
   color: rgba(87, 76, 76, 0.52);
-  border-bottom: 5px solid rgba(87, 76, 76, 0.52);
+  border-bottom: 5px solid black;
+  border-right: 5px black solid;
 }
 
 .estilo1_carta{
   border-bottom: 5px black solid;
+  border-left: 5px black solid;
   color: black;
 
 }
-
 .estilo2_carta{
   color: rgba(23, 0, 0, 0.52);
+  border-left: 5px black solid;
   border-bottom: 5px solid rgba(23, 0, 0, 0.52);
 }
 

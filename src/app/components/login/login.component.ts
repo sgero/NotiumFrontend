@@ -4,6 +4,7 @@ import {UsuarioService} from "../../services/usuario.service";
 import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
+import {SharedService} from "../../services/SharedService";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ export class LoginComponent {
 
   usuario = new Usuario();
 
-  constructor(private usuarioService : UsuarioService, private router : Router) { }
+  constructor(private usuarioService : UsuarioService,
+              private router : Router,
+              private sharedService: SharedService) { }
 
   login(){
 
@@ -26,8 +29,15 @@ export class LoginComponent {
 
       console.log(data)
       localStorage.setItem('token', data['token'])
-
     })
+
+    this.usuarioService.getUsuarioToken().subscribe( {
+      next: (usuario) => {
+        this.usuario = usuario;
+        this.sharedService.setUsuarioToken(usuario)},
+      error: (error) => { console.error('Error al obtener el usuario por token:', error); },
+      complete: () => { console.log('Usuario por token:', this.usuario); }
+    });
 
   }
 
