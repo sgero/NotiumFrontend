@@ -51,7 +51,7 @@ export class CartarestauranteComponent  implements OnInit {
 
   ngOnInit() {
     if (localStorage.length === 0){
-      this.router.navigate(['/notium/login']);
+      this.router.navigate(['/notium']);
     }
     this.usuarioservice.getUsuarioToken().subscribe(data=>{
       this.token.token = data.username
