@@ -4,16 +4,16 @@
   padding: 5% 15%;
   height: 100vh; /* Altura igual al 100% de la ventana del navegador */
   width: 100%;
-  overflow-y: auto;
+
 }
 
 .carta {
   width: 100%;
   height: auto;
-  background-color: #ddce79;
-  -webkit-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
-  -moz-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
-  box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  //background-color: #ddce79;
+  //-webkit-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  //-moz-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  //box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
   /* Añade una barra de desplazamiento vertical si el contenido es más grande */
   display: flex;
   flex-direction: column;
@@ -46,10 +46,11 @@
   margin-bottom: 15px;
 
 }
-.container{
-  margin: 0;
+.contain{
+  margin: 0 0 10px 0;
   padding: 0;
   height: 100vh;
+  width: 100%;
   overflow-y: auto;
 }
 .anyadeproducto{

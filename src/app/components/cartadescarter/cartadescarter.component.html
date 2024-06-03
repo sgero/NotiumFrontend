@@ -17,14 +17,18 @@
       <h1 *ngIf="entrante"><I><U>ENTRANTES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'1')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -35,7 +39,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'2')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -46,7 +52,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -58,14 +66,18 @@
       <h1 *ngIf="carne"><I><U>CARNES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'CARNE'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'1')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -76,7 +88,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'2')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -87,7 +101,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -99,14 +115,18 @@
       <h1 *ngIf="pescado"><I><U>PESCADOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'PESCADO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'1')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -117,7 +137,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'2')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -128,7 +150,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -140,14 +164,18 @@
       <h1 *ngIf="guiso"><I><U>GUISOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'GUISO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'1')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -158,7 +186,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'2')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -169,7 +199,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -181,14 +213,18 @@
       <h1 *ngIf="revuelto"><I><U>REVUELTOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'REVUELTO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'1')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -199,7 +235,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'2')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -210,7 +248,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -222,14 +262,18 @@
       <h1 *ngIf="frito"><I><U>FRITOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'FRITO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'1')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -240,7 +284,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'2')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -251,7 +297,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -263,14 +311,18 @@
       <h1 *ngIf="otros"><I><U>OTROS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'OTROS'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Tapa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 1">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'1')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'1')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -281,7 +333,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 2">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'2')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'2')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -292,7 +346,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -304,7 +360,9 @@
       <h1 *ngIf="postre"><I><U>POSTRES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'POSTRE'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
 
             <div class="formato">
@@ -312,7 +370,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 3">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'3')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'3')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -324,7 +384,9 @@
       <h1 *ngIf="vino"><I><U>VINOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'VINO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
 
             <div class="formato">
@@ -332,7 +394,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'5')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'5')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -344,14 +408,18 @@
       <h1 *ngIf="cerveza"><I><U>CERVEZAS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'CERVEZA'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Vaso</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'7')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'7')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -362,7 +430,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 8">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'8')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'8')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}8" (ngSubmit)="crearProductoFormato(p.producto.id,8)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -373,7 +443,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 6">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'6')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'6')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}6" (ngSubmit)="crearProductoFormato(p.producto.id,6)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -385,14 +457,18 @@
       <h1 *ngIf="refresco"><I><U>REFRESCOS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'REFRESCO'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Vaso</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'7')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'7')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -404,14 +480,18 @@
       <h1 *ngIf="agua"><I><U>AGUA</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'AGUA'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Copa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 7">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'7')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'7')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -423,14 +503,18 @@
       <h1 *ngIf="coctel"><I><U>COCTELES</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'COCTEL'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Copa</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'5')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'5')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -442,14 +526,18 @@
       <h1 *ngIf="bebidaAlcoholica"><I><U>BEBIDAS ALCOHÓLICAS</U></I></h1>
       <section *ngFor="let p of productos">
         <div class="producto" *ngIf="p.producto.tipoCategoria === 'BEBIDA_ALCOHOLICA'">
-          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Recuperar</button><button (click)="eliminarProducto(p.producto.id)">Eliminar</button></div>
+          <div class="datosproducto"><span>{{p.producto.nombre}}</span><button (click)="darBajaProducto(p.producto.id)">Activar</button><div class="wite" (click)="eliminarProducto(p.producto.id)"><button mat-icon-button color="warn" >
+            <mat-icon>delete</mat-icon>
+          </button></div></div>
           <div class="formatos">
             <div class="formato">
               <span>Chupito</span>
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 4">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'4')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'4')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}4" (ngSubmit)="crearProductoFormato(p.producto.id,4)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
@@ -460,7 +548,9 @@
               <div class="precioactual" *ngFor="let pr of p.formatos">
                 <div *ngIf="pr.formatoDTO.id === 5">{{ pr.precio }} €</div>
               </div>
-              <button (click)="mostrarPrecio(p.producto.id+'5')"></button>
+              <button mat-icon-button color="primary" (click)="mostrarPrecio(p.producto.id+'5')">
+                <mat-icon>edit</mat-icon>
+              </button>
               <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
                 <input type="submit" value="ok!" (click)="ocultarPrecio()">
