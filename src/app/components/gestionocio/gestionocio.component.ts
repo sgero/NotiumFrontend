@@ -160,6 +160,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   cartaOcio: CartaOcio = new CartaOcio();
   isModalOpen = false;
   isModalRppOpen = false;
+  isModalEditRppOpen = false;
+
   firstFormGroup = this.formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -393,8 +395,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       if (ocioID) {
         this.rppService.guardarRpp(ocioID, this.newRpp).subscribe({
           next: value => {
-
             this.newRpp = value as Rpp;
+            this.dataSource.data = this.rpps;
             this.rppModal(false);
           },
           error: e => {
@@ -890,4 +892,38 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   rppModal(b: boolean) {
     this.isModalRppOpen = b;
   }
+
+  rppEditModal(b: boolean) {
+    this.isModalEditRppOpen = b;
+  }
+
+  editRpp(id: number) {
+    this.rppService.rppPorId(id).subscribe({
+      next: value => {
+        this.newRpp = value as Rpp;
+        console.log(this.newRpp);
+        this.rppEditModal(true);
+      },
+          error: e => {
+            console.error("no funciona", e);
+          }
+        })
+      }
+
+  guardar(id: number) {
+    if (!this.newRpp.direccionDTO) {
+      this.newRpp.direccionDTO = new DireccionDTO();}
+    this.rppService.guardarRpp(id, this.newRpp).subscribe({
+      next: value => {
+        this.newRpp = value as Rpp;
+        this.dataSource.data = this.rpps;
+        this.rppEditModal(false);
+      },
+      error: e => {
+        console.error("no funciona", e);
+      }
+    })
+  }
+
+
 }

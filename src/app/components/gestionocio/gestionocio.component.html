@@ -475,6 +475,9 @@
               <ng-container matColumnDef="opciones">
                 <th mat-header-cell *matHeaderCellDef> Opciones</th>
                 <td mat-cell *matCellDef="let rpp">
+                  <button mat-icon-button color="primary" (click)="editRpp(rpp.id)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
                   <button mat-icon-button color="warn" (click)="deleteRpp(rpp.id)">
                     <mat-icon>delete</mat-icon>
                   </button>
@@ -656,6 +659,105 @@
               </ion-content>
             </ng-template>
           </ion-modal>
+        <ion-modal [isOpen]="isModalEditRppOpen">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <button mat-raised-button color="primary"  style="width: 140px !important" (click)="rppEditModal(false)">Cancelar</button>
+                </ion-buttons>
+                <ion-title style="display: flex;justify-content: center !important">Modifica sus datos</ion-title>
+                <ion-buttons slot="end">
+                  <button mat-raised-button color="primary"  style="width: 140px !important" (click)="guardar(newRpp!.id!)">Confirmar</button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <ion-item>
+                <ion-input
+                  label="Nombre"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.nombre"
+                ></ion-input>
+                <ion-input
+                  label="Apellidos"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.apellidos"
+                ></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label="DNI"
+                  labelPlacement="stacked"
+                  type="email"
+                  required="true"
+                  [(ngModel)]="newRpp.dni"
+                ></ion-input>
+                <ion-input
+                  label="Teléfono"
+                  labelPlacement="stacked"
+                  type="text"
+                  required="true"
+                  [(ngModel)]="newRpp.telefono"
+                ></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label="Fecha de nacimiento"
+                  labelPlacement="stacked"
+                  type=date
+                  required="true"
+                  [(ngModel)]="newRpp.fechaNacimiento"
+                ></ion-input>
+              </ion-item>
+              <div *ngIf="newRpp.direccionDTO">
+                <ion-item>
+                  <ion-input
+                    label="Calle"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.direccionDTO.calle"
+                  ></ion-input>
+                  <ion-input
+                    label="Código Postal"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.direccionDTO.codigoPostal"
+                  ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input
+                    label="Ciudad"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.direccionDTO.ciudad"
+                  ></ion-input>
+                  <ion-input
+                    label="Provincia"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.direccionDTO.provincia"
+                  ></ion-input>
+                  <ion-input
+                    label="País"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.direccionDTO.pais"
+                  ></ion-input>
+                </ion-item>
+              </div>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
       </div>
     </div>
   </div>
