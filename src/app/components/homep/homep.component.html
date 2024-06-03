@@ -1,0 +1,194 @@
+<ion-content class="home-content">
+<header><app-header> </app-header></header>
+
+<nav>
+  <div class="calendario">  <ion-datetime style="background-color: #F7F5FD !important; color: gray !important;" locale="es-ES"></ion-datetime></div>
+</nav>
+
+<section>
+
+  <div class="center">
+
+    <div class="card">
+      <div class="additional">
+        <div class="user-card">
+          <img src="../../../assets/images/OIGr.jpg" alt="Restaurante">
+
+        </div>
+        <div class="more-info">
+          <!--        <h1>RESTAURANTES</h1>-->
+
+          <div class="coords">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="coords">
+            <span></span>
+            <span></span>
+          </div>
+
+<!--          <div class="botonentrar">-->
+<!--            <ion-item button detail="true" detail-icon="caret-forward-outline">-->
+<!--              <ion-label>-->
+<!--                <h3><button class="enter-button" (click)="onEnterButtonClickRest()">ENTRAR</button></h3>-->
+
+<!--              </ion-label>-->
+<!--            </ion-item>-->
+
+
+<!--          </div>-->
+          <div class="botonentrar">
+            <button class="enter-button" (click)="onEnterButtonClickRest(usuarioLogueado)">ENTRAR</button>
+
+          </div>
+
+
+          <div class="stats">
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-trophy"></i>-->
+
+              <div class="value"></div>
+            </div>
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-gamepad"></i>-->
+
+              <div class="value"></div>
+            </div>
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-group"></i>-->
+              <div class="value"></div>
+            </div>
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-coffee"></i>-->
+              <div class="value infinity"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="general">
+        <h1>RESTAURANTES</h1>
+        <div class="subtitulo">
+          <!--        <i class="fa fa-cutlery" aria-hidden="true"></i>-->
+          <i class="fa-solid fa-utensils"></i>
+        </div>
+
+        <!--      <p>¡Tu guía definitiva para descubrir los mejores lugares para comer en tu ciudad! Con una selección cuidadosamente curada de restaurantes, nuestra aplicación te ayuda a encontrar experiencias gastronómicas deliciosas.</p>-->
+        <span class="more">Mouse over the card for more info</span>
+      </div>
+    </div>
+
+
+    <div class="card purple">
+      <div class="additional">
+        <div class="user-card">
+          <img src="../../../assets/images/OIGon.jpg" alt="Ocio Nocturno">
+
+        </div>
+        <div class="more-info">
+          <!--        <h1>OCIO NOCTURNO</h1>-->
+          <div class="coords">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="coords">
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="botonentrar">
+            <button class="enter-button" (click)="onEnterButtonClickOcioN(usuarioLogueado)">ENTRAR</button>
+
+          </div>
+
+          <div class="stats">
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-trophy"></i>-->
+              <div class="value"></div>
+            </div>
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-gamepad"></i>-->
+              <div class="value"></div>
+            </div>
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-group"></i>-->
+              <div class="value"></div>
+            </div>
+            <div>
+              <div class="title"></div>
+              <!--            <i class="fa fa-coffee"></i>-->
+              <div class="value infinity"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="general">
+        <h1>OCIO NOCTURNO</h1>
+        <div class="subtitulo">
+          <!--        <i class="fa fa-beer" aria-hidden="true"></i>-->
+          <i class="fa-solid fa-martini-glass"></i>
+        </div>
+
+        <!--      <p>¡Tu guía definitiva para descubrir los mejores lugares para disfrutar del ocio nocturno!, con una selección de locales de entretenimiento, nuestra aplicación te ayuda a encontrar emocionantes opciones para disfrutar de la vida nocturna.</p>-->
+        <span class="more">Mouse over the card for more info</span>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+  <div class="menulateral">
+    <ion-content class="home-content">
+      <div class="home-container">
+        <app-menu-lateral [isLoggedIn]="isLoggedIn" [userRole]="userRole"></app-menu-lateral>
+        <!-- Otro contenido del componente principal -->
+      </div>
+    </ion-content>
+
+  </div>
+
+</section>
+
+
+
+<!--<div class="listita">-->
+<!--  <ion-list style="background-color: #F7F5FD !important; color: gray !important;">-->
+<!--    <ion-item>-->
+<!--      <ion-label>Followers</ion-label>-->
+<!--      <ion-badge color="primary">22k</ion-badge>-->
+<!--    </ion-item>-->
+<!--    <ion-item>-->
+<!--      <ion-label>Likes</ion-label>-->
+<!--      <ion-badge color="secondary">118k</ion-badge>-->
+<!--    </ion-item>-->
+<!--    <ion-item>-->
+<!--      <ion-label>Stars</ion-label>-->
+<!--      <ion-badge color="tertiary">34k</ion-badge>-->
+<!--    </ion-item>-->
+<!--    <ion-item>-->
+<!--      <ion-label>Completed</ion-label>-->
+<!--      <ion-badge color="success">80</ion-badge>-->
+<!--    </ion-item>-->
+<!--    <ion-item>-->
+<!--      <ion-label>Warnings</ion-label>-->
+<!--      <ion-badge color="warning">70</ion-badge>-->
+<!--    </ion-item>-->
+<!--    <ion-item>-->
+<!--      <ion-label>Notifications</ion-label>-->
+<!--      <ion-badge color="danger">1000</ion-badge>-->
+<!--    </ion-item>-->
+<!--  </ion-list>-->
+<!--</div>-->
+
+<footer><app-footer> </app-footer></footer>
+
+
+</ion-content>

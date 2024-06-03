@@ -29,6 +29,10 @@ export class EventoService {
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/${id}/entradas`);
   }
 
+  getInfoEventoTotal(id:number){
+    return this.http.get<CrearEvento>(`${this.apiUrl}/eventos/info/${id}`);
+  }
+
   getActivos(params:any){
     let httpParams = new HttpParams();
     Object.keys(params).forEach(key => {
@@ -45,13 +49,12 @@ export class EventoService {
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/fechas`, {params:httpParams});
   }
 
-  entreDosFechasConIdOcio(idOcio:number, fechaInicio:Date, fechaFin:Date){
-    const datos = {
-      idOcio: idOcio,
-      fechaInicio: fechaInicio,
-      fechaFin: fechaFin
-    };
-    return this.http.post<RespuestaDTO>(`${this.apiUrl}/eventos/fechasYOcio`, datos);
+  entreDosFechasConIdOcio(params:any){
+    let httpParams = new HttpParams();
+    Object.keys(params).forEach(key => {
+      httpParams = httpParams.append(key, params[key]);
+    });
+    return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/fechas`, {params:httpParams});
   }
 
   guardarEvento(eventoData: CrearEvento){

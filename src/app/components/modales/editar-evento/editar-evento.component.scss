@@ -1,0 +1,16 @@
+body {
+  font-family: "Noto Sans JP", sans-serif;
+  letter-spacing: 0.5px;
+  color: #0c0b1f;
+  overflow-y: auto;
+  min-height: 100vh;
+
+}
+.crear{
+  display: grid;
+  align-items: center;
+}
+ion-modal{
+  --width: 80%;
+  --height: 80%;
+}

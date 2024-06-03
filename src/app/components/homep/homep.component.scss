@@ -1,0 +1,429 @@
+body {
+  font-family: segoe-ui_normal,Segoe UI,Segoe,Segoe WP,Helvetica Neue,Helvetica,sans-serif;
+  display: grid;
+  grid-template-areas:
+    "header header header"
+    "nav section aside"
+    "footer footer footer";
+  grid-template-rows: 80px 1fr 50px;
+  grid-template-columns: 15% 1fr 18%;
+  grid-gap: 5px;
+  height: 100vh;
+  margin: 10px;
+}
+
+header {
+  background: #e7e0e0;
+  grid-area: header;
+}
+
+nav {
+  //background: #C9BFBF;
+  grid-area: nav;
+  min-height: 1200px;
+}
+
+section {
+  background: #e7e0e0;
+  grid-area: section;
+}
+
+aside {
+  background: #e7e0e0;
+  grid-area: aside;
+}
+
+footer {
+  //background: #e7e0e0;
+  grid-area: footer;
+}
+
+header, nav, section, aside, footer {
+  padding: 5px;
+}
+
+
+
+app-home.ion-page {
+  background-color: #fcfbf9 ! important; /* Cambia este color al color claro que desees */
+}
+
+.ion-page {
+  background: #fcfbf9 !important;
+}
+
+.ion-list {
+  background: #fcfbf9 !important;
+}
+
+.center {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  //z-index: 2;
+  background: #f7f5fd;;
+  border-radius: 25px;
+  //padding: 3rem;
+  padding: 2rem;
+  margin-top:25px;
+}
+
+.card {
+  width: 450px;
+  height: 250px;
+  background-color: #fff;
+  background: linear-gradient(#f8f8f8, #fff);
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  margin: 1.5rem;
+}
+
+.card h1 {
+  text-align: center;
+}
+
+.card .additional {
+  position: absolute;
+  width: 150px;
+  height: 100%;
+  background: linear-gradient(#8d753e, #efd591);
+  transition: width 0.4s;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.card.purple .additional {
+  background: linear-gradient(#521852, #ae71c9);
+}
+
+
+.card:hover .additional {
+  width: 100%;
+  border-radius: 0 5px 5px 0;
+  z-index: 6;
+}
+
+.card .additional .user-card {
+  width: 150px;
+  height: 100%;
+  position: relative;
+  float: left;
+}
+
+.card .additional .user-card::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 10%;
+  right: -2px;
+  height: 80%;
+  border-left: 2px solid rgba(0,0,0,0.025);
+}
+
+.card .additional .user-card .level,
+.card .additional .user-card .points {
+  top: 15%;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.75em;
+  font-weight: bold;
+  background: rgba(0,0,0,0.15);
+  padding: 0.125rem 0.75rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.card .additional .user-card .points {
+  top: 85%;
+}
+
+.card .additional .user-card svg {
+  top: 50%;
+}
+
+.card .additional .more-info {
+  width: 300px;
+  float: left;
+  position: absolute;
+  left: 150px;
+  height: 100%;
+}
+
+.card .additional .more-info h1 {
+  color: #fff;
+  margin-bottom: 0;
+}
+
+.card.green .additional .more-info h1 {
+  color: #ffffff;
+}
+
+.card .additional .coords {
+  margin: 0 1rem;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.user-card {
+  display: flex;
+  justify-content: center;
+}
+.card img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  border-radius: 25%;
+  margin-bottom: 3rem;
+  margin-top: 3rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 1rem;
+}
+
+.card.green .additional .coords {
+  color: #ffffff;
+}
+
+.card .additional .coords span + span {
+  float: right;
+}
+
+.card .additional .stats {
+  font-size: 2rem;
+  display: flex;
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  top: auto;
+  color: #fff;
+}
+
+.card.green .additional .stats {
+  color: #ffffff;
+}
+
+.card .additional .stats > div {
+  flex: 1;
+  text-align: center;
+}
+
+.card .additional .stats i {
+  display: block;
+}
+
+.card .additional .stats div.title {
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card .additional .stats div.value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.card .additional .stats div.value.infinity {
+  font-size: 2.5rem;
+}
+
+.card .general {
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  padding: 1rem;
+  padding-top: 5rem;
+  color: #fff;
+  background: linear-gradient(#67676c, #c8c5d5);
+  font-size: 0.85em;
+  text-align: center;
+  //border: 2px solid fuchsia;
+}
+
+
+
+.card .general .more {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.9em;
+}
+
+.botonentrar {
+
+  margin-left: 5.5rem;
+  margin-right: 5rem;
+}
+//
+//listita {
+//  margin-left: 5.5rem;
+//  margin-right: 5rem;
+//  max-width: 30%;
+//}
+
+.list-md {
+  margin-left: 0;
+  margin-right: 1375px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: var(--ion-item-background, var(--ion-background-color, rgba(255, 255, 255, 0.63)));
+}
+
+
+.calendario {
+  margin-left: 5.5rem;
+  margin-right: 5rem;
+  margin-top: 18rem;
+}
+
+
+//.ion-activatable {
+//  display: flex;
+//  //align-items: center;
+//  //justify-items: center;
+//  //flex-direction: row;
+//  max-width: 100%;
+//  background: #7F448C;
+//}
+
+//.enter-button {
+//
+//  background-color: transparent; /* Color de fondo */
+//  align-items: center;
+//  align-content: center;
+//}
+//
+//.botonentrar {
+//  margin-left: 5.5rem;
+//  margin-right: 5rem;
+//  background-color: #7F448C; /* Color de fondo */
+//}
+//
+//.botonentrar:hover {
+//
+//  background-color: #2f3033; /* Cambio de color de fondo al pasar el ratón */
+//  color: #ffffff; /* Cambio de color del texto al pasar el ratón */
+//}
+
+.enter-button {
+  background-color: #af984c; /* Color de fondo */
+  border: none; /* Eliminar el borde predeterminado */
+  color: white; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interno */
+  text-align: center; /* Alineación del texto */
+  text-decoration: none; /* Eliminar subrayado del texto */
+  display: inline-block; /* Mostrar como bloque en línea */
+  font-size: 16px; /* Tamaño de fuente */
+  margin: 4px 2px; /* Márgenes */
+  cursor: pointer; /* Cursor de mano */
+  border-radius: 12px; /* Bordes redondeados */
+  transition-duration: 0.4s; /* Duración de la transición */
+  margin-top: 6rem;
+}
+
+.enter-button:hover {
+  background-color: white; /* Color de fondo al pasar el ratón */
+  color: black; /* Color del texto al pasar el ratón */
+  border: 2px solid #684caf; /* Borde al pasar el ratón */
+}
+
+
+//.menulateral {
+//  background-color: #f7f5fd;
+//  border-radius: 25px;
+//  padding: 2rem;
+//  margin-top: 25px;
+//  margin-left: 25px;
+//  margin-right: 25px;
+//  max-height: 20%;
+//}
+
+.menulateral {
+  position: absolute;
+  top: 106px;
+  bottom: 106px;
+  right: 0;
+  width: 300px; /* Ajusta el ancho deseado */
+  height: 92%;
+  background-color: #fff; /* Color de fondo del menú */
+  box-shadow: 0 4px 8px rgba(180, 177, 177, 0.1); /* Sombra para darle profundidad */
+  z-index: 1000; /* Asegúrate de que el menú esté por encima de otros elementos */
+}
+
+
+
+ion-content.ion-padding {
+  padding: 1rem; /* Ajusta el padding según lo que necesites */
+}
+
+.main-content {
+  margin-right: 300px; /* Deja espacio para el menú lateral */
+  transition: margin-right 0.3s; /* Transición suave al abrir/cerrar el menú */
+}
+
+///* Ajustes específicos para el header y footer */
+//.header {
+//  position: fixed;
+//  top: 0;
+//  width: 100%;
+//  height: 56px; /* Ajusta este valor según la altura de tu header */
+//  background-color: #1a1a1a; /* Color de fondo del header */
+//  color: white; /* Color del texto del header */
+//  z-index: 1010; /* Asegúrate de que el header esté por encima del menú */
+//}
+//
+//.footer {
+//  position: fixed;
+//  bottom: 0;
+//  width: 100%;
+//  height: 56px; /* Ajusta este valor según la altura de tu footer */
+//  background-color: #1a1a1a; /* Color de fondo del footer */
+//  color: white; /* Color del texto del footer */
+//  z-index: 1010; /* Asegúrate de que el footer esté por encima del menú */
+//}
+
+/* Ajustar el ion-menu para que tenga un fondo claro */
+ion-menu {
+  --width: 300px; /* Ancho del menú */
+  --background: #F5F3FA !important; /* Color de fondo del menú */
+  --color: #333 !important; /* Color del texto del menú */
+}
+
+/* Estilos para los componentes del menú */
+ion-menu ion-header {
+  --background: #F5F3FA !important; /* Color de fondo del header del menú */
+  --color: #333 !important; /* Color del texto del header del menú */
+}
+
+ion-menu ion-toolbar {
+  --background: #F5F3FA !important; /* Color de fondo del toolbar del menú */
+  --color: #333 !important; /* Color del texto del toolbar del menú */
+}
+
+ion-menu ion-content {
+  --background: #F5F3FA !important; /* Color de fondo del contenido del menú */
+  --color: #333 !important; /* Color del texto del contenido del menú */
+}
+
+md button in-toolbar ion-activatable ion-focusable {
+  --background: #F5F3FA !important; /* Color de fondo del botón */
+  --color: #6b6a6a !important; /* Color del texto del botón */
+}
+
+
+.toast-top {
+  top: 10%;
+}

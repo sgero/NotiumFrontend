@@ -307,3 +307,27 @@ h1 {
 .calendario .datetime-calendar {
 background-color: #62696c ! important;
 }
+
+
+.tarjetas {
+  margin-top: 15rem;
+  margin-left: 100rem;
+  margin-right: 1rem;
+  padding: 1rem;
+  flex: 0 0 300px; /* Ajusta este valor según el ancho deseado para el aside */
+ z-index: 1;
+  position: absolute ! important;
+}
+
+.main-content {
+  margin-top: 6rem;
+  display: flex;
+  flex: 1;
+  padding: 20px; /* Ajusta según necesites */
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

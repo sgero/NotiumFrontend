@@ -1,0 +1,28 @@
+/* Ajustar el ion-menu para que tenga un fondo claro */
+ion-menu {
+  --width: 300px; /* Ancho del menú */
+  --background: #F5F3FA !important; /* Color de fondo del menú */
+  --color: #333 !important; /* Color del texto del menú */
+}
+
+/* Estilos para los componentes del menú */
+ion-menu ion-header {
+  --background: #F5F3FA !important; /* Color de fondo del header del menú */
+  --color: #333 !important; /* Color del texto del header del menú */
+}
+
+ion-menu ion-toolbar {
+  --background: #F5F3FA !important; /* Color de fondo del toolbar del menú */
+  --color: #333 !important; /* Color del texto del toolbar del menú */
+}
+
+ion-menu ion-content {
+  --background: #F5F3FA !important; /* Color de fondo del contenido del menú */
+  --color: #333 !important; /* Color del texto del contenido del menú */
+}
+
+md button in-toolbar ion-activatable ion-focusable {
+  --background: #F5F3FA !important; /* Color de fondo del botón */
+  --color: #6b6a6a !important; /* Color del texto del botón */
+}
+

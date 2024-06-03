@@ -18,6 +18,15 @@
           {{ evento?.ocioNocturnoDTO?.direccionDTO?.provincia }},
           {{ evento?.ocioNocturnoDTO?.direccionDTO?.pais }}
         </p>
+        @if (permisosParaEditar) {
+          <h2 class="card-title"><b>Datos</b></h2>
+          <p class="text">
+            Aforo Total: {{ evento?.aforo }}
+          </p>
+          <p class="text">
+            Asistentes Totales Actualmente: {{ totalAsistentes }}
+          </p>
+        }
       </div>
     </div>
 
@@ -31,8 +40,20 @@
             {{ evento?.ocioNocturnoDTO?.horaApertura }}
             <ion-icon name="arrow-forward"></ion-icon>
             {{ evento?.ocioNocturnoDTO?.horaCierre }}
-          </a></h3>
+          </a>
+        </h3>
+        @if (permisosParaEditar) {
+          <button mat-raised-button color="primary" style="width: 140px !important" (click)="openModal(true)">Editar Evento</button>
+        }
       </div>
+      @if (crearEventoDTO){
+        <app-editar-evento
+          [isModalOpen]="isModalEvento"
+          [informacionEvento]="crearEventoDTO!"
+          (eventoModificado)="modificar($event)"
+        >
+        </app-editar-evento>
+      }
       <div>
         <h1 style="font-size: xx-large">{{ evento?.nombre }}</h1>
       </div>
@@ -48,135 +69,288 @@
         @if (comprarEntradas) {
           <div class="entradas-generales" style="min-width: 1000px;max-width: 1000px">
             <div class="row card-row card-style">
-              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
-                   (click)="setOpenGeneral(true, true, false, false)">
-                <div class="card-body event">
-                  <div class="tarifa">
-                    <div><h1 style="margin: 0 !important;">GENERAL {{ evento?.nombre }}</h1>
-                      @if (disponiblesGeneral! <= 15) {
-                        <div style="display: flex;color: red">
-                          <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
-                            <ion-icon name="flame-outline"></ion-icon>
-                            ¡Quedan menos de 15 entradas generales!
+              @if (permisosParaEditar) {
+                <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;">
+                  <div class="card-body event">
+                    <div class="tarifa">
+                      <div><h1 style="margin: 0;margin-right: 90px;">GENERAL {{ evento?.nombre }}</h1>
+                        <div style="display: flex">
+                          <h3 style="margin: 0 !important;">
+                            Entradas Totales A La Venta: {{ informacionTiposEntrada?.entradaOcioDTO?.totalEntradas }}
                           </h3>
                         </div>
-                      }
+                        <div style="display: flex">
+                          <h3 style="margin: 0 !important;">
+                            Entradas Vendidas: {{ entradasVendidas }}
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="info">
+                        <button class="button is-large is-light"
+                                style="padding: .4rem !important;margin-right: .5rem !important;">
+                          {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
+                        </button>
+                        <button class="button is-large is-link">
+                          <ion-icon name="arrow-forward"></ion-icon>
+                        </button>
+                      </div>
                     </div>
-                    <div class="info">
-                      <button class="button is-large is-light"
-                              style="padding: .4rem !important;margin-right: .5rem !important;">
-                        {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
-                      </button>
-                      <button class="button is-large is-link">
-                        <ion-icon name="arrow-forward"></ion-icon>
-                      </button>
+                    <hr>
+                    <div class="content">
+                      <p class=" text">{{ informacionTiposEntrada?.entradaOcioDTO?.detalleEntrada }}</p>
+                      <p class=" text">Precio: {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€</p>
+                      <p class=" text">Incluye {{ informacionTiposEntrada?.entradaOcioDTO?.consumiciones }}
+                        consumición/es.</p>
+                      <p class=" text">Incluye acceso al establecimiento.</p>
+                      <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
                     </div>
-                  </div>
-                  <hr>
-                  <div class="content">
-                    <p class=" text">{{ informacionTiposEntrada?.entradaOcioDTO?.detalleEntrada }}</p>
-                    <p class=" text">Precio: {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€</p>
-                    <p class=" text">Incluye {{ informacionTiposEntrada?.entradaOcioDTO?.consumiciones }}
-                      consumición/es.</p>
-                    <p class=" text">Incluye acceso al establecimiento.</p>
-                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
                   </div>
                 </div>
-              </div>
+              } @else {
+                <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
+                     (click)="setOpenGeneral(true, true, false, false)">
+                  <div class="card-body event">
+                    <div class="tarifa">
+                      <div><h1 style="margin: 0;margin-right: 90px;">GENERAL {{ evento?.nombre }}</h1>
+                        @if (disponiblesGeneral! <= 15) {
+                          <div style="display: flex;color: red">
+                            <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
+                              <ion-icon name="flame-outline"></ion-icon>
+                              ¡Quedan menos de 15 entradas generales!
+                            </h3>
+                          </div>
+                        }
+                      </div>
+                      <div class="info">
+                        <button class="button is-large is-light"
+                                style="padding: .4rem !important;margin-right: .5rem !important;">
+                          {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
+                        </button>
+                        <button class="button is-large is-link">
+                          <ion-icon name="arrow-forward"></ion-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="content">
+                      <p class=" text">{{ informacionTiposEntrada?.entradaOcioDTO?.detalleEntrada }}</p>
+                      <p class=" text">Precio: {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€</p>
+                      <p class=" text">Incluye {{ informacionTiposEntrada?.entradaOcioDTO?.consumiciones }}
+                        consumición/es.</p>
+                      <p class=" text">Incluye acceso al establecimiento.</p>
+                      <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                    </div>
+                  </div>
+                </div>
+              }
+
+
             </div>
           </div>
         } @else {
           <p>Se han agotado las entradas generales para este evento.</p>
+          <div style="display: flex">
+            <h3 style="margin: 0 !important;">
+              Entradas Totales A La Venta: {{ informacionTiposEntrada?.entradaOcioDTO?.totalEntradas }}
+            </h3>
+          </div>
+          <div style="display: flex">
+            <h3 style="margin: 0 !important;">
+              Entradas Vendidas: {{ entradasVendidas }}
+            </h3>
+          </div>
         }
 
         @if (comprarReservado) {
           <div class="reservados">
             <div class="row card-row card-style">
-              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
-                   style="width: 100%;"
-                   (click)="setOpenGeneral(true, false, true, false)">
-                <div class="card-body event">
-                  <div class="tarifa">
-                    <div><h1 style="margin: 0 !important;">RESERVADO {{ evento?.nombre }}</h1>
-                      @if (disponiblesReservado! <= 2) {
-                        <div style="display: flex;color: red">
-                          <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
-                            <ion-icon name="flame-outline"></ion-icon>
-                            ¡Quedan menos de 2 reservados disponibles!
+              @if (permisosParaEditar) {
+                <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;">
+                  <div class="card-body event">
+                    <div class="tarifa">
+                      <div><h1 style="margin: 0;margin-right: 90px;">RESERVADO {{ evento?.nombre }}</h1>
+                        <div style="display: flex">
+                          <h3 style="margin: 0 !important;">
+                            Reservados Totales A La
+                            Venta: {{ informacionTiposEntrada?.reservadoOcioDTO?.reservadosDisponibles }}
                           </h3>
                         </div>
-                      }
+                        <div style="display: flex">
+                          <h3 style="margin: 0 !important;">
+                            Reservados Vendidas: {{ reservadosVendidos }}
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="info">
+                        <button class="button is-large is-light bg-gray-300/30"
+                                style="padding: .4rem !important;margin-right: .5rem !important;">
+                          {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
+                        </button>
+                        <button class="button is-large is-link">
+                          <ion-icon name="arrow-forward"></ion-icon>
+                        </button>
+                      </div>
                     </div>
-                    <div class="info">
-                      <button class="button is-large is-light bg-gray-300/30"
-                              style="padding: .4rem !important;margin-right: .5rem !important;">
-                        {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
-                      </button>
-                      <button class="button is-large is-link">
-                        <ion-icon name="arrow-forward"></ion-icon>
-                      </button>
+                    <hr>
+                    <div class="content">
+                      <p class=" text">{{ informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado }}</p>
+                      <p class=" text">Precio: {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€</p>
+                      <p class=" text">Incluye {{ informacionTiposEntrada?.reservadoOcioDTO?.botellas }} botella/s.</p>
+                      <p class=" text">Incluye acceso al establecimiento.</p>
+                      <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
                     </div>
-                  </div>
-                  <hr>
-                  <div class="content">
-                    <p class=" text">{{ informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado }}</p>
-                    <p class=" text">Precio: {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€</p>
-                    <p class=" text">Incluye {{ informacionTiposEntrada?.reservadoOcioDTO?.botellas }} botella/s.</p>
-                    <p class=" text">Incluye acceso al establecimiento.</p>
-                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
                   </div>
                 </div>
-              </div>
+              } @else {
+                <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                     style="width: 100%;"
+                     (click)="setOpenGeneral(true, false, true, false)">
+                  <div class="card-body event">
+                    <div class="tarifa">
+                      <div><h1 style="margin: 0;margin-right: 90px;">RESERVADO {{ evento?.nombre }}</h1>
+                        @if (disponiblesReservado! <= 2) {
+                          <div style="display: flex;color: red">
+                            <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
+                              <ion-icon name="flame-outline"></ion-icon>
+                              ¡Quedan menos de 2 reservados disponibles!
+                            </h3>
+                          </div>
+                        }
+                      </div>
+                      <div class="info">
+                        <button class="button is-large is-light bg-gray-300/30"
+                                style="padding: .4rem !important;margin-right: .5rem !important;">
+                          {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
+                        </button>
+                        <button class="button is-large is-link">
+                          <ion-icon name="arrow-forward"></ion-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="content">
+                      <p class=" text">{{ informacionTiposEntrada?.reservadoOcioDTO?.detalleReservado }}</p>
+                      <p class=" text">Precio: {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€</p>
+                      <p class=" text">Incluye {{ informacionTiposEntrada?.reservadoOcioDTO?.botellas }} botella/s.</p>
+                      <p class=" text">Incluye acceso al establecimiento.</p>
+                      <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                    </div>
+                  </div>
+                </div>
+              }
+
             </div>
           </div>
         } @else {
           <p>Se han agotado los reservados para este evento.</p>
+          <div style="display: flex">
+            <h3 style="margin: 0 !important;">
+              Reservados Totales A La Venta: {{ informacionTiposEntrada?.reservadoOcioDTO?.reservadosDisponibles }}
+            </h3>
+          </div>
+          <div style="display: flex">
+            <h3 style="margin: 0 !important;">
+              Reservados Vendidas: {{ reservadosVendidos }}
+            </h3>
+          </div>
         }
 
         @if (comprarLista) {
           <div class="listas">
             <div class="row card-row card-style">
-              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
-                   (click)="setOpenGeneral(true, false, false, true)">
-                <div class="card-body event">
-                  <div class="tarifa">
-                    <div><h1 style="margin: 0 !important;">LISTA {{ evento?.nombre }}</h1>
-                      @if (disponiblesLista! <= 5) {
-                        <div style="display: flex;color: red">
-                          <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
-                            <ion-icon name="flame-outline"></ion-icon>
-                            ¡Quedan menos de 5 entradas por lista!
+              @if (permisosParaEditar) {
+                <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;">
+                  <div class="card-body event">
+                    <div class="tarifa">
+                      <div><h1 style="margin: 0;margin-right: 90px;">LISTA {{ evento?.nombre }}</h1>
+                        <div style="display: flex">
+                          <h3 style="margin: 0 !important;">
+                            Entradas Totales A La Venta: {{ informacionTiposEntrada?.listaOcioDTO?.total_invitaciones }}
                           </h3>
                         </div>
-                      }
+                        <div style="display: flex">
+                          <h3 style="margin: 0 !important;">
+                            Entradas Vendidas: {{ clientesApuntadosALista }}
+                          </h3>
+                        </div>
+                      </div>
+                      <div class="info">
+                        <button class="button is-large is-light bg-gray-300/30"
+                                style="padding: .4rem !important;margin-right: .5rem !important;">
+                          {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
+                        </button>
+                        <button class="button is-large is-link">
+                          <ion-icon name="arrow-forward"></ion-icon>
+                        </button>
+                      </div>
                     </div>
-                    <div class="info">
-                      <button class="button is-large is-light bg-gray-300/30"
-                              style="padding: .4rem !important;margin-right: .5rem !important;">
-                        {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
-                      </button>
-                      <button class="button is-large is-link">
-                        <ion-icon name="arrow-forward"></ion-icon>
-                      </button>
+                    <hr>
+                    <div class="content">
+                      <p class=" text">LISTA
+                        DE {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}</p>
+                      <p class=" text">{{ informacionTiposEntrada?.listaOcioDTO?.detalleLista }}</p>
+                      <p class=" text">Precio: {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€</p>
+                      <p class=" text">Incluye {{ informacionTiposEntrada?.listaOcioDTO?.consumiciones }}
+                        consumición/es.</p>
+                      <p class=" text">Incluye acceso al establecimiento.</p>
+                      <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
                     </div>
-                  </div>
-                  <hr>
-                  <div class="content">
-                    <p class=" text">LISTA
-                      DE {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}</p>
-                    <p class=" text">{{ informacionTiposEntrada?.listaOcioDTO?.detalleLista }}</p>
-                    <p class=" text">Precio: {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€</p>
-                    <p class=" text">Incluye {{ informacionTiposEntrada?.listaOcioDTO?.consumiciones }}
-                      consumición/es.</p>
-                    <p class=" text">Incluye acceso al establecimiento.</p>
-                    <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
                   </div>
                 </div>
-              </div>
+              } @else {
+                <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="width: 100%;"
+                     (click)="setOpenGeneral(true, false, false, true)">
+                  <div class="card-body event">
+                    <div class="tarifa">
+                      <div><h1 style="margin: 0;margin-right: 90px;">LISTA {{ evento?.nombre }}</h1>
+                        @if (disponiblesLista! <= 5) {
+                          <div style="display: flex;color: red">
+                            <h3 style="margin: 0 !important;display: flex;align-items: center !important;">
+                              <ion-icon name="flame-outline"></ion-icon>
+                              ¡Quedan menos de 5 entradas por lista!
+                            </h3>
+                          </div>
+                        }
+                      </div>
+                      <div class="info">
+                        <button class="button is-large is-light bg-gray-300/30"
+                                style="padding: .4rem !important;margin-right: .5rem !important;">
+                          {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
+                        </button>
+                        <button class="button is-large is-link">
+                          <ion-icon name="arrow-forward"></ion-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="content">
+                      <p class=" text">LISTA
+                        DE {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.nombre }} {{ informacionTiposEntrada?.listaOcioDTO?.rppDTO?.apellidos }}</p>
+                      <p class=" text">{{ informacionTiposEntrada?.listaOcioDTO?.detalleLista }}</p>
+                      <p class=" text">Precio: {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€</p>
+                      <p class=" text">Incluye {{ informacionTiposEntrada?.listaOcioDTO?.consumiciones }}
+                        consumición/es.</p>
+                      <p class=" text">Incluye acceso al establecimiento.</p>
+                      <p class=" text">Obligatorio mostrar el DNI y el código QR para acceder.</p>
+                    </div>
+                  </div>
+                </div>
+              }
+
             </div>
           </div>
         } @else {
           <p>Se han agotado las entradas por lista para este evento.</p>
+          <div style="display: flex">
+            <h3 style="margin: 0 !important;">
+              Entradas Totales A La Venta: {{ informacionTiposEntrada?.listaOcioDTO?.total_invitaciones }}
+            </h3>
+          </div>
+          <div style="display: flex">
+            <h3 style="margin: 0 !important;">
+              Entradas Vendidas: {{ clientesApuntadosALista }}
+            </h3>
+          </div>
         }
 
         <ion-modal [isOpen]="isModalOpen">
@@ -260,7 +434,7 @@
                           <mat-form-field>
                             <mat-label>Email</mat-label>
                             <input matInput formControlName="email" required type="email">
-                            @if (datosCompradores.get('email')?.hasError('email')){
+                            @if (datosCompradores.get('email')?.hasError('email')) {
                               <mat-error>Email incorrecto.</mat-error>
                             }
                           </mat-form-field>
@@ -268,9 +442,9 @@
 
                           <mat-form-field style="width: 213px">
                             <mat-label>Fecha Nacimiento</mat-label>
-                            <input matInput placeholder="YYYY/MM/DD" formControlName="fecha"  [matDatepicker]="picker">
-                            @if (datosCompradores.get('fecha')?.hasError('futureDate')){
-                              <mat-error>La edad mínima es {{edadMinima}} años.</mat-error>
+                            <input matInput placeholder="YYYY/MM/DD" formControlName="fecha" [matDatepicker]="picker">
+                            @if (datosCompradores.get('fecha')?.hasError('futureDate')) {
+                              <mat-error>La edad mínima es {{ edadMinima }} años.</mat-error>
                             }
                             <mat-datepicker-toggle matIconSuffix [for]="picker">
                             </mat-datepicker-toggle>

@@ -145,3 +145,73 @@
   align-items: center;
   flex-direction: row;
 }
+
+
+.fecha {
+  font-size: 1.5rem;
+  color: #521852;
+  margin-top: 1rem;
+  margin-bottom: 0rem;
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: row;
+  max-width: 100%;
+}
+
+
+.ion-activatable {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: row;
+  max-width: 50%;
+  background: #7F448C;
+}
+
+.ion-activatable :host button {
+  background: #7F448C;
+}
+
+#date-button {
+  background: #7F448C;
+}
+
+
+.tope-header {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 30rem;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: row;
+  max-width: 100%;
+}
+
+
+.md button button-clear in-buttons ion-activatable ion-focusable {
+  --background: #7F448C !important; /* Color de fondo del botón */
+  --color: #FCEEB5 !important; /* Color del texto del botón */
+}
+
+
+.logout-button {
+  background-color: #2a032a ; /* Color de fondo */
+  align-items: center;
+  align-content: center;
+  font-size: 1.1rem;
+  color: #e3a8fd;
+  border-radius: 15px;
+}
+
+
+.logout-button :hover{
+  background-color: #e3a8fd ; /* Color de fondo */
+  align-items: center;
+  align-content: center;
+  font-size: 1.1rem;
+  color: #2a032a;
+  border-radius: 15px;
+}

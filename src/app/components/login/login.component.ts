@@ -4,7 +4,7 @@ import {UsuarioService} from "../../services/usuario.service";
 import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
-import {SharedService} from "../../services/SharedService";
+import {ModalController} from "@ionic/angular";
 
 @Component({
   selector: 'app-login',
@@ -15,44 +15,59 @@ import {SharedService} from "../../services/SharedService";
   ],
   standalone: true
 })
+// export class LoginComponent {
+//
+//   usuario = new Usuario();
+//
+//   constructor(private usuarioService : UsuarioService, private router : Router) { }
+//
+//   login(){
+//
+//     this.usuarioService.loginUsuario(this.usuario).subscribe(data=>{
+//
+//       console.log(data)
+//       localStorage.setItem('token', data['token'])
+//
+//     })
+//
+//   }
+//
+//   // username: string | undefined;
+//   // password: string | undefined;
+//   //
+//   // constructor(private authService: AuthService) { }
+//   //
+//   // login() {
+//   //   this.authService.login(this.username, this.password).subscribe(response => {
+//   //     console.log('Logged in with role:', response.role);
+//   //     // Aquí puedes redirigir al usuario a la página correspondiente según su rol, si es necesario
+//   //   }, error => {
+//   //     console.error('Login failed', error);
+//   //   });
+//   // }
+//
+// }
 export class LoginComponent {
 
   usuario = new Usuario();
 
-  constructor(private usuarioService : UsuarioService,
-              private router : Router,
-              private sharedService: SharedService) { }
+  constructor(
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private modalController: ModalController
+  ) { }
 
-  login(){
-
-    this.usuarioService.loginUsuario(this.usuario).subscribe(data=>{
-
-      console.log(data)
-      localStorage.setItem('token', data['token'])
-    })
-
-    this.usuarioService.getUsuarioToken().subscribe( {
-      next: (usuario) => {
-        this.usuario = usuario;
-        this.sharedService.setUsuarioToken(usuario)},
-      error: (error) => { console.error('Error al obtener el usuario por token:', error); },
-      complete: () => { console.log('Usuario por token:', this.usuario); }
+  async login() {
+    this.usuarioService.loginUsuario(this.usuario).subscribe(data => {
+      console.log(data);
+      localStorage.setItem('token', data['token']);
+      // Cierra la ventana modal después de autenticar
+      this.dismissModal();
     });
-
   }
 
-  // username: string | undefined;
-  // password: string | undefined;
-  //
-  // constructor(private authService: AuthService) { }
-  //
-  // login() {
-  //   this.authService.login(this.username, this.password).subscribe(response => {
-  //     console.log('Logged in with role:', response.role);
-  //     // Aquí puedes redirigir al usuario a la página correspondiente según su rol, si es necesario
-  //   }, error => {
-  //     console.error('Login failed', error);
-  //   });
-  // }
+  dismissModal() {
+    this.modalController.dismiss();
+  }
 
 }

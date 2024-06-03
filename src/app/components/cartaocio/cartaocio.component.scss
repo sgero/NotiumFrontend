@@ -1,17 +1,24 @@
+.body{
+  display: flex;
+  align-items: center;
+  overflow-y: auto;
+  //overflow: hidden;
+}
+
 .container{
-  background-image: url('~src/assets/images/cartaOcioNocturno.jpg');
-  background-size: 80%;
-  background-repeat: no-repeat;
-  background-position: center center;
-  width: 100%; /* Ajusta el tamaño según sea necesario */
-  height: 300vh; /* Ajusta el tamaño según sea necesario */
+  //background-image: url('~src/assets/images/cartaOcioNocturno.jpg');
+  //background-size: 100%;
+  //background-repeat: no-repeat;
+  //background-position: center center;
+  width: 100%;
+  //height: 500vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   //align-content: center;
   align-items: center;
   //padding: 20%;
-  position: relative;
+  //position: relative;
 }
 
 
@@ -20,13 +27,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 2; /* Asegura que los botones estén por encima de la imagen */
-  background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para mayor visibilidad */
+  //z-index: 2; /* Asegura que los botones estén por encima de la imagen */
+  //background: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para mayor visibilidad */
   padding: 200px;
   border-radius: 10px;
   width: 90%;
+  height: 10%;
   max-width: 800px;
   margin: 10px;
+  overflow: hidden;
 }
 
 .ion-padding {
@@ -57,64 +66,55 @@ ion-button.icon {
   --padding-bottom: 10px;
 }
 
-//.ion-padding{
-//  display: flex;
-//  flex-direction: row;
-//  justify-content: center;
-//  z-index: 2;
+.table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  //align-content: center;
+  width: 80%;
+}
+
+.table mat-paginator{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.table-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 0 20px 0;
+}
+.table-header div {
+  margin: 15px;
+}
+
+//.mat-elevation-z8 {
+//  background: rgba(255, 255, 255, 0.5); /* Fondo blanco semitransparente */
+//  backdrop-filter: blur(10px); /* Opcional: para un efecto de desenfoque */
+//  border-radius: 8px; /* Opcional: para esquinas redondeadas */
+//  overflow: hidden; /* Para asegurar que el contenido no se salga de los bordes */
+//}
+//
+//.mat-elevation-z8 .mat-table {
+//  background: transparent; /* Asegurar que la tabla misma sea transparente */
+//}
+//
+//.mat-elevation-z8 th.mat-header-cell, .my-table td.mat-cell {
+//  background: transparent; /* Celdas transparentes */
+//}
+//
+//.mat-elevation-z8 th.mat-header-cell {
+//  color: rgba(0, 0, 0, 0.87); /* Opcional: color del texto del encabezado */
+//}
+//
+//.mat-elevation-z8 td.mat-cell {
+//  color: rgba(0, 0, 0, 0.87); /* Opcional: color del texto de las celdas */
 //}
 
-//.buttons{
-//  display: flex;
-//  flex-direction: row;
-//  justify-content: center;
-//  margin-top: 20px; /* Ajusta según sea necesario */
-//  z-index: 1; /* Asegura que los botones estén por encima de la imagen */
-//
-//}
-//
-//.buttons ion-button {
-//  margin-left: 15px;
-//  --background: #2a032a;
-//  --background-hover: #2a032a;
-//  --background-activated: #2a032a;
-//  --background-focused: #2a032a;
-//
-//  --color: white;
-//
-//  --border-radius: 1%;
-//  --border-color: #000;
-//  --border-style: solid;
-//  --border-width: 1px;
-//
-//  --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
-//
-//  --ripple-color: deeppink;
-//
-//  --padding-top: 10px;
-//  --padding-bottom: 10px;
-//}
-
-// ion-button .icon{
-//  color: white;
-//}
-//
-//ion-modal {
-//  z-index: 2; /* Asegura que el modal esté por encima de todos los demás elementos */
-//}
-//
-//
-//ion-label, .staff ion-label{
-//  max-width: 300px;
-//  overflow: hidden;
-//  text-overflow: ellipsis;
-//  white-space: nowrap;
-//}
-//
-//.listas ion_label{
-//  max-width: 800px;
-//  overflow: hidden;
-//  text-overflow: ellipsis;
-//  white-space: nowrap;
-//}
 

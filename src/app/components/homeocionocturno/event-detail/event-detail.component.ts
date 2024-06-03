@@ -47,6 +47,8 @@ import {UsuarioService} from "../../../services/usuario.service";
 import {ClienteService} from "../../../services/cliente.service";
 import {OcionocturnoService} from "../../../services/ocionocturno.service";
 import {PdfService} from "../../../services/pdf.service";
+import {EditarEventoComponent} from "../../modales/editar-evento/editar-evento.component";
+import {CrearEvento} from "../../../models/CrearEvento";
 
 const IonIcons = {
   shirtOutline,
@@ -91,7 +93,8 @@ const IonIcons = {
     MatError,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    EditarEventoComponent
   ],
   standalone: true,
   providers: [
@@ -164,6 +167,9 @@ export class EventDetailComponent implements OnInit {
   disponiblesReservado?: number;
   disponiblesLista?: number;
   permisosParaEditar = false;
+  isModalEvento = false;
+  crearEventoDTO?:CrearEvento;
+  eventoModificado = [0];
 
   constructor(private toastController: ToastController, private loadingCtrl: LoadingController,
               private eventoService: EventoService, private route: ActivatedRoute,
@@ -182,6 +188,7 @@ export class EventDetailComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = +params['id'];
       if (id) {
+        this.informacionEventoTotal(id)
         this.getById(id);
         this.getTiposEntradasInfo(id);
       }
@@ -618,5 +625,26 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
+
+  openModal(b: boolean) {
+    this.isModalEvento = b;
+  }
+
+  informacionEventoTotal(idEvento: number){
+    this.eventoService.getInfoEventoTotal(idEvento).subscribe({
+      next: value => {
+        if (value){
+          this.crearEventoDTO = value;
+        }
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
+  }
+
+  modificar(id: number) {
+    this.getById(id);
+  }
 
 }

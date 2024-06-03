@@ -1,165 +1,86 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {HeaderocionocturnoComponent} from "../headerocionocturno/headerocionocturno.component";
-import {FooterocionocturnoComponent} from "../footerocionocturno/footerocionocturno.component";
-import {IonicModule, IonModal, LoadingController, ToastController} from "@ionic/angular";
-import {OcionocturnoService} from "../../services/ocionocturno.service";
-import {OcioNocturno} from "../../models/OcioNocturno";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {Evento} from "../../models/Evento";
-import {EventoService} from "../../services/evento.service";
-import {DatePipe, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {RppService} from "../../services/rpp.service";
-import {Rpp} from "../../models/Rpp";
-import {ListaOcio} from "../../models/ListaOcio";
-import {ListaOcioService} from "../../services/listaOcio.service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {
   AbstractControl,
-  FormBuilder, FormGroup,
-  FormsModule,
+  FormBuilder,
+  FormGroup, FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
   Validators
-} from '@angular/forms';
-import {OverlayEventDetail} from '@ionic/core';
-import {DireccionDTO} from "../../models/DireccionDTO";
-import {Usuario} from "../../models/Usuario";
-import {MatButton, MatIconButton} from "@angular/material/button";
+} from "@angular/forms";
+import {Rpp} from "../../../models/Rpp";
+import {CodigoVestimentaOcio} from "../../../models/CodigoVestimentaOcio";
+import {EdadMinimaOcio} from "../../../models/EdadMinimaOcio";
+import {Consumiciones} from "../../../models/Consumiciones";
+import {Botellas} from "../../../models/Botellas";
+import {DiasARepetirCicloEventoOcio} from "../../../models/DiasARepetirCicloEventoOcio";
+import {RepetirCicloEventoOcio} from "../../../models/RepetirCicloEventoOcio";
+import {CrearEvento} from "../../../models/CrearEvento";
+import {CrearEventoCiclico} from "../../../models/CrearEventoCiclico";
+import {ListaOcio} from "../../../models/ListaOcio";
+import {OcionocturnoService} from "../../../services/ocionocturno.service";
+import {EventoService} from "../../../services/evento.service";
+import {RppService} from "../../../services/rpp.service";
+import {ListaOcioService} from "../../../services/listaOcio.service";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {CartaOcioService} from "../../../services/cartaOcio.service";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {UsuarioService} from "../../../services/usuario.service";
+import {IonicModule, LoadingController, ToastController} from "@ionic/angular";
+import {Evento} from "../../../models/Evento";
+import {EntradaOcio} from "../../../models/EntradaOcio";
+import {ReservadoOcio} from "../../../models/ReservadoOcio";
+import {OcioNocturno} from "../../../models/OcioNocturno";
+import {MatStep, MatStepLabel, MatStepper, MatStepperNext} from "@angular/material/stepper";
+import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import {MatOption, MatSelect} from "@angular/material/select";
 import {
   MatDatepicker,
   MatDatepickerInput,
   MatDatepickerModule,
   MatDatepickerToggle
 } from "@angular/material/datepicker";
-import {MatFormField, MatFormFieldModule, MatLabel} from "@angular/material/form-field";
+import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput, MatInputModule} from "@angular/material/input";
-import {MatOption} from "@angular/material/autocomplete";
-import {MatSelect} from "@angular/material/select";
-import {MatStep, MatStepLabel, MatStepper, MatStepperNext} from "@angular/material/stepper";
-import {arrowForward, calendar, closeOutline, flameOutline, pricetags, shirtOutline, watch} from "ionicons/icons";
-import {addIcons} from "ionicons";
-import {CodigoVestimentaOcio} from "../../models/CodigoVestimentaOcio";
-import {EdadMinimaOcio} from "../../models/EdadMinimaOcio";
-import {provideNativeDateAdapter} from "@angular/material/core";
-import {CartaocioComponent} from "../cartaocio/cartaocio.component";
-import {CartaOcio} from "../../models/CartaOcio";
-import {CartaOcioService} from "../../services/cartaOcio.service";
-import {CrearEvento} from "../../models/CrearEvento";
-import {CrearEventoCiclico} from "../../models/CrearEventoCiclico";
-import {DatosComprador} from "../../models/DatosComprador";
-import {Consumiciones} from "../../models/Consumiciones";
-import {Botellas} from "../../models/Botellas";
-import {EntradaOcio} from "../../models/EntradaOcio";
-import {ReservadoOcio} from "../../models/ReservadoOcio";
-import {ClienteService} from "../../services/cliente.service";
-import {UsuarioService} from "../../services/usuario.service";
-import {RepetirCicloEventoOcio} from "../../models/RepetirCicloEventoOcio";
-import {DiasARepetirCicloEventoOcio} from "../../models/DiasARepetirCicloEventoOcio";
-import {EntradaOcioCliente} from "../../models/EntradaOcioCliente";
-import {ComprarReservadoDTO} from "../../models/ComprarReservadoDTO";
-import {ListaOcioCliente} from "../../models/ListaOcioCliente";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {
-  MatCell, MatCellDef,
-  MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
-  MatHeaderRow,
-  MatRow,
-  MatTable,
-  MatTableDataSource,
-  MatHeaderRowDef,
-  MatRowDef,
-} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {trigger} from "@angular/animations";
-
-const IonIcons = {
-  shirtOutline,
-  arrowForward,
-  calendar,
-  watch,
-  pricetags,
-  closeOutline,
-  flameOutline
-}
 
 @Component({
-  selector: 'app-gestionocio',
-  templateUrl: './gestionocio.component.html',
-  styleUrls: ['./gestionocio.component.scss'],
+  selector: 'app-editar-evento',
+  templateUrl: './editar-evento.component.html',
+  styleUrls: ['./editar-evento.component.scss'],
   imports: [
-    HeaderocionocturnoComponent,
-    FooterocionocturnoComponent,
-    CartaocioComponent,
     IonicModule,
+    MatStepper,
+    MatStep,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    ReactiveFormsModule,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatDatepickerInput,
     DatePipe,
     NgForOf,
     NgIf,
     FormsModule,
     MatButton,
-    MatDatepicker,
-    MatDatepickerToggle,
-    MatFormField,
     MatIcon,
     MatInput,
     MatLabel,
-    MatOption,
-    MatSelect,
-    MatStep,
     MatStepLabel,
-    MatStepper,
     MatStepperNext,
-    ReactiveFormsModule,
-    MatDatepickerInput,
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
     RouterLink,
-    MatProgressSpinner,
-    MatTable,
-    MatColumnDef,
-    MatHeaderCell,
-    MatCell,
-    NgOptimizedImage,
-    MatIconButton,
-    MatPaginator,
-    MatHeaderRow,
-    MatRow,
-    MatHeaderCellDef,
-    MatCellDef,
-    MatRowDef,
-    MatHeaderRowDef
+    MatProgressSpinner
   ],
-  standalone: true,
-  providers: [
-    provideNativeDateAdapter(),
-    DatePipe
-  ],
+  standalone: true
 })
-export class GestionocioComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['imagen', 'nombre', 'opciones'];
-  displayedColumnsListas: string[] = ['Nº invitaciones', 'precio', 'consumiciones', 'evento', 'tematica', 'cartel'];
-  dataSource: MatTableDataSource<Rpp> = new MatTableDataSource<Rpp>();
-  dataSourceListas: MatTableDataSource<ListaOcio> = new MatTableDataSource<ListaOcio>();
-  @ViewChild(IonModal) modal!: IonModal;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild('listasPaginator') listasPaginator!: MatPaginator;
-  @ViewChild('listasSort') listasSort!: MatSort;  eventosInfo: string = 'eventosInfo';
-  mostrarListas: boolean = false;
-  ocio: OcioNocturno = new OcioNocturno();
-  eventos: Evento[] = [];
-  rpps: Rpp[] = [];
-  rppDeleted: Rpp = new Rpp();
-  newRpp: Rpp = new Rpp();
-  listas: ListaOcio[] = [];
-  mostrarCarta = true;
-  isDisable = false;
-  cartaOcio: CartaOcio = new CartaOcio();
-  isModalOpen = false;
-  isModalRppOpen = false;
+export class EditarEventoComponent  implements OnInit {
+  @Input() isModalOpen = false;
+  @Input() informacionEvento?:CrearEvento;
   firstFormGroup = this.formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -232,12 +153,12 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   iterable = false;
   listaActivada = false;
   opcionesEventoCiclicoBool = false;
-  fechaSeleccionada?: Date ;
-  fecha: Date = new Date();
-  noHayEventosSeleccionado?:boolean;
-  noHayEventos = true;
-  eventosEntreFechas: Evento[] = [];
-  fechaActual = new Date().toString();
+  ocio: OcioNocturno = new OcioNocturno();
+  rpps: Rpp[] = [];
+  eventos: Evento[] = [];
+  formularioRellenado = false;
+  @Output() eventoModificado = new EventEmitter<number>();
+
 
   constructor(
     private ocioNocturnoService: OcionocturnoService,
@@ -252,217 +173,15 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     private usuarioService: UsuarioService,
     private toastController: ToastController,
     private loadingCtrl: LoadingController
-  ) {
-    addIcons(IonIcons);
-    this.newRpp.direccionDTO = new DireccionDTO();
-    this.newRpp.userDTO = new Usuario();
-    this.fechaActual = <string>this.datePipe.transform(this.fechaActual, 'yyyy-MM-dd')
-  }
+  ) { }
 
   ngOnInit() {
     this.getOcio()
     this.getUsuario();
     this.formsLista.push(this.listaOcioDTO);
+    this.rellenarFormulario(this.informacionEvento!);
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSourceListas.paginator = this.listasPaginator;
-    this.dataSourceListas.sort = this.listasSort;
-  }
-
-
-  getOcio() {
-    this.route.params.subscribe(params => {
-      const ocioID = +params['id'];
-      if (ocioID) {
-        this.ocioNocturnoService.ocioPorId(ocioID).subscribe({
-          next: value => {
-            this.ocio = value as OcioNocturno;
-            this.eventoDTO.get('aforo')?.setValidators([
-              Validators.min(5),
-              Validators.max(this.ocio.aforo!)
-            ]);
-            this.eventoDTO.get('aforo')?.updateValueAndValidity();
-            this.getRpps();
-          },
-          error: e => {
-            console.error(e);
-          }
-        })
-      }
-    })
-  }
-
-  getEventos() {
-    this.route.params.subscribe(params => {
-      const ocioID = +params['id'];
-      if (ocioID) {
-        this.eventoService.getAllByOcio(ocioID).subscribe({
-          next: value => {
-            this.noHayEventos = false;
-            this.eventos = value.object as Evento[];
-          },
-          error: e => {
-            console.error(e);
-          }
-        })
-      }
-    })
-  }
-
-  getRpps(){
-    this.route.params.subscribe(params => {
-      const ocioID = +params['id'];
-      if (ocioID) {
-        this.rppService.rppsByOcio(ocioID).subscribe({
-          next: value => {
-            this.rpps = value as Rpp[];
-            this.dataSource.data = this.rpps;
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          },
-          error: e => {
-            console.error(e);
-          }
-        })
-      }
-    })
-  }
-
-
-  getListas(id:number){
-    this.showList()
-    this.listaService.getByRppId(id).subscribe({
-      next: value => {
-        this.listas = value as ListaOcio[];
-        this.dataSourceListas = new MatTableDataSource(this.listas);
-        this.dataSourceListas.paginator = this.listasPaginator;
-        this.dataSourceListas.sort = this.listasSort;
-      },
-      error: e => {
-        console.error(e);
-      }
-    })
-  }
-  showList(){
-    this.mostrarListas = true;
-  }
-
-  deleteRpp(id: number): void {
-    this.rppService.eliminarRpp(id).subscribe({
-      next: value => {
-        this.rppDeleted = value as Rpp;
-        this.rpps = this.rpps.filter(r => r.id !== id);
-        this.dataSource.data = this.rpps;
-      },
-      error: e => {
-        console.error(e);
-      }
-    });
-  }
-
-  Eventos() {
-    this.eventosInfo = 'eventosInfo';
-    this.getEventos()
-  }
-
-  Staff() {
-    this.eventosInfo = 'staff';
-    this.getRpps()
-  }
-
-  Carta() {
-    this.eventosInfo = 'carta';
-  }
-
-  Galeria() {
-    this.eventosInfo = 'galeria';
-  }
-
-  RegistrarRpp() {
-    if (!this.newRpp.direccionDTO) {
-      this.newRpp.direccionDTO = new DireccionDTO();
-    }
-    if (!this.newRpp.userDTO) {
-      this.newRpp.userDTO = new Usuario();
-    }
-    this.route.params.subscribe(params => {
-      const ocioID = +params['id'];
-      if (ocioID) {
-        this.rppService.guardarRpp(ocioID, this.newRpp).subscribe({
-          next: value => {
-
-            this.newRpp = value as Rpp;
-            this.rppModal(false);
-          },
-          error: e => {
-            console.error("no funciona", e);
-          }
-        })
-      }
-    })
-  }
-
-
-
-  confirmar() {
-    this.RegistrarRpp()
-  }
-
-  guardarCarta() {
-    this.route.params.subscribe(params => {
-      const ocioID = +params['id'];
-      if (ocioID) {
-        this.cartaOcioService.guardarCarta(ocioID, this.cartaOcio).subscribe({
-          next: value => {
-            this.cartaOcio = value as CartaOcio;
-          },
-          error: e => {
-            console.error(e);
-          }
-        })
-      }
-    })
-  }
-
-  eliminarCarta() {
-    this.route.params.subscribe(params => {
-      const cartaId = +params['id'];
-      if (cartaId) {
-        this.cartaOcioService.eliminarCarta(cartaId).subscribe({
-          next: value => {
-            this.cartaOcio = value as CartaOcio;
-          },
-          error: e => {
-            console.error(e);
-          }
-        })
-      }
-    })
-  }
-
-
-  saveCarta() {
-    this.mostrarCarta = true;
-    this.isDisable = true;
-    this.guardarCarta()
-  }
-
-  deleteCarta() {
-    this.mostrarCarta = false;
-    this.isDisable = false;
-    this.eliminarCarta();
-  }
-
-  openM(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-  }
-
-  eventoUnico(b: boolean) {
-    this.unico = b;
-  }
 
   futureDateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -705,40 +424,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getUsuario() {
-    this.usuarioService.getUsuarioToken().subscribe({
-      next: value => {
-        this.usuarioLogeado = value;
-        this.getDTO(this.usuarioLogeado);
-      },
-      error: err => {
-        console.error(err);
-      }
-    })
-  }
-
-  getDTO(usuario: any) {
-    if (usuario.rol == "CLIENTE") {
-      this.esCliente = true;
-    } else if (usuario.rol != "OCIONOCTURNO") {
-      this.esCliente = false;
-      this.router.navigate(["notium/error"])
-    } else {
-      this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
-        next: value => {
-          if (value.id == this.ocio.id) {
-            this.permisosParaEditar = true;
-          }
-          this.getEventos();
-        },
-        error: err => {
-          console.error(err);
-        }
-      })
-    }
-
-  }
-
 
   async guardarEvento() {
     const loading = await this.loadingCtrl.create({
@@ -746,39 +431,27 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       duration: 1000,
     });
     const toast = await this.toastController.create({
-      message: 'Ha ocurrido un error inesperado durante el proceso de creación.',
+      message: 'Ha ocurrido un error inesperado durante el proceso de edición.',
       duration: 3000,
       position: "top"
     });
     if (this.unico) {
+      this.crearEvento.eventoDTO!.id! = <number>this.informacionEvento?.eventoDTO?.id;
+      this.crearEvento.entradaOcioDTO!.id! = <number>this.informacionEvento?.entradaOcioDTO?.id;
+      this.crearEvento.reservadoOcioDTO!.id! = <number>this.informacionEvento?.reservadoOcioDTO?.id;
+      this.informacionEvento?.listaOcioDTO?.forEach((l, index) => {
+        this.crearEvento!.listaOcioDTO![index]!.id = l.id;
+      });
       this.eventoService.guardarEvento(this.crearEvento).subscribe({
         next: async value => {
           if (value.object as Evento) {
             await loading.present();
-            const evento = value.object as Evento;
-            this.router.navigate(['/notium/ocionocturno/evento/', evento.id]);
+            const evento = value.object !as Evento;
+            this.eventoModificado.emit(evento.id);
           } else {
             await toast.present();
-            this.isModalOpen = false;
           }
-        },
-        error: async err => {
-          await toast.present();
           this.isModalOpen = false;
-          console.error(err);
-        }
-      });
-    } else {
-      this.eventoService.crearEventoCiclico(this.crearEventoCiclico).subscribe({
-        next: async value => {
-          if (value.object as Evento) {
-            await loading.present();
-            const evento = value.object as Evento;
-            this.router.navigate(['/notium/ocionocturno/evento/', evento.id]);
-          } else {
-            await toast.present();
-            this.isModalOpen = false;
-          }
         },
         error: async err => {
           await toast.present();
@@ -830,64 +503,109 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.opcionesEventoCiclicoBool = true;
     console.log(this.crearEventoCiclico)
   }
-  getEventosEntreFechas(fecha:Date){
-    let fechaInicio = this.convertirFechaAStringFormatoYYYYMMDD(fecha.toString());
-    let fechaFin = this.obtenerSiguienteDia(fechaInicio);
-    let fechaFinal = this.formatDate(fechaFin);
+  openM(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
+
+  eventoUnico(b: boolean) {
+    this.unico = b;
+  }
+  getOcio() {
     this.route.params.subscribe(params => {
-      const id = +params['id'];
-      if (id) {
-        const params = {
-          idOcio: this.ocio!.id,
-          fechaInicio: fechaInicio,
-          fechaFin: fechaFinal,
-        };
-        this.eventoService.entreDosFechasConIdOcio(params).subscribe({
+      const ocioID = +params['id'];
+      if (ocioID) {
+        this.ocioNocturnoService.ocioPorIdEvento(ocioID).subscribe({
           next: value => {
-            this.eventos = value.object as Evento[];
-            this.noHayEventosSeleccionado = this.eventos.length == 0;
+            this.ocio = value as OcioNocturno;
+            this.eventoDTO.get('aforo')?.setValidators([
+              Validators.min(5),
+              Validators.max(this.ocio.aforo!)
+            ]);
+            this.eventoDTO.get('aforo')?.updateValueAndValidity();
+            this.getRpps(this.ocio.id!);
           },
           error: e => {
             console.error(e);
           }
         })
       }
-    });
-
+    })
   }
-  convertirFechaAStringFormatoYYYYMMDD(fecha:string): string{
-    fecha = fecha.substring(0, 10);
-    fecha = fecha.replace(/-/g, '/');
-
-    return fecha;
+  getRpps(ocioID:number) {
+      this.rppService.rppsByOcio(ocioID).subscribe({
+        next: value => {
+          this.rpps = value as Rpp[];
+        },
+        error: e => {
+          console.error(e);
+        }
+      })
   }
 
-  obtenerSiguienteDia(fecha: string): Date {
-    const fechaSiguiente = new Date(fecha);
-    fechaSiguiente.setDate(fechaSiguiente.getDate() + 1);
-
-    return fechaSiguiente;
+  getUsuario() {
+    this.usuarioService.getUsuarioToken().subscribe({
+      next: value => {
+        this.usuarioLogeado = value;
+        this.getDTO(this.usuarioLogeado);
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
   }
-  formatDate(date: Date): string {
-    const year = date.getFullYear();
-    const month = this.padZero(date.getMonth() + 1);
-    const day = this.padZero(date.getDate());
 
-    return `${year}/${month}/${day}`;
-  }
-  padZero(num: number): string {
-    return num < 10 ? `0${num}` : `${num}`;
-  }
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+  getDTO(usuario: any) {
+    if (usuario.rol == "CLIENTE") {
+      this.esCliente = true;
+    } else if (usuario.rol != "OCIONOCTURNO") {
+      this.esCliente = false;
+      this.router.navigate(["notium/error"])
+    } else {
+      this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
+        next: value => {
+          if (value.id == this.ocio.id) {
+            this.permisosParaEditar = true;
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
     }
   }
 
-  rppModal(b: boolean) {
-    this.isModalRppOpen = b;
+  rellenarFormulario(informacionEvento: CrearEvento) {
+    this.eventoDTO.get('nombre')?.setValue(String(informacionEvento.eventoDTO?.nombre));
+    this.eventoDTO.get('descripcion')?.setValue(String(informacionEvento.eventoDTO?.descripcion));
+    this.eventoDTO.get('tematica')?.setValue(String(informacionEvento.eventoDTO?.tematica));
+    this.eventoDTO.get('fecha')?.setValue(String(informacionEvento.eventoDTO?.fecha));
+    this.eventoDTO.get('codigoVestimentaOcio')?.setValue(String(informacionEvento.eventoDTO?.codigoVestimentaOcio));
+    this.eventoDTO.get('edadMinimaOcio')?.setValue(String(informacionEvento.eventoDTO?.edadMinimaOcio));
+    this.eventoDTO.get('cartel')?.setValue(String(informacionEvento.eventoDTO?.cartel));
+    this.eventoDTO.get('aforo')?.setValue(String(informacionEvento.eventoDTO?.aforo));
+
+    this.entradaOcioDTO.get('precio')?.setValue(String(informacionEvento.entradaOcioDTO?.precio));
+    this.entradaOcioDTO.get('totalEntradas')?.setValue(String(informacionEvento.entradaOcioDTO?.totalEntradas));
+    this.entradaOcioDTO.get('detalleEntrada')?.setValue(String(informacionEvento.entradaOcioDTO?.detalleEntrada));
+    this.entradaOcioDTO.get('consumiciones')?.setValue(String(informacionEvento.entradaOcioDTO?.consumiciones));
+
+    this.reservadoOcioDTO.get('precio')?.setValue(String(informacionEvento.reservadoOcioDTO?.precio));
+    this.reservadoOcioDTO.get('reservadosDisponibles')?.setValue(String(informacionEvento.reservadoOcioDTO?.reservadosDisponibles));
+    this.reservadoOcioDTO.get('personasMaximasPorReservado')?.setValue(String(informacionEvento.reservadoOcioDTO?.personasMaximasPorReservado));
+    this.reservadoOcioDTO.get('botellas')?.setValue(String(informacionEvento.reservadoOcioDTO?.botellas));
+    this.reservadoOcioDTO.get('detalleReservado')?.setValue(String(informacionEvento.reservadoOcioDTO?.detalleReservado));
+
+    informacionEvento.listaOcioDTO?.forEach(l => {
+      this.listaOcioDTO.get('precio')?.setValue(String(l.precio));
+      this.listaOcioDTO.get('total_invitaciones')?.setValue(String(l.total_invitaciones));
+      this.listaOcioDTO.get('detalleLista')?.setValue(String(l.detalleLista));
+      this.listaOcioDTO.get('consumiciones')?.setValue(String(l.consumiciones));
+      this.listaOcioDTO.get('rppDTO')?.setValue(l.rppDTO!);
+      this.formsLista.push(this.listaOcioDTO);
+    });
+    this.actualizarNumerosLista(informacionEvento.entradaOcioDTO?.totalEntradas! + ( informacionEvento.reservadoOcioDTO?.reservadosDisponibles! * informacionEvento.reservadoOcioDTO?.personasMaximasPorReservado!));
+    this.setearDisponibilidadLista( informacionEvento.listaOcioDTO?.length!,informacionEvento.entradaOcioDTO?.totalEntradas! + ( informacionEvento.reservadoOcioDTO?.reservadosDisponibles! * informacionEvento.reservadoOcioDTO?.personasMaximasPorReservado!));
+    this.formularioRellenado = true;
+
   }
 }

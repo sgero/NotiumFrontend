@@ -1,17 +1,27 @@
 <body>
 
 <app-headerocionocturno></app-headerocionocturno>
-<ion-content>
-
-  @if (!esCliente && permisosParaEditar) {
-    <section class="but">
-      <div class="example-button-row">
-        <button mat-raised-button color="primary" (click)="openM(true)">Crear Evento</button>
-      </div>
-    </section>
-  }
 
 
+  <div class="banner-container">
+    <!-- Banner de fondo con la imagen de la marca de la discoteca -->
+    <div class="banner" [style.background-image]="'url('+ ocio.imagenMarca +')'">
+      <!-- Contenido opcional dentro del banner -->
+      <!--      <h1> {{ocio.nombre}} </h1>-->
+      <!--      <p>{{ocio.direccionDTO.ciudad}}</p>-->
+    </div>
+  </div>
+  <div class="buttons">
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Eventos()">Ver Eventos</button>
+    @if (!esCliente && permisosParaEditar) {
+      <button mat-raised-button color="primary" style="width: 140px !important" (click)="openM(true)">Crear Evento
+      </button>
+    }
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Staff()">Staff</button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Carta()">Carta</button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Galeria()">Galería</button>
+    <button mat-raised-button color="primary" style="width: 140px !important">Valoraciones</button>
+  </div>
 
   <ion-modal [isOpen]="isModalOpen">
     <ng-template>
@@ -358,7 +368,7 @@
 
                   <mat-form-field>
                     <mat-label>Días de la semana en los que se repetirá el evento</mat-label>
-                    <mat-select  multiple  formControlName="diasARepetirCicloEventoOcioList">
+                    <mat-select multiple formControlName="diasARepetirCicloEventoOcioList">
                       @for (t of diasARepetirCicloEventoOcioList; track t) {
                         <mat-option [value]="t">{{ t }}</mat-option>
                       }
@@ -394,235 +404,275 @@
     </ng-template>
   </ion-modal>
 
-  <div class="banner-container">
-    <!-- Banner de fondo con la imagen de la marca de la discoteca -->
-    <div class="banner" [style.background-image]="'url('+ ocio.imagenMarca +')'">
-      <!-- Contenido opcional dentro del banner -->
-      <!--      <h1> {{ocio.nombre}} </h1>-->
-      <!--      <p>{{ocio.direccionDTO.ciudad}}</p>-->
-    </div>
-  </div>
-  <div class="buttons">
-    <ion-button shape="round" (click)="Eventos()">Eventos</ion-button>
-    <ion-button shape="round" (click)="Staff()">Staff</ion-button>
-    <ion-button shape="round" (click)="Carta()">Carta</ion-button>
-    <ion-button shape="round" (click)="Galeria()">Galería</ion-button>
-  </div>
-  <div *ngIf="eventosInfo == 'eventosInfo'">
-    <div class="eventos">
-      <ion-card>
-        <!--        <ion-card-header>-->
-        <!--          <ion-card-title>Eventos</ion-card-title>-->
-        <!--        </ion-card-header>-->
-        <ion-card-content>
-          <ion-list *ngFor="let e of eventos">
-            <ion-item>
-              <ion-thumbnail slot="start">
-                <img alt="Silhouette of mountains" src="{{e.cartel}}"/>
-              </ion-thumbnail>
-              <ion-label>{{ e.nombre }}</ion-label>
-              <ion-label style="margin-right: 60px !important;">{{ e.descripcion }}</ion-label>
-              <ion-label>{{ e.fecha | date: 'yyyy-MM-dd' }}</ion-label>
-              <ion-label>Aforo: {{ e.aforo }}</ion-label>
-              <ion-label>Edad Mínima: {{ e.edadMinimaOcio }}</ion-label>
-              <ion-label>Código: {{ e.codigoVestimentaOcio }}</ion-label>
-              <ion-label>Temática: {{ e.tematica }}</ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </div>
-  <div *ngIf="eventosInfo == 'staff'">
-    <div class="staff">
-      <ion-card>
-        <!--        <ion-card-header>-->
-        <!--          <ion-card-title>Staff</ion-card-title>-->
-        <!--        </ion-card-header>-->
-        <ion-card-content>
-          <ion-list *ngFor="let r of rpps">
-            <ion-item>
-              <ion-thumbnail slot="start">
-                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
-              </ion-thumbnail>
-              <ion-label>{{ r.nombre }}</ion-label>
-              <ion-button class="icon" shape="round" (click)="deleteRpp()">
-                <ion-icon name="trash-outline"></ion-icon>
-              </ion-button>
-              <ion-button class="icon" shape="round" (click)="getListas()">
-                <ion-icon name="clipboard"></ion-icon>
-              </ion-button>
-              <div class="listas">
-                <ion-card>
-                  <!--        <ion-card-header>-->
-                  <!--          <ion-card-title>Eventos</ion-card-title>-->
-                  <!--        </ion-card-header>-->
-                  <ion-card-content>
-                    <ion-list *ngFor="let l of listas">
-                      <ion-item>
-                        <ion-thumbnail slot="start">
-                          <img alt="Silhouette of mountains"
-                               src="https://ionicframework.com/docs/img/demos/thumbnail.svg"/>
-                        </ion-thumbnail>
-                        <ion-label>{{ l.total_invitaciones }}</ion-label>
-                        <ion-label>{{ l.precio }}</ion-label>
-                      </ion-item>
-                    </ion-list>
-                  </ion-card-content>
-                </ion-card>
-              </div>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-    </div>
-    <ion-content class="ion-padding">
-      <ion-button id="open-modal" shape="round">Añadir RRPP</ion-button>
-      <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
-        <ng-template>
-          <ion-header>
-            <ion-toolbar>
-              <ion-buttons slot="start">
-                <ion-button (click)="cancelar()">Cancelar</ion-button>
-              </ion-buttons>
-              <ion-title>Registra tu Rpp</ion-title>
-              <ion-buttons slot="end">
-                <ion-button (click)="confirmar()" [strong]="true">Confirmar</ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content class="ion-padding">
-            <ion-item>
-              <ion-input
-                label="Nombre"
-                labelPlacement="stacked"
-                type="text"
-                [(ngModel)]="newRpp.nombre"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input
-                label="Apellidos"
-                labelPlacement="stacked"
-                type="text"
-                [(ngModel)]="newRpp.apellidos"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input
-                label="DNI"
-                labelPlacement="stacked"
-                type="email"
-                [(ngModel)]="newRpp.dni"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input
-                label="Teléfono"
-                labelPlacement="stacked"
-                type="text"
-                [(ngModel)]="newRpp.telefono"
-              ></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input
-                label="Fecha de nacimiento"
-                labelPlacement="stacked"
-                type=date
-                [(ngModel)]="newRpp.fechaNacimiento"
-              ></ion-input>
-            </ion-item>
-            <div *ngIf="newRpp.direccionDTO">
-              <ion-item>
-                <ion-input
-                  label="Calle"
-                  labelPlacement="stacked"
-                  type="text"
-                  required="true"
-                  [(ngModel)]="newRpp.direccionDTO.calle"
-                ></ion-input>
-                <ion-input
-                  label="Código Postal"
-                  labelPlacement="stacked"
-                  type="text"
-                  required="true"
-                  [(ngModel)]="newRpp.direccionDTO.codigoPostal"
-                ></ion-input>
-                <ion-input
-                  label="Ciudad"
-                  labelPlacement="stacked"
-                  type="text"
-                  required="true"
-                  [(ngModel)]="newRpp.direccionDTO.ciudad"
-                ></ion-input>
-                <ion-input
-                  label="Provincia"
-                  labelPlacement="stacked"
-                  type="text"
-                  required="true"
-                  [(ngModel)]="newRpp.direccionDTO.provincia"
-                ></ion-input>
-                <ion-input
-                  label="País"
-                  labelPlacement="stacked"
-                  type="text"
-                  required="true"
-                  [(ngModel)]="newRpp.direccionDTO.pais"
-                ></ion-input>
-              </ion-item>
-            </div>
 
-            <div *ngIf="newRpp.userDTO">
-              <ion-item>
-                <ion-input
-                  label="Username"
-                  labelPlacement="stacked"
-                  type="text"
-                  required="true"
-                  [(ngModel)]="newRpp.userDTO.username"
-                ></ion-input>
-                <ion-input
-                  label="Password"
-                  labelPlacement="stacked"
-                  type="password"
-                  required="true"
-                  [(ngModel)]="newRpp.userDTO.password"
-                ></ion-input>
-                <ion-input
-                  label="Email"
-                  labelPlacement="stacked"
-                  type="email"
-                  required="true"
-                  [(ngModel)]="newRpp.userDTO.email"
-                ></ion-input>
-                <ion-select label="Rol" required="true" [(ngModel)]="newRpp.userDTO.rol">
-                  <ion-select-option value="RPP">RPP</ion-select-option>
-                </ion-select>
+  <div *ngIf="eventosInfo == 'eventosInfo'" class="ev">
+    <div class="eventos">
+      @if (noHayEventos) {
+        <div class="spinner">
+          <mat-spinner class="matspin"></mat-spinner>
+        </div>
+      }
+      @if (eventos.length != 0) {
+        <ion-card *ngIf="!noHayEventos" style="width: 1400px;">
+          <ion-card-content>
+            <ion-list *ngFor="let e of eventos">
+              <ion-item [routerLink]="['/notium/ocionocturno/evento/', e.id]">
+                <ion-thumbnail slot="start">
+                  <img alt="Silhouette of mountains" src="{{e.cartel}}"/>
+                </ion-thumbnail>
+                <ion-label>{{ e.nombre }}</ion-label>
+                <ion-label style="margin-right: 60px !important;">{{ e.descripcion }}</ion-label>
+                <ion-label>{{ e.fecha | date: 'yyyy-MM-dd' }}</ion-label>
+                <ion-label>Aforo: {{ e.aforo }}</ion-label>
+                <ion-label>Edad Mínima: {{ e.edadMinimaOcio }}</ion-label>
+                <ion-label>Código: {{ e.codigoVestimentaOcio }}</ion-label>
+                <ion-label>Temática: {{ e.tematica }}</ion-label>
               </ion-item>
-            </div>
-          </ion-content>
-        </ng-template>
-      </ion-modal>
-    </ion-content>
-  </div>
-  <div *ngIf="eventosInfo == 'carta'">
-    <div class="carta">
-      <ion-button class="icon" shape="round" (click)="saveCarta()" [disabled]="isDisable">Crear Carta
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
-      <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
-      <ion-button class="icon" shape="round" (click)="deleteCarta()">Eliminar Carta
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      }
+      <div *ngIf="noHayEventosSeleccionado"
+           style="display: flex;justify-content: center;margin-top: 20px;width: 1400px;"><p>No hay eventos en la
+        fecha
+        seleccionada. </p></div>
     </div>
+    <ion-datetime class="calendar-event" presentation="date" locale="es-ES" [(ngModel)]="fechaSeleccionada"
+                  (ionChange)="fecha" (click)="getEventosEntreFechas(fechaSeleccionada!)"></ion-datetime>
+  </div>
+  <div *ngIf="eventosInfo === 'staff'">
+    <div class="staff">
+      <div class="mat-elevation-z8 tabla">
+        <div class="table-header">
+          <div>
+            <button mat-raised-button color="primary"  id="open-modal" style="width: 140px !important" (click)="rppModal(true)">Añadir RRPP</button>
+          </div>
+          <div>
+            <mat-form-field appearance="fill">
+              <mat-label>Filter</mat-label>
+              <input matInput (keyup)="applyFilter($event)" placeholder="Buscar RPP">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="container">
+          <div class="table-container">
+            <table mat-table [dataSource]="dataSource" matSortActive="name" matSortDirection="asc" matSortDisableClear>
+
+              <ng-container matColumnDef="imagen">
+                <th mat-header-cell *matHeaderCellDef> Imagen</th>
+                <td mat-cell *matCellDef="let element">
+                  <img
+                    ngSrc="https://c1.klipartz.com/pngpicture/84/180/sticker-png-person-icon-avatar-user-profile-icon-design-blog-face-silhouette-head.png"
+                    height="50" width="50">
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre</th>
+                <td mat-cell *matCellDef="let rpp "> {{ rpp.nombre }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="opciones">
+                <th mat-header-cell *matHeaderCellDef> Opciones</th>
+                <td mat-cell *matCellDef="let rpp">
+                  <button mat-icon-button color="warn" (click)="deleteRpp(rpp.id)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary" (click)="getListas(rpp.id)">
+                    <mat-icon>list</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
+
+          <div *ngIf="listas.length > 0 && mostrarListas">
+            <h2 *ngFor="let rpp of rpps">Listas de {{ rpp.nombre }}</h2>
+            <table mat-table [dataSource]="dataSourceListas" class="mat-elevation-z8">
+              <ng-container matColumnDef="Nº invitaciones">
+                <th mat-header-cell *matHeaderCellDef> Nº invitaciones</th>
+                <td mat-cell *matCellDef="let lista"> {{ lista.total_invitaciones }}</td>
+              </ng-container>
+              <ng-container matColumnDef="precio">
+                <th mat-header-cell *matHeaderCellDef> Precio</th>
+                <td mat-cell *matCellDef="let lista"> {{ lista.precio }} €</td>
+              </ng-container>
+              <ng-container matColumnDef="consumiciones">
+                <th mat-header-cell *matHeaderCellDef> Consumiciones</th>
+                <td mat-cell *matCellDef="let lista"> {{ lista.consumiciones }}</td>
+              </ng-container>
+              <ng-container matColumnDef="evento">
+                <th mat-header-cell *matHeaderCellDef> Evento</th>
+                <td mat-cell *matCellDef="let lista"> {{ lista.eventoDTO?.nombre }}</td>
+              </ng-container>
+              <ng-container matColumnDef="tematica">
+                <th mat-header-cell *matHeaderCellDef> Temática</th>
+                <td mat-cell *matCellDef="let lista"> {{ lista.eventoDTO?.tematica }}</td>
+              </ng-container>
+              <ng-container matColumnDef="cartel">
+                <th mat-header-cell *matHeaderCellDef> Cartel</th>
+                <td mat-cell *matCellDef="let lista"><img
+                  src="{{lista.eventoDTO?.cartel}}"
+                  height="50" width="50"></td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsListas"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsListas;"></tr>
+            </table>
+          </div>
+          <mat-paginator *ngIf="mostrarListas" #listasPaginator [pageSizeOptions]="[5, 10, 20]"
+                         showFirstLastButtons="true"></mat-paginator>
+        </div>
+          <ion-modal [isOpen]="isModalRppOpen">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <button mat-raised-button color="primary"  style="width: 140px !important" (click)="rppModal(false)">Cancelar</button>
+                  </ion-buttons>
+                  <ion-title style="display: flex;justify-content: center !important">Registra tu Rpp</ion-title>
+                  <ion-buttons slot="end">
+                    <button mat-raised-button color="primary"  style="width: 140px !important" (click)="confirmar()">Confirmar</button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-item>
+                  <ion-input
+                    label="Nombre"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.nombre"
+                  ></ion-input>
+                  <ion-input
+                    label="Apellidos"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.apellidos"
+                  ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input
+                    label="DNI"
+                    labelPlacement="stacked"
+                    type="email"
+                    required="true"
+                    [(ngModel)]="newRpp.dni"
+                  ></ion-input>
+                  <ion-input
+                    label="Teléfono"
+                    labelPlacement="stacked"
+                    type="text"
+                    required="true"
+                    [(ngModel)]="newRpp.telefono"
+                  ></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input
+                    label="Fecha de nacimiento"
+                    labelPlacement="stacked"
+                    type=date
+                    required="true"
+                    [(ngModel)]="newRpp.fechaNacimiento"
+                  ></ion-input>
+                </ion-item>
+                <div *ngIf="newRpp.direccionDTO">
+                  <ion-item>
+                    <ion-input
+                      label="Calle"
+                      labelPlacement="stacked"
+                      type="text"
+                      required="true"
+                      [(ngModel)]="newRpp.direccionDTO.calle"
+                    ></ion-input>
+                    <ion-input
+                      label="Código Postal"
+                      labelPlacement="stacked"
+                      type="text"
+                      required="true"
+                      [(ngModel)]="newRpp.direccionDTO.codigoPostal"
+                    ></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input
+                      label="Ciudad"
+                      labelPlacement="stacked"
+                      type="text"
+                      required="true"
+                      [(ngModel)]="newRpp.direccionDTO.ciudad"
+                    ></ion-input>
+                    <ion-input
+                      label="Provincia"
+                      labelPlacement="stacked"
+                      type="text"
+                      required="true"
+                      [(ngModel)]="newRpp.direccionDTO.provincia"
+                    ></ion-input>
+                    <ion-input
+                      label="País"
+                      labelPlacement="stacked"
+                      type="text"
+                      required="true"
+                      [(ngModel)]="newRpp.direccionDTO.pais"
+                    ></ion-input>
+                  </ion-item>
+                </div>
+                <div *ngIf="newRpp.userDTO">
+                  <ion-item>
+                    <ion-input
+                      label="Username"
+                      labelPlacement="stacked"
+                      type="text"
+                      required="true"
+                      [(ngModel)]="newRpp.userDTO.username"
+                    ></ion-input>
+                    <ion-input
+                      label="Password"
+                      labelPlacement="stacked"
+                      type="password"
+                      required="true"
+                      [(ngModel)]="newRpp.userDTO.password"
+                    ></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input
+                      label="Email"
+                      labelPlacement="stacked"
+                      type="email"
+                      required="true"
+                      [(ngModel)]="newRpp.userDTO.email"
+                    ></ion-input>
+                    <ion-select label="Rol" required="true" [(ngModel)]="newRpp.userDTO.rol">
+                      <ion-select-option value="RPP">RPP</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </div>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="eventosInfo == 'carta'">
+    <div class="carta-ocio">
+      <button mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="saveCarta()" [disabled]="isDisable">Crear Carta</button>
+      <button mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="deleteCarta()">Eliminar Carta</button>
+    </div>
+    <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
+
   </div>
   <div *ngIf="eventosInfo == 'galeria'">
     <div class="galeria">
       <p>Aqui saldrian las fotos</p>
     </div>
   </div>
-</ion-content>
 
 <app-footerocionocturno></app-footerocionocturno>
-
 </body>
