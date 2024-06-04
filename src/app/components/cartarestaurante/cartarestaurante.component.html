@@ -19,10 +19,13 @@
         <span>Después de añadirlo indica el formato y precio.</span>
       </div>
       <div class="form" id="fporducto"><form (ngSubmit)="crearProducto()">
-        <h2>CREAR PRODUCTO</h2>
-        <div>
+
+        <div class="botonesform">
+          <button type="submit">Crear</button><h2>CREAR PRODUCTO</h2> <button type="reset" (click)="ocultarForm()">Cancelar</button>
+        </div>
+        <div class="parameter">
           <span>Ponle un nombre a su plato aquí:</span>
-          <input type="text" id="nombre" name="nombre" placeholder="Nombre del producto" [(ngModel)]="producto.nombre" required>
+          <input type="text" id="nombre" name="nombre"  [(ngModel)]="producto.nombre" required>
         </div>
         <div>
           <span>Selecciona una categoría aquí:</span>
@@ -43,9 +46,7 @@
             <option value="OTROS">OTROS</option>
           </select>
         </div>
-        <div>
-          <button type="submit">Crear</button> <button type="reset" (click)="ocultarForm()">Cancelar</button>
-        </div>
+
       </form></div>
       <h1 *ngIf="entrante"><I><U>ENTRANTES</U></I></h1>
       <section *ngFor="let p of productos">
@@ -62,7 +63,10 @@
           </button>
             <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
             <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-            <input type="submit" value="ok!" (click)="ocultarPrecio()">
+            <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+
             </form>
           </div>
           <div class="formato">
@@ -75,7 +79,9 @@
           </button>
             <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
               <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-              <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                <mat-icon>check_circle</mat-icon>
+              </button>
             </form>
           </div>
           <div class="formato">
@@ -88,7 +94,9 @@
           </button>
             <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
               <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-              <input type="submit" value="ok!" (click)="ocultarPrecio()">
+              <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                <mat-icon>check_circle</mat-icon>
+              </button>
             </form>
           </div>
         </div>
@@ -109,7 +117,9 @@
               </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -122,7 +132,9 @@
               </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -135,7 +147,9 @@
               </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -156,7 +170,9 @@
               </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -169,7 +185,9 @@
               </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -182,7 +200,9 @@
               </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -203,7 +223,9 @@
               </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -216,7 +238,9 @@
               </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -229,7 +253,9 @@
               </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -250,7 +276,9 @@
               </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -263,7 +291,9 @@
               </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -276,7 +306,9 @@
               </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -297,7 +329,9 @@
               </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -310,7 +344,9 @@
               </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -323,7 +359,9 @@
               </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -344,7 +382,9 @@
               </button>
               <form id="{{p.producto.id}}1" (ngSubmit)="crearProductoFormato(p.producto.id,1)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -357,7 +397,9 @@
               </button>
               <form id="{{p.producto.id}}2" (ngSubmit)="crearProductoFormato(p.producto.id,2)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -370,7 +412,9 @@
               </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -392,7 +436,9 @@
               </button>
               <form id="{{p.producto.id}}3" (ngSubmit)="crearProductoFormato(p.producto.id,3)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -414,7 +460,9 @@
               </button>
               <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -435,7 +483,9 @@
               </button>
               <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -448,7 +498,9 @@
               </button>
               <form id="{{p.producto.id}}8" (ngSubmit)="crearProductoFormato(p.producto.id,8)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -461,7 +513,9 @@
               </button>
               <form id="{{p.producto.id}}6" (ngSubmit)="crearProductoFormato(p.producto.id,6)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -482,7 +536,9 @@
               </button>
               <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -503,7 +559,9 @@
               </button>
               <form id="{{p.producto.id}}7" (ngSubmit)="crearProductoFormato(p.producto.id,7)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -524,7 +582,9 @@
               </button>
               <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
@@ -545,7 +605,9 @@
               </button>
               <form id="{{p.producto.id}}4" (ngSubmit)="crearProductoFormato(p.producto.id,4)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
             <div class="formato">
@@ -558,7 +620,9 @@
               </button>
               <form id="{{p.producto.id}}5" (ngSubmit)="crearProductoFormato(p.producto.id,5)">
                 <input type="number" name="precio" placeholder="" [(ngModel)]="productoFormato.precio" required>
-                <input type="submit" value="ok!" (click)="ocultarPrecio()">
+                <button mat-icon-button color="primary" (click)="ocultarPrecio()">
+                  <mat-icon>check_circle</mat-icon>
+                </button>
               </form>
             </div>
           </div>
