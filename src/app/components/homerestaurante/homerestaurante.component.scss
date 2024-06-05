@@ -102,3 +102,20 @@ footer {
   line-height: 50px;
   max-height: 100px;
 }
+button{
+  padding: 5px;
+  -webkit-box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.29);
+  -moz-box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.29);
+  box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.29);
+  border: solid #dcd8d8 0.001px;
+  border-radius: 5px;
+  margin: 10px 0 5px 0;
+  background-color: #e1ca7b;
+  color: white;
+  width: 80px;
+}
+button:hover{
+  -webkit-box-shadow: 0px 3px 13px -5px rgba(0,0,0,0.29);
+  -moz-box-shadow: 0px 3px 13px -5px rgba(0,0,0,0.29);
+  box-shadow: 0px 3px 13px -5px rgba(0,0,0,0.29); background-color: #e5d298;
+}
