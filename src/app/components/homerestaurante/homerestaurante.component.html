@@ -1,26 +1,5 @@
-<!--<body>-->
-
-<!--  <app-headerrestaurante></app-headerrestaurante>-->
-<!--  <div class="wrapper-rest">-->
-<!--    <div class="restau">-->
-<!--      <h1>Listado Restaurantes</h1>-->
-<!--    </div>-->
-<!--    <br>-->
-<!--  <div *ngFor="let restaurante of listaRestaurantes" class="restau">-->
-<!--    <a class="btn" href="notium/restaurante/{{restaurante.id}}"><h1>{{restaurante.nombre}}</h1></a>-->
-<!--  </div>-->
-<!--  </div>-->
-<!--  <footer> <app-footerrestaurante></app-footerrestaurante></footer>-->
-
-<!--</body>-->
 <body>
-
-
-<!--<app-headerrestaurante></app-headerrestaurante>-->
 <app-header></app-header>
-
-
-
 
 <div class="wrapper-rest">
   <div class="header">
@@ -34,13 +13,89 @@
     </div>
   </div>
 </div>
+
+<!-- New section with images and text -->
+
+
+<div class="listado_videos">
+  <div class="texto_videos">
+    <h2><span>Los restaurantes con mayor número de valoraciones </span></h2>
+    <div class="videos">
+      <div *ngFor="let restaurante of listaRestaurantes" class="video">
+        <a class="card" href="/notium/restaurante/{{restaurante.id}}">
+          <img src="{{restaurante.imagen_marca}}" alt="Imagen del restaurante">
+          <div class="title">{{restaurante.nombre}}</div>
+          <a href="#">
+            <div class="catagory" routerLink="/notium/restaurante/">{{restaurante.direccion}} <i class="fas fa-map-marker-alt"></i></div>
+          </a>
+          <a href="#">
+            <div class="views"><i class="fas fa-star"></i></div>
+          </a>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-section">
+    <div class="highlight">
+      <img src="https://png.pngtree.com/png-clipart/20230825/original/pngtree-professional-chef-cartoon-character-cooking-illustration-with-different-trays-and-food-to-serve-delicious-food-made-in-kitchen-suitable-for-poster-picture-image_8647806.png" alt="Comida Tradicional">
+      <div class="highlight-text">
+        <h2>¿Que te apetece comer hoy?</h2>
+        <p>Saborea los auténticos platos de la región en un ambiente acogedor.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="texto_videos">
+    <h2><span>Los restaurantes según su valoración</span></h2>
+    <div class="videos">
+      <div *ngFor="let restaurante of listaRestaurantes" class="video">
+        <a class="card" href="/notium/restaurante/{{restaurante.id}}">
+          <img src="{{restaurante.imagen_marca}}" alt="Imagen del restaurante">
+          <div class="title">{{restaurante.nombre}}</div>
+          <a href="#">
+            <div class="catagory" routerLink="/notium/restaurante/">{{restaurante.direccion}} <i class="fas fa-map-marker-alt"></i></div>
+          </a>
+          <a href="#">
+            <div class="views"><i class="fas fa-star"></i></div>
+          </a>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight-section">
+
+    <div class="highlight">
+      <img src="https://images.vexels.com/media/users/3/190869/isolated/preview/68208da69d14a72dd02e4e413866ed6f-edificio-ilustracion-plana-restaurante.png" alt="Restaurante Elegante">
+      <div class="highlight-text">
+        <h2>Restaurante Elegante</h2>
+        <p>Disfruta de una experiencia culinaria única en los restaurantes que mostramos en nuestra plataforma.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="texto_videos">
+    <h2><span>Los restaurantes que recomendamos</span></h2>
+    <div class="videos">
+      <div *ngFor="let restaurante of listaRestaurantes" class="video">
+        <a class="card" href="/notium/restaurante/{{restaurante.id}}">
+          <img src="{{restaurante.imagen_marca}}" alt="Imagen del restaurante">
+          <div class="title">{{restaurante.nombre}}</div>
+          <a href="#">
+            <div class="catagory" routerLink="/notium/restaurante/">{{restaurante.direccion}} <i class="fas fa-map-marker-alt"></i></div>
+          </a>
+          <a href="#">
+            <div class="views"><i class="fas fa-star"></i></div>
+          </a>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer>
-
-
-<!--  <app-footerrestaurante></app-footerrestaurante>-->
   <app-footer></app-footer>
-
-
-
 </footer>
 </body>
