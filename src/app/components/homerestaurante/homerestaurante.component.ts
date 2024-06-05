@@ -31,7 +31,8 @@ export class HomerestauranteComponent  implements OnInit {
   listaRestaurantesRanking: Restaurante[] = [];
   restaurante: Restaurante = new Restaurante();
   rankingRestauranteID: number[] = [];
-  idClase = {id: +''}
+  idClase = {id: +''};
+  Europa: any;
 
 
   constructor(private restauranteService: RestauranteService) {}
@@ -70,6 +71,28 @@ export class HomerestauranteComponent  implements OnInit {
     })
   }
 
+  mostrarEuropa(){
+    this.Europa = document.getElementById("pais1");
+    this.Europa.style.display = 'flex';
+  }
+  ocultarEuropa(){
+    this.Europa.style.display = 'none';
+  }
+  mostrarAmerica(){
+    this.Europa = document.getElementById("pais2");
+    this.Europa.style.display = 'flex';
+  }
+  ocultarAmerica(){
+    this.Europa.style.display = 'none';
+  }
+
+  mostrarAsia(){
+    this.Europa = document.getElementById("pais3");
+    this.Europa.style.display = 'flex';
+  }
+  ocultarAsia(){
+    this.Europa.style.display = 'none';
+  }
 
   ngOnInit() {
 

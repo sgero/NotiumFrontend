@@ -2,17 +2,46 @@
 <app-header></app-header>
 
 <div class="wrapper-rest">
+  <div class="selector">
+    <div class="continente" (mouseenter)="mostrarEuropa()" (mouseleave)="ocultarEuropa()">
+      <button>Europeo</button>
+      <div id="pais1">
+        <button (click)="listarPorClase(4)">Español</button>
+        <button (click)="listarPorClase(5)">Italiano</button>
+        <button (click)="listarPorClase(6)">Francés</button>
+        <button (click)="listarPorClase(7)">Alemán</button>
+        <button (click)="listarPorClase(8)">Inglés</button>
+      </div>
+    </div>
+    <div class="continente" (mouseenter)="mostrarAmerica()" (mouseleave)="ocultarAmerica()">
+      <button>Americano</button>
+      <div id="pais2">
+        <button (click)="listarPorClase(9)">Mexicano</button>
+        <button (click)="listarPorClase(10)">Chileno</button>
+        <button (click)="listarPorClase(11)">Argentino</button>
+      </div>
+    </div>
+    <div class="continente" (mouseenter)="mostrarAsia()" (mouseleave)="ocultarAsia()">
+      <button>Asiático</button>
+      <div id="pais3">
+        <button (click)="listarPorClase(1)">Chino</button>
+        <button (click)="listarPorClase(2)">Koreano</button>
+        <button (click)="listarPorClase(3)">Japonés</button>
+      </div>
+    </div>
+
+  </div>
   <div class="header">
-    <button (click)="listarPorClase(4)">Español</button>
+
     <h1>Listado Restaurantes</h1>
   </div>
-  <div class="restau-container">
-    <div *ngFor="let restaurante of listaRestaurantes" class="restau">
-      <a class="btn" href="notium/restaurante/{{restaurante.id}}">
-        <h1>{{restaurante.nombre}}</h1>
-      </a>
-    </div>
-  </div>
+<!--  <div class="restau-container">-->
+<!--    <div *ngFor="let restaurante of listaRestaurantes" class="restau">-->
+<!--      <a class="btn" href="notium/restaurante/{{restaurante.id}}">-->
+<!--        <h1>{{restaurante.nombre}}</h1>-->
+<!--      </a>-->
+<!--    </div>-->
+<!--  </div>-->
 </div>
 
 <!-- New section with images and text -->
