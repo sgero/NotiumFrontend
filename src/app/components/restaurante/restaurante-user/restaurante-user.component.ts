@@ -13,7 +13,7 @@ import {HacerValoracionComponent} from "../hacer-valoracion/hacer-valoracion.com
 import {CrearReservaComponent} from "../crear-reserva/crear-reserva.component";
 import {SharedService} from "../../../services/SharedService";
 import {Restaurante} from "../../../models/Restaurante";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RestauranteService} from "../../../services/restaurante.service";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -49,14 +49,15 @@ export class RestauranteUserComponent  implements OnInit {
   id_restaurante: any;
   usuario: any;
   inicio: boolean = false;
-
+  usuarioCli = false;
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,
               private restauranteService: RestauranteService,
               private usuarioService: UsuarioService,
               private _route: ActivatedRoute,
-              private dialogRef: MatDialog) {
+              private dialogRef: MatDialog,
+              private router : Router) {
     this.id_restaurante = this._route.snapshot.paramMap.get('id');
   }
 
@@ -99,7 +100,14 @@ export class RestauranteUserComponent  implements OnInit {
   }
 
   ngOnInit() {
-
+    if (localStorage.length === 0){
+      this.router.navigate(['/notium']);
+    }
+    this.usuarioService.getUsuarioToken().subscribe(data=> {
+      if (data.rol?.toString() === "CLIENTE"){
+        this.usuarioCli = true;
+      }
+    })
     //Funciones externas
     this.captarRestaurantePorId();
     this.setearIDParams();
