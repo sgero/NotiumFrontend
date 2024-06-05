@@ -4,76 +4,47 @@
   padding: 5% 15%;
   height: 100vh; /* Altura igual al 100% de la ventana del navegador */
   width: 100%;
-  overflow-y: auto;
+
 }
 
 .carta {
   width: 100%;
   height: auto;
-  background-color: #ddce79;
-  -webkit-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
-  -moz-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
-  box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  //background-color: #ddce79;
+  //-webkit-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  //-moz-box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
+  //box-shadow: inset 0px 24px 77px 0px rgba(255,255,255,1);
   /* Añade una barra de desplazamiento vertical si el contenido es más grande */
   display: flex;
   flex-direction: column;
-  padding: 20%;
+  padding: 5%;
   justify-content: center;
   align-content: center;
   align-items: center;
 }
 .carta>div{
-  padding: 5%;
-  margin: 4px;
-  border: 1.5px solid black;
   background-color: white;
-  border-radius: 5px;
-  -webkit-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.83);
-  -moz-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.83);
-  box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.83);
-  margin-bottom: 15px;
 
+
+  margin-bottom: 15px;
+  width: 100%;
 }
 .carta>section>div{
-  padding: 5%;
-
-  border: 1.5px solid black;
+  width: 100%;
+  border-bottom: 1px solid black;
   background-color: white;
-  border-radius: 5px;
-  -webkit-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.83);
-  -moz-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.83);
-  box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.83);
-  margin-bottom: 15px;
+
+  padding-bottom: 2px ;
 
 }
-.container{
-  margin: 0;
+.contain{
+  margin: 0 0 10px 0;
   padding: 0;
   height: 100vh;
+  width: 100%;
   overflow-y: auto;
 }
-.anyadeproducto{
-  width: 50px;
-  height: 50px;
-  -webkit-box-shadow: inset 0px 0px 7px 3px rgba(0,0,0,0.49);
-  -moz-box-shadow: inset 0px 0px 7px 3px rgba(0,0,0,0.49);
-  box-shadow: inset 0px 0px 7px 3px rgba(0,0,0,0.49);
-  background-image: url("/assets/images/plus.png");
-  background-size: cover;
-  margin-left: 10px;
-  margin-right: 10px;
 
-}
-.anyadir{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-}
-.anyadir>span{
-  width: 35% ;
-  text-wrap: normal;
-}
 section{width: 100%;
   justify-content: space-between;}
 .producto{
@@ -96,56 +67,11 @@ section{width: 100%;
   text-align: center;
 
 }
-.formato>button{
-  width: 20px;
-  height: 20px;
-  background-image: url("/assets/images/plus.png");
-  background-size: cover;
-  align-self: center;
-  margin: 3px;
-  -webkit-box-shadow: inset 0px 0px 7px 1px rgba(0,0,0,0.49);
-  -moz-box-shadow: inset 0px 0px 7px 1px rgba(0,0,0,0.49);
-  box-shadow: inset 0px 0px 7px 1px rgba(0,0,0,0.49);
-}
-.formato>form{
-  display: none;
-  flex-direction: column;
-  width: 60px;
-  padding: 1px;
-  text-align: center;
-}
-.formato>form>input{
-  font-size: 10px;
-  margin: 2px;
-}
-.form{
-  display: none;
+h1{text-align: center;
   width: 100%;
-}
-.form>form{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-.form>form>h2{
-  font-weight: bold;
-  margin-bottom: 30px;
-}
-.form>form>div{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin-bottom: 10px;
-}
-.form>form>div>button{
-  padding: 5px;
-  -webkit-box-shadow: inset 0px 0px 3px 1px rgba(0,0,0,0.49);
-  -moz-box-shadow: inset 0px 0px 3px 1px rgba(0,0,0,0.49);
-  box-shadow: inset 0px 0px 3px 1px rgba(0,0,0,0.49);
-  border: solid black 1px;
-  border-radius: 5px;
-  margin: 10px;
-}
-.precioactual{
-  width: 10vh;
-}
+  border-bottom: 1px solid black;
+  margin-top: 30px}
+
+//.precioactual{
+//  width: 10vh;
+//}

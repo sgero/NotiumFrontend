@@ -13,7 +13,7 @@ import {HacerValoracionComponent} from "../hacer-valoracion/hacer-valoracion.com
 import {CrearReservaComponent} from "../crear-reserva/crear-reserva.component";
 import {SharedService} from "../../../services/SharedService";
 import {Restaurante} from "../../../models/Restaurante";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RestauranteService} from "../../../services/restaurante.service";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -49,14 +49,15 @@ export class RestauranteUserComponent  implements OnInit {
   id_restaurante: any;
   usuario: any;
   inicio: boolean = false;
-
+  usuarioCli = false;
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,
               private restauranteService: RestauranteService,
               private usuarioService: UsuarioService,
               private _route: ActivatedRoute,
-              private dialogRef: MatDialog) {
+              private dialogRef: MatDialog,
+              private router : Router) {
     this.id_restaurante = this._route.snapshot.paramMap.get('id');
   }
 
@@ -87,11 +88,28 @@ export class RestauranteUserComponent  implements OnInit {
 
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 
-
+  captarRestaurantePorId(){
+    this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (responseData) => {
+        this.restaurante = responseData;
+        this.sharedService.setRestaurante(this.restaurante)
+      },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
+    });
+  }
 
   ngOnInit() {
-
+    if (localStorage.length === 0){
+      this.router.navigate(['/notium']);
+    }
+    this.usuarioService.getUsuarioToken().subscribe(data=> {
+      if (data.rol?.toString() === "CLIENTE"){
+        this.usuarioCli = true;
+      }
+    })
     //Funciones externas
+    this.captarRestaurantePorId();
     this.setearIDParams();
     this.inicio = true;
   }

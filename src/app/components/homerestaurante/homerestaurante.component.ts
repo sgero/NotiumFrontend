@@ -31,6 +31,7 @@ export class HomerestauranteComponent  implements OnInit {
   listaRestaurantesRanking: Restaurante[] = [];
   restaurante: Restaurante = new Restaurante();
   rankingRestauranteID: number[] = [];
+  idClase = {id: +''}
 
 
   constructor(private restauranteService: RestauranteService) {}
@@ -62,7 +63,12 @@ export class HomerestauranteComponent  implements OnInit {
     });
   }
 
-
+  listarPorClase(idClase: number){
+    this.idClase.id = idClase;
+    this.restauranteService.listarPorClase(this.idClase).subscribe(data =>{
+      this.listaRestaurantes = data;
+    })
+  }
 
 
   ngOnInit() {

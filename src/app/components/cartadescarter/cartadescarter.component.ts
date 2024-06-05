@@ -6,17 +6,21 @@ import {HeaderrestauranteComponent} from "../headerrestaurante/headerrestaurante
 import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
 @Component({
   selector: 'app-cartadescarter',
   templateUrl: './cartadescarter.component.html',
   styleUrls: ['./cartadescarter.component.scss'],
-  imports: [
-    HeaderrestauranteComponent,
-    FooterrestauranteComponent,
-    NgForOf,
-    FormsModule,
-    NgIf
-  ],
+    imports: [
+        HeaderrestauranteComponent,
+        FooterrestauranteComponent,
+        NgForOf,
+        FormsModule,
+        NgIf,
+        MatIcon,
+        MatIconButton
+    ],
   standalone: true
 })
 export class CartadescarterComponent  implements OnInit {
