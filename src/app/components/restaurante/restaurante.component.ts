@@ -9,6 +9,8 @@ import {UsuarioService} from "../../services/usuario.service";
 import {SharedService} from "../../services/SharedService";
 import {RestauranteService} from "../../services/restaurante.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-restaurante',
@@ -20,7 +22,9 @@ import {ActivatedRoute, Router} from "@angular/router";
     HeaderrestauranteComponent,
     FooterrestauranteComponent,
     RestauranteUserComponent,
-    RestauranteAdminComponent
+    RestauranteAdminComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true
 })
@@ -108,7 +112,7 @@ export class RestauranteComponent  implements OnInit {
     this.setearIDParams();
     setTimeout(() =>{
       this.adminuser();
-    }, 800);
+    }, 900);
 
 
   }
