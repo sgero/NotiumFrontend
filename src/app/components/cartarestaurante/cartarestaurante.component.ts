@@ -6,6 +6,10 @@ import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {UsuarioService} from "../../services/usuario.service";
+import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-cartarestaurante',
@@ -16,7 +20,11 @@ import {UsuarioService} from "../../services/usuario.service";
     FooterrestauranteComponent,
     NgForOf,
     FormsModule,
-    NgIf
+    NgIf,
+    MatIcon,
+    MatIconButton,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true
 })

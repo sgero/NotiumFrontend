@@ -9,6 +9,8 @@ import {UsuarioService} from "../../services/usuario.service";
 import {SharedService} from "../../services/SharedService";
 import {RestauranteService} from "../../services/restaurante.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-restaurante',
@@ -20,7 +22,9 @@ import {ActivatedRoute, Router} from "@angular/router";
     HeaderrestauranteComponent,
     FooterrestauranteComponent,
     RestauranteUserComponent,
-    RestauranteAdminComponent
+    RestauranteAdminComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true
 })
@@ -83,13 +87,16 @@ export class RestauranteComponent  implements OnInit {
       next: (responseData) => {
         this.restaurante = responseData;
         this.sharedService.setRestaurante(this.restaurante)
-        if (this.usuario.id !== this.restaurante.userDTO.id){
-          this.userup = true;
-        }
       },
       error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
       complete: () => { console.log('Restaurante captado por id', this.restaurante);}
     });
+  }
+
+  adminuser(){
+    if (this.usuario.id !== this.restaurante.userDTO.id){
+      this.userup = true;
+    }
   }
 
   ngOnInit() {
@@ -98,12 +105,14 @@ export class RestauranteComponent  implements OnInit {
       this.router.navigate(['/notium']);
     }
     //Funciones externas
-
+    this.captarRestaurantePorId();
     this.getUsuarioPorToken();
     this.valoracionRestaurante();
     this.rankingRestaurantes();
     this.setearIDParams();
-    this.captarRestaurantePorId();
+    setTimeout(() =>{
+      this.adminuser();
+    }, 900);
 
 
   }

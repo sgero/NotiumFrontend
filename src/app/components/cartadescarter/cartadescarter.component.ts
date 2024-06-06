@@ -6,6 +6,10 @@ import {HeaderrestauranteComponent} from "../headerrestaurante/headerrestaurante
 import {FooterrestauranteComponent} from "../footerrestaurante/footerrestaurante.component";
 import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {MatIcon} from "@angular/material/icon";
+import {MatIconButton} from "@angular/material/button";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 @Component({
   selector: 'app-cartadescarter',
   templateUrl: './cartadescarter.component.html',
@@ -15,7 +19,11 @@ import {FormsModule} from "@angular/forms";
     FooterrestauranteComponent,
     NgForOf,
     FormsModule,
-    NgIf
+    NgIf,
+    MatIcon,
+    MatIconButton,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true
 })

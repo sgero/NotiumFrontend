@@ -7,6 +7,11 @@ import {ComentarioRestaurante} from "../models/ComentarioRestaurante";
 import {Cliente} from "../models/Cliente";
 import { format, parseISO } from 'date-fns';
 
+import {OcioNocturno} from "../models/OcioNocturno";
+import {RespuestaDTO} from "../models/RespuestaDTO";
+import {Usuario} from "../models/Usuario";
+import {Token} from "../models/Token";
+import {Idsender} from "../models/idsender";
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +82,9 @@ export class RestauranteService {
     return this.http.post<any>(`${this.apiUrl}/reserva/crear`, reserva);
   }
 
+  listarPorClase(data: Idsender){
+    return this.http.post<Restaurante[]>(`${this.apiUrl}/restaurante/listaCategoria`, data);
+  }
   getComentarioRestaurante(id: any): Observable<ComentarioRestaurante[]>{
     return this.http.get<ComentarioRestaurante[]>(`${this.apiUrl}/comentario/comentarioPorRestaurante?id=${id}`)
       .pipe(

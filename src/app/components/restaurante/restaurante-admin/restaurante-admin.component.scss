@@ -12,19 +12,23 @@ h5{margin:0}
 
 .botoncarta{
   padding: 5px;
-  -webkit-box-shadow: inset 0px 0px 3px 1px rgba(0,0,0,0.49);
-  -moz-box-shadow: inset 0px 0px 3px 1px rgba(0,0,0,0.49);
-  box-shadow: inset 0px 0px 3px 1px rgba(0,0,0,0.49);
-  border: solid black 1px;
+  border: solid #dcd8d8 0.001px;
   border-radius: 5px;
+  -webkit-box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.29);
+  -moz-box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.29);
+  box-shadow: 0px 1px 2px -1px rgba(0,0,0,0.29);
   margin: 10px;
   width: 30vh;
   font-weight: bold;
   text-decoration: none;
-  color: black;
+  background-color: #e1ca7b;
+  color: white;
   text-align: center;
+  align-self: center;
 }
-
+.botoncarta:hover{-webkit-box-shadow: 0px 3px 13px -5px rgba(0,0,0,0.29);
+  -moz-box-shadow: 0px 3px 13px -5px rgba(0,0,0,0.29);
+  box-shadow: 0px 3px 13px -5px rgba(0,0,0,0.29); background-color: #e5d298;}
 .step{
   display:flex;
   flex-direction: row;

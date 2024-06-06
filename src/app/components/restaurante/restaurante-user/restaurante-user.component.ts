@@ -13,7 +13,7 @@ import {HacerValoracionComponent} from "../hacer-valoracion/hacer-valoracion.com
 import {CrearReservaComponent} from "../crear-reserva/crear-reserva.component";
 import {SharedService} from "../../../services/SharedService";
 import {Restaurante} from "../../../models/Restaurante";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RestauranteService} from "../../../services/restaurante.service";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
@@ -55,6 +55,7 @@ export class RestauranteUserComponent  implements OnInit {
   id_restaurante: any;
   usuario: any;
   inicio: boolean = false;
+  usuarioCli = false;
   valoraciones: ComentarioRestaurante[] = [];
 
   constructor(private modalController: ModalController,
@@ -62,21 +63,25 @@ export class RestauranteUserComponent  implements OnInit {
               private restauranteService: RestauranteService,
               private usuarioService: UsuarioService,
               private _route: ActivatedRoute,
-              private dialogRef: MatDialog) {
+              private dialogRef: MatDialog,
+              private router : Router) {
     this.id_restaurante = this._route.snapshot.paramMap.get('id');
   }
 
   //Funciones modales
   abrirModalValoraciones(){
+    if (this.usuarioCli){
      const dialogRef = this.dialogRef.open(HacerValoracionComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Chat cerrado');
     });
+    }
   }
 
 
   abrirModalReserva() {
+    if (this.usuarioCli){
     const dialogRef = this.dialogRef.open(CrearReservaComponent, {
       width: '1000px',
       height: '1000px' ,
@@ -89,6 +94,7 @@ export class RestauranteUserComponent  implements OnInit {
       console.log('El modal de reserva se ha cerrado');
       // Puedes realizar acciones después de cerrar el modal si es necesario
     });
+    }
   }
 
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
@@ -106,11 +112,29 @@ export class RestauranteUserComponent  implements OnInit {
     });
   }
 
+  captarRestaurantePorId(){
+    this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (responseData) => {
+        this.restaurante = responseData;
+        this.sharedService.setRestaurante(this.restaurante)
+      },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
+    });
+  }
 
   ngOnInit() {
-
+    if (localStorage.length === 0){
+      this.router.navigate(['/notium']);
+    }
+    this.usuarioService.getUsuarioToken().subscribe(data=> {
+      if (data.rol?.toString() === "CLIENTE"){
+        this.usuarioCli = true;
+      }
+    })
     //Funciones externas
     this.traerRestaurante();
+    this.captarRestaurantePorId();
     this.setearIDParams();
     this.inicio = true;
     this.valoracionesRestaurante();
