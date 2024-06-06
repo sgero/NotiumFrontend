@@ -13,7 +13,7 @@ import {FormsModule, FormGroup, FormBuilder, Validators, ReactiveFormsModule} fr
 import {MatButtonModule} from "@angular/material/button";
 import {MatStepper, MatStepperModule} from "@angular/material/stepper";
 import {RestauranteService} from "../../../services/restaurante.service";
-import Swal from 'sweetalert2'
+import {LoadingController, ToastController} from "@ionic/angular";
 
 
 @Component({
@@ -47,14 +47,16 @@ export class HacerValoracionComponent  implements OnInit {
   id_restaurante: any;
   firstStepFormGroup: FormGroup = new FormGroup({});
   secondStepFormGroup: FormGroup = new FormGroup({});
+  id_usuario: any;
 
   @ViewChild("stepper", { static: false }) stepper: MatStepper | undefined;
 
   constructor(private sharedService: SharedService,
               private restauranteService : RestauranteService,
               private dialogRef: MatDialog,
-              private formBuilder: FormBuilder) {
-  }
+              private formBuilder: FormBuilder,
+              private toastController: ToastController,
+              private loadingCtrl: LoadingController,) {}
 
 
   traerIdRestaurante(){
@@ -90,34 +92,35 @@ export class HacerValoracionComponent  implements OnInit {
       error: (error) => {
         console.error('Error al obtener la comprobación al restaurante', error);
       },
-      complete: () => {
+      complete: async () => {
         console.log('Comprobación efectuada con resultado:', this.comprobacionCR);
 
-        switch (this.comprobacionCR){
+        switch (this.comprobacionCR) {
           case 1:
-            /*Swal.fire({
-              title: "Este código no existe",
-              icon: "error"
-            });*/
-            alert("Este código no existe")
+            const toast1 = await this.toastController.create({
+              message: 'Este código no existe.',
+              duration: 3000,
+              position: "top"
+            });
+            await toast1.present();
             break;
 
           case 2:
-            /*Swal.fire({
-              title: "Este código no es valido.",
-              text: "No pertenece a este restaurante",
-              icon: "error"
-            });*/
-            alert("No pertenece a este restaurante")
+            const toast2 = await this.toastController.create({
+              message: 'Este código no es valido. No pertenece a este restaurante',
+              duration: 3000,
+              position: "top"
+            });
+            await toast2.present();
             break;
 
           case 3:
-            /*Swal.fire({
-              title: "Este código no es valido.",
-              text: "Ya has hecho una valoración",
-              icon: "error"
-            });*/
-            alert("Ya has hecho una valoración")
+            const toast3 = await this.toastController.create({
+              message: 'Este código no es valido. Ya has hecho una valoración.',
+              duration: 3000,
+              position: "top"
+            });
+            await toast3.present();
             break;
 
           case 4:
@@ -125,23 +128,23 @@ export class HacerValoracionComponent  implements OnInit {
             break;
 
           case 5:
-            /*Swal.fire({
-              title: "Este código no es valido.",
-              text: "La reserva aún no se ha efectuado",
-              icon: "error"
-            });*/
-            alert("La reserva aún no se ha efectuado")
+            const toast5 = await this.toastController.create({
+              message: 'Este código no es valido. La reserva aún no se ha efectuado',
+              duration: 3000,
+              position: "top"
+            });
+            await toast5.present();
             break;
 
           case 6:
-            /*Swal.fire({
-              title: "Este código no es valido.",
-              icon: "error"
-            });*/
-            alert("Este código no es valido.")
+            const toast6 = await this.toastController.create({
+              message: 'Este código no es valido.',
+              duration: 3000,
+              position: "top"
+            });
+            await toast6.present();
             break;
         }
-
 
 
         /*if(this.comprobacionCR == 2){
@@ -158,9 +161,17 @@ export class HacerValoracionComponent  implements OnInit {
 
   mandarValoracion(){
 
-    this.restauranteService.enviarValoracion(this.id_restaurante, this.codigoReserva, this.texto, Number(this.n_valoracion)).subscribe( {
+    this.id_usuario = this.sharedService.getUsuarioToken().id;
+
+    this.restauranteService.enviarValoracion(this.id_restaurante, this.codigoReserva, this.texto, Number(this.n_valoracion), this.id_usuario).subscribe( {
       error: (error) => { console.error('Error al realizar la valoración del restaurante', error); },
-      complete: () => { console.log('Valoracion realizada:', this.comprobacionCR); }
+      complete: async () => {
+        console.log('Valoracion realizada:', this.comprobacionCR);
+        const loading = await this.loadingCtrl.create({
+          message: 'Enviando valoración...',
+          duration: 500,
+        });
+      }
     });
 
   }

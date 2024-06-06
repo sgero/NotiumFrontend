@@ -20,6 +20,8 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {UsuarioService} from "../../../services/usuario.service";
 import {CartaclienterestauranteComponent} from "../../cartaclienterestaurante/cartaclienterestaurante.component";
+import {ComentarioRestaurante} from "../../../models/ComentarioRestaurante";
+import {Cliente} from "../../../models/Cliente";
 
 @Component({
   selector: 'app-restaurante-user',
@@ -39,17 +41,21 @@ import {CartaclienterestauranteComponent} from "../../cartaclienterestaurante/ca
 export class RestauranteUserComponent  implements OnInit {
 
   info: string = 'info';
+  valoracion: string = '';
+  carta: string= '';
   estilo1_info: boolean = false;
   estilo2_info: boolean = true;
   estilo1_carta: boolean = true;
   estilo2_carta: boolean = false;
+  estilo1_valoraciones: boolean = true;
+  estilo2_valoraciones: boolean = false;
 
   //Variabales
   restaurante = new Restaurante();
   id_restaurante: any;
   usuario: any;
   inicio: boolean = false;
-
+  valoraciones: ComentarioRestaurante[] = [];
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,
@@ -87,28 +93,62 @@ export class RestauranteUserComponent  implements OnInit {
 
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 
+  traerRestaurante(){
+    this.restaurante = this.sharedService.getRestaurante();
+    console.log(this.restaurante);
+  }
+
+  valoracionesRestaurante(){
+    this.restauranteService.getComentarioRestaurante(Number(this.id_restaurante)).subscribe( {
+      next: (data) => { this.valoraciones = data; },
+      error: (error) => { console.error('Error al obtener las valoraciones del restaurante:', error); },
+      complete: () => { console.log('Las valoraciones del restaurante', this.valoraciones); }
+    });
+  }
 
 
   ngOnInit() {
 
     //Funciones externas
+    this.traerRestaurante();
     this.setearIDParams();
     this.inicio = true;
+    this.valoracionesRestaurante();
   }
 
   Info(){
     this.estilo2_info = true;
+    this.estilo2_valoraciones = false;
     this.estilo2_carta = false;
     this.info = 'info';
+    this.valoracion = '';
+    this.carta = '';
+  }
+
+  Valoracion(){
+    this.valoracion = 'valoracion';
+    this.estilo1_valoraciones = false;
+    this.estilo2_valoraciones = true;
+    this.estilo1_info=true;
+    this.estilo2_info=false;
+    this.estilo1_carta=true;
+    this.estilo2_carta=false;
+    this.info='nope';
+    this.carta = '';
+
   }
 
   Carta(){
     this.estilo1_info = true;
     this.estilo2_info = false;
+    this.estilo2_valoraciones = false;
 
     this.estilo1_carta = false;
     this.estilo2_carta = true
-    this.info = 'Carta';
+    this.carta = 'carta';
+    this.valoracion='';
+    this.info='';
+
   }
 }
 

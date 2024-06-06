@@ -1,9 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear turno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <form (submit)="nuevoTurno()">
-  <mat-form-field class="formularios">
-    <mat-label >Indique la hora de inicio</mat-label>
-    <input matInput [(ngModel)]="hora_inicio" name="hora_inicio" id="hora_inicio" required>
-    <mat-label >Indique la hora de cierre</mat-label>
-    <input [(ngModel)]="hora_fin" name="hora_fin" id="hora_fin" required>
-    <button type="submit" id="subir-button">Crear turno</button>
-  </mat-form-field>
+  <div class="example-container">
+    <mat-form-field hintLabel="Max 10 characters">
+      <input matInput
+             [ngxTimepicker]="picker"
+             name="hora_inicio"
+             [(ngModel)]="hora_inicio"
+             placeholder="Indique la hora de inicio"
+             readonly >
+      <ngx-material-timepicker #picker></ngx-material-timepicker>
+      <mat-icon matSuffix>watch_later</mat-icon>
+
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Indique la hora de cierre</mat-label>
+      <input [(ngModel)]="hora_fin" name="hora_fin" id="hora_fin" required>
+    </mat-form-field>
+    <div class="boton_modal">
+      <button mat-raised-button color="primary" style="width: 140px !important">Crear turno</button>
+    </div>
+  </div>
+
+
+
+
+
+  <!--
+
+        <input matInput #input maxlength="10" placeholder="Ex. Nougat">
+
+
+  <div class="formularios_turos">
+    <mat-form-field>
+      <mat-label >Indique la hora de inicio</mat-label>
+      <input matInput [(ngModel)]="hora_inicio" name="hora_inicio" id="hora_inicio" required>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label >Indique la hora de cierre</mat-label>
+      <input [(ngModel)]="hora_fin" name="hora_fin" id="hora_fin" required>
+    </mat-form-field>
+    <div class="boton_modal">
+      <ion-button type="submit" id="subir-button" class="btn-c">Crear turo</ion-button>
+    </div>
+  </div>-->
 </form>
+

@@ -4,7 +4,6 @@ import {Turno} from "../../../models/Turno";
 import {MesaService} from "../../../services/mesa.service";
 import {Mesa} from "../../../models/Mesa";
 import {MatDialog} from "@angular/material/dialog";
-import {CrearReservaComponent} from "../crear-reserva/crear-reserva.component";
 import {CrearMesasComponent} from "./crear-mesas/crear-mesas.component";
 import {CrearTurnosComponent} from "./crear-turnos/crear-turnos.component";
 import {ReservaService} from "../../../services/reserva.service";
@@ -13,6 +12,8 @@ import {CommonModule} from "@angular/common";
 import {UsuarioService} from "../../../services/usuario.service";
 import {CartarestauranteService} from "../../../services/cartarestaurante.service";
 import {Router} from "@angular/router";
+import {VisualizarComponent} from "./visualizar/visualizar.component";
+import {SharedService} from "../../../services/SharedService";
 
 @Component({
   selector: 'app-restaurante-admin',
@@ -20,7 +21,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./restaurante-admin.component.scss'],
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
   ]
 })
 export class RestauranteAdminComponent  implements OnInit {
@@ -29,6 +30,7 @@ export class RestauranteAdminComponent  implements OnInit {
   mesas: Mesa[] = [];
   reservas: Reserva[] = [];
   usuario={username: ''};
+  id_restaurante: any;
 
   constructor(private turnosService: TurnosService,
               private mesaService: MesaService,
@@ -36,13 +38,33 @@ export class RestauranteAdminComponent  implements OnInit {
               private dialogRef: MatDialog,
               private usuarioservice: UsuarioService,
               private cartaservice: CartarestauranteService,
-              private router : Router) { }
+              private router : Router,
+              private sharedService: SharedService) { }
 
 
   //Funciones modales
-  abrirModalCrearMesa(){ this.dialogRef.open(CrearMesasComponent); }
+  abrirModalCrearMesa(){ this.dialogRef.open(CrearMesasComponent, {
+    width: '510px'})
+  }
 
-  abrirModalCrearTurno(){ this.dialogRef.open(CrearTurnosComponent); }
+  abrirModalCrearTurno(){ this.dialogRef.open(CrearTurnosComponent, {
+    width: '510px'})
+  }
+
+  listarMesas(){
+    this.dialogRef.open(VisualizarComponent, {
+      width: '510px',
+      height: '200px',
+    })
+  }
+
+  listarTurnos(){
+    this.dialogRef.open(VisualizarComponent, {
+      width: '510px',
+      height: '200px',
+      data:'turnos'
+    })
+  }
 
   ngOnInit() {
     this.listarReserva();
@@ -51,24 +73,27 @@ export class RestauranteAdminComponent  implements OnInit {
     });
   }
 
-  listarTurnos(){
-    this.turnosService.getAllTurnos().subscribe( {
-      next: (data) => { this.turnos = data; },
-      error: (error) => { console.error('Error al listar los turnos', error); },
-      complete: () => { console.log('El listado con todos los turnos:', this.turnos); }
-    });
-  }
+  /*  listarTurnos(){
+      this.turnosService.getAllTurnos().subscribe( {
+        next: (data) => { this.turnos = data; },
+        error: (error) => { console.error('Error al listar los turnos', error); },
+        complete: () => { console.log('El listado con todos los turnos:', this.turnos); }
+      });
+    }
 
-  listarMesas(){
-    this.mesaService.getAllMesas().subscribe( {
-      next: (data) => { this.mesas = data; },
-      error: (error) => { console.error('Error al listar lasmesas', error); },
-      complete: () => { console.log('El listado con todos las mesas:', this.mesas); }
-    });
-  }
+    listarMesas(){
+      this.mesaService.getAllMesas().subscribe( {
+        next: (data) => { this.mesas = data; },
+        error: (error) => { console.error('Error al listar lasmesas', error); },
+        complete: () => { console.log('El listado con todos las mesas:', this.mesas); }
+      });
+    }*/
 
   listarReserva(){
-    this.reservaService.getAllReserva().subscribe( {
+
+    this.id_restaurante = this.sharedService.getIdParamsRestaurante();
+
+    this.reservaService.getReservaRestaurante(this.id_restaurante).subscribe( {
       next: (data) => { this.reservas = data; },
       error: (error) => { console.error('Error al listar las reservas', error); },
       complete: () => { console.log('El listado de reservas:', this.reservas); }

@@ -1,0 +1,29 @@
+
+.formularios{
+  width: 100%;
+  display:flex;
+  justify-content: center;
+  text-align:center;
+}
+
+.boton_modal{
+  display:flex;
+  justify-content: center;
+}
+
+.btn_info{
+  border-radius:20px;
+  padding: 5px;
+  background-color: #c4a971;
+  color: black;
+  cursor: pointer;
+  text-decoration: none;
+  align-items: center;
+
+  .btn-c{
+    margin:0 !important;
+    padding:0 !important;
+  }
+
+
+}

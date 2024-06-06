@@ -18,7 +18,7 @@ export class MesaService {
 
   crearMesa(n_plazas: number,r: boolean, id: number ): Observable<any>{
     let mesa={
-      num_plazas: n_plazas,
+      numPlazas: n_plazas,
       reservada:r,
       "restauranteDTO":
         {"id":id}

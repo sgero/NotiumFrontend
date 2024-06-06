@@ -14,8 +14,8 @@ export class ReservaService {
 
   constructor(private http: HttpClient) {}
 
-  getAllReserva(): Observable<Reserva[]> {
-    return this.http.get<Reserva[]>(`${this.apiUrl}/reserva/listar`);
+  getReservaRestaurante(id: any): Observable<Reserva[]> {
+    return this.http.get<Reserva[]>(`${this.apiUrl}/reserva/listarReservaRestaurante?id=${id}`);
   }
 
 }

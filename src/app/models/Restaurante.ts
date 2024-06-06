@@ -11,6 +11,6 @@ export class Restaurante{
   disponible?: boolean = true;
   imagen_marca?: string = '';
   activo?: boolean = true;
-  usuario: Usuario = new Usuario();
-  direccion: DireccionDTO = new DireccionDTO();
+  usuarioDTO: Usuario = new Usuario();
+  direccionDTO: DireccionDTO = new DireccionDTO();
 }

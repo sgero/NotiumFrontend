@@ -1,3 +1,9 @@
+h1,
+h2,
+h3,
+h4,
+h5{margin:0}
+
 .info-rest-user{
   display: flex;
   flex-direction: column;
@@ -18,11 +24,13 @@
   color: rgba(87, 76, 76, 0.52);
   border-bottom: 5px solid rgba(87, 76, 76, 0.52);
 }
-
+/*
 .btn_rest:hover {
   color: rgba(28, 17, 17, 0.52);
   border-bottom: 5px solid rgba(28, 17, 17, 0.52);
 }
+
+ */
 
 .estilo1_info{
   border-bottom: 5px black solid;
@@ -30,10 +38,25 @@
   color: black;
 }
 
+.estilo1_valoraciones{
+  color: black;
+  border-bottom: 5px solid black;
+  border-right: 5px black solid;
+  border-left: 5px solid black;
+
+}
+
 .estilo2_info{
   color: rgba(87, 76, 76, 0.52);
   border-bottom: 5px solid black;
   border-right: 5px black solid;
+}
+
+.estilo2_valoraciones{
+  border-bottom: 5px black solid;
+  border-left: 5px black solid;
+  border-right: 5px black solid;
+  color: black;
 }
 
 .estilo1_carta{
@@ -54,6 +77,13 @@
   margin-top: 60px;
 }
 
+.restaurante_user_val{
+  display: flex;
+  flex-direction: row;
+  margin-top: 60px;
+  padding-bottom: 2rem;
+}
+
 .posicion_btn{
   width: 33.3%;
   display: flex;
@@ -61,12 +91,14 @@
   justify-content: center;
 }
 
-.btn_info{
-  border: 4px solid black;
+.btn_info {
+  border-radius: 20px;
   padding: 5px;
-  background-color: #2a2a2a;
-  color: white;
+  background-color: #c4a971;
+  color: black;
   cursor: pointer;
+  text-decoration: none;
+  align-items: center;
 }
 
 .info-direccion{
@@ -80,4 +112,28 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end !important;
+  width: 33.3%;
+}
+
+.resenas{
+  display: flex;
+  flex-direction: column;
+  width:100%;
+  border-left: 2px solid black;
+  padding: 0em 2rem;
+
+}
+
+.resena{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid black;
+  padding: 1rem 0;
+}
+
+.info_resena{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

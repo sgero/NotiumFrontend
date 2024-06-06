@@ -53,7 +53,7 @@ export class RestauranteComponent  implements OnInit {
   }
 
   valoracionRestaurante(){
-    this.restauranteService.getValoracionRestauranteByID(Number()).subscribe( {
+    this.restauranteService.getValoracionRestauranteByID(Number(this.id_restaurante)).subscribe( {
       next: (valoracion_capada) => { this.valoracion_restaurante = valoracion_capada; },
       error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
       complete: () => { console.log('Valoración del restaurante', this.valoracion_restaurante); }

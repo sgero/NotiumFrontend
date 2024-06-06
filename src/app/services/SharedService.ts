@@ -10,6 +10,7 @@ export class SharedService {
 
   restaurante = new Restaurante();
   id_restaurante: number | undefined;
+  id_ocio: number | undefined;
   usuario: Usuario = new Usuario();
 
   constructor() {}
@@ -30,6 +31,15 @@ export class SharedService {
 
   getIdParamsRestaurante(){
     return this.id_restaurante;
+  }
+
+  /*Obtener ID de parametro Ocio Restaurante*/
+  setIdParamsOcio(data: number){
+    this.id_ocio=data;
+  }
+
+  getIdParamsOcio(){
+    return this.id_ocio;
   }
 
   //Obtener el usuario por el token

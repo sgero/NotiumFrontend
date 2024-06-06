@@ -2,7 +2,7 @@ import {Restaurante} from "./Restaurante";
 
 export class Mesa{
   id?: number;
-  num_plazas?: string;
+  numPlazas?: string;
   activo?: boolean = true;
   restaurante: Restaurante = new Restaurante();
 }

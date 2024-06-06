@@ -74,6 +74,10 @@ import {
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {trigger} from "@angular/animations";
+import {MatDialog} from "@angular/material/dialog";
+import {HacerValoracionComponent} from "../restaurante/hacer-valoracion/hacer-valoracion.component";
+import {ValoacionOcioComponent} from "./valoacion-ocio/valoacion-ocio.component";
+import {SharedService} from "../../services/SharedService";
 
 const IonIcons = {
   shirtOutline,
@@ -251,8 +255,9 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     private router: Router,
     private usuarioService: UsuarioService,
     private toastController: ToastController,
-    private loadingCtrl: LoadingController
-  ) {
+    private loadingCtrl: LoadingController,
+    private dialogRef: MatDialog,
+    private sharedService: SharedService) {
     addIcons(IonIcons);
     this.newRpp.direccionDTO = new DireccionDTO();
     this.newRpp.userDTO = new Usuario();
@@ -315,6 +320,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   getRpps(){
     this.route.params.subscribe(params => {
       const ocioID = +params['id'];
+      this.sharedService.setIdParamsOcio(ocioID);
       if (ocioID) {
         this.rppService.rppsByOcio(ocioID).subscribe({
           next: value => {
@@ -889,5 +895,13 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
   rppModal(b: boolean) {
     this.isModalRppOpen = b;
+  }
+
+  Valoraciones(){
+      const dialogRef = this.dialogRef.open(ValoacionOcioComponent);
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('Chat cerrado');
+      });
   }
 }

@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {AuthService} from "../../services/auth.service";
 import {ModalController} from "@ionic/angular";
+import {SharedService} from "../../services/SharedService";
 
 @Component({
   selector: 'app-login',
@@ -54,13 +55,15 @@ export class LoginComponent {
   constructor(
     private usuarioService: UsuarioService,
     private router: Router,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private sharedService: SharedService,
   ) { }
 
   async login() {
     this.usuarioService.loginUsuario(this.usuario).subscribe(data => {
       console.log(data);
       localStorage.setItem('token', data['token']);
+      this.sharedService.setUsuarioToken(this.usuario);
       // Cierra la ventana modal después de autenticar
       this.dismissModal();
     });
