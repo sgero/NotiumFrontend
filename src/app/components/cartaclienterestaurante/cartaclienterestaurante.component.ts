@@ -45,49 +45,49 @@ export class CartaclienterestauranteComponent  implements OnInit {
   ocultarPrecio(){
     this.cartarestauranteService.listarProducto(this.token).subscribe(data =>{
       data.forEach(item =>{
-        if (item.producto?.tipoCategoria === 'ENTRANTE'){
+        if (item.producto?.tipoCategoria === 'ENTRANTE' && item.formatos?.length !== 0){
           this.entrante = true;
         }
-        if (item.producto?.tipoCategoria === 'GUISO'){
+        if (item.producto?.tipoCategoria === 'GUISO' && item.formatos?.length !== 0){
           this.guiso = true;
         }
-        if (item.producto?.tipoCategoria === 'FRITO'){
+        if (item.producto?.tipoCategoria === 'FRITO' && item.formatos?.length !== 0){
           this.frito = true;
         }
-        if (item.producto?.tipoCategoria === 'REVUELTO'){
+        if (item.producto?.tipoCategoria === 'REVUELTO' && item.formatos?.length !== 0){
           this.revuelto = true;
         }
-        if (item.producto?.tipoCategoria === 'CARNE'){
+        if (item.producto?.tipoCategoria === 'CARNE' && item.formatos?.length !== 0){
           this.carne = true;
         }
-        if (item.producto?.tipoCategoria === 'PESCADO'){
+        if (item.producto?.tipoCategoria === 'PESCADO' && item.formatos?.length !== 0){
           this.pescado = true;
         }
-        if (item.producto?.tipoCategoria === 'POSTRE'){
+        if (item.producto?.tipoCategoria === 'POSTRE' && item.formatos?.length !== 0){
           this.postre = true;
         }
-        if (item.producto?.tipoCategoria === 'VINO'){
+        if (item.producto?.tipoCategoria === 'VINO' && item.formatos?.length !== 0){
           this.vino = true;
         }
-        if (item.producto?.tipoCategoria === 'REFRESCO'){
+        if (item.producto?.tipoCategoria === 'REFRESCO' && item.formatos?.length !== 0){
           this.refresco = true;
         }
-        if (item.producto?.tipoCategoria === 'GUISO'){
+        if (item.producto?.tipoCategoria === 'GUISO' && item.formatos?.length !== 0){
           this.guiso = true;
         }
-        if (item.producto?.tipoCategoria === 'AGUA'){
+        if (item.producto?.tipoCategoria === 'AGUA' && item.formatos?.length !== 0){
           this.agua = true;
         }
-        if (item.producto?.tipoCategoria === 'CERVEZA'){
+        if (item.producto?.tipoCategoria === 'CERVEZA' && item.formatos?.length !== 0){
           this.cerveza = true;
         }
-        if (item.producto?.tipoCategoria === 'BEBIDA_ALCOHOLICA'){
+        if (item.producto?.tipoCategoria === 'BEBIDA_ALCOHOLICA' && item.formatos?.length !== 0){
           this.bebidaAlcoholica = true;
         }
-        if (item.producto?.tipoCategoria === 'COCTEL'){
+        if (item.producto?.tipoCategoria === 'COCTEL' && item.formatos?.length !== 0){
           this.coctel = true;
         }
-        if (item.producto?.tipoCategoria === 'OTROS'){
+        if (item.producto?.tipoCategoria === 'OTROS' && item.formatos?.length !== 0){
           this.otros = true;
         }
       });
