@@ -8,6 +8,8 @@ import {FormsModule} from "@angular/forms";
 import {UsuarioService} from "../../services/usuario.service";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 
 @Component({
   selector: 'app-cartarestaurante',
@@ -20,7 +22,9 @@ import {MatIconButton} from "@angular/material/button";
     FormsModule,
     NgIf,
     MatIcon,
-    MatIconButton
+    MatIconButton,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true
 })

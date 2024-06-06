@@ -63,15 +63,18 @@ export class RestauranteUserComponent  implements OnInit {
 
   //Funciones modales
   abrirModalValoraciones(){
+    if (this.usuarioCli){
      const dialogRef = this.dialogRef.open(HacerValoracionComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Chat cerrado');
     });
+    }
   }
 
 
   abrirModalReserva() {
+    if (this.usuarioCli){
     const dialogRef = this.dialogRef.open(CrearReservaComponent, {
       width: '1000px',
       height: '1000px' ,
@@ -84,6 +87,7 @@ export class RestauranteUserComponent  implements OnInit {
       console.log('El modal de reserva se ha cerrado');
       // Puedes realizar acciones después de cerrar el modal si es necesario
     });
+    }
   }
 
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
