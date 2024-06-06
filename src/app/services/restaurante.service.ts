@@ -52,7 +52,7 @@ export class RestauranteService {
         {id:id},
       texto: experiencia,
       valoracion: evaluacion,
-      usuario:
+      clienteDTO:
         {id:id_usuario}
     };
 

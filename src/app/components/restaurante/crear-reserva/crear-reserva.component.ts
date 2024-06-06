@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { RestauranteService } from '../../../services/restaurante.service';
-import { AlertController, IonicModule, ModalController } from '@ionic/angular';
+import {AlertController, IonicModule, ModalController, ToastController} from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -31,6 +31,7 @@ export class CrearReservaComponent implements OnInit {
         private dialog: MatDialog,
         private modalController: ModalController,
         private dialogRef: MatDialogRef<CrearReservaComponent>,
+        private toastController: ToastController,
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         const today = new Date();
@@ -77,12 +78,20 @@ export class CrearReservaComponent implements OnInit {
 
                     this.reservaService.crearReserva(reserva).subscribe(
                         async (data) => {
-                            const alert = await this.alertController.create({
+                          const toast2 = await this.toastController.create({
+                            message: 'Su reserva ha sido confirmada. Código de reserva:' ${data.codigoReserva},
+                            duration: 3000,
+                            position: "top"
+                          });
+                          await toast2.present();
+
+
+                            /*const alert = await this.alertController.create({
                                 header: 'Reserva Confirmada',
                                 message: `Su reserva ha sido confirmada. Código de reserva: ${data.codigoReserva}`,
                                 buttons: ['OK'],
                             });
-                            await alert.present();
+                            await alert.present();*/
                             this.dialog.closeAll(); // Cierra el modal de reserva
                         },
                         async (error) => {
