@@ -1,0 +1,38 @@
+<mat-vertical-stepper #stepper>
+  <mat-step label="Elija la fecha">
+    <form (submit)="enviarFecha()">
+      <mat-form-field class="formularios">
+        <mat-label>Indique la fecha que quiere consultar</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="fecha" name="fecha">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </form>
+    <div>
+      <button mat-button type="submit" (click)="enviarFecha()">Enviar</button>
+      <button mat-button mat-dialog-close>Cancelar</button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Turnos para el día">
+    <form (submit)="enviarTurno()">
+      <mat-form-field class="formularios">
+        <mat-label>Seleccione el turno deseado</mat-label>
+        <input matInput [(ngModel)]="turno" name="turno" required>
+      </mat-form-field>
+    </form>
+    <div>
+      <button mat-button type="submit" (click)="enviarTurno()">Enviar</button>
+      <button mat-button mat-dialog-close>Cancelar</button>
+    </div>
+  </mat-step>
+
+  <mat-step label="Estas son las mesas que nos encontramos">
+    <p>Hola</p>
+    <div>
+      <button mat-button>Comprobar</button>
+      <button mat-button mat-dialog-close>Cancelar</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
