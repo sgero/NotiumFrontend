@@ -342,6 +342,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
         this.dataSourceListas = new MatTableDataSource(this.listas);
         this.dataSourceListas.paginator = this.listasPaginator;
         this.dataSourceListas.sort = this.listasSort;
+
       },
       error: e => {
         console.error(e);

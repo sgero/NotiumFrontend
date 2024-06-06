@@ -445,7 +445,7 @@
       <div class="mat-elevation-z8 tabla">
         <div class="table-header">
           <div>
-            <button mat-raised-button color="primary"  id="open-modal" style="width: 140px !important" (click)="rppModal(true)">Añadir RRPP</button>
+            <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  id="open-modal" style="width: 140px !important" (click)="rppModal(true)">Añadir RRPP</button>
           </div>
           <div>
             <mat-form-field appearance="fill">
@@ -475,13 +475,15 @@
               <ng-container matColumnDef="opciones">
                 <th mat-header-cell *matHeaderCellDef> Opciones</th>
                 <td mat-cell *matCellDef="let rpp">
-                  <button mat-icon-button color="primary" (click)="editRpp(rpp.id)">
+
+                  <button *ngIf="permisosParaEditar" mat-icon-button color="primary" (click)="editRpp(rpp.id)">
                     <mat-icon>edit</mat-icon>
                   </button>
-                  <button mat-icon-button color="warn" (click)="deleteRpp(rpp.id)">
+                  <button *ngIf="permisosParaEditar" mat-icon-button color="warn" (click)="deleteRpp(rpp.id)">
                     <mat-icon>delete</mat-icon>
                   </button>
-                  <button mat-icon-button color="primary" (click)="getListas(rpp.id)">
+                  <button id="open-loading" mat-icon-button color="primary" (click)="getListas(rpp.id)">
+                    <ion-loading class="custom-loading" trigger="open-loading" message="Cargando Listas" [duration]="3000"></ion-loading>
                     <mat-icon>list</mat-icon>
                   </button>
                 </td>
@@ -493,8 +495,8 @@
           </div>
           <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
 
-          <div *ngIf="listas.length > 0 && mostrarListas">
-            <h2 *ngFor="let rpp of rpps">Listas de {{ rpp.nombre }}</h2>
+          <div *ngIf="listas.length > 0 && mostrarListas" class="listas">
+<!--            <h2 *ngFor="let rpp of rpps">Listas de {{ rpp.id.nombre }}</h2>-->
             <table mat-table [dataSource]="dataSourceListas" class="mat-elevation-z8">
               <ng-container matColumnDef="Nº invitaciones">
                 <th mat-header-cell *matHeaderCellDef> Nº invitaciones</th>
@@ -518,16 +520,16 @@
               </ng-container>
               <ng-container matColumnDef="cartel">
                 <th mat-header-cell *matHeaderCellDef> Cartel</th>
-                <td mat-cell *matCellDef="let lista"><img
+                <td mat-cell *matCellDef="let lista" class="cartel"><img
                   src="{{lista.eventoDTO?.cartel}}"
-                  height="50" width="50"></td>
+                  height="50" width="50" [routerLink]="['/notium/ocionocturno/evento/', lista.eventoDTO.id]"></td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumnsListas"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumnsListas;"></tr>
             </table>
           </div>
-          <mat-paginator *ngIf="mostrarListas" #listasPaginator [pageSizeOptions]="[5, 10, 20]"
+            <mat-paginator *ngIf="mostrarListas" #listasPaginator [pageSizeOptions]="[5, 10, 20]"
                          showFirstLastButtons="true"></mat-paginator>
         </div>
           <ion-modal [isOpen]="isModalRppOpen">
@@ -764,8 +766,8 @@
 
   <div *ngIf="eventosInfo == 'carta'">
     <div class="carta-ocio">
-      <button mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="saveCarta()" [disabled]="isDisable">Crear Carta</button>
-      <button mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="deleteCarta()">Eliminar Carta</button>
+      <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="saveCarta()" [disabled]="isDisable">Crear Carta</button>
+      <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="deleteCarta()">Eliminar Carta</button>
     </div>
     <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
 

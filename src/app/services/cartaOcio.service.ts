@@ -32,6 +32,7 @@ export class CartaOcioService {
     });
     return this.http.post<Producto>(this.apiUrl+"/producto/guardar",producto, { headers: headers })
   }
+
   listarProductos(token: string){
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
     return this.http.post<ProductoFormato[]>(`${this.apiUrl}/producto/listarTodos`, {}, { headers });
@@ -44,6 +45,14 @@ export class CartaOcioService {
   listarFormatos(token: string){
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
     return this.http.post<ProductoFormato[]>(`${this.apiUrl}/productoFormato/listarTodos`, {}, { headers });
+  }
+
+  eliminarProducto(id: number){
+    return this.http.delete(this.apiUrl+`/producto/eliminar/${id}` )
+  }
+
+  productoById(id: number){
+    return this.http.get(this.apiUrl+`/producto/${id}` )
   }
 
 }
