@@ -1,0 +1,21 @@
+
+
+.container-valoracion{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25rem;
+  height: auto;
+}
+
+.formularios{
+  width: 100%;
+  min-heigth: 200px;
+  min-width: 510px;
+}
+
+.colum{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}

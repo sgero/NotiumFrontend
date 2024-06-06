@@ -78,12 +78,12 @@ export class CrearReservaComponent implements OnInit {
 
                     this.reservaService.crearReserva(reserva).subscribe(
                         async (data) => {
-                          const toast2 = await this.toastController.create({
+                         /* const toast2 = await this.toastController.create({
                             message: 'Su reserva ha sido confirmada. Código de reserva:' ${data.codigoReserva},
                             duration: 3000,
                             position: "top"
                           });
-                          await toast2.present();
+                          await toast2.present();*/
 
 
                             /*const alert = await this.alertController.create({

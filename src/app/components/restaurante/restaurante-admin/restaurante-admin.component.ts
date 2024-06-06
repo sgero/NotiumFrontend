@@ -53,15 +53,13 @@ export class RestauranteAdminComponent  implements OnInit {
 
   listarMesas(){
     this.dialogRef.open(VisualizarComponent, {
-      width: '510px',
-      height: '200px',
+      width: '510px'
     })
   }
 
   listarTurnos(){
     this.dialogRef.open(VisualizarComponent, {
       width: '510px',
-      height: '200px',
       data:'turnos'
     })
   }
