@@ -74,13 +74,13 @@ h5{margin:0}
 .restaurante_user{
   display: flex;
   flex-direction: row;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 .restaurante_user_val{
   display: flex;
   flex-direction: row;
-  margin-top: 60px;
+  margin-top: 30px;
   padding-bottom: 2rem;
 }
 
@@ -89,6 +89,14 @@ h5{margin:0}
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.posicion_btn_val{
+  width: 33.3%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 3rem;
 }
 
 .btn_info {
@@ -104,6 +112,7 @@ h5{margin:0}
 .info-direccion{
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   width: 33.3%;
 }
@@ -111,8 +120,22 @@ h5{margin:0}
 .dispo_info{
   display: flex;
   flex-direction: column;
-  align-items: flex-end !important;
+  align-items: flex-start !important;
+  justify-content: center;
+  margin-left: 40px;
   width: 33.3%;
+}
+
+.dispo_info_val{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start !important;
+  justify-content: center;
+  width: 100%;
+
+  div,h3{
+    margin-top: 1rem;
+  }
 }
 
 .resenas{
@@ -136,4 +159,22 @@ h5{margin:0}
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.texto_val{
+  display:flex;
+  justify-content: center;
+  aling-items: center;
+}
+
+.blinck{
+  animation: blink 1.5s linear infinite;
+  color: #b06c6c;
+
+}
+
+@keyframes blink{
+  0%{ opacity: 1;}
+  50%{ opacity: 0;}
+  100%{ opacity: 1;}
 }

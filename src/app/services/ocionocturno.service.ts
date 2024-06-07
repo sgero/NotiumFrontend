@@ -44,13 +44,15 @@ export class OcionocturnoService {
     return this.http.post<any>(`${this.apiUrl}/comentario/comprobarCodigoOcioNocturno`, codigoReser)
   }
 
-  enviarValoracionOcio(id: number, codigoReserva: string, experiencia: string, evaluacion: number): Observable<any> {
+  enviarValoracionOcio(id: number, codigoReserva: string, experiencia: string, evaluacion: number, id_user: number): Observable<any> {
     let valoracion = {
       codigoReserva: codigoReserva,
       "ocioDTO":
         {"id":id},
       texto: experiencia,
-      valoracion: evaluacion
+      valoracion: evaluacion,
+      clienteDTO:
+        {id:id_user}
     };
 
     return this.http.post<any>(`${this.apiUrl}/comentario/crearOcioNocturno`, valoracion)

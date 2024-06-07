@@ -56,15 +56,15 @@ export class RestauranteComponent  implements OnInit {
     });
   }
 
-  valoracionRestaurante(){
+ /* valoracionRestaurante(){
     this.restauranteService.getValoracionRestauranteByID(Number(this.id_restaurante)).subscribe( {
       next: (valoracion_capada) => { this.valoracion_restaurante = valoracion_capada; },
       error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
       complete: () => { console.log('Valoración del restaurante', this.valoracion_restaurante); }
     });
-  }
+  }*/
 
-  rankingRestaurantes(){
+ /* rankingRestaurantes(){
     this.restauranteService.getRankingRestaurantes().subscribe( {
       next: (data) => { this.rankingRestaurante = data; },
       error: (error) => { console.error('Error al el ranking de restaurantes', error); },
@@ -79,7 +79,7 @@ export class RestauranteComponent  implements OnInit {
         }
       }
     });
-  }
+  }*/
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 
   captarRestaurantePorId(){
@@ -94,8 +94,8 @@ export class RestauranteComponent  implements OnInit {
   }
 
   adminuser(){
-    if (this.usuario.id !== this.restaurante.userDTO.id){
-      this.userup = true;
+    if (this.usuario.id == this.restaurante.userDTO.id){
+      this.userup = false;
     }
   }
 
@@ -107,8 +107,6 @@ export class RestauranteComponent  implements OnInit {
     //Funciones externas
     this.captarRestaurantePorId();
     this.getUsuarioPorToken();
-    this.valoracionRestaurante();
-    this.rankingRestaurantes();
     this.setearIDParams();
     setTimeout(() =>{
       this.adminuser();

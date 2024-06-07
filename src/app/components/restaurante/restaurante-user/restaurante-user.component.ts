@@ -17,7 +17,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RestauranteService} from "../../../services/restaurante.service";
 import {MatFormField} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {MatButtonModule} from "@angular/material/button";
+import {MatButton, MatButtonModule} from "@angular/material/button";
 import {UsuarioService} from "../../../services/usuario.service";
 import {CartaclienterestauranteComponent} from "../../cartaclienterestaurante/cartaclienterestaurante.component";
 import {ComentarioRestaurante} from "../../../models/ComentarioRestaurante";
@@ -31,7 +31,8 @@ import {Cliente} from "../../../models/Cliente";
     CartaclienterestauranteComponent,
     IonicModule,
     CommonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButton
   ],
   standalone: true
 })
@@ -57,6 +58,10 @@ export class RestauranteUserComponent  implements OnInit {
   inicio: boolean = false;
   usuarioCli = false;
   valoraciones: ComentarioRestaurante[] = [];
+  numValoraciones: number | undefined;
+  valoracion_restaurante: number = 0.0;
+  rankingRestaurante: number[] = [];
+  restauranteEnRanking: boolean = false;
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,
@@ -97,6 +102,31 @@ export class RestauranteUserComponent  implements OnInit {
     }
   }
 
+  valoracionRestaurante(){
+    this.restauranteService.getValoracionRestauranteByID(Number(this.id_restaurante)).subscribe( {
+      next: (valoracion_capada) => { this.valoracion_restaurante = valoracion_capada; },
+      error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+      complete: () => { console.log('Valoración del restaurante', this.valoracion_restaurante); }
+    });
+  }
+
+  rankingRestaurantes(){
+    this.restauranteService.getRankingRestaurantes().subscribe( {
+      next: (data) => { this.rankingRestaurante = data; },
+      error: (error) => { console.error('Error al el ranking de restaurantes', error); },
+      complete: () => {
+        console.log('El ranking de restaurante es:', this.rankingRestaurante);
+        this.restauranteEnRanking = this.rankingRestaurante.includes(Number(this.sharedService.getIdParamsRestaurante()))
+
+        if(this.restauranteEnRanking == true ){
+          console.log('Está en ranking')
+        }else {
+          console.log('No está en ranking')
+        }
+      }
+    });
+  }
+
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 
   traerRestaurante(){
@@ -108,7 +138,10 @@ export class RestauranteUserComponent  implements OnInit {
     this.restauranteService.getComentarioRestaurante(Number(this.id_restaurante)).subscribe( {
       next: (data) => { this.valoraciones = data; },
       error: (error) => { console.error('Error al obtener las valoraciones del restaurante:', error); },
-      complete: () => { console.log('Las valoraciones del restaurante', this.valoraciones); }
+      complete: () => {
+        console.log('Las valoraciones del restaurante', this.valoraciones);
+        this.numValoraciones = this.valoraciones.length;
+      }
     });
   }
 
@@ -138,6 +171,8 @@ export class RestauranteUserComponent  implements OnInit {
     this.setearIDParams();
     this.inicio = true;
     this.valoracionesRestaurante();
+    this.valoracionRestaurante();
+    this.rankingRestaurantes();
   }
 
   Info(){

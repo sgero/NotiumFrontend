@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import {FormControl, FormsModule, Validators, ReactiveFormsModule} from "@angular/forms";
 import { SharedService } from "../../../../services/SharedService";
 import {provideNativeDateAdapter} from '@angular/material/core';
 import { MatDialogModule } from "@angular/material/dialog";
@@ -9,6 +9,7 @@ import { MatButtonModule } from "@angular/material/button";
 import { CommonModule } from "@angular/common";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatStepperModule } from "@angular/material/stepper";
+import {IonicModule} from "@ionic/angular";
 
 @Component({
   selector: 'app-visualizar',
@@ -16,16 +17,18 @@ import { MatStepperModule } from "@angular/material/stepper";
   styleUrls: ['./visualizar.component.scss'],
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatStepperModule,
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatDatepickerModule,
+        MatStepperModule,
+        IonicModule,
+    ]
 })
 export class VisualizarComponent implements OnInit {
   isLinear = true;
@@ -33,17 +36,29 @@ export class VisualizarComponent implements OnInit {
   fecha: string = '';
   turno: string = '';
   data: string = 'mesas';
+  fechaControl: FormControl;
+  turnoControl: FormControl;
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService) {
+    this.fechaControl = new FormControl('', Validators.required);
+    this.turnoControl = new FormControl('', Validators.required);
+  }
 
   ngOnInit() { }
 
   enviarFecha() {
-    console.log('La fecha es:', this.fecha)
-  }
+    if (this.fechaControl.valid) {
+      console.log('La fecha es:', this.fecha);
+    } else {
+      console.log('Fecha inválida');
+    }  }
 
   enviarTurno() {
-    console.log(this.turno)
+    if (this.turnoControl.valid) {
+      console.log('El turno es:', this.turno);
+    } else {
+      console.log('Turno inválido');
+    }
   }
 }
 

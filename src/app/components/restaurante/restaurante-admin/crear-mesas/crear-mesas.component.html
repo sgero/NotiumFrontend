@@ -6,11 +6,11 @@
 
 <form (submit)="nuevaMesaCreada()">
   <mat-form-field class="formularios">
-    <mat-label >Indique el número de plazas</mat-label>
+    <mat-label style="margin-rigth:20px; margin-left:20px">Indique el número de plazas</mat-label>
     <input matInput [(ngModel)]="numeroPlazas" name="numeroPlazas" id="numeroPlazas" required>
-    <mat-checkbox [(ngModel)]="reservada" name="reservada" id="reservada" required>Reservada</mat-checkbox>
-    <div class="boton_modal">
-      <button mat-raised-button color="primary" style="width: 140px !important">Crear mesa</button>
-    </div>
   </mat-form-field>
+  <div class="boton_modal">
+    <mat-checkbox [(ngModel)]="reservada" name="reservada" id="reservada" required>Reservada</mat-checkbox>
+    <button mat-raised-button color="primary" style="width: 140px !important">Crear mesa</button>
+  </div>
 </form>

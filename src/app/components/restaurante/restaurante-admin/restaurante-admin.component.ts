@@ -14,21 +14,24 @@ import {CartarestauranteService} from "../../../services/cartarestaurante.servic
 import {Router} from "@angular/router";
 import {VisualizarComponent} from "./visualizar/visualizar.component";
 import {SharedService} from "../../../services/SharedService";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-restaurante-admin',
   templateUrl: './restaurante-admin.component.html',
   styleUrls: ['./restaurante-admin.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-  ]
+    imports: [
+        CommonModule,
+        MatButton,
+    ]
 })
 export class RestauranteAdminComponent  implements OnInit {
 
   turnos: Turno[] = [];
   mesas: Mesa[] = [];
   reservas: Reserva[] = [];
+  numReservas: number | undefined;
   usuario={username: ''};
   id_restaurante: any;
 
@@ -44,11 +47,13 @@ export class RestauranteAdminComponent  implements OnInit {
 
   //Funciones modales
   abrirModalCrearMesa(){ this.dialogRef.open(CrearMesasComponent, {
-    width: '510px'})
+    width: '510px',
+    height:'250px'})
   }
 
   abrirModalCrearTurno(){ this.dialogRef.open(CrearTurnosComponent, {
-    width: '510px'})
+    width: '510px',
+    height:'300px'})
   }
 
   listarMesas(){
@@ -94,7 +99,10 @@ export class RestauranteAdminComponent  implements OnInit {
     this.reservaService.getReservaRestaurante(this.id_restaurante).subscribe( {
       next: (data) => { this.reservas = data; },
       error: (error) => { console.error('Error al listar las reservas', error); },
-      complete: () => { console.log('El listado de reservas:', this.reservas); }
+      complete: () => {
+        console.log('El listado de reservas:', this.reservas);
+        this.numReservas = this.reservas.length;
+      }
     });
   }
 

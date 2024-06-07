@@ -32,12 +32,13 @@ h5{margin:0}
 }
 
 .banner-img{
-  background-color: #c4a971;
-  border-radius: 2rem 2rem 0rem 0rem;
+  border-radius: 1rem 1rem 0rem 0rem;
   border: 0.5px solid black;
   margin: 1rem 2rem 0rem 2rem;
   height: 20rem;
   position: relative;
+  background-size: cover;
+  background-position: center;
 }
 
 .profile-img{

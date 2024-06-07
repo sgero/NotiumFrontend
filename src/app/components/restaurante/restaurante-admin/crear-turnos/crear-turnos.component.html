@@ -4,8 +4,30 @@
   </ion-toolbar>
 </ion-header>
 
+
 <form (submit)="nuevoTurno()">
-  <div class="example-container">
+  <div class="big">
+    <div class="gran_formulario">
+      <mat-form-field class="formularios">
+        <mat-label>Hora inicio</mat-label>
+        <input matInput [(ngModel)]="hora_inicio" name="hora_inicio" required>
+      </mat-form-field>
+      <mat-form-field class="formularios">
+        <mat-label>Hora fin</mat-label>
+        <input matInput [(ngModel)]="hora_fin" name="hora_fin" required>
+      </mat-form-field>
+    </div>
+    <div class="posicion_btn">
+      <button mat-raised-button mat-dialog-close color="primary" style="width: 160px !important" type="submit" (click)="nuevoTurno()">Crear turno</button>
+      <button mat-raised-button mat-dialog-close color="primary" style="width: 140px !important">Cancelar</button>
+    </div>
+  </div>
+
+
+
+
+
+  <!--<div class="example-container">
     <mat-form-field hintLabel="Max 10 characters">
       <input matInput
              [ngxTimepicker]="picker"
@@ -15,7 +37,6 @@
              readonly >
       <ngx-material-timepicker #picker></ngx-material-timepicker>
       <mat-icon matSuffix>watch_later</mat-icon>
-
     </mat-form-field>
 
     <mat-form-field>
@@ -25,13 +46,13 @@
     <div class="boton_modal">
       <button mat-raised-button color="primary" style="width: 140px !important">Crear turno</button>
     </div>
-  </div>
+  </div>->
 
 
 
 
 
-  <!--
+
 
         <input matInput #input maxlength="10" placeholder="Ex. Nougat">
 

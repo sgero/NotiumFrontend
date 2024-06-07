@@ -44,6 +44,7 @@ export class ValoacionOcioComponent  implements OnInit {
   texto: string = '';
   n_valoracion: any;
   id_ocio: any;
+  id_usuario: any;
   firstStepFormGroup: FormGroup = new FormGroup({});
   secondStepFormGroup: FormGroup = new FormGroup({});
 
@@ -154,7 +155,9 @@ export class ValoacionOcioComponent  implements OnInit {
 
   mandarValoracion(){
 
-    this.ocioNocturnoService.enviarValoracionOcio(Number(this.id_ocio), this.codigoReserva, this.texto, Number(this.n_valoracion)).subscribe( {
+    this.id_usuario = this.sharedService.getUsuarioToken().id;
+
+    this.ocioNocturnoService.enviarValoracionOcio(Number(this.id_ocio), this.codigoReserva, this.texto, Number(this.n_valoracion), this.id_usuario).subscribe( {
       error: (error) => { console.error('Error al realizar la valoración del restaurante', error); },
       complete: () => { console.log('Valoracion realizada:', this.comprobacionCR); }
     });

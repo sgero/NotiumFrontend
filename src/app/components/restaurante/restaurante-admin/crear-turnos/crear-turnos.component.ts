@@ -18,29 +18,32 @@ import {TurnosService} from "../../../../services/turnos.service";
 import {IonicModule} from "@ionic/angular";
 import {MatIconModule} from "@angular/material/icon";
 import {NgxMaterialTimepickerModule} from "ngx-material-timepicker"
+import {MatStepperNext} from "@angular/material/stepper";
 
 @Component({
   selector: 'app-crear-turnos',
   templateUrl: './crear-turnos.component.html',
   styleUrls: ['./crear-turnos.component.scss'],
   standalone: true,
-    imports: [
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatDialogTitle,
-        MatDialogContent,
-        MatDialogActions,
-        MatDialogClose,
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        MatIconModule,
-        NgxMaterialTimepickerModule
-    ]
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    MatIconModule,
+    NgxMaterialTimepickerModule,
+    MatStepperNext
+  ]
 })
 export class CrearTurnosComponent  implements OnInit {
 
+  isLinear=true;
   hora_inicio: string = '';
   hora_fin: string = '';
   id_restaurante: any;
@@ -58,11 +61,5 @@ export class CrearTurnosComponent  implements OnInit {
       error: (error) => {console.error('Error al crear el turno', error);},
       complete: () => {console.log('Turno creado');}
     })
-
-    this.cerrar()
-  }
-
-  cerrar(){
-    this.dialogRef.closeAll();
   }
 }

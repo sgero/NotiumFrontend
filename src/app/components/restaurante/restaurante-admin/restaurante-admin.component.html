@@ -1,43 +1,42 @@
 <div class="container-admin">
   <div class="step">
-    <a CLASS="botoncarta" (click)="crearCartaRes()">CREA TU CARTA</a>
+    <button mat-raised-button color="primary" style="width: 200px !important" (click)="crearCartaRes()"><h2>Crea tu carta</h2></button>
   </div>
   <div class="step">
     <div class="tamano_titulo"><h2>MESAS</h2></div>
-    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="listarMesas()"><h2>Visualizar mesas</h2></a></div>
-    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="abrirModalCrearMesa()"><h2>Crear mesa</h2></a></div>
+    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 200px !important" (click)="listarMesas()"><h2>Visualizar mesas</h2></button></div>
+    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearMesa()"><h2>Crear mesa</h2></button></div>
   </div>
   <div class="step">
     <div class="tamano_titulo"><h2>TURNOS</h2></div>
-    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="listarTurnos()"><h2>Visualizar turnos</h2></a></div>
-    <div class="posicion_btn"><a class="valoraciones btn_info" (click)="abrirModalCrearTurno()"><h2>Crear turno</h2></a></div>
+    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 200px !important" (click)="listarTurnos()"><h2>Visualizar turnos</h2></button></div>
+    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearTurno()"><h2>Crear turno</h2></button></div>
 
   </div>
-  <div class="step-reserva">
-    <h2>RESERVAS</h2>
-
-    <table class="tabla_reserva">
-      <thead>
-        <tr>
-          <th><h3><b>Nombre</b></h3></th>
-          <th><h3><b>Fecha</b></h3></th>
-          <th><h3><b>Hora</b></h3></th>
-          <th><h3><b>Mesa</b></h3></th>
-          <th><h3><b>Numero de plazas</b></h3></th>
-        </tr>
-      </thead>
-      <tbody>
-      <ng-container *ngFor="let reserva of reservas">
-        <tr>
-          <td>{{reserva.clienteDTO?.nombre}}</td>
-          <td>{{reserva.fecha}}</td>
-          <td>{{reserva.turnoDTO?.hora_inicio}}</td>
-          <td>{{reserva.mesaDTO?.id}}</td>
-          <td>{{reserva.mesaDTO?.numPlazas}}</td>
-        </tr>
-      </ng-container>
-      </tbody>
-    </table>
-  </div>
-
+  <div class="step-reserva" *ngIf="numReservas!=0; else sinReservas">
+      <h2>RESERVAS</h2>
+      <table class="tabla_reserva">
+        <thead>
+          <tr>
+            <th><h3><b>Nombre</b></h3></th>
+            <th><h3><b>Fecha</b></h3></th>
+            <th><h3><b>Hora</b></h3></th>
+            <th><h3><b>Mesa</b></h3></th>
+            <th><h3><b>Numero de plazas</b></h3></th>
+          </tr>
+        </thead>
+        <tbody>
+        <ng-container *ngFor="let reserva of reservas">
+          <tr>
+            <td>{{reserva.clienteDTO?.nombre}}</td>
+            <td>{{reserva.fecha}}</td>
+            <td>{{reserva.turnoDTO?.hora_inicio}}</td>
+            <td>{{reserva.mesaDTO?.id}}</td>
+            <td>{{reserva.mesaDTO?.numPlazas}}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+    <ng-template #sinReservas><div class="texto_val"><h2>Aun no hay reservas realizadas.</h2></div></ng-template>
 </div>

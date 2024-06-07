@@ -2,12 +2,7 @@
   <app-header></app-header>
   <div class="contenedor-restaurante">
     <div class="container48">
-      <div class='banner-img'>
-        <div class="valoracion">
-          <h3>Valoración media: {{valoracion_restaurante}}/5</h3>
-          <div *ngIf="restauranteEnRanking==true"><h3 class="blinck">¡Este restaurante está en el top 3 de mejor valorados!</h3></div>
-        </div>
-      </div>
+      <div class='banner-img' [style.background-image]="'url('+ restaurante?.imagen_marca +')'"></div>
       <div class="info-concreta">
         <div *ngIf="userup; else vistaAdmin">
           <app-restaurante-user></app-restaurante-user>
