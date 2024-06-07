@@ -74,6 +74,10 @@ import {
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {trigger} from "@angular/animations";
+import {ChatComponent} from "./chat/chat.component";
+import {ChatService} from "../../services/chat.service";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 
 const IonIcons = {
   shirtOutline,
@@ -130,7 +134,10 @@ const IonIcons = {
     MatHeaderCellDef,
     MatCellDef,
     MatRowDef,
-    MatHeaderRowDef
+    MatHeaderRowDef,
+    ChatComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true,
   providers: [
@@ -238,7 +245,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   noHayEventos = true;
   eventosEntreFechas: Evento[] = [];
   fechaActual = new Date().toString();
-
+  clienteEstaEnChat?:boolean;
   constructor(
     private ocioNocturnoService: OcionocturnoService,
     private eventoService: EventoService,
@@ -251,7 +258,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     private router: Router,
     private usuarioService: UsuarioService,
     private toastController: ToastController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private chatService : ChatService
   ) {
     addIcons(IonIcons);
     this.newRpp.direccionDTO = new DireccionDTO();
@@ -261,7 +269,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getOcio()
-    this.getUsuario();
     this.formsLista.push(this.listaOcioDTO);
   }
 
@@ -285,6 +292,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
               Validators.max(this.ocio.aforo!)
             ]);
             this.eventoDTO.get('aforo')?.updateValueAndValidity();
+            this.getUsuario();
             this.getRpps();
           },
           error: e => {
@@ -377,8 +385,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.eventosInfo = 'carta';
   }
 
-  Galeria() {
-    this.eventosInfo = 'galeria';
+  chat() {
+    this.eventosInfo = 'chat';
   }
 
   RegistrarRpp() {
@@ -720,6 +728,14 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   getDTO(usuario: any) {
     if (usuario.rol == "CLIENTE") {
       this.esCliente = true;
+      this.chatService.verificarClienteEnChat(usuario.id, this.ocio.id!).subscribe({
+        next: value => {
+          this.clienteEstaEnChat = value;
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
     } else if (usuario.rol != "OCIONOCTURNO") {
       this.esCliente = false;
       this.router.navigate(["notium/error"])
@@ -748,7 +764,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     const toast = await this.toastController.create({
       message: 'Ha ocurrido un error inesperado durante el proceso de creación.',
       duration: 3000,
-      position: "top"
+      position: "top",
+      color: "danger"
     });
     if (this.unico) {
       this.eventoService.guardarEvento(this.crearEvento).subscribe({
@@ -828,7 +845,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       this.crearEventoCiclico.diasARepetirCicloEventoOcioList = d;
     }
     this.opcionesEventoCiclicoBool = true;
-    console.log(this.crearEventoCiclico)
   }
   getEventosEntreFechas(fecha:Date){
     let fechaInicio = this.convertirFechaAStringFormatoYYYYMMDD(fecha.toString());

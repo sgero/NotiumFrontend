@@ -1,0 +1,63 @@
+<div class="full-body">
+  <div class="chat-area">
+
+    @if (permisosParaEditar) {
+      @for (m of mensajes; track m) {
+        <div class="chat-msg owner">
+          <div class="chat-msg-profile">
+            <img class="chat-msg-img"
+                 src="https://cdn-icons-png.flaticon.com/512/6522/6522581.png"
+                 alt=""/>
+            @if (m.editado) {
+              <div class="chat-msg-date">Editado por última vez el {{ m.fecha }}</div>
+            } @else {
+              <div class="chat-msg-date">Enviado el {{ m.fecha }}</div>
+            }
+          </div>
+          <div class="chat-msg-content">
+            <div class="chat-msg-text">
+              {{ m.texto }}
+              <ion-icon name="ellipsis-vertical-outline" [matMenuTriggerFor]="menu" class="options"
+                        (click)="toggleMenu(m, m.isMenuVisible)"></ion-icon>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="editar(m)">Editar</button>
+                <button mat-menu-item (click)="eliminarMensaje(m)">Eliminar</button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+      }
+      <div class="chat-area-footer">
+        @if (!editarMensaje) {
+          <textarea type="text" [(ngModel)]="message" placeholder="Escribe un mensaje..."></textarea>
+          @if (message.length != 0) {
+            <ion-icon name="send" (click)="guardarMensaje(message, undefined )"></ion-icon>
+          }
+        } @else {
+          @if (mensajeSeleccionado) {
+            <textarea type="text" placeholder="Escribe un mensaje..." [value]="mensajeSeleccionado?.texto!"  [(ngModel)]="message"></textarea>
+            <ion-icon name="send" (click)="guardarMensaje(message, mensajeSeleccionado?.id!)"></ion-icon>
+          }
+        }
+      </div>
+    } @else {
+      @for (m of mensajes; track m) {
+        <div class="chat-msg client">
+          <div class="chat-msg-profile">
+            <img class="chat-msg-img"
+                 src="https://cdn-icons-png.flaticon.com/512/6522/6522581.png"
+                 alt=""/>
+            @if (m.editado) {
+              <div class="chat-msg-date-right">Editado por última vez el {{ m.fecha }}</div>
+            } @else {
+              <div class="chat-msg-date-right">Enviado el {{ m.fecha }}</div>
+            }
+          </div>
+          <div class="chat-msg-content">
+            <div class="chat-msg-text">{{ m.texto }}</div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

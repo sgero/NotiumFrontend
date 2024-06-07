@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import {DomSanitizer} from "@angular/platform-browser";
 import {EmailService} from "../../services/email.service";
 import {IonicModule, ToastController} from '@ionic/angular';
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss'],
   imports: [
-    IonicModule
+    IonicModule,
+    MatButton
   ],
   standalone: true
 })

@@ -44,7 +44,7 @@ ion-menu {
 }
 
 ion-toolbar {
-  --background: #f5f3fa; /* Color de fondo del toolbar del menú */
+  //--background: #f5f3fa; /* Color de fondo del toolbar del menú */
   --color: #333; /* Color del texto
 }
 
@@ -54,7 +54,7 @@ ion-menu ion-toolbar {
 }
 
 ion-content {
-  --background: #f5f3fa;; /* Color de fondo del contenido del menú */
+  //--background: #f5f3fa;; /* Color de fondo del contenido del menú */
   --color: #333; /* Color del texto del contenido del menú */
 }
 
@@ -86,7 +86,7 @@ ion-menu ion-list ion-menu-toggle ion-item {
 
 
 ion-item {
-  --background: #f5f3fa;
+  //--background: #f5f3fa;
   --color: #333;
   text-align: center;
 }
