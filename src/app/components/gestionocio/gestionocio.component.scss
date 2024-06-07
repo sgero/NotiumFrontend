@@ -17,6 +17,7 @@
   align-items: center;
   text-align: center;
   color: white;
+  border-radius: 20px;
 }
 //.banner h1{
 //  font-size: 100px;
@@ -132,4 +133,8 @@ body {
 }
 .carta-ocio button {
   margin: 10px;
+}
+.chat{
+  display: flex;
+  justify-content: center;
 }

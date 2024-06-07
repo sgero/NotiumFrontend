@@ -49,6 +49,9 @@ import {OcionocturnoService} from "../../../services/ocionocturno.service";
 import {PdfService} from "../../../services/pdf.service";
 import {EditarEventoComponent} from "../../modales/editar-evento/editar-evento.component";
 import {CrearEvento} from "../../../models/CrearEvento";
+import {ChatService} from "../../../services/chat.service";
+import {HeaderComponent} from "../../header/header.component";
+import {FooterComponent} from "../../footer/footer.component";
 
 const IonIcons = {
   shirtOutline,
@@ -94,7 +97,9 @@ const IonIcons = {
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    EditarEventoComponent
+    EditarEventoComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true,
   providers: [
@@ -160,33 +165,76 @@ export class EventDetailComponent implements OnInit {
   clientesApuntadosALista?: number;
   totalAsistentes?: number;
   usuarioLogeado: any;
-  comprarEntradas?: boolean;
-  comprarReservado?: boolean;
-  comprarLista?: boolean;
+  comprarEntradas = true;
+  comprarReservado = true;
+  comprarLista = true;
   disponiblesGeneral?: number;
   disponiblesReservado?: number;
   disponiblesLista?: number;
   permisosParaEditar = false;
   isModalEvento = false;
-  crearEventoDTO?:CrearEvento;
+  crearEventoDTO?: CrearEvento;
   eventoModificado = [0];
+  isAlertOpen = false;
+  idEvento?: number;
+  clienteEstaEnChat = false;
+  isDeleteOpen = false;
 
   constructor(private toastController: ToastController, private loadingCtrl: LoadingController,
               private eventoService: EventoService, private route: ActivatedRoute,
               private formBuilder: FormBuilder, private promocionService: PromocionService,
               private comprarService: ComprarService, private usuarioService: UsuarioService,
               private router: Router, private clienteService: ClienteService,
-              private ocioService: OcionocturnoService, private pdfService : PdfService,
-              private datePipe: DatePipe, private ocioNocturnoService: OcionocturnoService,
-
+              private pdfService: PdfService, private datePipe: DatePipe,
+              private ocioNocturnoService: OcionocturnoService,
+              private chatService: ChatService
   ) {
     addIcons(IonIcons);
   }
+
+  public alertButtons = [
+    {
+      text: 'Sí',
+      role: 'confirmar',
+      handler: () => {
+        this.chatService.actualizarClienteChat(this.cliente?.id!, this.evento?.ocioNocturnoDTO?.id!).subscribe({
+          next: value => {
+            this.router.navigate(["notium/ocionocturno/", this.evento?.ocioNocturnoDTO?.id!])
+          }
+        })
+      },
+    },
+    {
+      text: 'No',
+      role: 'cancelar',
+      handler: () => {
+        console.log('Alert canceled');
+      },
+    },
+  ];
+
+  public deleteButtons = [
+    {
+      text: 'Sí',
+      role: 'confirmar',
+      handler: () => {
+        this.eliminarEvento();
+      },
+    },
+    {
+      text: 'No',
+      role: 'cancelar',
+      handler: () => {
+        this.alertDelete(false);
+      },
+    },
+  ];
 
   ngOnInit() {
     this.getUsuario();
     this.route.params.subscribe(params => {
       const id = +params['id'];
+      this.idEvento = id;
       if (id) {
         this.informacionEventoTotal(id)
         this.getById(id);
@@ -260,7 +308,7 @@ export class EventDetailComponent implements OnInit {
       date.setFullYear(date.getFullYear() - edadMinima!);
 
       if (inputDate.setHours(0, 0, 0, 0) >= date.setHours(0, 0, 0, 0)) {
-        return { futureDate: true };
+        return {futureDate: true};
       }
       return null;
     };
@@ -334,7 +382,8 @@ export class EventDetailComponent implements OnInit {
     const toast = await this.toastController.create({
       message: 'El código promocional introducido no es correcto.',
       duration: 1500,
-      position: "top"
+      position: "top",
+      color: "danger"
     });
     const params = {
       codigo: this.codigoPromocion
@@ -348,9 +397,9 @@ export class EventDetailComponent implements OnInit {
             this.actualizarTotal();
             if (this.isGeneral) {
               this.datosAsistentesEOC[0].promocionDTO = this.promocionElegida;
-            } else if (this.isLista){
+            } else if (this.isLista) {
               this.datosAsistentesLOC[0].promocionDTO = this.promocionElegida;
-            } else{
+            } else {
               this.datosAsistentesROC!.reservadoOcioClienteDTO!.promocionDTO = this.promocionElegida;
             }
           } else {
@@ -384,7 +433,7 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
-  verifyForm(){
+  verifyForm() {
     const formValues = this.datosCompradores.value;
     return formValues.nombre != '' && formValues.apellidos != '' && formValues.email != '' && formValues.fecha != '' && formValues.telefono != '';
   }
@@ -392,7 +441,7 @@ export class EventDetailComponent implements OnInit {
   addForm(c: number) {
     const formValues = this.datosCompradores.value;
     let fecha = formValues.fecha!;
-    fecha =  <string>this.datePipe.transform(fecha, 'yyyy-mm-dd');
+    fecha = <string>this.datePipe.transform(fecha, 'yyyy-mm-dd');
     const nuevoComprador: DatosComprador = {
       nombre: formValues.nombre || '',
       apellidos: formValues.apellidos || '',
@@ -418,7 +467,7 @@ export class EventDetailComponent implements OnInit {
     this.yaEnviado.push(c);
     if (this.cantidad == this.datosAsistentesEOC.length || this.cantidad == this.datosAsistentesLOC.length) {
       this.verPromocion = true;
-    } else if (this.reservadoOcioCliente.cantidad_personas == this.datosAsistentesROC?.datosCompradorDTOS?.length){
+    } else if (this.reservadoOcioCliente.cantidad_personas == this.datosAsistentesROC?.datosCompradorDTOS?.length) {
       this.verPromocion = true;
     }
   }
@@ -444,7 +493,8 @@ export class EventDetailComponent implements OnInit {
     const toast = await this.toastController.create({
       message: 'Ha ocurrido un error inesperado durante el proceso de compra.',
       duration: 3000,
-      position: "top"
+      position: "top",
+      color: "danger"
     });
     if (this.isGeneral) {
       this.comprarService.comprarEntradaGeneral(
@@ -459,6 +509,7 @@ export class EventDetailComponent implements OnInit {
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf(compra, new ComprarReservadoDTO(), []);
+            this.alert();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -483,6 +534,7 @@ export class EventDetailComponent implements OnInit {
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], compra, []);
+            this.alert();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -507,6 +559,7 @@ export class EventDetailComponent implements OnInit {
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], new ComprarReservadoDTO(), compra);
+            this.alert();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -606,11 +659,26 @@ export class EventDetailComponent implements OnInit {
           console.error(err);
         }
       })
-    } else if (usuario.rol == "OCIONOCTURNO"){
-      this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
+      this.chatService.verificarClienteEnChat(usuario.id, this.evento?.ocioNocturnoDTO?.id!).subscribe({
         next: value => {
+          this.clienteEstaEnChat = value;
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+    } else if (usuario.rol == "OCIONOCTURNO") {
+      this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
+        next: async value => {
           if (value.id != this.evento?.ocioNocturnoDTO?.id) {
             this.router.navigate(["notium/error"])
+            const toast = await this.toastController.create({
+              message: 'Siendo gestor de ocio no puedes visualizar eventos si no eres el propietario',
+              duration: 5000,
+              position: 'top',
+              color: 'danger'
+            });
+            toast.present();
           } else {
             this.permisosParaEditar = true;
           }
@@ -619,8 +687,7 @@ export class EventDetailComponent implements OnInit {
           console.error(err);
         }
       })
-    }
-    else {
+    } else {
       this.router.navigate(["notium/error"])
     }
   }
@@ -630,10 +697,10 @@ export class EventDetailComponent implements OnInit {
     this.isModalEvento = b;
   }
 
-  informacionEventoTotal(idEvento: number){
+  informacionEventoTotal(idEvento: number) {
     this.eventoService.getInfoEventoTotal(idEvento).subscribe({
       next: value => {
-        if (value){
+        if (value) {
           this.crearEventoDTO = value;
         }
       },
@@ -645,6 +712,42 @@ export class EventDetailComponent implements OnInit {
 
   modificar(id: number) {
     this.getById(id);
+  }
+
+  alert() {
+    if (!this.clienteEstaEnChat) {
+      this.isAlertOpen = true;
+    }
+  }
+
+  alertDelete(b:boolean) {
+    this.isDeleteOpen = b;
+  }
+
+  eliminarEvento() {
+    this.eventoService.eliminarEvento(this.idEvento!).subscribe({
+      next: async value => {
+        if (value) {
+          const toast = await this.toastController.create({
+            message: 'Evento eliminado correctamente',
+            duration: 4000,
+            position: 'top',
+            color: 'success'
+          });
+          toast.present();
+          this.router.navigate(["notium/ocionocturno", this.evento?.ocioNocturnoDTO?.id])
+        }
+      },
+      error: async err => {
+        const toast = await this.toastController.create({
+          message: 'El evento no se ha podido eliminar',
+          duration: 4000,
+          position: 'top',
+          color: 'danger'
+        });
+        toast.present();
+      }
+    })
   }
 
 }

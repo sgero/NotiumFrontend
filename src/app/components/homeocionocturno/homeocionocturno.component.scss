@@ -144,3 +144,107 @@ body {
   transition: all 300ms;
 }
 
+
+.listado_videos {
+  margin-top: 50px;
+}
+
+.texto_videos {
+  //padding-bottom: 5%;
+}
+
+.texto_videos h2 {
+  width: 100%;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+.texto_videos h2 span {
+  background: white;
+  padding-right: 20px;
+  padding-left: 40px;
+  margin-right: 40px;
+}
+
+
+
+.card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: .5s;
+  cursor: pointer;
+}
+
+.title {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  font-size: 20px;
+  font-weight: 100;
+  padding: 30px 0;
+  background: linear-gradient(to top, #970, transparent);
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  transition: .5s;
+}
+
+
+
+.catagory {
+  position: absolute;
+  left: 10px;
+  top: 140px;
+  padding: 3px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  transform: translate(-160px, 0);
+  transition: all 0.5s ease;
+}
+
+.views {
+  position: absolute;
+  left: 10px;
+  top: 175px;
+  padding: -7px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  background: #8b2463;
+  color: #fff;
+  border-radius: 5px;
+  transform: translate(-160px, 0);
+  transition: all 0.5s ease 0.15s;
+}
+
+.videos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 30px;
+  overflow: hidden;
+  overflow-x: auto;
+  object-position: left;
+  min-width: 1200px;
+  margin-left: 50px;
+}
+
+.video {
+  display: flex;
+}
+.spinner {
+  width: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.matspin{
+  height: 30px !important;
+  width: 30px !important;
+}

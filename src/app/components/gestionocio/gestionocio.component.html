@@ -1,6 +1,6 @@
 <body>
 
-<app-headerocionocturno></app-headerocionocturno>
+<app-header></app-header>
 
 
   <div class="banner-container">
@@ -19,8 +19,10 @@
     }
     <button mat-raised-button color="primary" style="width: 140px !important" (click)="Staff()">Staff</button>
     <button mat-raised-button color="primary" style="width: 140px !important" (click)="Carta()">Carta</button>
-    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Galeria()">Galería</button>
-    <button mat-raised-button color="primary" style="width: 140px !important" (click)="Valoraciones()">Valoraciones</button>
+    @if (clienteEstaEnChat || permisosParaEditar){
+      <button mat-raised-button color="primary" style="width: 140px !important" (click)="chat()">Canal</button>
+    }
+    <button mat-raised-button color="primary" style="width: 140px !important">Valoraciones</button>
   </div>
 
   <ion-modal [isOpen]="isModalOpen">
@@ -668,11 +670,12 @@
     <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
 
   </div>
-  <div *ngIf="eventosInfo == 'galeria'">
-    <div class="galeria">
-      <p>Aqui saldrian las fotos</p>
+
+  <div *ngIf="eventosInfo == 'chat'">
+    <div class="chat">
+      <app-chat></app-chat>
     </div>
   </div>
 
-<app-footerocionocturno></app-footerocionocturno>
+<app-footer></app-footer>
 </body>

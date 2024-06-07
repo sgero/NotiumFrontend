@@ -433,7 +433,8 @@ export class EditarEventoComponent  implements OnInit {
     const toast = await this.toastController.create({
       message: 'Ha ocurrido un error inesperado durante el proceso de edición.',
       duration: 3000,
-      position: "top"
+      position: "top",
+      color: "danger"
     });
     if (this.unico) {
       this.crearEvento.eventoDTO!.id! = <number>this.informacionEvento?.eventoDTO?.id;
