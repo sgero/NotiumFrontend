@@ -83,8 +83,7 @@ export class RestauranteUserComponent  implements OnInit {
   abrirModalReserva() {
     if (this.usuarioCli){
     const dialogRef = this.dialogRef.open(CrearReservaComponent, {
-      width: '1000px',
-      height: '1000px' ,
+      width: '500px',
       data: {
         restauranteId: this.id_restaurante
       }

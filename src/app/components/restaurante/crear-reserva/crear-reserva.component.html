@@ -1,32 +1,65 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Crear Reserva</ion-title>
+    <ion-title>Crear reserva</ion-title>
   </ion-toolbar>
 </ion-header>
+<mat-vertical-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="fechaForm">
+    <form [formGroup]="fechaForm">
+      <ng-template matStepLabel>Seleccionar Fecha</ng-template>
+      <mat-form-field class="formularios">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fecha">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div class="posicion_boton">
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </form>
+  </mat-step>
 
-<ion-content>
-  <ion-item>
-    <ion-label>Fecha</ion-label>
-    <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fecha" [min]="minFecha" preferWheel="false" presentation="date" locale="es-ES"></ion-datetime>
-  </ion-item>
+  <mat-step [stepControl]="personasForm">
+    <form [formGroup]="personasForm">
+      <ng-template matStepLabel>Número de Personas</ng-template>
+      <mat-form-field class="formularios">
+        <mat-label>Número de Personas</mat-label>
+        <input matInput type="string" formControlName="numPersonas" min="1">
+      </mat-form-field>
+      <div class="posicion_boton">
+        <button mat-button matStepperPrevious>Anterior</button>
+        <button mat-button matStepperNext (click)="buscarTurnos()">Buscar turnos</button>
+      </div>
+    </form>
+  </mat-step>
 
-  <ion-item>
-    <ion-label>Número de Personas</ion-label>
-    <ion-input type="number" [(ngModel)]="numPersonas" min="1"></ion-input>
-  </ion-item>
-
-  <ion-button expand="full" (click)="buscarTurnos()">Buscar Turnos Disponibles</ion-button>
-
-  <ion-list *ngIf="turnosDisponibles.length > 0">
-    <ion-list-header>
-      <ion-label>Turnos Disponibles</ion-label>
-    </ion-list-header>
-    <ion-item *ngFor="let turno of turnosDisponibles" [class.selected]="turnoSeleccionado === turno" (click)="seleccionarTurno(turno)">
+  <mat-step>
+    <ng-template matStepLabel>Confirmar Reserva</ng-template>
+    <mat-list *ngIf="turnosDisponibles.length > 0" class="formularios">
+      <mat-list-item *ngFor="let turno of turnosDisponibles" [class.selected]="turnoSeleccionado === turno" (click)="seleccionarTurno(turno)">
         {{ turno.hora_inicio }} a {{ turno.hora_fin }}
-      <ion-button slot="end" (click)="seleccionarTurno(turno)">Seleccionar</ion-button>
-    </ion-item>
-  </ion-list>
+        <button class="boton_selec" mat-button matStepperNext (click)="seleccionarTurno(turno)">Seleccionar</button>
+      </mat-list-item>
+    </mat-list>
+    <div class="posicion_boton">
+      <button mat-button matStepperPrevious>Anterior</button>
+    </div>
+  </mat-step>
 
-  <ion-button expand="full" (click)="hacerReserva()" [disabled]="!turnoSeleccionado">Hacer Reserva</ion-button>
-  <ion-button expand="full" (click)="cancelarReserva()">Cancelar</ion-button>
-</ion-content>
+
+  <mat-step>
+    <ng-template matStepLabel>Datos de confirmación de reserva</ng-template>
+
+    <div>
+
+      <h2>Tu reserva es el día: {{ fechaForm.value?.fecha }}</h2>
+      <h2>En el turno de: {{ turnoSeleccionado?.hora_inicio }} a {{ turnoSeleccionado?.hora_fin }}</h2>
+      <h2>Y para: {{ personasForm.value?.numPersonas }} personas.</h2>
+
+    </div>
+    <div class="posicion_boton">
+      <button mat-button (click)="hacerReserva()" [disabled]="!turnoSeleccionado">Hacer Reserva</button>
+      <button mat-button (click)="cancelarReserva()">Cancelar</button>
+    </div>
+  </mat-step>
+</mat-vertical-stepper>
