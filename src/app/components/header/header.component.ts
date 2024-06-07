@@ -116,4 +116,8 @@ export class HeaderComponent  implements OnInit {
     });
   }
 
+  goHome() {
+    this.router.navigate(['/notium']);
+  }
+
   }
