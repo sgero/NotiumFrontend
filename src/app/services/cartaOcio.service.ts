@@ -46,13 +46,16 @@ export class CartaOcioService {
     const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
     return this.http.post<ProductoFormato[]>(`${this.apiUrl}/productoFormato/listarTodos`, {}, { headers });
   }
+  listarFormatosCliente(username: Token){
+    return this.http.post<ProductoFormato[]>(`${this.apiUrl}/productoFormato/listarTodosCliente`, username);
+  }
 
   eliminarProducto(id: number){
     return this.http.delete(this.apiUrl+`/producto/eliminar/${id}` )
   }
 
   productoById(id: number){
-    return this.http.get(this.apiUrl+`/producto/${id}` )
+    return this.http.get<Producto>(this.apiUrl+`/producto/${id}` )
   }
 
 }

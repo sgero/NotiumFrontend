@@ -147,9 +147,10 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('listasPaginator') listasPaginator!: MatPaginator;
-  @ViewChild('listasSort') listasSort!: MatSort;  eventosInfo: string = 'eventosInfo';
+  @ViewChild('listasSort') listasSort!: MatSort;
+  eventosInfo: string = 'eventosInfo';
   mostrarListas: boolean = false;
-  ocio: OcioNocturno = new OcioNocturno();
+  ocio = new OcioNocturno();
   eventos: Evento[] = [];
   rpps: Rpp[] = [];
   rppDeleted: Rpp = new Rpp();
@@ -241,6 +242,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   eventosEntreFechas: Evento[] = [];
   fechaActual = new Date().toString();
 
+
+
   constructor(
     private ocioNocturnoService: OcionocturnoService,
     private eventoService: EventoService,
@@ -273,6 +276,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.dataSourceListas.paginator = this.listasPaginator;
     this.dataSourceListas.sort = this.listasSort;
   }
+
+
 
 
   getOcio() {
@@ -373,7 +378,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
   Staff() {
     this.eventosInfo = 'staff';
-    this.getRpps()
+    this.getRpps();
+    this.mostrarListas = false;
   }
 
   Carta() {
@@ -712,7 +718,10 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.usuarioService.getUsuarioToken().subscribe({
       next: value => {
         this.usuarioLogeado = value;
+        // this.token.username = value.username;
+        // console.log(this.token.username)
         this.getDTO(this.usuarioLogeado);
+
       },
       error: err => {
         console.error(err);

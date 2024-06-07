@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {IonicModule, IonModal} from "@ionic/angular";
 import {Producto} from "../../models/Producto";
 import {ProductoFormato} from "../../models/ProductoFormato";
@@ -33,6 +33,8 @@ import {ClienteService} from "../../services/cliente.service";
 import {OcionocturnoService} from "../../services/ocionocturno.service";
 import {Cliente} from "../../models/Cliente";
 import {CartaOcio} from "../../models/CartaOcio";
+import {OcioNocturno} from "../../models/OcioNocturno";
+import {Usuario} from "../../models/Usuario";
 
 @Component({
   selector: 'app-cartaocio',
@@ -82,7 +84,7 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   productoF = {id: 0}
   FormatoP = {id: 0}
   productoFormato = {precio: +'', productoDTO: this.productoF, formatoDTO: this.FormatoP}
-  token = {token: ''}
+  // token = {token: ''}
   productos: Producto[] = [];
   newProducto: Producto = new Producto();
   formatos: ProductoFormato[] = [];
@@ -96,6 +98,8 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   cliente?: Cliente;
   cartaOcio?: CartaOcio;
   usuarioLogeado: any;
+  token = {token: ''};
+  @Input() ocio!: any;
 
   constructor(private route:ActivatedRoute,
               private cartaOcioService: CartaOcioService,
@@ -107,8 +111,10 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+    // this.token.token = this.ocio.usuarioDTO.username;
+    // console.log(this.token.username);
+    // console.log(this.ocio.usuarioDTO?.username);
     this.getUsuario();
-    this.getFormatos()
   }
 
   ngAfterViewInit() {
@@ -230,6 +236,7 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   }
 
 
+
   siguiente() {
     this.formatoModal(true);
     this.newProducto.username = this.authService.getUsername();
@@ -246,10 +253,6 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
     this.cartaOcioService.listarProductos(token).subscribe({
       next: value => {
         this.productos = value as Producto[];
-        console.log('Productos recibidos:', this.productos);
-        // this.dataSourceProductos = new MatTableDataSource(this.productos);
-        // this.dataSourceProductos.paginator = this.productosPaginator;
-        // this.dataSourceProductos.sort = this.productosSort;
       },
       error: (error) => {
         console.error('Error al listar productos', error);
@@ -258,7 +261,10 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   }
 
   getFormatos() {
+    console.log(this.ocio)
     const token = this.getToken();
+    this.token.token = this.ocio.userDTO.username!;
+    if (this.usuarioLogeado.rol?.toString() === "OCIONOCTURNO" && this.usuarioLogeado.id === this.ocio.userDTO.id){
     this.cartaOcioService.listarFormatos(token).subscribe({
       next: value => {
         this.formatos = value as ProductoFormato[];
@@ -271,7 +277,22 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
       error: (error) => {
         console.error('Error al listar productos', error);
       }
-    });
+    })}
+    else{
+      this.cartaOcioService.listarFormatosCliente(this.token).subscribe({
+        next: value => {
+          this.formatos = value as ProductoFormato[];
+          console.log('Formatos recibidos:', this.formatos);
+          this.formatos.sort((a, b) => a!.productoDTO!.nombre!.localeCompare(b!.productoDTO!.nombre!));
+          this.dataSourceProductos.data = this.formatos;
+          this.dataSourceProductos.paginator = this.productosPaginator;
+          this.dataSourceProductos.sort = this.productosSort;
+        },
+        error: (error) => {
+          console.error('Error al listar productos', error);
+        }
+      })
+    }
   }
 
 
@@ -355,15 +376,17 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
       this.clienteService.getByIdUsuario(usuario.id).subscribe({
         next: value => {
           this.cliente = value;
+          this.getFormatos();
         },
         error: err => {
           console.error(err);
         }
       })
-    } else if (usuario.rol == "OCIONOCTURNO"){
+    } else if (usuario.rol == "OCIONOCTURNO" && usuario.id === this.ocio.userDTO.id){
       this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
         next: value => {
-            this.permisosParaEditar = true;
+          this.permisosParaEditar = true;
+          this.getFormatos();
           },
         error: err => {
           console.error(err);
@@ -371,7 +394,15 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
       })
     }
     else {
-      this.router.navigate(["notium/error"])
+      this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
+        next: value => {
+          this.getFormatos();
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+      // this.router.navigate(["notium/error"])
     }
   }
 

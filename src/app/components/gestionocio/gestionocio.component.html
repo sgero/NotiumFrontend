@@ -483,7 +483,7 @@
                     <mat-icon>delete</mat-icon>
                   </button>
                   <button id="open-loading" mat-icon-button color="primary" (click)="getListas(rpp.id)">
-                    <ion-loading class="custom-loading" trigger="open-loading" message="Cargando Listas" [duration]="3000"></ion-loading>
+                    <ion-loading class="custom-loading" trigger="open-loading" message="Cargando Listas" [duration]="10500"></ion-loading>
                     <mat-icon>list</mat-icon>
                   </button>
                 </td>
@@ -764,15 +764,15 @@
     </div>
   </div>
 
-  <div *ngIf="eventosInfo == 'carta'">
+  <div *ngIf="eventosInfo === 'carta'">
     <div class="carta-ocio">
       <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="saveCarta()" [disabled]="isDisable">Crear Carta</button>
       <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="deleteCarta()">Eliminar Carta</button>
     </div>
-    <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
+    <app-cartaocio *ngIf="mostrarCarta" [ocio]="ocio"></app-cartaocio>
 
   </div>
-  <div *ngIf="eventosInfo == 'galeria'">
+  <div *ngIf="eventosInfo === 'galeria'">
     <div class="galeria">
       <p>Aqui saldrian las fotos</p>
     </div>

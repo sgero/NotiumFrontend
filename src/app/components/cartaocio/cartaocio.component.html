@@ -29,14 +29,14 @@
         <td mat-cell *matCellDef="let formatos">{{ formatos.formatoDTO!.formato! }}</td>
       </ng-container>
       <ng-container matColumnDef="opciones">
-        <th mat-header-cell *matHeaderCellDef> Opciones</th>
+        <th mat-header-cell *matHeaderCellDef> <span *ngIf="permisosParaEditar">Opciones</span></th>
         <td mat-cell *matCellDef="let formatos">
 
-          <button mat-icon-button color="primary" (click)="editProducto(formatos.productoDTO.id)">
+          <button *ngIf="permisosParaEditar" mat-icon-button color="primary" (click)="editProducto(formatos.productoDTO.id)">
             <mat-icon>edit</mat-icon>
           </button>
 
-          <button mat-icon-button color="warn" (click)="deleteProducto(formatos.id)">
+          <button *ngIf="permisosParaEditar" mat-icon-button color="warn" (click)="deleteProducto(formatos.id)">
             <mat-icon>delete</mat-icon>
           </button>
 
@@ -211,7 +211,7 @@
           <ion-buttons slot="start">
             <button mat-raised-button color="primary" style="width: 140px !important" (click)="productoEditModal(false)">Cancelar</button>
           </ion-buttons>
-          <ion-title>Registra tu Producto</ion-title>
+          <ion-title>Modifica tu Producto</ion-title>
           <ion-buttons slot="end">
             <button mat-raised-button color="primary" style="width: 140px !important" (click)="guardar(newProductoFormato!.productoDTO!.id!)">Agregar</button>
           </ion-buttons>
