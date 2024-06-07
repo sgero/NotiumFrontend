@@ -30,4 +30,8 @@ export class ClienteService {
     return this.http.get<Cliente>(`${this.apiUrl}/cliente/${idUsuario}`);
   }
 
+  deleteCliente(idUsuario:number){
+    return this.http.get<Cliente>(`${this.apiUrl}/cliente/delete/${idUsuario}`);
+  }
+
 }

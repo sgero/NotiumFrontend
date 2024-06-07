@@ -6,6 +6,7 @@ import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {LoginComponent} from "../login/login.component";
 import {RegistroComponent} from "../registro/registro.component";
+import {UsuarioService} from "../../services/usuario.service";
 
 @Component({
   selector: 'app-header',
@@ -20,50 +21,36 @@ import {RegistroComponent} from "../registro/registro.component";
 })
 export class HeaderComponent  implements OnInit {
 
-  protected username: string | undefined;
+  username: any;
+  usuarioLogueado:any;
 
   constructor(private router: Router, public authService: AuthService,
-              private modalController: ModalController) { }
+              private modalController: ModalController,
+              private userService: UsuarioService) { }
 
-  onRegisterButtonClick() {
+  ngOnInit() {
 
-    this.router.navigate(['/notium/registrar']);
+    this.traerUsuario();
+
+  }
+  traerUsuario(){
+
+    this.userService.getUsuarioToken().subscribe(data=>{
+
+      this.usuarioLogueado = data;
+      this.username = this.usuarioLogueado.username;
+      localStorage.setItem('username', this.username);
+
+    });
 
   }
 
-  onLoginButtonClick() {
-
-    this.router.navigate(['/notium/login']);
-
-
-  }
-  // ngOnInit() {return null}
-
-
-  get isAdmin() {
-    return this.authService.getUserRole() === 'ADMIN';
-  }
-
-  get isClient() {
-    return this.authService.getUserRole() === 'CLIENTE';
-  }
-
-  get isRestaurant() {
-    return this.authService.getUserRole() === 'RESTAURANTE';
-  }
-
-  get isOcioNocturno() {
-    return this.authService.getUserRole() === 'OCIONOCTURNO';
-  }
-
-  get isRpp() {
-    return this.authService.getUserRole() === 'RPP';
-  }
 
   logout() {
     this.authService.logout();
-    // Redirigir al usuario a la página de inicio de sesión u otra página, si es necesario
+    window.location.reload();
     this.router.navigate(['/login']).then(r => console.log('Logged out'));
+
   }
 
   openAdminPanel() {
@@ -89,9 +76,8 @@ export class HeaderComponent  implements OnInit {
 
   async login() {
     const modal = await this.modalController.create({
-      component: LoginComponent, // Reemplaza LoginComponent por el nombre de tu componente de inicio de sesión
+      component: LoginComponent,
       componentProps: {
-        // Puedes pasar cualquier dato necesario al modal
       }
     });
     await modal.present();
@@ -100,24 +86,11 @@ export class HeaderComponent  implements OnInit {
 
   async registro() {
     const modal = await this.modalController.create({
-      component: RegistroComponent, // Reemplaza LoginComponent por el nombre de tu componente de inicio de sesión
+      component: RegistroComponent,
       componentProps: {
-        // Puedes pasar cualquier dato necesario al modal
       }
     });
     await modal.present();
   }
 
-
-  ngOnInit() {
-    this.authService.getCurrentUser().subscribe(usuario => {
-      // @ts-ignore
-      this.username = usuario.username; // Suponiendo que el servicio devuelve el nombre de usuario
-    });
-  }
-
-  goHome() {
-    this.router.navigate(['/notium']);
-  }
-
-  }
+}
