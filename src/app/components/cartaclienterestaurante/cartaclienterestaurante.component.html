@@ -12,7 +12,7 @@
     <div class="carta">
       <h1 *ngIf="entrante"><I><U>ENTRANTES</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'ENTRANTE' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato">
@@ -38,7 +38,7 @@
       </section>
       <h1 *ngIf="carne"><I><U>CARNES</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CARNE'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CARNE' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato">
@@ -64,7 +64,7 @@
       </section>
       <h1 *ngIf="pescado"><I><U>PESCADOS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'PESCADO'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'PESCADO' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato">
@@ -90,7 +90,7 @@
       </section>
       <h1 *ngIf="guiso"><I><U>GUISOS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'GUISO'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'GUISO' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato" >
@@ -116,7 +116,7 @@
       </section>
       <h1 *ngIf="revuelto"><I><U>REVUELTOS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REVUELTO'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REVUELTO' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato">
@@ -142,7 +142,7 @@
       </section>
       <h1 *ngIf="frito"><I><U>FRITOS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'FRITO'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'FRITO' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato">
@@ -168,7 +168,7 @@
       </section>
       <h1 *ngIf="otros"><I><U>OTROS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'OTROS'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'OTROS' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato">
@@ -194,7 +194,7 @@
       </section>
       <h1 *ngIf="postre"><I><U>POSTRES</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'POSTRE'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'POSTRE' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato" ></div>
@@ -210,7 +210,7 @@
       </section>
       <h1 *ngIf="vino"><I><U>VINOS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'VINO'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'VINO' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato"></div>
@@ -226,7 +226,7 @@
       </section>
       <h1 *ngIf="cerveza"><I><U>CERVEZAS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CERVEZA'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'CERVEZA' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato">
@@ -252,7 +252,7 @@
       </section>
       <h1 *ngIf="refresco"><I><U>REFRESCOS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REFRESCO'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'REFRESCO' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato"></div>
@@ -268,7 +268,7 @@
       </section>
       <h1 *ngIf="agua"><I><U>AGUA</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'AGUA'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'AGUA' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato"></div>
@@ -284,7 +284,7 @@
       </section>
       <h1 *ngIf="coctel"><I><U>COCTELES</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'COCTEL'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'COCTEL' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato"></div>
@@ -300,7 +300,7 @@
       </section>
       <h1 *ngIf="bebidaAlcoholica"><I><U>BEBIDAS ALCOHÓLICAS</U></I></h1>
       <section *ngFor="let p of productos">
-        <div class="producto" *ngIf="p.producto.tipoCategoria === 'BEBIDA_ALCOHOLICA'">
+        <div class="producto" *ngIf="p.producto.tipoCategoria === 'BEBIDA_ALCOHOLICA' && p.formatos.length !== 0">
           <div><span>{{p.producto.nombre}}</span></div>
           <div class="formatos">
             <div class="formato"></div>

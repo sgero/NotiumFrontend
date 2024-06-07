@@ -34,7 +34,10 @@
   padding: 20px;
 }
 
+ion-datetime{
 
+  background-color: white;
+}
 
 ion-item.selected {
   background-color: #f0f0f0; /* Cambia el color de fondo */
@@ -45,6 +48,29 @@ ion-item.selected {
   margin-bottom: 20px;
 }
 
+.formularios{
+
+  width: 100%;
+}
+
+.posicion_boton{
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  button:last-child{
+
+    margin-left:1rem;
+
+  }
+
+
+}
+.boton_selec{
+
+  margin-left:10px;
+
+}
 .form-group {
   margin-bottom: 15px;
 }

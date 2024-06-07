@@ -38,7 +38,7 @@ export class RestauranteComponent  implements OnInit {
   rankingRestaurante: number[] = [];
   restauranteEnRanking: boolean = false;
   restaurante: any;
-  userup = false;
+  userup = true;
   constructor(private usuarioService: UsuarioService,
               private sharedService: SharedService,
               private restauranteService: RestauranteService,
@@ -46,10 +46,20 @@ export class RestauranteComponent  implements OnInit {
               private _route: ActivatedRoute) {this.id_restaurante = this._route.snapshot.paramMap.get('id');}
 
   getUsuarioPorToken(){
-
     this.usuarioService.getUsuarioToken().subscribe( {
       next: (usuario) => {
-        this.usuario = usuario;
+        this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
+          next: (responseData) => {
+            this.restaurante = responseData;
+            this.sharedService.setRestaurante(this.restaurante);
+            this.usuario = usuario;
+            if (usuario.id == this.restaurante.userDTO.id){
+              this.userup = false;
+            }
+          },
+          error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
+          complete: () => { console.log('Restaurante captado por id', this.restaurante);}
+        });
         this.sharedService.setUsuarioToken(usuario)},
       error: (error) => { console.error('Error al obtener el Usuario:', error); },
       complete: () => { console.log('Usuario', this.usuario); }
@@ -105,12 +115,9 @@ export class RestauranteComponent  implements OnInit {
       this.router.navigate(['/notium']);
     }
     //Funciones externas
-    this.captarRestaurantePorId();
+
     this.getUsuarioPorToken();
     this.setearIDParams();
-    setTimeout(() =>{
-      this.adminuser();
-    }, 900);
 
 
   }

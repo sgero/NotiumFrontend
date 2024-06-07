@@ -22,6 +22,34 @@ ion-button{
 
 }
 
+.direccion{
+
+  display: flex;
+  flex-direction: column;
+
+}
+
+ion-list {
+
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  margin-bottom: 20px !important;
+
+}
+
+input {
+
+  text-align: start !important;
+
+}
+
+ion-input{
+
+  text-align: start !important;
+
+}
+
 .labelspace{
 
   max-width: max-content !important;

@@ -1,8 +1,5 @@
 import {Routes} from '@angular/router';
-import {HomeComponent} from "./components/home/home.component";
 import {ErrorComponent} from "./components/error/error.component";
-import {HeaderComponent} from './components/header/header.component';
-import {FooterComponent} from './components/footer/footer.component';
 import {HomerestauranteComponent} from "./components/homerestaurante/homerestaurante.component";
 import {HomeocionocturnoComponent} from "./components/homeocionocturno/homeocionocturno.component";
 import {RegistroComponent} from "./components/registro/registro.component";
@@ -16,23 +13,22 @@ import {GestionocioComponent} from "./components/gestionocio/gestionocio.compone
 import {CartaocioComponent} from "./components/cartaocio/cartaocio.component";
 import {CartadescarterComponent} from "./components/cartadescarter/cartadescarter.component";
 import {HomepComponent} from "./components/homep/homep.component";
+import {PerfilComponent} from "./components/perfil/perfil.component";
+import {EditarPerfilComponent} from "./components/perfil/editar-perfil/editar-perfil.component";
+import {MisTicketsReservasComponent} from "./components/mis-tickets-reservas/mis-tickets-reservas.component";
 
 export const routes: Routes = [
-  // {
-  //   path: 'home',
-  //   loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
-  // },
+
   {
     path: '',
     redirectTo: 'notium',
     pathMatch: 'full',
   },
+
   {path: 'notium', component: HomepComponent},
   {path: 'notium/registrar', component: RegistroComponent},
   {path: 'notium/login', component: LoginComponent},
   {path: 'notium/error', component: ErrorComponent},
-  {path: 'header', component: HeaderComponent},
-  {path: 'footer', component: FooterComponent},
   {path: 'cartaRestaurante', component: CartarestauranteComponent},
   {path: 'cartaRDescarte', component: CartadescarterComponent},
   {path: 'notium/restaurante', component: HomerestauranteComponent},
@@ -42,16 +38,10 @@ export const routes: Routes = [
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
   {path: 'notium/ocionocturno/:id', component: GestionocioComponent},
   {path: 'cartaOcio', component: CartaocioComponent},
-
-  // Esto me da error porque no existe
-  // {
-  //   path: 'prueba',
-  //   loadComponent: () => import('./components/restaurante/prueba/prueba.page').then( m => m.PruebaPage)
-  // }
-
   {path: 'notium/reservar/:restauranteId', component: CrearReservaComponent},
-  {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent}
-
-
+  {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
+  {path: 'notium/perfil/:id', component: PerfilComponent},
+  {path: 'notium/perfil/editar', component: EditarPerfilComponent},
+  {path: 'notium/ticketsyreservas', component: MisTicketsReservasComponent},
 
 ];

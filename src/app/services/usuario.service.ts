@@ -69,5 +69,10 @@ export class UsuarioService{
     return this.http.get<any>(`${this.apiUrl}/usuarioByToken`);
   }
 
+  validaUsernameEmailExistentes(usuario: Usuario){
+
+    return this.http.post<any>(`${this.apiUrl}/users/validar`, usuario);
+
+  }
 
 }

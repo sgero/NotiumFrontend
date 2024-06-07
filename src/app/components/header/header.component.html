@@ -9,7 +9,7 @@
 
     <!--    <i class="fa fa-search search_icon" ></i>-->
     <div class="titulin">
-      <img src="../../../assets/images/OIG4.jpg" alt="Logo">
+      <img src="../../../assets/images/OIG4.jpg" alt="Logo" href="/notium">
       <div >
 <!--        <h1><strong>OTIUMⁿ </strong></h1>-->
 
@@ -32,39 +32,6 @@
 
 
   </div>
-  <!--  <div class="reglog">-->
-  <!--    <button class="register-button" (click)="onRegisterButtonClick()">Sign Up</button>-->
-  <!--    <span> | </span>-->
-  <!--    <button class="login-button" (click)="onLoginButtonClick()">Sign In</button>-->
-  <!--  </div>-->
-
-
-
-
-
-<!--<div class="tope-header">-->
-<!--  <ng-container *ngIf="authService.isUserLoggedIn()">-->
-<!--    <ion-buttons slot="end">-->
-<!--      <ng-container *ngIf="isAdmin">-->
-<!--        <ion-button (click)="openAdminPanel()">Panel de Admin</ion-button>-->
-<!--      </ng-container>-->
-<!--      <ng-container *ngIf="isClient">-->
-<!--        <ion-button (click)="openClientPanel()">Panel de Cliente</ion-button>-->
-<!--      </ng-container>-->
-<!--      <ng-container *ngIf="isRestaurant">-->
-<!--        <ion-button (click)="openRestaurantPanel()">Panel de Restaurante</ion-button>-->
-<!--      </ng-container>-->
-<!--      <ng-container *ngIf="isOcioNocturno">-->
-<!--        <ion-button (click)="openOcioNocturnoPanel()">Panel de Ocio Nocturno</ion-button>-->
-<!--      </ng-container>-->
-<!--      <ng-container *ngIf="isRpp">-->
-<!--        <ion-button (click)="openRppPanel()">Panel de RPP</ion-button>-->
-<!--      </ng-container>-->
-<!--      &lt;!&ndash; Agrega más botones para otros roles si es necesario &ndash;&gt;-->
-<!--      <ion-button (click)="logout()">Logout</ion-button> &lt;!&ndash; Botón de Logout &ndash;&gt;-->
-<!--    </ion-buttons>-->
-<!--  </ng-container>-->
-<!--</div>-->
 
   <div class="tope-header">
     <ng-container *ngIf="authService.isUserLoggedIn()">
@@ -72,15 +39,6 @@
     </ng-container>
   </div>
 
-
-<!--  <div class="user">-->
-<!--    <button class="register-button" (click)="registro()">Regístrate</button>-->
-<!--&lt;!&ndash;    <button class="register-button" (click)="onRegisterButtonClick()">Regístrate</button>&ndash;&gt;-->
-<!--    <span> | </span>-->
-<!--    <button class="login-button" (click)="login()">Login</button>-->
-<!--&lt;!&ndash;    <button class="login-button" (click)="onLoginButtonClick()">Sign In</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;    <img src="../../../assets/images/notium.jpeg" alt="User">&ndash;&gt;-->
-<!--  </div>-->
   <div class="user" style="display: flex; align-items: center;">
     <ng-container *ngIf="authService.isUserLoggedIn()">
       <button class="logout-button" style="padding: 8px 16px; margin-right: 8px;" (click)="logout()">Logout</button>

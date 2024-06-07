@@ -3,6 +3,10 @@ import {AuthService} from "../../services/auth.service";
 import {IonicModule, ModalController} from "@ionic/angular";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {LoginComponent} from "../login/login.component";
+import {UsuarioService} from "../../services/usuario.service";
+import {Router} from "@angular/router";
+// @ts-ignore
+import {EditarPerfilComponent} from "../perfil/editar-perfil/editar-perfil.component";
 
 
 @Component({
@@ -16,25 +20,64 @@ import {LoginComponent} from "../login/login.component";
   ],
   standalone: true
 })
-export class MenuLateralComponent  implements OnInit {
-
+export class MenuLateralComponent implements OnInit {
 
 
   @Input() userRole!: any;
   @Input() isLoggedIn!: any;
 
+  usuarioLogueado:any;
+  username:any;
+
 
   constructor(private authService: AuthService,
-              private modalController: ModalController) { }
+              private modalController: ModalController,
+              private userService: UsuarioService,
+              private router: Router) {
+  }
 
   ngOnInit() {
-    // this.isLoggedIn = this.authService.isUserLoggedIn();
+
+    this.traerUsuario();
+    this.isLoggedIn = this.authService.isUserLoggedIn()
+
+  }
+
+  traerUsuario() {
+
+    this.userService.getUsuarioToken().subscribe(data => {
+
+      this.usuarioLogueado = data;
+      this.username = this.usuarioLogueado.username;
+      this.userRole = this.usuarioLogueado.rol;
+      localStorage.setItem('username', this.username);
+
+    });
+
+  }
+
+  visualizarPerfil(){
+
+    this.router.navigate(['/notium/perfil/' + this.usuarioLogueado.id]);
+
+  }
+
+  async editarPerfil(){
+
+    const modal = await this.modalController.create({
+      component: EditarPerfilComponent,
+      componentProps: {
+      }
+    });
+    await modal.present();
+
+  }
 
 
-    this.isLoggedIn = this.authService.isUserLoggedIn();
+  verTicketsReservas(){
 
+    this.router.navigate(['/notium/ticketsyreservas']);
 
-    this.userRole = this.authService.getUserRole();
   }
 
   logout() {
@@ -43,11 +86,11 @@ export class MenuLateralComponent  implements OnInit {
     this.userRole = null;
   }
 
+
   async login() {
     const modal = await this.modalController.create({
-      component: LoginComponent, // Reemplaza LoginComponent por el nombre de tu componente de inicio de sesión
+      component: LoginComponent,
       componentProps: {
-        // Puedes pasar cualquier dato necesario al modal
       }
     });
     await modal.present();

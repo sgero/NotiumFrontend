@@ -59,8 +59,7 @@
 
               <ion-item>
                 <ion-label class="labelspace">Contraseña</ion-label>
-                <ion-input (input)="validarContrasena()" id="contrasena" type="password" [(ngModel)]="user.password" required></ion-input>
-                <div id="mensajeContrasena"></div>
+                <ion-input id="contrasena" type="password" [(ngModel)]="user.password" required></ion-input>
               </ion-item>
 
               <ion-item>
@@ -127,19 +126,20 @@
               <ion-item class="direccion">
                 <ion-label class="labelspace">Calle</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.calle" required></ion-input>
-                <br>
+
                 <ion-label class="labelspace">Número</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.numero" required></ion-input>
+              </ion-item>
 
+              <ion-item class="direccion">
                 <ion-label class="labelspace">Puerta</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.puerta" required></ion-input>
 
                 <ion-label class="labelspace">Código Postal</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.codigoPostal" required></ion-input>
+              </ion-item>
 
-                <ion-label class="labelspace">País</ion-label>
-                <ion-input type="text" [(ngModel)]="direccion.pais" required></ion-input>
-
+              <ion-item class="direccion">
                 <ion-label class="labelspace">Ciudad</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.ciudad" required></ion-input>
 
@@ -165,7 +165,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-label class="labelspace">Imagen marca del restaurante</ion-label>
+                <ion-label class="labelspace">Enlace del logo del restaurante</ion-label>
                 <ion-input type="text" [(ngModel)]="userRestaurante.imagen_marca" required></ion-input>
               </ion-item>
 
@@ -194,19 +194,20 @@
               <ion-item class="direccion">
                 <ion-label class="labelspace">Calle</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.calle" required></ion-input>
-                <br>
+
                 <ion-label class="labelspace">Número</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.numero" required></ion-input>
+              </ion-item>
 
+              <ion-item class="direccion">
                 <ion-label class="labelspace">Puerta</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.puerta" required></ion-input>
 
                 <ion-label class="labelspace">Código Postal</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.codigoPostal" required></ion-input>
+              </ion-item>
 
-                <ion-label class="labelspace">País</ion-label>
-                <ion-input type="text" [(ngModel)]="direccion.pais" required></ion-input>
-
+              <ion-item class="direccion">
                 <ion-label class="labelspace">Ciudad</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.ciudad" required></ion-input>
 
@@ -237,12 +238,12 @@
               </ion-item>
 
               <ion-item>
-                <ion-label class="labelspace">Imagen marca del establecimiento nocturno</ion-label>
+                <ion-label class="labelspace">Enlace del logo del establecimiento nocturno</ion-label>
                 <ion-input type="text" [(ngModel)]="userOcioNocturno.imagen_marca" required></ion-input>
               </ion-item>
 
               <ion-item>
-                <ion-label>Hora de apertura del establecimiento nocturno</ion-label>
+                <ion-label>Hora de apertura</ion-label>
                 <ion-datetime
                   [(ngModel)]="userOcioNocturno.hora_apertura"
                   required
@@ -253,7 +254,7 @@
               </ion-item>
 
               <ion-item>
-                <ion-label>Hora de cierre del establecimiento nocturno</ion-label>
+                <ion-label>Hora de cierre</ion-label>
                 <ion-datetime
                   [(ngModel)]="userOcioNocturno.hora_cierre"
                   required
@@ -266,25 +267,27 @@
               <ion-item class="direccion">
                 <ion-label class="labelspace">Calle</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.calle" required></ion-input>
-                <br>
+
                 <ion-label class="labelspace">Número</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.numero" required></ion-input>
+              </ion-item>
 
+              <ion-item class="direccion">
                 <ion-label class="labelspace">Puerta</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.puerta" required></ion-input>
 
                 <ion-label class="labelspace">Código Postal</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.codigoPostal" required></ion-input>
+              </ion-item>
 
-                <ion-label class="labelspace">País</ion-label>
-                <ion-input type="text" [(ngModel)]="direccion.pais" required></ion-input>
-
+              <ion-item class="direccion">
                 <ion-label class="labelspace">Ciudad</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.ciudad" required></ion-input>
 
                 <ion-label class="labelspace">Provincia</ion-label>
                 <ion-input type="text" [(ngModel)]="direccion.provincia" required></ion-input>
               </ion-item>
+
             </ion-list>
 
             <div class="botones">

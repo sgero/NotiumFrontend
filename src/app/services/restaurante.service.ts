@@ -5,6 +5,7 @@ import { Restaurante } from "../models/Restaurante";
 import {UserRestaurante} from "../models/UserRestaurante";
 import {ComentarioRestaurante} from "../models/ComentarioRestaurante";
 import {Cliente} from "../models/Cliente";
+// @ts-ignore
 import { format, parseISO } from 'date-fns';
 
 import {OcioNocturno} from "../models/OcioNocturno";

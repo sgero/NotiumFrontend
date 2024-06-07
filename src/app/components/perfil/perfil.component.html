@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil del Usuario</title>
+  <link rel="stylesheet" href="perfil.component.scss">
+</head>
+<body>
+  <app-header></app-header>
+
+  <div class="container">
+
+    <h1>MI PERFIL</h1>
+
+    <div class="profile-card">
+
+      <div class="user-info">
+        <p><strong>Username:</strong> <span name="username" id="username">{{usuario.username}}</span></p>
+        <p><strong>Email:</strong> <span name="email" id="useremail">{{usuario.email}}</span></p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <app-footer></app-footer>
+</body>
+</html>
