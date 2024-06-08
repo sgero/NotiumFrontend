@@ -101,4 +101,9 @@ md button in-toolbar ion-activatable ion-focusable {
 .custom-toast {
   --background: #eecd4f !important; /* Cambia este valor al color que desees */
 }
-
+.cdk-overlay-container div div mat-dialog-container {
+  margin: 20px !important;
+}
+.mdc-dialog{
+  height: 900px !important
+}

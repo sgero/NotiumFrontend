@@ -52,6 +52,8 @@ import {CrearEvento} from "../../../models/CrearEvento";
 import {ChatService} from "../../../services/chat.service";
 import {HeaderComponent} from "../../header/header.component";
 import {FooterComponent} from "../../footer/footer.component";
+import {ChatComponent} from "../../gestionocio/chat/chat.component";
+import {MatDialog, MatDialogContent} from "@angular/material/dialog";
 
 const IonIcons = {
   shirtOutline,
@@ -99,7 +101,9 @@ const IonIcons = {
     MatDatepickerModule,
     EditarEventoComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    ChatComponent,
+    MatDialogContent
   ],
   standalone: true,
   providers: [
@@ -174,10 +178,7 @@ export class EventDetailComponent implements OnInit {
   permisosParaEditar = false;
   isModalEvento = false;
   crearEventoDTO?: CrearEvento;
-  eventoModificado = [0];
-  isAlertOpen = false;
   idEvento?: number;
-  clienteEstaEnChat = false;
   isDeleteOpen = false;
 
   constructor(private toastController: ToastController, private loadingCtrl: LoadingController,
@@ -187,31 +188,11 @@ export class EventDetailComponent implements OnInit {
               private router: Router, private clienteService: ClienteService,
               private pdfService: PdfService, private datePipe: DatePipe,
               private ocioNocturnoService: OcionocturnoService,
-              private chatService: ChatService
+              private chatService: ChatService,
+              public dialog: MatDialog
   ) {
     addIcons(IonIcons);
   }
-
-  public alertButtons = [
-    {
-      text: 'Sí',
-      role: 'confirmar',
-      handler: () => {
-        this.chatService.actualizarClienteChat(this.cliente?.id!, this.evento?.ocioNocturnoDTO?.id!).subscribe({
-          next: value => {
-            this.router.navigate(["notium/ocionocturno/", this.evento?.ocioNocturnoDTO?.id!])
-          }
-        })
-      },
-    },
-    {
-      text: 'No',
-      role: 'cancelar',
-      handler: () => {
-        console.log('Alert canceled');
-      },
-    },
-  ];
 
   public deleteButtons = [
     {
@@ -509,7 +490,6 @@ export class EventDetailComponent implements OnInit {
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf(compra, new ComprarReservadoDTO(), []);
-            this.alert();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -534,7 +514,6 @@ export class EventDetailComponent implements OnInit {
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], compra, []);
-            this.alert();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -559,7 +538,6 @@ export class EventDetailComponent implements OnInit {
             this.entradasCompradasExito = true;
             this.isModalOpen = false;
             this.pdfService.downloadPdf([], new ComprarReservadoDTO(), compra);
-            this.alert();
           } else {
             await toast.present();
             this.isModalOpen = false;
@@ -659,14 +637,6 @@ export class EventDetailComponent implements OnInit {
           console.error(err);
         }
       })
-      this.chatService.verificarClienteEnChat(usuario.id, this.evento?.ocioNocturnoDTO?.id!).subscribe({
-        next: value => {
-          this.clienteEstaEnChat = value;
-        },
-        error: err => {
-          console.error(err);
-        }
-      })
     } else if (usuario.rol == "OCIONOCTURNO") {
       this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
         next: async value => {
@@ -714,13 +684,7 @@ export class EventDetailComponent implements OnInit {
     this.getById(id);
   }
 
-  alert() {
-    if (!this.clienteEstaEnChat) {
-      this.isAlertOpen = true;
-    }
-  }
-
-  alertDelete(b:boolean) {
+  alertDelete(b: boolean) {
     this.isDeleteOpen = b;
   }
 
@@ -750,4 +714,11 @@ export class EventDetailComponent implements OnInit {
     })
   }
 
+  openChat() {
+    if (this.evento) {
+      this.dialog.open(ChatComponent, {
+        data: {evento: this.evento!}
+      });
+    }
+  }
 }

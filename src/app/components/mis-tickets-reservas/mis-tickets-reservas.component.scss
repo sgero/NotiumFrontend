@@ -1,12 +1,25 @@
-ion-card {
-  margin-bottom: 20px;
+.content{
+  overflow: auto;
 }
-
+.card-content {
+  margin: 20px;
+  box-shadow: 1px 10px 10px #ebebeb;
+  border-radius: 10px;
+}
+.ion-page{
+  z-index: 101;
+  overflow: auto !important;
+}
 ion-card-title {
   font-size: 1.4em;
   font-weight: bold;
 }
-
+ion-card-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 ion-label h2 {
   font-size: 1.2em;
   font-weight: bold;
@@ -15,4 +28,86 @@ ion-label h2 {
 ion-label p {
   font-size: 1em;
   color: #666;
+}
+
+.general{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.general button{
+  margin: 10px;
+}
+.ocio{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  overflow: auto;
+  justify-content: center;
+}
+
+.etiquetas{
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+.ocio button{
+  margin: 10px;
+}
+.middle-content{
+  width: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1rem;
+}
+.card-row{
+  margin-left: 50px;
+  display: flex;
+  justify-content: center;
+}
+.card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: .5s;
+  cursor: pointer;
+}
+.detail{
+  margin: 5px;
+  width: 18rem;
+  padding-left: 0 !important;
+  padding-right: 0!important;
+}
+.text{
+  max-width: 245px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.spinner {
+  width: 1400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.matspin{
+  height: 30px !important;
+  width: 30px !important;
+}
+
+.texto_videos h2 {
+  width: 97.3%;
+  border-bottom: 1px solid #000;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+.texto_videos h2 span {
+  background: white;
+  padding-right: 20px;
+  padding-left: 40px;
+  margin-right: 40px;
 }

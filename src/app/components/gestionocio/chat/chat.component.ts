@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {IonicModule, ToastController} from "@ionic/angular";
 import {addIcons} from "ionicons";
-import {send, menu, arrowDown, ellipsisVerticalOutline} from "ionicons/icons";
+import {alert, arrowDown, ellipsisVerticalOutline, menu, send} from "ionicons/icons";
 import {FormsModule} from "@angular/forms";
 import {UsuarioService} from "../../../services/usuario.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -11,12 +11,19 @@ import {ChatMensajeDTO} from "../../../models/ChatMensajeDTO";
 import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
 import {MatButton} from "@angular/material/button";
 import {OcioNocturno} from "../../../models/OcioNocturno";
+import {Evento} from "../../../models/Evento";
+import {EventoService} from "../../../services/evento.service";
+import {HeaderComponent} from "../../header/header.component";
+import {FooterComponent} from "../../footer/footer.component";
+import {MatIconModule} from "@angular/material/icon";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 const IonIcons = {
   send,
   menu,
   arrowDown,
-  ellipsisVerticalOutline
+  ellipsisVerticalOutline,
+  alert
 }
 
 @Component({
@@ -29,33 +36,49 @@ const IonIcons = {
     MatMenuTrigger,
     MatButton,
     MatMenuItem,
-    MatMenu
+    MatMenu,
+    HeaderComponent,
+    FooterComponent,
+    MatIconModule
   ],
   standalone: true
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
   message: string = '';
   esCliente?: boolean;
-  idOcio: any;
   permisosParaEditar = false;
-  mensajes: ChatMensajeDTO[] = [];
+  mensajes: ChatMensajeDTO[] = [new ChatMensajeDTO()];
   mensajeSeleccionado?: ChatMensajeDTO;
   editarMensaje = false;
+  evento?: Evento;
+  @ViewChild('scrollContainer') private myScrollContainer!: ElementRef;
 
   constructor(
     private usuarioService: UsuarioService,
-    private router : Router,
-    private ocioNocturnoService : OcionocturnoService,
+    private router: Router,
+    private ocioNocturnoService: OcionocturnoService,
     private route: ActivatedRoute,
-    private chatService : ChatService,
-    private toastController : ToastController
+    private chatService: ChatService,
+    private toastController: ToastController,
+    private eventoService: EventoService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
   ) {
-    this.idOcio = this.route.snapshot.paramMap.get('id');
     addIcons(IonIcons);
   }
 
   ngOnInit() {
-    this.getUsuario();
+    this.getEvento(this.data.evento.id!)
+    this.scrollToBottom();
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }
   }
 
   getUsuario() {
@@ -75,16 +98,16 @@ export class ChatComponent implements OnInit {
     if (usuario.rol == "CLIENTE") {
       this.esCliente = true;
       this.permisosParaEditar = false;
-      this.getMensajes(this.idOcio!);
+      this.getMensajes(this.data.evento.id!);
     } else if (usuario.rol != "OCIONOCTURNO") {
       this.esCliente = false;
       this.router.navigate(["notium/error"])
     } else {
       this.ocioNocturnoService.getByIdUsuario(usuario.id).subscribe({
         next: value => {
-          if (value.id == this.idOcio) {
+          if (value.id == this.evento?.ocioNocturnoDTO?.id) {
             this.permisosParaEditar = true;
-            this.getMensajes(value.id!);
+            this.getMensajes(this.data.evento.id!);
           }
         },
         error: err => {
@@ -94,10 +117,10 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  getMensajes(id:number) {
-    this.chatService.getMensajesByOcio(id).subscribe({
+  getMensajes(id: number) {
+    this.chatService.getMensajesByEvento(id).subscribe({
       next: value => {
-        if (value){
+        if (value) {
           this.mensajes = value.reverse();
           this.mensajes.forEach(m => {
             const fechaString = m.fecha;
@@ -117,27 +140,21 @@ export class ChatComponent implements OnInit {
         }
       },
       error: err => {
+        this.mensajes = [];
         console.error(err);
       }
     })
   }
 
-  toggleMenu(message:ChatMensajeDTO, b: boolean | undefined) {
+  toggleMenu(message: ChatMensajeDTO, b: boolean | undefined) {
     message.isMenuVisible = !b;
   }
 
 
-  async eliminarMensaje(m: ChatMensajeDTO) {
-    const toast = await this.toastController.create({
-      message: 'Mensaje eliminado con éxito',
-      duration: 5000,
-      position: "top",
-      color: "danger"
-    });
+  eliminarMensaje(m: ChatMensajeDTO) {
     this.chatService.eliminarMensaje(m.id!).subscribe({
-      next: async value => {
-        await toast.present();
-        this.getMensajes(this.idOcio!);
+      next: value => {
+        this.getMensajes(this.data.evento.id!);
       },
       error: err => {
         console.error(err);
@@ -145,27 +162,23 @@ export class ChatComponent implements OnInit {
     })
   }
 
-  async guardarMensaje(texto: string, idMensaje?: number,) {
-    const toast = await this.toastController.create({
-      message: 'Mensaje guardado con éxito',
-      duration: 5000,
-      position: "top",
-      color: "success"
-    });
+  guardarMensaje(texto: string, idMensaje?: number,) {
     const mensaje = new ChatMensajeDTO();
     mensaje.id = idMensaje;
     mensaje.texto = texto;
-    const chat = new OcioNocturno()
-    chat.id = this.idOcio;
-    mensaje.chatDTO = chat;
+    const ocioNocturno = new OcioNocturno()
+    ocioNocturno.id = this.evento?.ocioNocturnoDTO?.id;
+    mensaje.ocioNocturnoDTO = ocioNocturno;
+    const chatEvento = new Evento();
+    chatEvento.id = this.data.evento.id!;
+    mensaje.chatEventoDTO = chatEvento;
     this.chatService.guardar(mensaje).subscribe({
-      next: async value => {
-        this.getMensajes(this.idOcio!);
+      next: value => {
+        this.getMensajes(this.data.evento.id!);
         this.message = '';
-        if (this.mensajeSeleccionado){
+        if (this.mensajeSeleccionado) {
           this.mensajeSeleccionado.texto = '';
         }
-        await toast.present();
       },
       error: err => {
         console.error(err);
@@ -179,4 +192,14 @@ export class ChatComponent implements OnInit {
     this.mensajeSeleccionado = m;
     this.message = m.texto!;
   }
+
+  getEvento(id: number) {
+    this.eventoService.getById(id).subscribe({
+      next: value => {
+        this.evento = value.object as Evento;
+      }
+    });
+    this.getUsuario();
+  }
+
 }

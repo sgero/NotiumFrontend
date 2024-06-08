@@ -16,12 +16,10 @@
     @if (!esCliente && permisosParaEditar) {
       <button mat-raised-button color="primary" style="width: 140px !important" (click)="openM(true)">Crear Evento
       </button>
+      <button mat-raised-button color="primary" style="width: 140px !important">Chats</button>
     }
     <button mat-raised-button color="primary" style="width: 140px !important" (click)="Staff()">Staff</button>
     <button mat-raised-button color="primary" style="width: 140px !important" (click)="Carta()">Carta</button>
-    @if (clienteEstaEnChat || permisosParaEditar){
-      <button mat-raised-button color="primary" style="width: 140px !important" (click)="chat()">Canal</button>
-    }
     <button mat-raised-button color="primary" style="width: 140px !important">Valoraciones</button>
   </div>
 
@@ -669,12 +667,6 @@
     </div>
     <app-cartaocio *ngIf="mostrarCarta"></app-cartaocio>
 
-  </div>
-
-  <div *ngIf="eventosInfo == 'chat'">
-    <div class="chat">
-      <app-chat></app-chat>
-    </div>
   </div>
 
 <app-footer></app-footer>

@@ -1,38 +1,223 @@
 <app-header></app-header>
+<div class="general">
+  @if (restaurante) {
+    <button mat-raised-button color="primary" style="width: 200px !important; height: 50px"
+            (click)="verRestaurante(true)">Reservas de Restaurantes
+    </button>
+    <button mat-raised-button color="white" style="width: 200px !important;height: 50px"
+            (click)="verRestaurante(false)">Entradas de Eventos de Ocios Nocturnos
+    </button>
+  } @else {
+    <button mat-raised-button color="white" style="width: 200px !important; height: 50px"
+            (click)="verRestaurante(true)">Reservas de Restaurantes
+    </button>
+    <button mat-raised-button color="primary" style="width: 200px !important;height: 50px"
+            (click)="verRestaurante(false)">Entradas de Eventos de Ocios Nocturnos
+    </button>
+  }
+</div>
+<div class="content">
+  @if (restaurante) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Reservas de Restaurantes</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let reserva of reservas">
+            <ion-label>
+              <h2>{{ reserva.codigoReserva }}</h2>
+              <p>Hora: {{ reserva.clienteDTO }}</p>
+              <p>Fecha: {{ reserva.fecha }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  } @else if (!restaurante) {
+    <div class="card-content">
+      <ion-card-header>
+        <ion-card-title>Entradas de Eventos de Ocios Nocturnos</ion-card-title>
+        <div class="ocio">
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="menuEntradas" style="width: 140px !important">
+            Entradas
+          </button>
+          <mat-menu #menuEntradas="matMenu">
+            <button mat-menu-item (click)="actualizar('ep')">Pasadas</button>
+            <button mat-menu-item (click)="actualizar('ef')">Futuras</button>
+          </mat-menu>
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="menuReservados"
+                  style="width: 140px !important">
+            Reservados
+          </button>
+          <mat-menu #menuReservados="matMenu">
+            <button mat-menu-item (click)="actualizar('rp')">Pasados</button>
+            <button mat-menu-item (click)="actualizar('rf')">Futuros</button>
+          </mat-menu>
+          <button mat-raised-button color="primary" [matMenuTriggerFor]="menuListas" style="width: 140px !important">
+            Listas
+          </button>
+          <mat-menu #menuListas="matMenu">
+            <button mat-menu-item (click)="actualizar('lp')">Pasadas</button>
+            <button mat-menu-item (click)="actualizar('lf')">Futuras</button>
+          </mat-menu>
+        </div>
+      </ion-card-header>
 
-<ion-content class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Reservas de Restaurantes</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let reserva of reservas">
-          <ion-label>
-            <h2>{{ reserva.codigoReserva }}</h2>
-            <p>Hora: {{ reserva.clienteDTO }}</p>
-            <p>Fecha: {{ reserva.fecha }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
+    </div>
+    <div class="middle-content">
+      <div class="container py-5" style="max-width: 1644px !important;">
+        <div class="row card-row">
+          @if (ePasadas) {
+            @if (!entradasCompradas?.entradasGeneralesCompradasPasadas) {
+              <div class="spinner">
+                <mat-spinner class="matspin"></mat-spinner>
+              </div>
+            } @else if (entradasCompradas!.entradasGeneralesCompradasPasadas!.length ==0){
+              <h2><span>No tienes entradas compradas para ningún evento pasado.</span></h2>
+            }
+            @else {
+              <div class="texto_videos">
+                <h2><span>Entradas de eventos pasados</span></h2>
+              </div>
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   *ngFor="let x of entradasCompradas?.entradasGeneralesCompradasPasadas">
+                <img src="{{x.entradaOcioDTO?.eventoDTO?.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.entradaOcioDTO?.eventoDTO?.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.entradaOcioDTO?.eventoDTO?.nombre }}</p>
+                  <p class=" text">{{ x.entradaOcioDTO?.eventoDTO?.fecha }}</p>
+                  <p class=" text"><a class="btn btn-primary" (click)="descargarPdfEntradas(x)">Descargar</a></p>
+                  <p class=" text"><a class="btn btn-primary">Valorar experiencia</a></p>
+                </div>
+              </div>
 
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Entradas de Eventos de Ocios Nocturnos</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let entrada of entradas">
-          <ion-label>
-            <h2>{{ entrada.eventoDTO }}</h2>
-            <p>Fecha: {{ entrada.precio }}</p>
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
-</ion-content>
+            }
+          } @else if (eFuturas) {
+            @if (!entradasCompradas?.entradasGeneralesCompradasFuturas) {
+              <div class="spinner">
+                <mat-spinner class="matspin"></mat-spinner>
+              </div>
+            } @else if (entradasCompradas!.entradasGeneralesCompradasFuturas!.length ==0){
+              <h2><span>No tienes entradas compradas para ningún evento próximo.</span></h2>
+            }
+            @else {
+              <div class="texto_videos">
+                <h2><span>Entradas para próximos eventos</span></h2>
+              </div>
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   *ngFor="let x of entradasCompradas?.entradasGeneralesCompradasFuturas">
+                <img src="{{x.entradaOcioDTO?.eventoDTO?.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.entradaOcioDTO?.eventoDTO?.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.entradaOcioDTO?.eventoDTO?.nombre }}</p>
+                  <p class=" text">{{ x.entradaOcioDTO?.eventoDTO?.fecha }}</p>
+                  <p class=" text"><a class="btn btn-primary" (click)="descargarPdfEntradas(x)">Descargar</a></p>
+                  <p class=" text"><a class="btn btn-primary" (click)="openChat(x.entradaOcioDTO?.eventoDTO!)">Chat exclusivo</a></p>
+                </div>
+              </div>
+            }
+          } @else if (rPasados) {
+            @if (!entradasCompradas?.reservadosCompradosPasados) {
+              <div class="spinner">
+                <mat-spinner class="matspin"></mat-spinner>
+              </div>
+            } @else if (entradasCompradas!.reservadosCompradosPasados!.length ==0){
+              <h2><span>No tienes reservados comprados para ningún evento pasado.</span></h2>
+            }
+            @else {
+              <div class="texto_videos">
+                <h2><span>Reservados de eventos pasados</span></h2>
+              </div>
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   *ngFor="let x of entradasCompradas?.reservadosCompradosPasados">
+                <img src="{{x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.nombre }}</p>
+                  <p class=" text">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.fecha }}</p>
+                  <p class=" text"><a class="btn btn-primary" (click)="descargarPdfReservados(x)">Descargar</a></p>
+                  <p class=" text"><a class="btn btn-primary">Valorar experiencia</a></p>
+                </div>
+              </div>
+            }
+          }@else if (rFuturos) {
+            @if (!entradasCompradas?.reservadosCompradosFuturos) {
+              <div class="spinner">
+                <mat-spinner class="matspin"></mat-spinner>
+              </div>
+            }  @else if (entradasCompradas!.reservadosCompradosFuturos!.length ==0){
+              <h2><span>No tienes reservados comprados para ningún evento próximo.</span></h2>
+            }
+            @else {
+              <div class="texto_videos">
+                <h2><span>Reservados para próximos eventos</span></h2>
+              </div>
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   *ngFor="let x of entradasCompradas?.reservadosCompradosFuturos">
+                <img src="{{x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.nombre }}</p>
+                  <p class=" text">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.fecha }}</p>
+                  <p class=" text"><a class="btn btn-primary" (click)="descargarPdfReservados(x)">Descargar</a></p>
+                  <p class=" text"><a class="btn btn-primary" (click)="openChat(x.reservadoOcioClienteDTO?.reservadoOcioDTO?.eventoDTO!)">Chat exclusivo</a></p>
+                </div>
+              </div>
+            }
+          }@else if (lPasadas) {
+            @if (!entradasCompradas?.listasCompradasPasadas) {
+              <div class="spinner">
+                <mat-spinner class="matspin"></mat-spinner>
+              </div>
+            } @else if (entradasCompradas!.listasCompradasPasadas!.length ==0){
+              <h2><span>No tienes listas compradas para ningún evento pasado.</span></h2>
+            }
+            @else {
+              <div class="texto_videos">
+                <h2><span>Listas de eventos pasados</span></h2>
+              </div>
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   *ngFor="let x of entradasCompradas?.listasCompradasPasadas">
+                <img src="{{x.listaOcioDTO?.eventoDTO?.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.listaOcioDTO?.eventoDTO?.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.listaOcioDTO?.eventoDTO?.nombre }}</p>
+                  <p class=" text">{{ x.listaOcioDTO?.eventoDTO?.fecha }}</p>
+                  <p class=" text"><a class="btn btn-primary" (click)="descargarPdfListas(x)">Descargar</a></p>
+                  <p class=" text"><a class="btn btn-primary">Valorar experiencia</a></p>
+                </div>
+              </div>
+            }
+          }@else if (lFuturos) {
+            @if (!entradasCompradas?.listasCompradasFuturas) {
+              <div class="spinner">
+                <mat-spinner class="matspin"></mat-spinner>
+              </div>
+            }  @else if (entradasCompradas!.listasCompradasFuturas!.length ==0){
+              <h2><span>No tienes listas compradas para ningún evento próximo.</span></h2>
+            }
+            @else {
+              <div class="texto_videos">
+                <h2><span>Listas para próximos eventos</span></h2>
+              </div>
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 "
+                   *ngFor="let x of entradasCompradas?.listasCompradasFuturas">
+                <img src="{{x.listaOcioDTO?.eventoDTO?.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.listaOcioDTO?.eventoDTO?.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.listaOcioDTO?.eventoDTO?.nombre }}</p>
+                  <p class=" text">{{ x.listaOcioDTO?.eventoDTO?.fecha }}</p>
+                  <p class=" text"><a class="btn btn-primary" (click)="descargarPdfListas(x)">Descargar</a></p>
+                  <p class=" text"><a class="btn btn-primary" (click)="openChat(x.listaOcioDTO?.eventoDTO!)">Chat exclusivo</a></p>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  }
 
-<app-footer></app-footer>
+  <app-footer></app-footer>
+</div>

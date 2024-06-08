@@ -152,6 +152,9 @@ html {
   display: flex;
   flex-grow: 1;
   overflow: hidden;
+  border: #eeecec 0.23px solid;
+  border-radius: 10px;
+
 }
 
 .conversation-area,
@@ -362,19 +365,11 @@ html {
   background: var(--overlay-bg);
   height: 80px;
 }
-.full-body{
-  background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png') ;
-  border-radius: 20px;
-}
+
 .chat-area {
-  padding: 20px;
   display: flex;
   flex-direction: column;
   overflow: auto;
-  align-items: center;
-  justify-content: center;
-  max-width: 600px;
-  min-width: 600px;
   &-header {
     display: flex;
     position: sticky;
@@ -425,16 +420,6 @@ html {
   white-space: nowrap;
 }
 
-.chat-msg-date-right {
-  position: absolute;
-  left : 52px;
-  bottom: 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--msg-date);
-  white-space: nowrap;
-}
-
 .chat-msg {
   display: flex;
   padding: 0 20px 45px;
@@ -446,8 +431,8 @@ html {
     align-items: flex-start;
   }
   &-text {
-    background-color: var(--chat-text-bg);
-    padding: 10px;
+    background-color: #F1F2F6FF;
+    padding: 15px;
     border-radius: 20px 20px 20px 0;
     line-height: 1.5;
     font-size: 14px;
@@ -462,14 +447,26 @@ html {
   color: var(--chat-text-color);
 }
 
-
-.chat-msg-text {
-  border-radius: 20px 20px 20px 0;
-  background: #86e36e;
-  display: flex;
-  align-items: center;
-  color: black;
+.owner {
+  flex-direction: row-reverse;
+  .chat-msg-content {
+    margin-left: 0;
+    margin-right: 12px;
+    align-items: flex-end;
+  }
+  .chat-msg-text {
+    background-color: #0086FFFF;
+    color: #fff;
+    border-radius: 20px 20px 0 20px;
+    display: flex;
+    align-items: center;
+  }
+  .chat-msg-date {
+    left: auto;
+    right: calc(100% + 12px);
+  }
 }
+
 .chat-msg-text img {
   max-width: 300px;
   width: 100%;
@@ -477,26 +474,16 @@ html {
 
 .chat-area-footer {
   display: flex;
-  padding: 5px 10px;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+  padding: 10px 20px;
   align-items: center;
   background-color: var(--theme-bg-color);
   position: sticky;
   bottom: 0;
   left: 0;
-  width: 100%;
-  justify-content: center;
-  border: #1a1a1a 1px solid;
-  border-radius: 20px;
 }
-.chat-area-footer ion-icon{
-  cursor: pointer;
-}
-ion-icon{
-  --padding: 12px;
-  --border-radius: 6px;
-  --margin: 0 12px;
-  --width: 100px;
-}
+
 .chat-area-footer svg {
   color: var(--settings-icon-color);
   width: 20px;
@@ -511,16 +498,15 @@ ion-icon{
   }
 }
 
-.chat-area-footer textarea {
+.chat-area-footer input {
   border: none;
   color: var(--body-color);
   background-color: var(--input-bg);
   padding: 12px;
   border-radius: 6px;
   font-size: 15px;
+  margin: 0 12px;
   width: 100%;
-  height: 50px;
-
   &::placeholder {
     color: var(--input-chat-color);
   }
@@ -550,40 +536,7 @@ ion-icon{
   font-weight: 600;
   color: var(--msg-date);
 }
-.owner {
-  flex-direction: row-reverse;
-  width: 100%;
-  .chat-msg-content {
-    margin-left: 0;
-    margin-right: 12px;
-    align-items: flex-end;
-  }
-  .chat-msg-text {
-    background: #2599ff;
-    border-radius: 20px 20px 0 20px;
-    color: white;
-  }
-  .chat-msg-date {
-    left: auto;
-    right: calc(100% + 12px);
-  }
-}
-.client {
-  flex-direction: row;
-  width: 100%;
-  .chat-msg-content {
-    margin-left: 12px;
-    margin-right: 0;
-    align-items: flex-end;
-  }
-  .chat-msg-text {
-    border-radius: 20px 20px 20px 0;
-  }
-  .chat-msg-date {
-    left: auto;
-    right: calc(100% + 12px);
-  }
-}
+
 .detail-button {
   border: 0;
   background-color: var(--button-bg-color);
@@ -833,9 +786,39 @@ ion-icon{
     }
   }
 }
-.options{
-  cursor: pointer;
-  background: #2599ff;
-  border-radius: 3px;
 
+.main{
+  min-width: 1195px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
 }
+
+.no-permisos{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.no-permisos div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 5px;
+}
+.no-permisos div p{
+  margin: 0;
+}
+
+.flecha{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 3px;
+  overflow: visible;
+}
+.icon-display {
+  transform: scale(1.3);
+}
+

@@ -45,6 +45,9 @@
         @if (permisosParaEditar) {
           <div>
             <button mat-raised-button color="primary" style="width: 180px !important; margin:10px"
+                    (click)="openChat()">Chat del evento
+            </button>
+            <button mat-raised-button color="primary" style="width: 180px !important; margin:10px"
                     (click)="openModal(true)">Editar Evento
             </button>
             <button mat-raised-button color="warn" style="width: 180px !important; margin:10px"
@@ -563,12 +566,6 @@
             </ion-content>
           </ng-template>
         </ion-modal>
-
-        <ion-alert
-          [isOpen]="isAlertOpen"
-          header="¿Deseas unirte al canal privado de este establecimiento?"
-          [buttons]="alertButtons"
-        ></ion-alert>
 
         <ion-alert
           [isOpen]="isDeleteOpen"

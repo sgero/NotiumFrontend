@@ -6,6 +6,7 @@ import {RespuestaDTO} from "../models/RespuestaDTO";
 import {OcioNocturno} from "../models/OcioNocturno";
 import {Observable} from "rxjs";
 import {Evento} from "../models/Evento";
+import {ClienteEntradasCompradasDTO} from "../models/ClienteEntradasCompradasDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -76,6 +77,10 @@ export class EventoService {
 
   getInfoRestantes(id:number){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/restante/${id}`);
+  }
+
+  entradasCompradasByIdCliente(id:number){
+    return this.http.get<ClienteEntradasCompradasDTO>(`${this.apiUrl}/eventos/compradas/${id}`);
   }
 
 }
