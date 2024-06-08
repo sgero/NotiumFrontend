@@ -74,6 +74,8 @@ import {
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {trigger} from "@angular/animations";
+import {Producto} from "../../models/Producto";
+import {ProductoFormato} from "../../models/ProductoFormato";
 
 const IonIcons = {
   shirtOutline,
@@ -157,11 +159,13 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   newRpp: Rpp = new Rpp();
   listas: ListaOcio[] = [];
   mostrarCarta = true;
-  isDisable = false;
+  isDisable = true;
+  isDisabled = false;
   cartaOcio: CartaOcio = new CartaOcio();
   isModalOpen = false;
   isModalRppOpen = false;
   isModalEditRppOpen = false;
+  ocioNocturno: OcioNocturno = new OcioNocturno();
 
   firstFormGroup = this.formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -405,6 +409,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
             this.newRpp = value as Rpp;
             this.dataSource.data = this.rpps;
             this.rppModal(false);
+
           },
           error: e => {
             console.error("no funciona", e);
@@ -412,6 +417,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
         })
       }
     })
+
   }
 
 
@@ -426,7 +432,9 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       if (ocioID) {
         this.cartaOcioService.guardarCarta(ocioID, this.cartaOcio).subscribe({
           next: value => {
+            this.cartaOcio.ocioNocturno.id = ocioID;
             this.cartaOcio = value as CartaOcio;
+            console.log("esta funcionando")
           },
           error: e => {
             console.error(e);
@@ -456,12 +464,14 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   saveCarta() {
     this.mostrarCarta = true;
     this.isDisable = true;
+    this.isDisabled = false;
     this.guardarCarta()
   }
 
   deleteCarta() {
     this.mostrarCarta = false;
     this.isDisable = false;
+    this.isDisabled = true;
     this.eliminarCarta();
   }
 
@@ -933,7 +943,16 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
         console.error("no funciona", e);
       }
     })
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.newRpp = new Rpp();
   }
 
 
+  cancelar() {
+    this.rppEditModal(false);
+    this.resetForm();
+  }
 }

@@ -111,9 +111,6 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    // this.token.token = this.ocio.usuarioDTO.username;
-    // console.log(this.token.username);
-    // console.log(this.ocio.usuarioDTO?.username);
     this.getUsuario();
   }
 
@@ -306,11 +303,21 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   }
 
   editProducto(id: number) {
+    this.productoEditModal(true);
+    this.cartaOcioService.productoFormatoById(id).subscribe({
+      next: value => {
+        this.newProductoFormato = value as ProductoFormato;
+        this.edit(this.newProductoFormato.productoDTO!.id!)
+      }
+    })
+
+
+  }
+
+  edit(id: number){
     this.cartaOcioService.productoById(id).subscribe({
       next: value => {
         this.newProducto = value as Producto;
-        this.resetForm();
-        this.productoEditModal(true);
       }
     })
   }
@@ -406,5 +413,8 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
     }
   }
 
-
+  cancelar() {
+    this.productoEditModal(false);
+    this.resetForm();
+  }
 }

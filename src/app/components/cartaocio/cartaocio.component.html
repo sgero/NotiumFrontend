@@ -6,9 +6,8 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar Producto">
       </mat-form-field>
     </div>
-    @if (permisosParaEditar) {
-    <div><button mat-raised-button color="primary" style="width: 180px !important;margin-bottom: 20px" (click)="productoModal(true)">Añadir producto</button></div>
-    }
+
+    <div><button mat-raised-button *ngIf="permisosParaEditar" color="primary" style="width: 180px !important;margin-bottom: 20px" (click)="productoModal(true)">Añadir producto</button></div>
   </div>
   <div class="table">
     <table mat-table [dataSource]="dataSourceProductos">
@@ -32,7 +31,7 @@
         <th mat-header-cell *matHeaderCellDef> <span *ngIf="permisosParaEditar">Opciones</span></th>
         <td mat-cell *matCellDef="let formatos">
 
-          <button *ngIf="permisosParaEditar" mat-icon-button color="primary" (click)="editProducto(formatos.productoDTO.id)">
+          <button *ngIf="permisosParaEditar" mat-icon-button color="primary" (click)="editProducto(formatos.id)">
             <mat-icon>edit</mat-icon>
           </button>
 
@@ -209,7 +208,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <button mat-raised-button color="primary" style="width: 140px !important" (click)="productoEditModal(false)">Cancelar</button>
+            <button mat-raised-button color="primary" style="width: 140px !important" (click)="cancelar()">Cancelar</button>
           </ion-buttons>
           <ion-title>Modifica tu Producto</ion-title>
           <ion-buttons slot="end">

@@ -58,4 +58,8 @@ export class CartaOcioService {
     return this.http.get<Producto>(this.apiUrl+`/producto/${id}` )
   }
 
+  productoFormatoById(id: number){
+    return this.http.get<ProductoFormato>(this.apiUrl+`/productoFormato/${id}` )
+  }
+
 }

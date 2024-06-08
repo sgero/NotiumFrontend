@@ -532,14 +532,14 @@
             <mat-paginator *ngIf="mostrarListas" #listasPaginator [pageSizeOptions]="[5, 10, 20]"
                          showFirstLastButtons="true"></mat-paginator>
         </div>
-          <ion-modal [isOpen]="isModalRppOpen">
+          <ion-modal [isOpen]="isModalRppOpen" class="modalRpp">
             <ng-template>
               <ion-header>
                 <ion-toolbar>
                   <ion-buttons slot="start">
                     <button mat-raised-button color="primary"  style="width: 140px !important" (click)="rppModal(false)">Cancelar</button>
                   </ion-buttons>
-                  <ion-title style="display: flex;justify-content: center !important">Registra tu Rpp</ion-title>
+                  <ion-title style="display: flex;justify-content: center;align-items: center !important">Registra tu Rpp</ion-title>
                   <ion-buttons slot="end">
                     <button mat-raised-button color="primary"  style="width: 140px !important" (click)="confirmar()">Confirmar</button>
                   </ion-buttons>
@@ -595,6 +595,13 @@
                       type="text"
                       required="true"
                       [(ngModel)]="newRpp.direccionDTO.calle"
+                    ></ion-input>
+                    <ion-input
+                      label="Número"
+                      labelPlacement="stacked"
+                      type="number"
+                      required="true"
+                      [(ngModel)]="newRpp.direccionDTO.numero"
                     ></ion-input>
                     <ion-input
                       label="Código Postal"
@@ -661,12 +668,12 @@
               </ion-content>
             </ng-template>
           </ion-modal>
-        <ion-modal [isOpen]="isModalEditRppOpen">
+        <ion-modal [isOpen]="isModalEditRppOpen" class="editModal">
           <ng-template>
             <ion-header>
               <ion-toolbar>
                 <ion-buttons slot="start">
-                  <button mat-raised-button color="primary"  style="width: 140px !important" (click)="rppEditModal(false)">Cancelar</button>
+                  <button mat-raised-button color="primary"  style="width: 140px !important" (click)="cancelar()">Cancelar</button>
                 </ion-buttons>
                 <ion-title style="display: flex;justify-content: center !important">Modifica sus datos</ion-title>
                 <ion-buttons slot="end">
@@ -767,7 +774,7 @@
   <div *ngIf="eventosInfo === 'carta'">
     <div class="carta-ocio">
       <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="saveCarta()" [disabled]="isDisable">Crear Carta</button>
-      <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="deleteCarta()">Eliminar Carta</button>
+      <button *ngIf="permisosParaEditar" mat-raised-button color="primary"  style="width: 140px !important"  class="icon" (click)="deleteCarta()" [disabled]="isDisabled">Eliminar Carta</button>
     </div>
     <app-cartaocio *ngIf="mostrarCarta" [ocio]="ocio"></app-cartaocio>
 
