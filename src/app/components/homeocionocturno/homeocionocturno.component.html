@@ -1,8 +1,8 @@
 <body>
-<app-headerocionocturno></app-headerocionocturno>
+<app-header></app-header>
 <section class="but">
   <div class="example-button-row">
-    @if (ver){
+    @if (ver) {
       <button mat-stroked-button color="primary" (click)="verEventos(true)">Eventos</button>
       <button mat-raised-button color="primary" (click)="verEventos(false)">Ocios</button>
     } @else {
@@ -11,69 +11,117 @@
     }
   </div>
 </section>
-    <div class="main-container">
-      @if (ver) {
-      <ion-card (scroll)="onScroll($event)">
-        <ion-card-header>
-          <ion-card-title>Eventos Activos</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-list *ngFor="let x of items">
-            <ion-item class="event-charged" [routerLink]="['/notium/ocionocturno/evento/', x.id]">
-              <ion-thumbnail slot="start">
-                <img src="{{x.cartel}}"/>
-              </ion-thumbnail>
-              <ion-label>{{ x.ocioNocturnoDTO?.nombre }}</ion-label>
-              <ion-label>{{ x.nombre }}</ion-label>
-              <ion-label style="margin-right: 60px !important;">{{ x.descripcion }}</ion-label>
-              <ion-label>{{ x.fecha | date: 'yyyy-MM-dd' }}</ion-label>
-            </ion-item>
-          </ion-list>
-          <div *ngIf="finalPaginado"><p>Has llegado al final.</p></div>
-        </ion-card-content>
-      </ion-card>
-      } @else {
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Establecimientos</ion-card-title>
-          </ion-card-header>
-          <ion-card-content >
-            <ion-list  *ngFor="let o of ocios">
-              <ion-item  class="event-charged" [routerLink]="['/notium/ocionocturno/', o.id]">
-                <ion-thumbnail slot="start">
-                  <img alt="logo_ocio_nocturno" src="{{o.imagenMarca}}" />
-                </ion-thumbnail>
-                <ion-label>{{o.nombre}}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      }
+<div class="main-container">
+  @if (ver) {
+    <ion-card (scroll)="onScroll($event)">
+      <ion-card-header>
+        <ion-card-title>Eventos Activos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngFor="let x of items">
+          <ion-item class="event-charged" [routerLink]="['/notium/ocionocturno/evento/', x.id]">
+            <ion-thumbnail slot="start">
+              <img src="{{x.cartel}}"/>
+            </ion-thumbnail>
+            <ion-label>{{ x.ocioNocturnoDTO?.nombre }}</ion-label>
+            <ion-label>{{ x.nombre }}</ion-label>
+            <ion-label style="margin-right: 60px !important;">{{ x.descripcion }}</ion-label>
+            <ion-label>{{ x.fecha | date: 'yyyy-MM-dd' }}</ion-label>
+          </ion-item>
+        </ion-list>
+        <div *ngIf="finalPaginado"><p>Has llegado al final.</p></div>
+      </ion-card-content>
+    </ion-card>
+  } @else {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Establecimientos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngFor="let o of ocios">
+          <ion-item class="event-charged" [routerLink]="['/notium/ocionocturno/', o.id]">
+            <ion-thumbnail slot="start">
+              <img alt="logo_ocio_nocturno" src="{{o.imagenMarca}}"/>
+            </ion-thumbnail>
+            <ion-label>{{ o.nombre }}</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  }
 
-      <ion-datetime class="calendar-event" presentation="date" locale="es-ES" [(ngModel)]="fechaSeleccionada"
-                    (ionChange)="fecha" (click)="getEventosEntreFechas(fechaSeleccionada!)"></ion-datetime>
-    </div>
-    <div *ngIf="noHayEventos" style="display: flex;justify-content: center;margin-top: 20px"><p>No hay eventos en la
-      fecha
-      seleccionada. </p></div>
-    <div class="middle-content">
-      <div class="container py-5">
-        <div class="row card-row">
-          <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " *ngFor="let x of eventosEntreFechas">
-            <img src="{{x.cartel}}" class="card-img-top" alt="...">
-            <div class="card-body event">
-              <h5 class="card-title">{{ x.ocioNocturnoDTO?.nombre }}</h5>
-              <p class=" text">{{ x.nombre }}</p>
-              @if (x.fecha!.substring(0, 10) > fechaActual) {
-                <a href="#" class="btn btn-primary" [routerLink]="['/notium/ocionocturno/evento/', x.id]">Más
-                  información</a>
-              }
+  <ion-datetime class="calendar-event" presentation="date" locale="es-ES" [(ngModel)]="fechaSeleccionada"
+                (ionChange)="fecha" (click)="getEventosEntreFechas(fechaSeleccionada!)"></ion-datetime>
+</div>
+<div class="listado_videos">
+  <div class="texto_videos">
+    @if (fechaSeleccionada) {
+      <h2><span>Eventos en {{ fechaElegida }}</span></h2>
+    } @else {
+      <h2><span>Eventos hoy</span></h2>
+    }
+    @if (noHayEventos) {
+      <div style="display: flex;justify-content: center;padding: 50px!important">
+        <p>No hay eventos en la fecha seleccionada.</p>
+      </div>
+    } @else {
+      <div class="videos">
+        <div class="middle-content">
+          <div class="container py-5" style="max-width: 1644px !important;">
+            <div class="row card-row">
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " *ngFor="let x of eventosEntreFechas">
+                <img src="{{x.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.nombre }}</p>
+                  <p class=" text">{{ fechaElegida }}</p>
+                  @if (x.fecha!.substring(0, 10) >= fechaActual) {
+                    <a href="#" class="btn btn-primary" [routerLink]="['/notium/ocionocturno/evento/', x.id]">Más
+                      información</a>
+                  }
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    }
+  </div>
+</div>
 
-<app-footerocionocturno></app-footerocionocturno>
+
+<div class="listado_videos">
+  <div class="texto_videos">
+    <h2><span>Corre que vuelan</span></h2>
+    <div class="videos">
+      <div class="middle-content">
+        <div class="container py-5" style="max-width: 1644px !important;">
+          <div class="row card-row">
+            @if (!eventosPopulares) {
+              <div class="spinner">
+                <mat-spinner class="matspin"></mat-spinner>
+              </div>
+            } @else {
+              <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " *ngFor="let x of eventosPopulares">
+                <img src="{{x.cartel}}" class="card-img-top" alt="...">
+                <div class="card-body event">
+                  <h5 class="card-title">{{ x.ocioNocturnoDTO?.nombre }}</h5>
+                  <p class=" text">{{ x.nombre }}</p>
+                  <p class=" text">{{ x.fecha }}</p>
+                  @if (x.fecha!.substring(0, 10) >= fechaActual) {
+                    <a href="#" class="btn btn-primary" [routerLink]="['/notium/ocionocturno/evento/', x.id]">Más
+                      información</a>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
 </body>
 

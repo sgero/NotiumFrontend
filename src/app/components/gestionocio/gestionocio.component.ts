@@ -14,14 +14,14 @@ import {ListaOcio} from "../../models/ListaOcio";
 import {ListaOcioService} from "../../services/listaOcio.service";
 import {
   AbstractControl,
-  FormBuilder, FormGroup,
+  FormBuilder,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   ValidationErrors,
   ValidatorFn,
   Validators
 } from '@angular/forms';
-import {OverlayEventDetail} from '@ionic/core';
 import {DireccionDTO} from "../../models/DireccionDTO";
 import {Usuario} from "../../models/Usuario";
 import {MatButton, MatIconButton} from "@angular/material/button";
@@ -47,35 +47,34 @@ import {CartaOcio} from "../../models/CartaOcio";
 import {CartaOcioService} from "../../services/cartaOcio.service";
 import {CrearEvento} from "../../models/CrearEvento";
 import {CrearEventoCiclico} from "../../models/CrearEventoCiclico";
-import {DatosComprador} from "../../models/DatosComprador";
 import {Consumiciones} from "../../models/Consumiciones";
 import {Botellas} from "../../models/Botellas";
 import {EntradaOcio} from "../../models/EntradaOcio";
 import {ReservadoOcio} from "../../models/ReservadoOcio";
-import {ClienteService} from "../../services/cliente.service";
 import {UsuarioService} from "../../services/usuario.service";
 import {RepetirCicloEventoOcio} from "../../models/RepetirCicloEventoOcio";
 import {DiasARepetirCicloEventoOcio} from "../../models/DiasARepetirCicloEventoOcio";
-import {EntradaOcioCliente} from "../../models/EntradaOcioCliente";
-import {ComprarReservadoDTO} from "../../models/ComprarReservadoDTO";
-import {ListaOcioCliente} from "../../models/ListaOcioCliente";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {
-  MatCell, MatCellDef,
+  MatCell,
+  MatCellDef,
   MatColumnDef,
-  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
   MatHeaderRow,
+  MatHeaderRowDef,
   MatRow,
+  MatRowDef,
   MatTable,
   MatTableDataSource,
-  MatHeaderRowDef,
-  MatRowDef,
 } from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {trigger} from "@angular/animations";
+import {ChatComponent} from "./chat/chat.component";
+import {ChatService} from "../../services/chat.service";
+import {HeaderComponent} from "../header/header.component";
+import {FooterComponent} from "../footer/footer.component";
 import {MatDialog} from "@angular/material/dialog";
-import {HacerValoracionComponent} from "../restaurante/hacer-valoracion/hacer-valoracion.component";
 import {ValoacionOcioComponent} from "./valoacion-ocio/valoacion-ocio.component";
 import {SharedService} from "../../services/SharedService";
 
@@ -134,7 +133,10 @@ const IonIcons = {
     MatHeaderCellDef,
     MatCellDef,
     MatRowDef,
-    MatHeaderRowDef
+    MatHeaderRowDef,
+    ChatComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   standalone: true,
   providers: [
@@ -240,9 +242,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   fecha: Date = new Date();
   noHayEventosSeleccionado?:boolean;
   noHayEventos = true;
-  eventosEntreFechas: Evento[] = [];
   fechaActual = new Date().toString();
-
   constructor(
     private ocioNocturnoService: OcionocturnoService,
     private eventoService: EventoService,
@@ -256,6 +256,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     private usuarioService: UsuarioService,
     private toastController: ToastController,
     private loadingCtrl: LoadingController,
+    private chatService : ChatService,
     private dialogRef: MatDialog,
     private sharedService: SharedService) {
     addIcons(IonIcons);
@@ -266,7 +267,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getOcio()
-    this.getUsuario();
     this.formsLista.push(this.listaOcioDTO);
   }
 
@@ -290,6 +290,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
               Validators.max(this.ocio.aforo!)
             ]);
             this.eventoDTO.get('aforo')?.updateValueAndValidity();
+            this.getUsuario();
             this.getRpps();
           },
           error: e => {
@@ -381,10 +382,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
   Carta() {
     this.eventosInfo = 'carta';
-  }
-
-  Galeria() {
-    this.eventosInfo = 'galeria';
   }
 
   RegistrarRpp() {
@@ -726,6 +723,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   getDTO(usuario: any) {
     if (usuario.rol == "CLIENTE") {
       this.esCliente = true;
+      this.getEventos();
     } else if (usuario.rol != "OCIONOCTURNO") {
       this.esCliente = false;
       this.router.navigate(["notium/error"])
@@ -742,7 +740,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
         }
       })
     }
-
   }
 
 
@@ -754,7 +751,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     const toast = await this.toastController.create({
       message: 'Ha ocurrido un error inesperado durante el proceso de creación.',
       duration: 3000,
-      position: "top"
+      position: "top",
+      color: "danger"
     });
     if (this.unico) {
       this.eventoService.guardarEvento(this.crearEvento).subscribe({
@@ -834,7 +832,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       this.crearEventoCiclico.diasARepetirCicloEventoOcioList = d;
     }
     this.opcionesEventoCiclicoBool = true;
-    console.log(this.crearEventoCiclico)
   }
   getEventosEntreFechas(fecha:Date){
     let fechaInicio = this.convertirFechaAStringFormatoYYYYMMDD(fecha.toString());

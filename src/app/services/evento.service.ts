@@ -5,6 +5,8 @@ import {CrearEventoCiclico} from "../models/CrearEventoCiclico";
 import {RespuestaDTO} from "../models/RespuestaDTO";
 import {OcioNocturno} from "../models/OcioNocturno";
 import {Observable} from "rxjs";
+import {Evento} from "../models/Evento";
+import {ClienteEntradasCompradasDTO} from "../models/ClienteEntradasCompradasDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +43,10 @@ export class EventoService {
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/activos`, {params:httpParams});
   }
 
+  getPopulares(){
+    return this.http.get<Evento[]>(`${this.apiUrl}/eventos/populares`);
+  }
+
   entreDosFechas(params:any){
     let httpParams = new HttpParams();
     Object.keys(params).forEach(key => {
@@ -66,11 +72,15 @@ export class EventoService {
   }
 
   eliminarEvento(id: number){
-    return this.http.post<RespuestaDTO>(`${this.apiUrl}/eventos/eliminar`, id);
+    return this.http.delete<RespuestaDTO>(`${this.apiUrl}/eventos/eliminar/${id}`);
   }
 
   getInfoRestantes(id:number){
     return this.http.get<RespuestaDTO>(`${this.apiUrl}/eventos/restante/${id}`);
+  }
+
+  entradasCompradasByIdCliente(id:number){
+    return this.http.get<ClienteEntradasCompradasDTO>(`${this.apiUrl}/eventos/compradas/${id}`);
   }
 
 }

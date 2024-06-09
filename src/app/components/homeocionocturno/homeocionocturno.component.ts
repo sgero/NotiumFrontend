@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FooterocionocturnoComponent} from "../footerocionocturno/footerocionocturno.component";
 import {HeaderocionocturnoComponent} from "../headerocionocturno/headerocionocturno.component";
 import {EventoService} from "../../services/evento.service";
 import {Evento} from "../../models/Evento";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {InfiniteScrollCustomEvent, IonicModule} from "@ionic/angular";
+import {IonicModule} from "@ionic/angular";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
 import {FormsModule} from "@angular/forms";
 import {OcionocturnoService} from "../../services/ocionocturno.service";
 import {OcioNocturno} from "../../models/OcioNocturno";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {UsuarioService} from "../../services/usuario.service";
 import {MatButton} from "@angular/material/button";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-homeocionocturno',
@@ -29,7 +30,8 @@ import {MatButton} from "@angular/material/button";
     FormsModule,
     DatePipe,
     RouterLink,
-    MatButton
+    MatButton,
+    MatProgressSpinner
   ],
   standalone: true,
   providers: [DatePipe]
@@ -41,13 +43,14 @@ export class HomeocionocturnoComponent  implements OnInit {
   ocios: OcioNocturno[] = [];
   esCliente?: boolean;
   fecha: Date = new Date();
-  fechaSeleccionada?: Date ;
+  fechaSeleccionada: Date | string | undefined ;
   noHayEventos?: boolean;
   items:Evento[] = [];
   finalPaginado:boolean = false;
   fechaActual = new Date().toString();
   ver= true;
-
+  fechaElegida?: string;
+  eventosPopulares!: Evento[];
 
   constructor(private ocioService : EventoService,
               private ocioNocturnoService : OcionocturnoService,
@@ -59,7 +62,9 @@ export class HomeocionocturnoComponent  implements OnInit {
     this.getUsuario();
     this.getEventos(5,0);
     this.getOcios();
-    this.fechaActual = <string>this.datePipe.transform(this.fechaActual, 'yyyy-MM-dd')
+    this.fechaActual = <string>this.datePipe.transform(this.fechaActual, 'yyyy-MM-dd');
+    this.getEventosEntreFechas(this.fecha.toISOString());
+    this.getEventosPopulares();
   }
   getEventos(numElem:number, numPag:number){
     const params = {
@@ -92,7 +97,7 @@ export class HomeocionocturnoComponent  implements OnInit {
     })
   }
 
-  getEventosEntreFechas(fecha:Date){
+  getEventosEntreFechas(fecha:Date | string){
     let fechaInicio = this.convertirFechaAStringFormatoYYYYMMDD(fecha.toString());
     let fechaFin = this.obtenerSiguienteDia(fechaInicio);
     let fechaFinal = this.formatDate(fechaFin);
@@ -100,6 +105,14 @@ export class HomeocionocturnoComponent  implements OnInit {
       fechaInicio: fechaInicio,
       fechaFin: fechaFinal,
     };
+    const opcionesFormato: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(new Date(fecha));
+    this.fechaElegida = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
     this.ocioService.entreDosFechas(params).subscribe({
       next: value => {
         this.eventosEntreFechas = value.object as Evento[];
@@ -174,4 +187,30 @@ export class HomeocionocturnoComponent  implements OnInit {
   verEventos(b: boolean) {
     this.ver = b;
   }
+
+  getEventosPopulares(){
+    this.ocioService.getPopulares().subscribe({
+      next: value => {
+        if (value){
+          this.eventosPopulares = value;
+          this.eventosPopulares.forEach(m => {
+            const fechaString = m.fecha;
+            const fecha = new Date(fechaString!);
+            const opcionesFormato: Intl.DateTimeFormatOptions = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            };
+            const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fecha);
+            m.fecha = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+          });
+        }
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
+  }
+
 }

@@ -1,5 +1,5 @@
 <body>
-<app-headerocionocturno></app-headerocionocturno>
+<app-header></app-header>
 <div class="middle-content">
   <div class="container py-5 card-ev">
     <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " style="height: 100%">
@@ -43,10 +43,20 @@
           </a>
         </h3>
         @if (permisosParaEditar) {
-          <button mat-raised-button color="primary" style="width: 140px !important" (click)="openModal(true)">Editar Evento</button>
+          <div>
+            <button mat-raised-button color="primary" style="width: 180px !important; margin:10px"
+                    (click)="openChat()">Chat del evento
+            </button>
+            <button mat-raised-button color="primary" style="width: 180px !important; margin:10px"
+                    (click)="openModal(true)">Editar Evento
+            </button>
+            <button mat-raised-button color="warn" style="width: 180px !important; margin:10px"
+                    (click)="alertDelete(true)">Eliminar Evento
+            </button>
+          </div>
         }
       </div>
-      @if (crearEventoDTO){
+      @if (crearEventoDTO) {
         <app-editar-evento
           [isModalOpen]="isModalEvento"
           [informacionEvento]="crearEventoDTO!"
@@ -89,9 +99,6 @@
                         <button class="button is-large is-light"
                                 style="padding: .4rem !important;margin-right: .5rem !important;">
                           {{ informacionTiposEntrada?.entradaOcioDTO?.precio }}€
-                        </button>
-                        <button class="button is-large is-link">
-                          <ion-icon name="arrow-forward"></ion-icon>
                         </button>
                       </div>
                     </div>
@@ -148,17 +155,19 @@
             </div>
           </div>
         } @else {
-          <p>Se han agotado las entradas generales para este evento.</p>
-          <div style="display: flex">
-            <h3 style="margin: 0 !important;">
-              Entradas Totales A La Venta: {{ informacionTiposEntrada?.entradaOcioDTO?.totalEntradas }}
-            </h3>
-          </div>
-          <div style="display: flex">
-            <h3 style="margin: 0 !important;">
-              Entradas Vendidas: {{ entradasVendidas }}
-            </h3>
-          </div>
+          @if (evento) {
+            <p>Se han agotado las entradas generales para este evento.</p>
+            <div style="display: flex">
+              <h3 style="margin: 0 !important;">
+                Entradas Totales A La Venta: {{ informacionTiposEntrada?.entradaOcioDTO?.totalEntradas }}
+              </h3>
+            </div>
+            <div style="display: flex">
+              <h3 style="margin: 0 !important;">
+                Entradas Vendidas: {{ entradasVendidas }}
+              </h3>
+            </div>
+          }
         }
 
         @if (comprarReservado) {
@@ -185,9 +194,6 @@
                         <button class="button is-large is-light bg-gray-300/30"
                                 style="padding: .4rem !important;margin-right: .5rem !important;">
                           {{ informacionTiposEntrada?.reservadoOcioDTO?.precio }}€
-                        </button>
-                        <button class="button is-large is-link">
-                          <ion-icon name="arrow-forward"></ion-icon>
                         </button>
                       </div>
                     </div>
@@ -242,17 +248,19 @@
             </div>
           </div>
         } @else {
-          <p>Se han agotado los reservados para este evento.</p>
-          <div style="display: flex">
-            <h3 style="margin: 0 !important;">
-              Reservados Totales A La Venta: {{ informacionTiposEntrada?.reservadoOcioDTO?.reservadosDisponibles }}
-            </h3>
-          </div>
-          <div style="display: flex">
-            <h3 style="margin: 0 !important;">
-              Reservados Vendidas: {{ reservadosVendidos }}
-            </h3>
-          </div>
+          @if (evento) {
+            <p>Se han agotado los reservados para este evento.</p>
+            <div style="display: flex">
+              <h3 style="margin: 0 !important;">
+                Reservados Totales A La Venta: {{ informacionTiposEntrada?.reservadoOcioDTO?.reservadosDisponibles }}
+              </h3>
+            </div>
+            <div style="display: flex">
+              <h3 style="margin: 0 !important;">
+                Reservados Vendidas: {{ reservadosVendidos }}
+              </h3>
+            </div>
+          }
         }
 
         @if (comprarLista) {
@@ -278,9 +286,6 @@
                         <button class="button is-large is-light bg-gray-300/30"
                                 style="padding: .4rem !important;margin-right: .5rem !important;">
                           {{ informacionTiposEntrada?.listaOcioDTO?.precio }}€
-                        </button>
-                        <button class="button is-large is-link">
-                          <ion-icon name="arrow-forward"></ion-icon>
                         </button>
                       </div>
                     </div>
@@ -340,17 +345,19 @@
             </div>
           </div>
         } @else {
-          <p>Se han agotado las entradas por lista para este evento.</p>
-          <div style="display: flex">
-            <h3 style="margin: 0 !important;">
-              Entradas Totales A La Venta: {{ informacionTiposEntrada?.listaOcioDTO?.total_invitaciones }}
-            </h3>
-          </div>
-          <div style="display: flex">
-            <h3 style="margin: 0 !important;">
-              Entradas Vendidas: {{ clientesApuntadosALista }}
-            </h3>
-          </div>
+          @if (evento) {
+            <p>Se han agotado las entradas por lista para este evento.</p>
+            <div style="display: flex">
+              <h3 style="margin: 0 !important;">
+                Entradas Totales A La Venta: {{ informacionTiposEntrada?.listaOcioDTO?.total_invitaciones }}
+              </h3>
+            </div>
+            <div style="display: flex">
+              <h3 style="margin: 0 !important;">
+                Entradas Vendidas: {{ clientesApuntadosALista }}
+              </h3>
+            </div>
+          }
         }
 
         <ion-modal [isOpen]="isModalOpen">
@@ -560,12 +567,20 @@
           </ng-template>
         </ion-modal>
 
+        <ion-alert
+          [isOpen]="isDeleteOpen"
+          header="¿Estás seguro? Vas a eliminar el evento y toda su información permanentemente"
+          [buttons]="deleteButtons"
+        ></ion-alert>
+
 
       } @else {
-        <p class=" text">Este evento ya ha ocurrido.</p>
+        @if (evento) {
+          <p class=" text">Este evento ya ha ocurrido.</p>
+        }
       }
     </div>
   </div>
 </div>
-<app-footerocionocturno></app-footerocionocturno>
+<app-footer></app-footer>
 </body>

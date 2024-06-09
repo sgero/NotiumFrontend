@@ -16,6 +16,7 @@ import {HomepComponent} from "./components/homep/homep.component";
 import {PerfilComponent} from "./components/perfil/perfil.component";
 import {EditarPerfilComponent} from "./components/perfil/editar-perfil/editar-perfil.component";
 import {MisTicketsReservasComponent} from "./components/mis-tickets-reservas/mis-tickets-reservas.component";
+import {ChatComponent} from "./components/gestionocio/chat/chat.component";
 
 export const routes: Routes = [
 
@@ -43,5 +44,6 @@ export const routes: Routes = [
   {path: 'notium/perfil/:id', component: PerfilComponent},
   {path: 'notium/perfil/editar', component: EditarPerfilComponent},
   {path: 'notium/ticketsyreservas', component: MisTicketsReservasComponent},
+  {path: 'notium/ocionocturno/chat/:id', component: ChatComponent}
 
 ];

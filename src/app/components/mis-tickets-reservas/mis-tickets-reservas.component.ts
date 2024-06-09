@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Reserva} from "../../models/Reserva";
 import {EntradaOcio} from "../../models/EntradaOcio";
 import {FormsModule} from "@angular/forms";
@@ -6,6 +6,22 @@ import {IonicModule} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
+import {EventoService} from "../../services/evento.service";
+import {UsuarioService} from "../../services/usuario.service";
+import {Router, RouterLink} from "@angular/router";
+import {ClienteService} from "../../services/cliente.service";
+import {ClienteEntradasCompradasDTO} from "../../models/ClienteEntradasCompradasDTO";
+import {MatButton} from "@angular/material/button";
+import {MatMenu, MatMenuItem, MatMenuTrigger} from "@angular/material/menu";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {PdfService} from "../../services/pdf.service";
+import {EntradaOcioCliente} from "../../models/EntradaOcioCliente";
+import {ListaOcioCliente} from "../../models/ListaOcioCliente";
+import {ComprarReservadoDTO} from "../../models/ComprarReservadoDTO";
+import {ReservadoOcioCliente} from "../../models/ReservadoOcioCliente";
+import {ChatComponent} from "../gestionocio/chat/chat.component";
+import {Evento} from "../../models/Evento";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-mis-tickets-reservas',
@@ -16,19 +32,222 @@ import {FooterComponent} from "../footer/footer.component";
     IonicModule,
     CommonModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    MatButton,
+    MatMenu,
+    MatMenuTrigger,
+    MatMenuItem,
+    MatProgressSpinner,
+    RouterLink
   ],
   standalone: true
 })
 export class MisTicketsReservasComponent  implements OnInit {
 
   reservas: Reserva[] = [];
+  entradasCompradas ?: ClienteEntradasCompradasDTO;
+  restaurante?: boolean;
+  ePasadas = false;
+  eFuturas = false;
+  rPasados = false;
+  rFuturos = false;
+  lPasadas = false;
+  lFuturos = false;
 
-  entradas: EntradaOcio[] = [];
-
-  constructor() { }
+  constructor(
+    private eventoService: EventoService,
+    private usuarioService: UsuarioService,
+    private router: Router,
+    private clienteService: ClienteService,
+    private pdfService : PdfService,
+    public dialog: MatDialog
+  ) {
+  }
 
   ngOnInit() {
+    this.getUsuario();
+  }
+
+  getUsuario() {
+    this.usuarioService.getUsuarioToken().subscribe({
+      next: value => {
+        this.getDTO(value);
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
+  }
+
+  getDTO(usuario: any) {
+    if (usuario.rol == "CLIENTE") {
+      this.clienteService.getByIdUsuario(usuario.id).subscribe({
+        next: value => {
+          if (value) {
+            this.getEntradasCliente(value.id!);
+          }
+        },
+        error: err => {
+          console.error(err);
+        }
+      })
+    } else {
+      this.router.navigate(["notium/error"])
+    }
+  }
+
+  getEntradasCliente(id: number) {
+    this.eventoService.entradasCompradasByIdCliente(id).subscribe({
+      next: value => {
+        if (value){
+          this.entradasCompradas = value;
+          this.entradasCompradas?.entradasGeneralesCompradasPasadas!.forEach(m => {
+            const fechaString = m.entradaOcioDTO?.eventoDTO!.fecha;
+            const fecha = new Date(fechaString!);
+            const opcionesFormato: Intl.DateTimeFormatOptions = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            };
+            const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fecha);
+            m.entradaOcioDTO!.eventoDTO!.fecha = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+          });
+          this.entradasCompradas?.entradasGeneralesCompradasFuturas!.forEach(m => {
+            const fechaString = m.entradaOcioDTO?.eventoDTO!.fecha;
+            const fecha = new Date(fechaString!);
+            const opcionesFormato: Intl.DateTimeFormatOptions = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            };
+            const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fecha);
+            m.entradaOcioDTO!.eventoDTO!.fecha = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+          });
+          this.entradasCompradas?.reservadosCompradosPasados!.forEach(m => {
+            const fechaString = m.reservadoOcioClienteDTO.reservadoOcioDTO!.eventoDTO!.fecha;
+            const fecha = new Date(fechaString!);
+            const opcionesFormato: Intl.DateTimeFormatOptions = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            };
+            const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fecha);
+            m.reservadoOcioClienteDTO.reservadoOcioDTO!.eventoDTO!.fecha = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+          });
+          this.entradasCompradas?.reservadosCompradosFuturos!.forEach(m => {
+            const fechaString = m.reservadoOcioClienteDTO.reservadoOcioDTO!.eventoDTO!.fecha;
+            const fecha = new Date(fechaString!);
+            const opcionesFormato: Intl.DateTimeFormatOptions = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            };
+            const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fecha);
+            m.reservadoOcioClienteDTO.reservadoOcioDTO!.eventoDTO!.fecha = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+          });
+          this.entradasCompradas?.listasCompradasPasadas!.forEach(m => {
+            const fechaString = m.listaOcioDTO!.eventoDTO!.fecha;
+            const fecha = new Date(fechaString!);
+            const opcionesFormato: Intl.DateTimeFormatOptions = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            };
+            const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fecha);
+            m.listaOcioDTO!.eventoDTO!.fecha = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+          });
+          this.entradasCompradas?.listasCompradasFuturas!.forEach(m => {
+            const fechaString = m.listaOcioDTO!.eventoDTO!.fecha;
+            const fecha = new Date(fechaString!);
+            const opcionesFormato: Intl.DateTimeFormatOptions = {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            };
+            const formatoFecha = new Intl.DateTimeFormat('es-ES', opcionesFormato).format(fecha);
+            m.listaOcioDTO!.eventoDTO!.fecha = formatoFecha.charAt(0).toUpperCase() + formatoFecha.slice(1);
+          });
+        }
+      },
+      error: err => {
+        console.error(err);
+      }
+    })
+  }
+
+  verRestaurante(b: boolean) {
+    this.restaurante = b;
+  }
+
+  actualizar(s : string) {
+    if (s == 'ep'){
+      this.ePasadas = true;
+      this.eFuturas = false;
+      this.rPasados = false;
+      this.rFuturos = false;
+      this.lPasadas = false;
+      this.lFuturos = false;
+    } else if (s == 'ef'){
+      this.ePasadas = false;
+      this.eFuturas = true;
+      this.rPasados = false;
+      this.rFuturos = false;
+      this.lPasadas = false;
+      this.lFuturos = false;
+    } else if (s == 'rp'){
+      this.ePasadas = false;
+      this.eFuturas = false;
+      this.rPasados = true;
+      this.rFuturos = false;
+      this.lPasadas = false;
+      this.lFuturos = false;
+    } else if (s == 'rf'){
+      this.ePasadas = false;
+      this.eFuturas = false;
+      this.rPasados = false;
+      this.rFuturos = true;
+      this.lPasadas = false;
+      this.lFuturos = false;
+    } else if (s== 'lp'){
+      this.ePasadas = false;
+      this.eFuturas = false;
+      this.rPasados = false;
+      this.rFuturos = false;
+      this.lPasadas = true;
+      this.lFuturos = false;
+    } else if (s == 'lf'){
+      this.ePasadas = false;
+      this.eFuturas = false;
+      this.rPasados = false;
+      this.rFuturos = false;
+      this.lPasadas = false;
+      this.lFuturos = true;
+    }
+  }
+
+  descargarPdfEntradas(x: EntradaOcioCliente) {
+    this.pdfService.downloadPdf([x], new ComprarReservadoDTO(), []);
+  }
+
+  descargarPdfReservados(x: ComprarReservadoDTO) {
+    this.pdfService.downloadPdf([], x, []);
+  }
+
+  descargarPdfListas(x: ListaOcioCliente) {
+    this.pdfService.downloadPdf([], new ComprarReservadoDTO(), [x]);
+  }
+  openChat(evento:Evento) {
+    if (evento) {
+      this.dialog.open(ChatComponent, {
+        data: {evento: evento!}
+      });
+    }
   }
 
 }
