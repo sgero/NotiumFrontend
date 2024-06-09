@@ -1,7 +1,8 @@
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {RespuestaDTO} from "../models/RespuestaDTO";
 import {ListaOcio} from "../models/ListaOcio";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,14 @@ export class ListaOcioService{
 
   eliminarLista(id: number){
     return this.http.delete<RespuestaDTO>(`${this.apiUrl}/listasOcio/${id}`);
+  }
+
+  reasignarListas(idRppOriginal: number, idRppDestino: number): Observable<void> {
+    const params = new HttpParams()
+      .set('idRppOriginal', idRppOriginal.toString())
+      .set('idRppDestino', idRppDestino.toString());
+
+    return this.http.post<void>(`${this.apiUrl}/listasOcio/reasignar`, params);
   }
 
 }

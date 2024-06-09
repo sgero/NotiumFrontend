@@ -166,6 +166,11 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   isModalRppOpen = false;
   isModalEditRppOpen = false;
   ocioNocturno: OcioNocturno = new OcioNocturno();
+  alertButtons = ['Cancelar','Aceptar'];
+  idRppOriginal: number | null = null;
+  idRppDestino: number | null = null;
+  isModalReasignOpen= false;
+
 
   firstFormGroup = this.formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -245,6 +250,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   noHayEventos = true;
   eventosEntreFechas: Evento[] = [];
   fechaActual = new Date().toString();
+
+
 
 
 
@@ -351,7 +358,6 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
         this.dataSourceListas = new MatTableDataSource(this.listas);
         this.dataSourceListas.paginator = this.listasPaginator;
         this.dataSourceListas.sort = this.listasSort;
-
       },
       error: e => {
         console.error(e);
@@ -363,17 +369,29 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   }
 
   deleteRpp(id: number): void {
-    this.rppService.eliminarRpp(id).subscribe({
-      next: value => {
-        this.rppDeleted = value as Rpp;
-        this.rpps = this.rpps.filter(r => r.id !== id);
-        this.dataSource.data = this.rpps;
+    this.listaService.getByRppId(id).subscribe({
+      next: listas => {
+        if (listas.length === 0) {
+          this.rppService.eliminarRpp(id).subscribe({
+            next: value => {
+              this.rpps = this.rpps.filter(r => r.id !== id);
+              this.dataSource.data = this.rpps;
+            },
+            error: e => {
+              console.error(e);
+            }
+          });
+        } else {
+          this.reasignModal(id);
+          console.log("Este RPP tiene listas asociadas y no se puede eliminar.");
+        }
       },
       error: e => {
         console.error(e);
       }
     });
   }
+
 
   Eventos() {
     this.eventosInfo = 'eventosInfo';
@@ -409,7 +427,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
             this.newRpp = value as Rpp;
             this.dataSource.data = this.rpps;
             this.rppModal(false);
-
+            this.getRpps();
           },
           error: e => {
             console.error("no funciona", e);
@@ -950,9 +968,38 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.newRpp = new Rpp();
   }
 
-
   cancelar() {
     this.rppEditModal(false);
     this.resetForm();
+  }
+
+  async reasignModal(idRppOriginal: number) {
+    this.idRppOriginal = idRppOriginal;
+    this.isModalReasignOpen = true;
+  }
+
+  reasignarListas() {
+    if (this.idRppOriginal !== null && this.idRppDestino !== null) {
+      this.listaService.reasignarListas(this.idRppOriginal, this.idRppDestino).subscribe({
+        next: () => {
+          alert('Listas reasignadas exitosamente');
+          this.isModalReasignOpen = false;
+        },
+        error: (err) => {
+          console.error('Error:', err);
+          alert('Error al reasignar listas');
+        }
+      });
+    } else {
+      alert('Por favor, completa ambos campos');
+    }
+  }
+
+  cancel() {
+    this.isModalReasignOpen = false;
+  }
+
+  accept() {
+    this.reasignarListas();
   }
 }
