@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {IonicModule, IonModal} from "@ionic/angular";
+import {IonicModule, IonModal, LoadingController, ToastController} from "@ionic/angular";
 import {Producto} from "../../models/Producto";
 import {ProductoFormato} from "../../models/ProductoFormato";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
@@ -35,6 +35,7 @@ import {Cliente} from "../../models/Cliente";
 import {CartaOcio} from "../../models/CartaOcio";
 import {OcioNocturno} from "../../models/OcioNocturno";
 import {Usuario} from "../../models/Usuario";
+import {addWarning} from "@angular-devkit/build-angular/src/utils/webpack-diagnostics";
 
 @Component({
   selector: 'app-cartaocio',
@@ -84,7 +85,6 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   productoF = {id: 0}
   FormatoP = {id: 0}
   productoFormato = {precio: +'', productoDTO: this.productoF, formatoDTO: this.FormatoP}
-  // token = {token: ''}
   productos: Producto[] = [];
   newProducto: Producto = new Producto();
   formatos: ProductoFormato[] = [];
@@ -107,7 +107,9 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
               private usuarioService: UsuarioService,
               private clienteService: ClienteService,
               private ocioNocturnoService: OcionocturnoService,
-              private router: Router,) { }
+              private router: Router,
+              private toastController: ToastController,
+              private loadingCtrl: LoadingController) { }
 
 
   ngOnInit() {
@@ -155,11 +157,9 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   crearProducto(){
     const token = this.getToken();
     if (token){
-      console.log(this.newProducto)
       this.cartaOcioService.crearProducto(this.newProducto,token).subscribe({
           next: value => {
             this.newProducto = value as Producto;
-            console.log(this.newProducto)
             this.productoModal(false);
           },
         error: e => {
@@ -169,13 +169,16 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
     }
   }
 
-  crearMultiplesFormatos() {
+  async crearMultiplesFormatos() {
     const formatos = [
       { id: 10, precio: this.precio1},
       { id: 5, precio: this.precio2},
       { id: 4, precio: this.precio3}
     ];
-
+    const loading = await this.loadingCtrl.create({
+      message: 'Creando producto...',
+      duration: 1000,
+    });
     formatos.forEach(formato => {
       const newPFormato = {
         formatoDTO: { id: formato.id },
@@ -183,16 +186,15 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
         productoDTO: { ...this.newProducto }
       };
       this.newProductoFormato = newPFormato;
-      console.log("Estado:", this.newProductoFormato);
       this.cartaOcioService.crearProductoFormato(this.newProductoFormato).subscribe({
-        next: value => {
-          console.log(`Formato ${formato.id} creado con éxito.`);
+        next: async value => {
+          await loading.present();
           this.formatoModal(false);
           this.resetForm();
           this.getFormatos()
         },
         error: e => {
-          console.error(`Error al crear formato ${formato.id}:`, e);
+          console.error(e);
         }
       });
     });
@@ -258,35 +260,32 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
   }
 
   getFormatos() {
-    console.log(this.ocio)
     const token = this.getToken();
     this.token.token = this.ocio.userDTO.username!;
     if (this.usuarioLogeado.rol?.toString() === "OCIONOCTURNO" && this.usuarioLogeado.id === this.ocio.userDTO.id){
     this.cartaOcioService.listarFormatos(token).subscribe({
       next: value => {
         this.formatos = value as ProductoFormato[];
-        console.log('Formatos recibidos:', this.formatos);
         this.formatos.sort((a, b) => a!.productoDTO!.nombre!.localeCompare(b!.productoDTO!.nombre!));
         this.dataSourceProductos.data = this.formatos;
         this.dataSourceProductos.paginator = this.productosPaginator;
         this.dataSourceProductos.sort = this.productosSort;
       },
       error: (error) => {
-        console.error('Error al listar productos', error);
+        console.error(error);
       }
     })}
     else{
       this.cartaOcioService.listarFormatosCliente(this.token).subscribe({
         next: value => {
           this.formatos = value as ProductoFormato[];
-          console.log('Formatos recibidos:', this.formatos);
           this.formatos.sort((a, b) => a!.productoDTO!.nombre!.localeCompare(b!.productoDTO!.nombre!));
           this.dataSourceProductos.data = this.formatos;
           this.dataSourceProductos.paginator = this.productosPaginator;
           this.dataSourceProductos.sort = this.productosSort;
         },
         error: (error) => {
-          console.error('Error al listar productos', error);
+          console.error(error);
         }
       })
     }
@@ -322,17 +321,28 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
     })
   }
 
-  deleteProducto(id: number) {
+  async deleteProducto(id: number) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Eliminando producto...',
+      duration: 500,
+    });
+    const toast = await this.toastController.create({
+      message: 'Ha ocurrido un error inesperado durante el proceso de eliminación.',
+      duration: 3000,
+      position: "top",
+      color: "danger"
+    });
     this.cartaOcioService.eliminarProducto(id).subscribe({
-      next: value => {
-        console.log(this.productoDeleted);
+      next: async value => {
         this.productoDeleted = value as Producto;
         // this.formatos = this.formatos.filter(p => p.id !== id);
         this.dataSourceProductos.data = this.formatos;
+        await loading.present();
         this.resetForm();
         this.getFormatos()
         },
-      error: e => {
+      error: async e => {
+        await toast.present();
         console.error(e);
       }
     })
@@ -350,18 +360,30 @@ export class CartaocioComponent  implements OnInit, AfterViewInit {
     this.isModalFormatoOpen = b;
   }
 
-  guardar(id: number) {
+  async guardar(id: number) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Creando formato...',
+      duration: 1000,
+    });
+    const toast = await this.toastController.create({
+      message: 'Ha ocurrido un error inesperado durante el proceso de creación.',
+      duration: 3000,
+      position: "top",
+      color: "danger"
+    });
     this.newProductoFormato.productoDTO = this.newProducto;
     this.cartaOcioService.crearProductoFormato(this.newProductoFormato).subscribe({
-      next: value => {
+      next: async value => {
         this.newProductoFormato = value as ProductoFormato;
         this.dataSourceProductos.data = this.productos;
+        await loading.present();
         this.productoEditModal(false);
         this.resetForm();
         this.getFormatos()
       },
-      error: e => {
-        console.error("no funciona", e);
+      error: async e => {
+        await toast.present();
+        console.error(e);
       }
     })
   }
