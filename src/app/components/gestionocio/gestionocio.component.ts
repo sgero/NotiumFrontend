@@ -895,10 +895,10 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   }
 
   Valoraciones(){
-      const dialogRef = this.dialogRef.open(ValoacionOcioComponent);
+    const dialogRef = this.dialogRef.open(ValoacionOcioComponent);
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('Chat cerrado');
-      });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Chat cerrado');
+    });
   }
 }

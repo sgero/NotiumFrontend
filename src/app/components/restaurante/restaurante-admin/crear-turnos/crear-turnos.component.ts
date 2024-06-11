@@ -31,6 +31,7 @@ import { MatOption } from "@angular/material/autocomplete";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { Turno } from "../../../../models/Turno";
 
+
 @Component({
   selector: 'app-crear-turnos',
   templateUrl: './crear-turnos.component.html',
@@ -52,7 +53,7 @@ import { Turno } from "../../../../models/Turno";
     NgxMaterialTimepickerModule,
     MatStepperNext,
     MatOption,
-    MatCheckbox
+    MatCheckbox,
   ]
 })
 export class CrearTurnosComponent implements OnInit {
@@ -61,26 +62,38 @@ export class CrearTurnosComponent implements OnInit {
   hora_fin: string = '';
   id_restaurante: any;
   diasARepetirTurno: string[] = Object.keys(DiasARepetirCicloEventoOcio).filter(key => isNaN(Number(key))) as string[];
+  diasSeleccionado:string[] = []
+
+
   turno: Turno = new Turno();
   turno_nuevo = this.formBuilder.group({
     diaForm: ["", Validators.required],
     horainicioForm: ["", Validators.required],
     horafinForm: ["", Validators.required]
-
   })
+
 
   constructor(private sharedService: SharedService,
               private turnoService: TurnosService,
               private dialogRef: MatDialog,
               private formBuilder: FormBuilder) {
-    /*this.turnoNuevo = this.formBuilder.group({
-      diasARepetir: this.formBuilder.array(this.diasARepetirTurno.map(dia => new FormControl(false)))
-    });*/
   }
 
   ngOnInit(): void {
 
     this.id_restaurante = this.sharedService.getIdParamsRestaurante();
+  }
+
+
+  diaElegido($event){
+    const d = $event.target.value
+    const c = $event.target.checked
+    console.log(d)
+    console.log(c)
+    console.log(this.diasSeleccionado.includes(d));
+    if(this.diasSeleccionado.includes(d) == false){
+      this.diasSeleccionado.push(d);
+    }
   }
 
   nuevoTurno() {
@@ -89,7 +102,9 @@ export class CrearTurnosComponent implements OnInit {
     let d: any;
     d = formsValues.diaForm
     this.turno.diasARepetirTurno = d;
-    console.log(this.turno.diasARepetirTurno, d);
+
+    console.log(this.diasSeleccionado);
+
 
 
 
