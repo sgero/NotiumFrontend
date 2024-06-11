@@ -16,6 +16,7 @@ import {RestauranteService} from "../../../services/restaurante.service";
 import Swal from 'sweetalert2'
 import {OcionocturnoService} from "../../../services/ocionocturno.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {ComentarioOcio} from "../../../models/ComentarioOcio";
 
 @Component({
   selector: 'app-valoacion-ocio',
@@ -47,6 +48,7 @@ export class ValoacionOcioComponent  implements OnInit {
   id_usuario: any;
   firstStepFormGroup: FormGroup = new FormGroup({});
   secondStepFormGroup: FormGroup = new FormGroup({});
+  comentariosOcio: ComentarioOcio[] = [];
 
   @ViewChild("stepper", { static: false }) stepper: MatStepper | undefined;
 
@@ -68,6 +70,8 @@ export class ValoacionOcioComponent  implements OnInit {
       textoForm: ["", Validators.required],
       n_valoracionForm: ["", Validators.required]
     });
+
+    this.listarValoraciones();
 
   }
 
@@ -163,4 +167,21 @@ export class ValoacionOcioComponent  implements OnInit {
     });
 
   }
+
+  listarValoraciones(){
+
+    this.id_usuario = this.sharedService.getUsuarioToken().id;
+
+    this.ocioNocturnoService.valorcionesPorRestaurante(Number(this.id_ocio)).subscribe( {
+      next: (data) => { this.comentariosOcio = data; },
+      error: (error) => { console.error('Error al listar las valoraciones del ocio', error); },
+      complete: () => { console.log('Las valoraciones del ocio:', this.comentariosOcio); }
+    });
+
+  }
+
+
+
+
+
 }

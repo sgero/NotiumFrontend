@@ -18,5 +18,13 @@ export class ReservaService {
     return this.http.get<Reserva[]>(`${this.apiUrl}/reserva/listarReservaRestaurante?id=${id}`);
   }
 
+  getReservaUser(id_usuario: any, tiempo: string): Observable<Reserva[]> {
+    let ReservaTiempo = {
+      "id_usuario":id_usuario,
+      "tipoReserva":tiempo
+    };
+    return this.http.post<Reserva[]>(`${this.apiUrl}/reserva/reservasUsuariosTiempo`, ReservaTiempo);
+  }
+
 
 }

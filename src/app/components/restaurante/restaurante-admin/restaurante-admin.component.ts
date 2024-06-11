@@ -15,16 +15,31 @@ import {Router} from "@angular/router";
 import {VisualizarComponent} from "./visualizar/visualizar.component";
 import {SharedService} from "../../../services/SharedService";
 import {MatButton} from "@angular/material/button";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatFormField, MatHint, MatInput, MatLabel, MatSuffix} from "@angular/material/input";
+import {ReactiveFormsModule, FormsModule} from "@angular/forms";
+import {provideNativeDateAdapter} from "@angular/material/core";
 
 @Component({
   selector: 'app-restaurante-admin',
   templateUrl: './restaurante-admin.component.html',
   styleUrls: ['./restaurante-admin.component.scss'],
   standalone: true,
-    imports: [
-        CommonModule,
-        MatButton,
-    ]
+  providers: [provideNativeDateAdapter()],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButton,
+    MatDatepickerInput,
+    MatInput,
+    MatLabel,
+    ReactiveFormsModule,
+    MatFormField,
+    MatDatepicker,
+    MatDatepickerToggle,
+    MatHint,
+    MatSuffix,
+  ]
 })
 export class RestauranteAdminComponent  implements OnInit {
 
@@ -34,6 +49,7 @@ export class RestauranteAdminComponent  implements OnInit {
   numReservas: number | undefined;
   usuario={username: ''};
   id_restaurante: any;
+  fecha: any;
 
   constructor(private turnosService: TurnosService,
               private mesaService: MesaService,
@@ -51,23 +67,8 @@ export class RestauranteAdminComponent  implements OnInit {
     height:'250px'})
   }
 
-  abrirModalCrearTurno(){ this.dialogRef.open(CrearTurnosComponent, {
-    width: '510px',
-    height:'300px'})
-  }
+  abrirModalCrearTurno(){ this.dialogRef.open(CrearTurnosComponent)}
 
-  listarMesas(){
-    this.dialogRef.open(VisualizarComponent, {
-      width: '510px'
-    })
-  }
-
-  listarTurnos(){
-    this.dialogRef.open(VisualizarComponent, {
-      width: '510px',
-      data:'turnos'
-    })
-  }
 
   ngOnInit() {
     this.listarReserva();
@@ -75,22 +76,6 @@ export class RestauranteAdminComponent  implements OnInit {
       this.usuario.username = data.username;
     });
   }
-
-  /*  listarTurnos(){
-      this.turnosService.getAllTurnos().subscribe( {
-        next: (data) => { this.turnos = data; },
-        error: (error) => { console.error('Error al listar los turnos', error); },
-        complete: () => { console.log('El listado con todos los turnos:', this.turnos); }
-      });
-    }
-
-    listarMesas(){
-      this.mesaService.getAllMesas().subscribe( {
-        next: (data) => { this.mesas = data; },
-        error: (error) => { console.error('Error al listar lasmesas', error); },
-        complete: () => { console.log('El listado con todos las mesas:', this.mesas); }
-      });
-    }*/
 
   listarReserva(){
 

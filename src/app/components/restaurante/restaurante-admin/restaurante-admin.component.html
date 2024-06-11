@@ -1,21 +1,24 @@
 <div class="container-admin">
   <div class="step">
     <button mat-raised-button color="primary" style="width: 200px !important" (click)="crearCartaRes()"><h2>Crea tu carta</h2></button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearTurno()"><h2>Crear turno</h2></button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearMesa()"><h2>Crear mesa</h2></button>
   </div>
-  <div class="step">
-    <div class="tamano_titulo"><h2>MESAS</h2></div>
-    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 200px !important" (click)="listarMesas()"><h2>Visualizar mesas</h2></button></div>
-    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearMesa()"><h2>Crear mesa</h2></button></div>
-  </div>
-  <div class="step">
-    <div class="tamano_titulo"><h2>TURNOS</h2></div>
-    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 200px !important" (click)="listarTurnos()"><h2>Visualizar turnos</h2></button></div>
-    <div class="posicion_btn"><button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearTurno()"><h2>Crear turno</h2></button></div>
 
-  </div>
-  <div class="step-reserva" *ngIf="numReservas!=0; else sinReservas">
-      <h2>RESERVAS</h2>
-      <table class="tabla_reserva">
+  <div class="step-reserva">
+    <h2>MIS RESERVAS</h2>
+    <div class="form1">
+      <mat-form-field>
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <button mat-raised-button color="primary" style="width: 200px !important"><h2>Visualizar turnos</h2></button>
+    </div>
+
+    <!--  <table class="tabla_reserva">
         <thead>
           <tr>
             <th><h3><b>Nombre</b></h3></th>
@@ -36,7 +39,6 @@
           </tr>
         </ng-container>
         </tbody>
-      </table>
-    </div>
-    <ng-template #sinReservas><div class="texto_val"><h2>Aun no hay reservas realizadas.</h2></div></ng-template>
+      </table>-->
+  </div>
 </div>

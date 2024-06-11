@@ -42,3 +42,15 @@ justify-content: space-between;
 align-items: center;
 padding: 1rem;
 }
+
+.dias_dispo{
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+}
+
+.dispo_dias{
+  display:flex;
+  flex-direction: row;
+}

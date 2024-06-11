@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {UserOcioNocturno} from "../models/UserOcioNocturno";
 import {OcioNocturno} from "../models/OcioNocturno";
 import {Observable} from "rxjs";
+import {ComentarioOcio} from "../models/ComentarioOcio";
 
 @Injectable({
   providedIn: 'root'
@@ -12,26 +13,28 @@ export class OcionocturnoService {
 
   private apiUrl = 'http://127.0.0.1:8080';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   crearOcioNocturno(userOcioNocturno: UserOcioNocturno) {
 
-  return this.http.post<any>(`${this.apiUrl}/ocio_nocturno/crear`, UserOcioNocturno);
+    return this.http.post<any>(`${this.apiUrl}/ocio_nocturno/crear`, UserOcioNocturno);
 
   }
 
-  listarOcioNocturno(){
+  listarOcioNocturno() {
     return this.http.get<OcioNocturno[]>(`${this.apiUrl}/ocioNocturno/listar`);
   }
 
-  ocioPorId(id: number){
+  ocioPorId(id: number) {
     return this.http.get<OcioNocturno>(`${this.apiUrl}/ocioNocturno/${id}`)
   }
-  ocioPorIdEvento(id: number){
+
+  ocioPorIdEvento(id: number) {
     return this.http.get<OcioNocturno>(`${this.apiUrl}/ocioNocturno/${id}/evento`)
   }
 
-  getByIdUsuario(idUsuario:number){
+  getByIdUsuario(idUsuario: number) {
     return this.http.get<OcioNocturno>(`${this.apiUrl}/ocioNocturno/usuario/${idUsuario}`);
   }
 
@@ -48,14 +51,18 @@ export class OcionocturnoService {
     let valoracion = {
       codigoReserva: codigoReserva,
       "ocioDTO":
-        {"id":id},
+        {"id": id},
       texto: experiencia,
       valoracion: evaluacion,
       clienteDTO:
-        {id:id_user}
+        {id: id_user}
     };
 
     return this.http.post<any>(`${this.apiUrl}/comentario/crearOcioNocturno`, valoracion)
+  }
+
+  valorcionesPorRestaurante(id: any): Observable<ComentarioOcio[]> {
+    return this.http.get<ComentarioOcio[]>(`${this.apiUrl}/comentario/listarValoracionesPorOcio?id=${id}`)
   }
 
 }

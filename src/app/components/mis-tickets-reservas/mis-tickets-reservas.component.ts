@@ -22,6 +22,8 @@ import {ReservadoOcioCliente} from "../../models/ReservadoOcioCliente";
 import {ChatComponent} from "../gestionocio/chat/chat.component";
 import {Evento} from "../../models/Evento";
 import {MatDialog} from "@angular/material/dialog";
+import {ReservaService} from "../../services/reserva.service";
+import {SharedService} from "../../services/SharedService";
 
 @Component({
   selector: 'app-mis-tickets-reservas',
@@ -44,7 +46,8 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class MisTicketsReservasComponent  implements OnInit {
 
-  reservas: Reserva[] = [];
+  reservasTiempo: Reserva[] = [];
+  id_usuario: any;
   entradasCompradas ?: ClienteEntradasCompradasDTO;
   restaurante?: boolean;
   ePasadas = false;
@@ -53,6 +56,8 @@ export class MisTicketsReservasComponent  implements OnInit {
   rFuturos = false;
   lPasadas = false;
   lFuturos = false;
+  rPasadas = false;
+  rFuturas = false;
 
   constructor(
     private eventoService: EventoService,
@@ -60,8 +65,9 @@ export class MisTicketsReservasComponent  implements OnInit {
     private router: Router,
     private clienteService: ClienteService,
     private pdfService : PdfService,
-    public dialog: MatDialog
-  ) {
+    public dialog: MatDialog,
+    private reservaService: ReservaService,
+    private sharedService: SharedService) {
   }
 
   ngOnInit() {
@@ -247,6 +253,35 @@ export class MisTicketsReservasComponent  implements OnInit {
       this.dialog.open(ChatComponent, {
         data: {evento: evento!}
       });
+    }
+  }
+
+
+  reserv(estado : string){
+
+    this.id_usuario = this.sharedService.getUsuarioToken().id
+
+    if (estado == 'pasadas'){
+      this.rPasadas = true;
+      this.rFuturas = false;
+
+      this.reservaService.getReservaUser(this.id_usuario, estado).subscribe( {
+        next: (data) => { this.reservasTiempo = data; },
+        error: (error) => { console.error('Error al obtener las reservas pasadas', error); },
+        complete: () => { console.log('Las reservas pasadas:', this.reservasTiempo); }
+      });
+
+
+    }else if(estado == 'futuras'){
+      this.rPasadas = false;
+      this.rFuturas = true;
+
+      this.reservaService.getReservaUser(this.id_usuario, estado).subscribe( {
+        next: (data) => { this.reservasTiempo = data; },
+        error: (error) => { console.error('Error al obtener las reservas futuras:', error); },
+        complete: () => { console.log('Las reservas futuras:', this.reservasTiempo); }
+      });
+
     }
   }
 
