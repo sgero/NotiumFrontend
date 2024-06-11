@@ -5,14 +5,14 @@
 
   </div>
   <div class="search">
-    <!--    <input class="search__input" type="text" placeholder="Search">-->
 
-    <!--    <i class="fa fa-search search_icon" ></i>-->
     <div class="titulin">
-      <img src="../../../assets/images/OIG4.jpg" alt="Logo" href="/notium">
-      <div >
-<!--        <h1><strong>OTIUMⁿ </strong></h1>-->
 
+      <a href="/notium">
+        <img src="../../../assets/images/OIG4.jpg" alt="Logo" href="/notium">
+      </a>
+
+      <div>
         <div class="fecha">
           <ion-datetime-button  datetime="datetime"></ion-datetime-button>
 
@@ -33,21 +33,22 @@
 
   </div>
 
-  <div class="tope-header">
+  <div class="user" style="display: flex; align-items: center;">
+
     <ng-container *ngIf="authService.isUserLoggedIn()">
       <span>Bienvenido, {{ username }}</span>
     </ng-container>
-  </div>
 
-  <div class="user" style="display: flex; align-items: center;">
     <ng-container *ngIf="authService.isUserLoggedIn()">
       <button class="logout-button" style="padding: 8px 16px; margin-right: 8px;" (click)="logout()">Logout</button>
     </ng-container>
+
     <ng-container *ngIf="!authService.isUserLoggedIn()">
       <button class="register-button" style="padding: 8px 16px; margin-right: 8px;" (click)="registro()">Regístrate</button>
       <span> | </span>
       <button class="login-button" style="padding: 8px 16px;" (click)="login()">Login</button>
     </ng-container>
+
   </div>
 
 </div>

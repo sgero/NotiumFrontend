@@ -7,23 +7,86 @@
   <link rel="stylesheet" href="perfil.component.scss">
 </head>
 <body>
-  <app-header></app-header>
+<app-header></app-header>
 
-  <div class="container">
+<div class="container">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>MI PERFIL</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-list>
+              <ion-item>
+                <ion-label><strong>Username:</strong></ion-label>
+                <ion-text>{{usuario.username}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Email:</strong></ion-label>
+                <ion-text>{{usuario.email}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Nombre:</strong></ion-label>
+                <ion-text>{{perfil?.nombre}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Apellidos:</strong></ion-label>
+                <ion-text>{{perfil?.apellidos}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>DNI:</strong></ion-label>
+                <ion-text>{{perfil?.dni}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Fecha Nacimiento:</strong></ion-label>
+                <ion-text>{{perfil?.fechaNacimiento}}</ion-text>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+          <ion-col size="6">
+            <ion-list>
+              <ion-item>
+                <ion-label><strong>Calle:</strong></ion-label>
+                <ion-text>{{perfil?.direccionDTO?.calle}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Código Postal:</strong></ion-label>
+                <ion-text>{{perfil?.direccionDTO?.codigoPostal}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Numero:</strong></ion-label>
+                <ion-text>{{perfil?.direccionDTO?.numero}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="perfil?.direccionDTO?.puerta">
+                <ion-label><strong>Puerta:</strong></ion-label>
+                <ion-text>{{perfil?.direccionDTO?.puerta}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Provincia:</strong></ion-label>
+                <ion-text>{{perfil?.direccionDTO?.provincia}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Ciudad:</strong></ion-label>
+                <ion-text>{{perfil?.direccionDTO?.ciudad}}</ion-text>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>País:</strong></ion-label>
+                <ion-text>{{perfil?.direccionDTO?.pais}}</ion-text>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-    <h1>MI PERFIL</h1>
-
-    <div class="profile-card">
-
-      <div class="user-info">
-        <p><strong>Username:</strong> <span name="username" id="username">{{usuario.username}}</span></p>
-        <p><strong>Email:</strong> <span name="email" id="useremail">{{usuario.email}}</span></p>
+      <div class="botones">
+        <ion-button id="boton_editar" expand="full" (click)="openEditProfileModal()">Editar Perfil</ion-button>
+        <ion-button id="boton_eliminar" expand="full" (click)="eliminarCuenta()">Eliminar Cuenta</ion-button>
       </div>
 
-    </div>
-
-  </div>
-
-  <app-footer></app-footer>
+    </ion-card-content>
+  </ion-card>
+</div>
 </body>
 </html>

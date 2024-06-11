@@ -13,6 +13,7 @@ import {UserCliente} from "../../models/UserCliente";
 import {OcionocturnoService} from "../../services/ocionocturno.service";
 import {DireccionDTO} from "../../models/DireccionDTO";
 import {LoginComponent} from "../login/login.component";
+import {Observable} from "rxjs";
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -54,57 +55,56 @@ export class RegistroComponent implements OnInit {
 
   }
 
-  siguientePaso() {
-
+  async siguientePaso() {
     if (this.paso === 1 && !this.selectedRole) {
       return;
     }
 
-    if (this.paso === 2){
+    if (this.paso === 2) {
+      this.validaUsernameEmailExistentes().subscribe((existe: boolean) => {
+        this.repiteEmailUsername = existe;
 
-      this.validaUsernameEmailExistentes();
-      if (!this.validarFormularioGenerico() || this.repiteEmailUsername){
-
-        if (this.repiteEmailUsername){
-
-          const toast = this.toastController.create({
-            message: 'El username o el email ya existen',
-            duration: 2000,
-            position: 'top',
-            color: 'error'
-          });
-
+        if (!this.validarFormularioGenerico() || this.repiteEmailUsername) {
+          if (this.repiteEmailUsername) {
+            this.toastController.create({
+              message: 'El username o el email ya existen',
+              duration: 2000,
+              position: 'top',
+              color: 'danger'
+            }).then(toast => toast.present());
+          }
           return;
-
         }
-        return;
 
-      }
-
+        this.paso++;
+      });
+    } else {
+      this.paso++;
     }
-
-    this.paso++;
   }
 
-  validaUsernameEmailExistentes(){
-
-      this.usuarioService.validaUsernameEmailExistentes(this.user).subscribe(data=>{
-
-        this.repiteEmailUsername = data;
-
-      })
-
+  validaUsernameEmailExistentes(): Observable<boolean> {
+    return this.usuarioService.validaUsernameEmailExistentes(this.user);
   }
 
   validarFormularioGenerico(): boolean {
     if (!this.user.username || !this.user.email || !this.user.password || !this.repiteContrasena) {
+      this.toastController.create({
+        message: 'Hay algún campo no rellenado.',
+        duration: 2000,
+        position: 'top',
+        color: 'danger'
+      }).then(toast => toast.present());
       return false;
     }
 
     if (this.user.password !== this.repiteContrasena) {
-      const mensajeContraseña = document.getElementById('repiteContraseña');
-      // @ts-ignore
-      mensajeContraseña.innerHTML = '<span style="color: red">¡Las contraseñas no coinciden!</span>';
+      this.toastController.create({
+        message: 'Las contraseñas no coinciden.',
+        duration: 2000,
+        position: 'top',
+        color: 'danger'
+      }).then(toast => toast.present());
       return false;
     }
 

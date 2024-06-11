@@ -1,0 +1,174 @@
+.contenedor-general {
+  background-color: #f0f0f0; /* Color de fondo más claro */
+  padding: 20px; /* Espaciado interior */
+}
+
+.contenedor-registro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.contenedor-logo {
+  text-align: center;
+  position: relative;
+}
+
+ion-button{
+
+  margin: 0 !important;
+  padding : 0 !important;
+
+}
+
+ion-list {
+
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  margin-bottom: 20px !important;
+
+}
+
+input {
+
+  text-align: start !important;
+
+}
+
+ion-input{
+
+  text-align: start !important;
+
+}
+
+.labelspace{
+
+  max-width: max-content !important;
+
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.texto-logo {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.botones{
+
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+
+}
+
+.botones ion-button{
+
+  width: 50%;
+
+}
+
+.contenido {
+  margin-bottom: 20px;
+}
+
+.titulo-principal {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.titulo-secundario {
+  font-size: 18px;
+}
+
+.enlaces {
+  margin-bottom: 20px;
+}
+
+.enlaces-sociales {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.enlaces-sociales li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.superposicion-registro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+ion-label{
+
+  flex:auto !important;
+
+}
+
+.contenedor-formulario-registro {
+  max-width: 400px;
+  width: 100%;
+}
+
+.grupo-formulario {
+  margin-bottom: 20px;
+}
+
+.grupo-formulario label {
+  display: block;
+}
+
+.campo-formulario {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.margen-superior-lg {
+  margin-top: 20px;
+}
+
+.boton-formulario {
+  padding: 10px 20px;
+  background-color: #2ecc71; /* Color del botón diferente */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease; /* Transición suave */
+}
+
+.boton-formulario:hover {
+  background-color: #27ae60; /* Cambio de color al pasar el mouse */
+  scale: 1.05;
+}
+
+.enlace-registro {
+  color: #007bff;
+  text-decoration: none;
+}
+
+ul{
+
+  text-decoration: none;
+  list-style: none;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  gap: 10px;
+
+}

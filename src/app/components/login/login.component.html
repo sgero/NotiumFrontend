@@ -25,6 +25,13 @@
               <ion-button expand="block" (click)="login()">Login</ion-button>
             </div>
 
+            <ion-toast
+              [isOpen]="isToastOpen"
+              message="{{mensaje}}"
+              [duration]="5000"
+              (didDismiss)="!isToastOpen"
+            ></ion-toast>
+
           </ion-card-content>
         </ion-card>
       </ion-col>

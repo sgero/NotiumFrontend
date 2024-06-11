@@ -38,7 +38,9 @@ export class MenuLateralComponent implements OnInit {
 
   ngOnInit() {
 
-    this.traerUsuario();
+    if (localStorage.getItem('token')){
+      this.traerUsuario();
+    }
     this.isLoggedIn = this.authService.isUserLoggedIn()
 
   }
@@ -52,13 +54,15 @@ export class MenuLateralComponent implements OnInit {
       this.userRole = this.usuarioLogueado.rol;
       localStorage.setItem('username', this.username);
 
+    }, error => {
+
     });
 
   }
 
   visualizarPerfil(){
 
-    this.router.navigate(['/notium/perfil/' + this.usuarioLogueado.id]);
+    this.router.navigate(['/notium/perfil']);
 
   }
 

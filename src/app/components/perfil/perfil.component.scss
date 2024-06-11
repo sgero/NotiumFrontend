@@ -1,62 +1,41 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
 .container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+ion-card-title {
   text-align: center;
-  background: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 170px;
-  margin-top: 170px;
-}
-
-h1{
-
-  font-weight: bold;
-  font-size: 35px;
-  color: #521852;
-
-}
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.user-info {
-  text-align: left;
-  gap: 40px;
-}
-
-.user-info p {
-  margin: 10px 0;
-
-  font-size: 19px;
-}
-
-.user-info span{
-
-  justify-content: center;
-  margin-left: 20px;
-
-}
-
-.user-info strong {
+  font-size: 1.5em;
   color: #333;
+}
+
+ion-card {
+  margin-top: 20px;
+}
+
+ion-item {
+  --inner-padding-end: 0;
+}
+
+ion-label {
+  width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+  flex: 0.4 !important;
+}
+
+ion-text {
+  flex: 1;
+  text-align: center;
+}
+
+.botones{
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
 }

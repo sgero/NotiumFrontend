@@ -198,20 +198,14 @@
 
 
 .logout-button {
-  background-color: #2a032a ; /* Color de fondo */
+  background-color: transparent; /* Color de fondo */
   align-items: center;
   align-content: center;
   font-size: 1.1rem;
-  color: #e3a8fd;
-  border-radius: 15px;
+  color: #714983;
 }
 
 
-.logout-button :hover{
-  background-color: #e3a8fd ; /* Color de fondo */
-  align-items: center;
-  align-content: center;
-  font-size: 1.1rem;
-  color: #2a032a;
-  border-radius: 15px;
+.logout-button:hover{
+  color: #521852;
 }

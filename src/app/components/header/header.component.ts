@@ -24,15 +24,19 @@ export class HeaderComponent  implements OnInit {
   username: any;
   usuarioLogueado:any;
 
-  constructor(private router: Router, public authService: AuthService,
+  constructor(private router: Router,
+              public authService: AuthService,
               private modalController: ModalController,
               private userService: UsuarioService) { }
 
   ngOnInit() {
 
-    this.traerUsuario();
+    if (localStorage.getItem('token')){
+      this.traerUsuario();
+    }
 
   }
+
   traerUsuario(){
 
     this.userService.getUsuarioToken().subscribe(data=>{
@@ -41,10 +45,11 @@ export class HeaderComponent  implements OnInit {
       this.username = this.usuarioLogueado.username;
       localStorage.setItem('username', this.username);
 
+    }, error => {
+
     });
 
   }
-
 
   logout() {
     this.authService.logout();
@@ -52,27 +57,6 @@ export class HeaderComponent  implements OnInit {
     this.router.navigate(['/login']).then(r => console.log('Logged out'));
 
   }
-
-  openAdminPanel() {
-    this.router.navigate(['/admin-panel']);
-  }
-
-  openClientPanel() {
-    this.router.navigate(['/client-panel']);
-  }
-
-  openRestaurantPanel() {
-    this.router.navigate(['/restaurant-panel']);
-  }
-
-  openOcioNocturnoPanel() {
-    this.router.navigate(['/ocio-panel']);
-  }
-
-  openRppPanel() {
-    this.router.navigate(['/rpp-panel']);
-  }
-
 
   async login() {
     const modal = await this.modalController.create({
@@ -82,7 +66,6 @@ export class HeaderComponent  implements OnInit {
     });
     await modal.present();
   }
-
 
   async registro() {
     const modal = await this.modalController.create({

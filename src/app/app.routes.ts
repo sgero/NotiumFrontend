@@ -41,7 +41,7 @@ export const routes: Routes = [
   {path: 'cartaOcio', component: CartaocioComponent},
   {path: 'notium/reservar/:restauranteId', component: CrearReservaComponent},
   {path: 'notium/ocionocturno/evento/:id', component: EventDetailComponent},
-  {path: 'notium/perfil/:id', component: PerfilComponent},
+  {path: 'notium/perfil', component: PerfilComponent},
   {path: 'notium/perfil/editar', component: EditarPerfilComponent},
   {path: 'notium/ticketsyreservas', component: MisTicketsReservasComponent},
   {path: 'notium/ocionocturno/chat/:id', component: ChatComponent}

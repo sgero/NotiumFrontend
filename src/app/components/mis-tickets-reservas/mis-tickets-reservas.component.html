@@ -161,7 +161,7 @@
                   <p class=" text">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.nombre }}</p>
                   <p class=" text">{{ x.reservadoOcioClienteDTO.reservadoOcioDTO?.eventoDTO?.fecha }}</p>
                   <p class=" text"><a class="btn btn-primary" (click)="descargarPdfReservados(x)">Descargar</a></p>
-                  <p class=" text"><a class="btn btn-primary" (click)="openChat(x.reservadoOcioClienteDTO?.reservadoOcioDTO?.eventoDTO!)">Chat exclusivo</a></p>
+                  <p class=" text"><a class="btn btn-primary" (click)="openChat(x.reservadoOcioClienteDTO.reservadoOcioDTO!.eventoDTO!)">Chat exclusivo</a></p>
                 </div>
               </div>
             }
@@ -170,7 +170,7 @@
               <div class="spinner">
                 <mat-spinner class="matspin"></mat-spinner>
               </div>
-            } @else if (entradasCompradas!.listasCompradasPasadas!.length ==0){
+            } @else if (entradasCompradas!.listasCompradasPasadas!.length === 0){
               <h2><span>No tienes listas compradas para ningún evento pasado.</span></h2>
             }
             @else {
