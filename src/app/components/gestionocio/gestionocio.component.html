@@ -481,12 +481,6 @@
                   </button>
                   <button *ngIf="permisosParaEditar" mat-icon-button color="warn" id="present-alert" (click)="deleteRpp(rpp.id)">
                     <mat-icon>delete</mat-icon>
-<!--                    <ion-alert *ngIf="listas.length > 0"-->
-<!--                      trigger="present-alert"-->
-<!--                      header="Este rpp tiene listas activas"-->
-<!--                      message="¿Desea reasignar sus listas a otro rpp?"-->
-<!--                      [buttons]="alertButtons"-->
-<!--                    ></ion-alert>-->
                   </button>
                   <button mat-icon-button color="primary" id="open-loading" (click)="getListas(rpp.id)">
                     <mat-icon>list</mat-icon>
@@ -770,7 +764,7 @@
             </ion-content>
           </ng-template>
         </ion-modal>
-        <ion-modal [isOpen]="isModalReasignOpen">
+        <ion-modal [isOpen]="isModalReasignOpen" class="reasignModal">
           <ng-template>
             <ion-header>
               <ion-toolbar>
@@ -790,7 +784,9 @@
               <ion-item>
                 <ion-label>¿Desea asignarlas a otro Rpp?</ion-label>
                 <ion-select [(ngModel)]="idRppDestino">
-                  <ion-select-option *ngFor="let rpp of rpps" [value]="rpp.id">{{ rpp.nombre }}</ion-select-option>
+                  <ng-container *ngFor="let rpp of rpps">
+                  <ion-select-option [value]="rpp.id" *ngIf="rpp.id !== idRppOriginal">{{ rpp.nombre }}</ion-select-option>
+                  </ng-container>
                 </ion-select>
               </ion-item>
             </ion-content>

@@ -80,16 +80,26 @@ ion-label, .staff ion-label{
   white-space: nowrap;
 }
 
-
 ion-modal{
   --width: 80%;
   --height: 80%;
 }
 
-.editModal #background-content{
+.modalRpp{
   --width: 80%;
   --height: 46%;
 }
+
+.editModal{
+  --width: 80%;
+  --height: 36%;
+}
+
+.reasignModal{
+  --width: 40%;
+  --height: 18%;
+}
+
 body {
   font-family: "Noto Sans JP", sans-serif;
   letter-spacing: 0.5px;
@@ -155,10 +165,3 @@ body {
   margin-top: 50px;
   margin-bottom: 50px;
 }
-
-//.modalRpp{
-//  display: flex;
-//  flex-direction: column;
-//  align-items: center;
-//  width: 50%;
-//}

@@ -361,7 +361,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       position: "top",
       color: "danger"
     });
-    this.showList()
+
     this.listaService.getByRppId(id).subscribe({
       next: async value => {
         this.listas = value as ListaOcio[];
@@ -369,6 +369,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
         this.dataSourceListas.paginator = this.listasPaginator;
         this.dataSourceListas.sort = this.listasSort;
         await loading.present();
+        this.showList()
       },
       error: async e => {
         await toast.present();
@@ -963,11 +964,10 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.rppService.rppPorId(id).subscribe({
       next: value => {
         this.newRpp = value as Rpp;
-        console.log(this.newRpp);
         this.rppEditModal(true);
       },
           error: e => {
-            console.error("no funciona", e);
+            console.error(e);
           }
         })
       }
@@ -1010,7 +1010,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.resetForm();
   }
 
-  async reasignModal(idRppOriginal: number) {
+  reasignModal(idRppOriginal: number) {
     this.idRppOriginal = idRppOriginal;
     this.isModalReasignOpen = true;
   }
