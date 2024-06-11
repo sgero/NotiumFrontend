@@ -61,10 +61,8 @@ import {
   MatColumnDef,
   MatHeaderCell,
   MatHeaderCellDef,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow,
-  MatRowDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
   MatTable,
   MatTableDataSource,
 } from "@angular/material/table";
@@ -77,6 +75,9 @@ import {FooterComponent} from "../footer/footer.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ValoacionOcioComponent} from "./valoacion-ocio/valoacion-ocio.component";
 import {SharedService} from "../../services/SharedService";
+import {trigger} from "@angular/animations";
+import {Producto} from "../../models/Producto";
+import {ProductoFormato} from "../../models/ProductoFormato";
 
 const IonIcons = {
   shirtOutline,
@@ -153,19 +154,27 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild('listasPaginator') listasPaginator!: MatPaginator;
-  @ViewChild('listasSort') listasSort!: MatSort;  eventosInfo: string = 'eventosInfo';
+  @ViewChild('listasSort') listasSort!: MatSort;
+  eventosInfo: string = 'eventosInfo';
   mostrarListas: boolean = false;
-  ocio: OcioNocturno = new OcioNocturno();
+  ocio = new OcioNocturno();
   eventos: Evento[] = [];
   rpps: Rpp[] = [];
   rppDeleted: Rpp = new Rpp();
   newRpp: Rpp = new Rpp();
   listas: ListaOcio[] = [];
   mostrarCarta = true;
-  isDisable = false;
+  isDisable = true;
+  isDisabled = false;
   cartaOcio: CartaOcio = new CartaOcio();
   isModalOpen = false;
   isModalRppOpen = false;
+  isModalEditRppOpen = false;
+  idRppOriginal: number | null = null;
+  idRppDestino: number | null = null;
+  isModalReasignOpen= false;
+
+
   firstFormGroup = this.formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -243,6 +252,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   noHayEventosSeleccionado?:boolean;
   noHayEventos = true;
   fechaActual = new Date().toString();
+
   constructor(
     private ocioNocturnoService: OcionocturnoService,
     private eventoService: EventoService,
@@ -258,7 +268,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     private loadingCtrl: LoadingController,
     private chatService : ChatService,
     private dialogRef: MatDialog,
-    private sharedService: SharedService) {
+    private sharedService: SharedService
+  ) {
     addIcons(IonIcons);
     this.newRpp.direccionDTO = new DireccionDTO();
     this.newRpp.userDTO = new Usuario();
@@ -339,16 +350,29 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   }
 
 
-  getListas(id:number){
-    this.showList()
+  async getListas(id:number){
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando Listas...',
+      duration: 3000,
+    });
+    const toast = await this.toastController.create({
+      message: 'Ha ocurrido un error inesperado durante el proceso.',
+      duration: 3000,
+      position: "top",
+      color: "danger"
+    });
+
     this.listaService.getByRppId(id).subscribe({
-      next: value => {
+      next: async value => {
         this.listas = value as ListaOcio[];
         this.dataSourceListas = new MatTableDataSource(this.listas);
         this.dataSourceListas.paginator = this.listasPaginator;
         this.dataSourceListas.sort = this.listasSort;
+        await loading.present();
+        this.showList()
       },
-      error: e => {
+      error: async e => {
+        await toast.present();
         console.error(e);
       }
     })
@@ -357,12 +381,22 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.mostrarListas = true;
   }
 
-  deleteRpp(id: number): void {
-    this.rppService.eliminarRpp(id).subscribe({
-      next: value => {
-        this.rppDeleted = value as Rpp;
-        this.rpps = this.rpps.filter(r => r.id !== id);
-        this.dataSource.data = this.rpps;
+  deleteRpp(id: number) {
+    this.listaService.getByRppId(id).subscribe({
+      next: listas => {
+        if (listas.length === 0) {
+          this.rppService.eliminarRpp(id).subscribe({
+            next: value => {
+              this.rpps = this.rpps.filter(r => r.id !== id);
+              this.dataSource.data = this.rpps;
+            },
+            error: e => {
+              console.error(e);
+            }
+          });
+        } else {
+          this.reasignModal(id);
+        }
       },
       error: e => {
         console.error(e);
@@ -377,31 +411,45 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
   Staff() {
     this.eventosInfo = 'staff';
-    this.getRpps()
+    this.getRpps();
+    this.mostrarListas = false;
   }
 
   Carta() {
     this.eventosInfo = 'carta';
   }
 
-  RegistrarRpp() {
+  async RegistrarRpp() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Creando Rpp...',
+      duration: 1000,
+    });
+    const toast = await this.toastController.create({
+      message: 'Ha ocurrido un error inesperado durante el proceso de creación.',
+      duration: 1000,
+      position: "top",
+      color: "danger"
+    });
     if (!this.newRpp.direccionDTO) {
       this.newRpp.direccionDTO = new DireccionDTO();
     }
     if (!this.newRpp.userDTO) {
       this.newRpp.userDTO = new Usuario();
     }
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe( params => {
       const ocioID = +params['id'];
       if (ocioID) {
         this.rppService.guardarRpp(ocioID, this.newRpp).subscribe({
-          next: value => {
-
+          next: async value => {
             this.newRpp = value as Rpp;
+            this.dataSource.data = this.rpps;
+            await loading.present();
             this.rppModal(false);
+            this.getRpps();
           },
-          error: e => {
-            console.error("no funciona", e);
+          error: async e => {
+            await toast.present();
+            console.error( e);
           }
         })
       }
@@ -420,6 +468,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       if (ocioID) {
         this.cartaOcioService.guardarCarta(ocioID, this.cartaOcio).subscribe({
           next: value => {
+            this.cartaOcio.ocioNocturno.id = ocioID;
             this.cartaOcio = value as CartaOcio;
           },
           error: e => {
@@ -448,14 +497,16 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
 
   saveCarta() {
+    this.guardarCarta();
     this.mostrarCarta = true;
     this.isDisable = true;
-    this.guardarCarta()
+    this.isDisabled = false;
   }
 
   deleteCarta() {
     this.mostrarCarta = false;
     this.isDisable = false;
+    this.isDisabled = true;
     this.eliminarCarta();
   }
 
@@ -895,10 +946,102 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   }
 
   Valoraciones(){
-      const dialogRef = this.dialogRef.open(ValoacionOcioComponent);
+    const dialogRef = this.dialogRef.open(ValoacionOcioComponent);
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('Chat cerrado');
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Chat cerrado');
+    });
+  }
+
+  rppEditModal(b: boolean) {
+    this.isModalEditRppOpen = b;
+  }
+
+  editRpp(id: number) {
+    this.rppService.rppPorId(id).subscribe({
+      next: value => {
+        this.newRpp = value as Rpp;
+        this.rppEditModal(true);
+      },
+          error: e => {
+            console.error(e);
+          }
+        })
+      }
+
+  async guardar(id: number) {
+    if (!this.newRpp.direccionDTO) {
+      this.newRpp.direccionDTO = new DireccionDTO();}
+    const loading = await this.loadingCtrl.create({
+      message: 'Editando Rpp...',
+      duration: 1000,
+    });
+    const toast = await this.toastController.create({
+      message: 'Ha ocurrido un error inesperado durante el proceso de edición.',
+      duration: 3000,
+      position: "top",
+      color: "danger"
+    });
+    this.rppService.guardarRpp(id, this.newRpp).subscribe({
+      next: async value => {
+        this.newRpp = value as Rpp;
+        this.dataSource.data = this.rpps;
+        await loading.present();
+        this.rppEditModal(false);
+        this.getRpps();
+      },
+      error: async e => {
+        await toast.present();
+        console.error(e);
+      }
+    })
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.newRpp = new Rpp();
+  }
+
+  cancelar() {
+    this.rppEditModal(false);
+    this.resetForm();
+  }
+
+  reasignModal(idRppOriginal: number) {
+    this.idRppOriginal = idRppOriginal;
+    this.isModalReasignOpen = true;
+  }
+
+  async reasignarListas() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Reasignando listas...',
+      duration: 1000,
+    });
+    const toast = await this.toastController.create({
+      message: 'Ha ocurrido un error inesperado durante el proceso de reasignación.',
+      duration: 3000,
+      position: "top",
+      color: "danger"
+    });
+    if (this.idRppOriginal !== null && this.idRppDestino !== null) {
+      this.listaService.reasignarListas(this.idRppOriginal, this.idRppDestino).subscribe({
+        next: async () => {
+          await loading.present();
+          this.isModalReasignOpen = false;
+        },
+        error: async (err) => {
+          await toast.present();
+          console.error(err);
+        }
       });
+    }
+  }
+
+  cancel() {
+    this.isModalReasignOpen = false;
+  }
+
+  accept() {
+    this.reasignarListas();
   }
 }

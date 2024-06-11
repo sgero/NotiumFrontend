@@ -46,9 +46,10 @@
   z-index: 3; /* Asegura que el contenido del modal esté por encima de otros elementos */
 }
 
-//ion-modal {
-//  z-index: 4; /* Asegura que el modal esté por encima de todos los demás elementos */
-//}
+ion-modal{
+  --width: 30%;
+  --height: 29%;
+}
 
 ion-button.icon {
   --background: #2a032a;
