@@ -172,3 +172,14 @@ ul{
   gap: 10px;
 
 }
+
+
+ion-toast {
+  --background: #c21834;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #c4c4d0;
+}
+
+ion-toast::part(message) {
+  font-family: "Open Sans", sans-serif;
+}

@@ -69,9 +69,19 @@ export class UsuarioService{
     return this.http.get<any>(`${this.apiUrl}/usuarioByToken`);
   }
 
-  validaUsernameEmailExistentes(usuario: Usuario){
+  validaUsernameEmailExistentes(user: any): Observable<boolean> {
+    return this.http.post<boolean>(`${this.apiUrl}/users/validar`, user);
+  }
 
-    return this.http.post<any>(`${this.apiUrl}/users/validar`, usuario);
+  traerPerfil(usuario: Usuario){
+
+    return this.http.post<any>(`${this.apiUrl}/users/perfil`, usuario);
+
+  }
+
+  eliminarCuenta(usuario: Usuario){
+
+    return this.http.post<any>(`${this.apiUrl}/users/eliminar`, usuario);
 
   }
 

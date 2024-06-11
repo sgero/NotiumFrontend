@@ -10,6 +10,7 @@ export class Restaurante{
   valoracion?: boolean = true;
   disponible?: boolean = true;
   imagen_marca?: string = '';
+  aforo?: number ;
   activo?: boolean = true;
   usuarioDTO: Usuario = new Usuario();
   direccionDTO: DireccionDTO = new DireccionDTO();

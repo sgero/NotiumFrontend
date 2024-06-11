@@ -3,7 +3,7 @@ import {Usuario} from "../../models/Usuario";
 import {UsuarioService} from "../../services/usuario.service";
 import {Router} from "@angular/router";
 import {FormsModule} from "@angular/forms";
-import {IonicModule, ModalController} from "@ionic/angular";
+import {IonicModule, ModalController, ToastController} from "@ionic/angular";
 import {SharedService} from "../../services/SharedService";
 import {NgIf} from "@angular/common";
 
@@ -21,6 +21,8 @@ import {NgIf} from "@angular/common";
 export class LoginComponent {
 
   usuario = new Usuario();
+  isToastOpen = false;
+  mensaje = '';
 
   constructor(
     private usuarioService: UsuarioService,
@@ -29,16 +31,29 @@ export class LoginComponent {
     private sharedService: SharedService,
   ) { }
 
-  async login() {
+  login() {
+
     this.usuarioService.loginUsuario(this.usuario).subscribe(data => {
 
-      console.log(data);
-      localStorage.setItem('token', data['token']);
-      this.sharedService.setUsuarioToken(this.usuario);
-      this.dismissModal();
-      window.location.reload();
+      if (data['token'] == ""){
+
+        this.isToastOpen = true;
+        this.mensaje = data['message'];
+        setTimeout(() => {
+          this.dismissModal();
+        }, 5000);
+
+      }else{
+
+        localStorage.setItem('token', data['token']);
+        this.sharedService.setUsuarioToken(this.usuario);
+        this.dismissModal();
+        window.location.reload();
+
+      }
 
     });
+
   }
 
   dismissModal() {
