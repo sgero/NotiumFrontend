@@ -1,55 +1,37 @@
 <div class="topbar">
-
-  <div class="toggle">
-    <i class="fa fa-bars  "></i>
-
-  </div>
   <div class="search">
-
     <div class="titulin">
-
       <a href="/notium">
-        <img src="../../../assets/images/OIG4.jpg" alt="Logo" href="/notium">
+        <img src="../../../assets/images/OIG4.jpg" alt="Logo">
       </a>
-
       <div>
         <div class="fecha">
-          <ion-datetime-button  datetime="datetime"></ion-datetime-button>
-
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
               <ion-datetime id="datetime"></ion-datetime>
             </ng-template>
           </ion-modal>
         </div>
-
         <h2>Ocio a la enésima potencia.</h2>
-
       </div>
-
     </div>
-
-
-
   </div>
 
   <div class="user" style="display: flex; align-items: center;">
-
     <ng-container *ngIf="authService.isUserLoggedIn()">
       <span>Bienvenido, {{ username }}</span>
     </ng-container>
-
     <ng-container *ngIf="authService.isUserLoggedIn()">
       <button class="logout-button" style="padding: 8px 16px; margin-right: 8px;" (click)="logout()">Logout</button>
     </ng-container>
-
     <ng-container *ngIf="!authService.isUserLoggedIn()">
       <button class="register-button" style="padding: 8px 16px; margin-right: 8px;" (click)="registro()">Regístrate</button>
       <span> | </span>
       <button class="login-button" style="padding: 8px 16px;" (click)="login()">Login</button>
     </ng-container>
-
+    <ion-menu-button autoHide="false"></ion-menu-button>
   </div>
-
 </div>
 
+<app-menu-lateral></app-menu-lateral>
