@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
-import {IonicModule, ModalController} from "@ionic/angular";
+import {IonicModule, MenuController, ModalController} from "@ionic/angular";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {LoginComponent} from "../login/login.component";
 import {UsuarioService} from "../../services/usuario.service";
@@ -33,7 +33,8 @@ export class MenuLateralComponent implements OnInit {
   constructor(private authService: AuthService,
               private modalController: ModalController,
               private userService: UsuarioService,
-              private router: Router) {
+              private router: Router,
+              private menuController: MenuController) {
   }
 
   ngOnInit() {
@@ -98,5 +99,13 @@ export class MenuLateralComponent implements OnInit {
       }
     });
     await modal.present();
+  }
+
+  openMenu() {
+    this.menuController.open('main-menu');
+  }
+
+  closeMenu() {
+    this.menuController.close('main-menu');
   }
 }

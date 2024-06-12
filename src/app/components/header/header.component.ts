@@ -7,6 +7,7 @@ import {CommonModule} from "@angular/common";
 import {LoginComponent} from "../login/login.component";
 import {RegistroComponent} from "../registro/registro.component";
 import {UsuarioService} from "../../services/usuario.service";
+import {MenuLateralComponent} from "../menu-lateral/menu-lateral.component";
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ import {UsuarioService} from "../../services/usuario.service";
   imports: [
     AdminPanelComponent,
     IonicModule,
-    CommonModule
+    CommonModule,
+    MenuLateralComponent
   ],
   standalone: true
 })
