@@ -1,4 +1,3 @@
-
 .topbar {
   background-color: #eeecf8;
   color: #171616;
@@ -6,10 +5,10 @@
   font-size: 1.5rem;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-content: center;
+  justify-content: space-between;
   align-items: center;
-
+  padding: 0 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .topbar a {
@@ -21,191 +20,51 @@
   color: #FCEEB5;
 }
 
-.topbar .user {
-  margin-left: auto;
-}
-
-.topbar .user img {
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  margin-right: 1rem;
-  border: 2px solid #521852;
-}
-
-
-.register-button {
-  background-color: transparent; /* Color de fondo */
-  align-items: center;
-  align-content: center;
-  font-size: 1.1rem;
-  color: #714983;
-}
-
-.register-button:hover {
-  color: #521852;
-}
-
-.login-button {
-  background-color: transparent; /* Color de fondo */
-  align-items: center;
-  align-content: center;
-  font-size: 1.1rem;
-  color: #714983;
-}
-
-.login-button:hover {
-  color: #521852;
-}
-
-//.reglog {
-//  margin-left: 40%;
-//}
-
-
-.toggle {
-  display: none;
-}
-
-
-.user {
-  display: flex;
-  align-items: center;
-  align-content: center;
-  margin-right: 5rem;
-
-}
-
-.user button,
-.user span {
-  margin-right: 10px; /* Añadir margen a la derecha para separar los botones y el span */
-}
-
-.user img {
-  margin-left: auto; /* Mover la imagen hacia el extremo derecho del contenedor */
-}
-
-
-
-//.footer {
-//  position: fixed;
-//  bottom: 0;
-//  width: 100%;
-//
-//}
-
-.home-container {
-  min-height: calc(100vh - 100px); /* Ajusta el valor 100px según la altura de tu footer */
-  margin-bottom: 500px; /* Espacio entre el contenido y el footer */
-  display: flex; /* Opcional: utiliza flexbox para organizar el contenido */
-  flex-direction: column; /* Opcional: organiza el contenido en una columna */
-
-}
-
-.app-footer {
-  height: 100px; /* Altura del footer */
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  background-color: #f8f9fa; /* Ajusta el color de fondo según tu diseño */
-}
-
-
-.search__input {
-
-  margin-right: 1rem;
-
-}
-
-
 .titulin {
-  font-size: 2rem;
-  color: #521852;
-  margin-left: 3rem;
   display: flex;
   align-items: center;
-  flex-direction: row;
 }
 
 .titulin img {
-  width: 80px;
-  height: 80px;
-  margin-left: 1rem;
-  margin-right: 3rem;
-  border-radius: 20%;
+  height: 50px;
+  margin-right: 10px;
 }
-
-.titulocentro {
-  font-size: 2rem;
-  color: #521852;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin-left: 3rem;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-}
-
 
 .fecha {
   font-size: 1.5rem;
   color: #521852;
   margin-top: 1rem;
-  margin-bottom: 0rem;
-  margin-left: 2rem;
   display: flex;
   align-items: center;
-  justify-items: center;
-  flex-direction: row;
-  max-width: 100%;
 }
 
-
-.ion-activatable {
+.user {
   display: flex;
   align-items: center;
-  justify-items: center;
-  flex-direction: row;
-  max-width: 50%;
-  background: #7F448C;
 }
 
-.ion-activatable :host button {
-  background: #7F448C;
+.user button,
+.user span {
+  margin-right: 10px;
 }
 
-#date-button {
-  background: #7F448C;
-}
-
-
-.tope-header {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  margin-left: 30rem;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  flex-direction: row;
-  max-width: 100%;
-}
-
-
-.md button button-clear in-buttons ion-activatable ion-focusable {
-  --background: #7F448C !important; /* Color de fondo del botón */
-  --color: #FCEEB5 !important; /* Color del texto del botón */
-}
-
-
-.logout-button {
-  background-color: transparent; /* Color de fondo */
-  align-items: center;
-  align-content: center;
+.logout-button, .register-button, .login-button {
+  background-color: transparent;
   font-size: 1.1rem;
   color: #714983;
+  padding: 8px 16px;
 }
 
-
-.logout-button:hover{
+.logout-button:hover,
+.register-button:hover,
+.login-button:hover {
   color: #521852;
+}
+
+ion-menu-button {
+  font-size: 24px;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
