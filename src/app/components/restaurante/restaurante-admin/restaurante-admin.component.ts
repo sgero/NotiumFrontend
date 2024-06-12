@@ -17,7 +17,7 @@ import {SharedService} from "../../../services/SharedService";
 import {MatButton} from "@angular/material/button";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
 import {MatFormField, MatHint, MatInput, MatLabel, MatSuffix} from "@angular/material/input";
-import {ReactiveFormsModule, FormsModule} from "@angular/forms";
+import {ReactiveFormsModule, FormsModule, FormBuilder, Validators} from "@angular/forms";
 import {provideNativeDateAdapter} from "@angular/material/core";
 
 @Component({
@@ -43,13 +43,21 @@ import {provideNativeDateAdapter} from "@angular/material/core";
 })
 export class RestauranteAdminComponent  implements OnInit {
 
-  turnos: Turno[] = [];
+  turnosDisponibles: Turno[] = [];
+  turnosOK: boolean = false;
+  reservasDisponibles: Reserva[] = [];
+  reservasOK: boolean = false;
+
   mesas: Mesa[] = [];
   reservas: Reserva[] = [];
   numReservas: number | undefined;
   usuario={username: ''};
   id_restaurante: any;
-  fecha: any;
+  fecha_reservas = this.formBuilder.group({
+    fechaForm: ["", Validators.required],
+  })
+  fechaFormateada:any;
+  fechaTexto:any;
 
   constructor(private turnosService: TurnosService,
               private mesaService: MesaService,
@@ -58,7 +66,8 @@ export class RestauranteAdminComponent  implements OnInit {
               private usuarioservice: UsuarioService,
               private cartaservice: CartarestauranteService,
               private router : Router,
-              private sharedService: SharedService) { }
+              private sharedService: SharedService,
+              private formBuilder: FormBuilder) { }
 
 
   //Funciones modales
@@ -71,25 +80,71 @@ export class RestauranteAdminComponent  implements OnInit {
 
 
   ngOnInit() {
-    this.listarReserva();
     this.usuarioservice.getUsuarioToken().subscribe(data=>{
       this.usuario.username = data.username;
     });
   }
 
-  listarReserva(){
+  getFormattedDate(): string {
+    const fecha = this.fecha_reservas.get('fechaForm')?.value;
+    if (fecha) {
+      const date = new Date(fecha);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return '';
+  }
+
+  getFormattedDateHTML(): string {
+    const fecha = this.fecha_reservas.get('fechaForm')?.value;
+    if (fecha) {
+      const date = new Date(fecha);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${day}-${month}-${year}`;
+    }
+    return '';
+  }
+
+  listarTurnos(){
+
+    console.log(this.fecha_reservas.value.fechaForm)
+    this.fechaFormateada = this.getFormattedDate();
+    console.log('Fecha formateada:', this.fechaFormateada);
+
+    this.fechaTexto = this.getFormattedDateHTML();
+
 
     this.id_restaurante = this.sharedService.getIdParamsRestaurante();
 
-    this.reservaService.getReservaRestaurante(this.id_restaurante).subscribe( {
-      next: (data) => { this.reservas = data; },
-      error: (error) => { console.error('Error al listar las reservas', error); },
-      complete: () => {
-        console.log('El listado de reservas:', this.reservas);
-        this.numReservas = this.reservas.length;
-      }
+    this.turnosService.getTurnoFecha(this.id_restaurante, this.fechaFormateada).subscribe( {
+      next: (responseData) => {this.turnosDisponibles = responseData;},
+      error: (error) => { console.error('Error al obtener los turnos disponibles', error); },
+      complete: () => { console.log('Los turnos disponibles: ', this.turnosDisponibles);}
     });
+
+    this.turnosOK = true;
+    this.reservasOK=false;
+
   }
+
+
+  listarReservas(turnoElegido: Turno){
+    console.log(turnoElegido)
+
+
+    this.reservaService.getReservaFechaTurno(turnoElegido.id ,this.id_restaurante, this.fechaFormateada).subscribe( {
+      next: (responseData) => {this.reservasDisponibles = responseData;},
+      error: (error) => { console.error('Error al obtener las reservas', error); },
+      complete: () => { console.log('Las reservas disponibles: ', this.reservasDisponibles);}
+    });
+
+    this.reservasOK = true;
+  }
+
 
   crearCartaRes(){
     this.cartaservice.crearCartaRes(this.usuario).subscribe(data =>{

@@ -49,7 +49,7 @@
 
 <div class="listado_videos">
   <div class="texto_videos">
-    <h2><span>Los restaurantes con mayor número de valoraciones </span></h2>
+    <h2><span>Todos los restaurantes</span></h2>
     <div class="videos">
       <div *ngFor="let restaurante of listaRestaurantes" class="video">
         <a class="card" href="/notium/restaurante/{{restaurante.id}}">
@@ -77,14 +77,14 @@
   </div>
 
   <div class="texto_videos">
-    <h2><span>Los restaurantes según su valoración</span></h2>
+    <h2><span>Los restaurantes con mejores valoraciones</span></h2>
     <div class="videos">
-      <div *ngFor="let restaurante of listaRestaurantes" class="video">
-        <a class="card" href="/notium/restaurante/{{restaurante.id}}">
-          <img src="{{restaurante.imagen_marca}}" alt="Imagen del restaurante">
-          <div class="title">{{restaurante.nombre}}</div>
+      <div *ngFor="let restauranteRanking of listaRestaurantesRanking" class="video">
+        <a class="card" href="/notium/restaurante/{{restauranteRanking.id}}">
+          <img src="{{restauranteRanking.imagen_marca}}" alt="Imagen del restaurante">
+          <div class="title">{{restauranteRanking.nombre}}</div>
           <a href="#">
-            <div class="catagory" routerLink="/notium/restaurante/">{{restaurante.direccionDTO.calle}} <i class="fas fa-map-marker-alt"></i></div>
+            <div class="catagory" routerLink="/notium/restaurante/">{{restauranteRanking.direccionDTO.calle}} <i class="fas fa-map-marker-alt"></i></div>
           </a>
           <a href="#">
             <div class="views"><i class="fas fa-star"></i></div>
@@ -94,8 +94,8 @@
     </div>
   </div>
 
-  <div class="highlight-section">
 
+  <div class="highlight-section">
     <div class="highlight">
       <img src="https://images.vexels.com/media/users/3/190869/isolated/preview/68208da69d14a72dd02e4e413866ed6f-edificio-ilustracion-plana-restaurante.png" alt="Restaurante Elegante">
       <div class="highlight-text">
@@ -107,14 +107,14 @@
   </div>
 
   <div class="texto_videos">
-    <h2><span>Los restaurantes que recomendamos</span></h2>
+    <h2><span>Los restaurantes con más valoraciones</span></h2>
     <div class="videos">
-      <div *ngFor="let restaurante of listaRestaurantes" class="video">
-        <a class="card" href="/notium/restaurante/{{restaurante.id}}">
-          <img src="{{restaurante.imagen_marca}}" alt="Imagen del restaurante">
-          <div class="title">{{restaurante.nombre}}</div>
+      <div *ngFor="let restauranteValoraciones of listaRestauranteMasValoracion" class="video">
+        <a class="card" href="/notium/restaurante/{{restauranteValoraciones.id}}">
+          <img src="{{restauranteValoraciones.imagen_marca}}" alt="Imagen del restaurante">
+          <div class="title">{{restauranteValoraciones.nombre}}</div>
           <a href="#">
-            <div class="catagory" routerLink="/notium/restaurante/">{{restaurante.direccionDTO.calle}} <i class="fas fa-map-marker-alt"></i></div>
+            <div class="catagory" routerLink="/notium/restaurante/">{{restauranteValoraciones.direccionDTO.calle}} <i class="fas fa-map-marker-alt"></i></div>
           </a>
           <a href="#">
             <div class="views"><i class="fas fa-star"></i></div>

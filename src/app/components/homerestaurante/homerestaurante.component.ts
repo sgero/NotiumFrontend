@@ -29,6 +29,7 @@ export class HomerestauranteComponent  implements OnInit {
   //Variabales
   listaRestaurantes: Restaurante[] = [];
   listaRestaurantesRanking: Restaurante[] = [];
+  listaRestauranteMasValoracion: Restaurante[] = [];
   restaurante: Restaurante = new Restaurante();
   rankingRestauranteID: number[] = [];
   idClase = {id: +''};
@@ -40,12 +41,28 @@ export class HomerestauranteComponent  implements OnInit {
   listarTodosRestaurantes(){
     this.restauranteService.listarRestaurantes().subscribe({
       next: (responseData) => {this.listaRestaurantes = responseData;},
-      error: (error) => {console.error('Error al obtener datos:', error);},
+      error: (error) => {console.error('Error al obtener datos.', error);},
       complete: () => {console.log('Todos los restaurantes han sido listados', this.listaRestaurantes);}
     });
   }
 
-  listarRankingRestaurante(){
+  rankingRestaurante(){
+    this.restauranteService.getRankingRestaurante().subscribe({
+      next: (responseData) => {this.listaRestaurantesRanking = responseData;},
+      error: (error) => {console.error('Error al obtener datos.', error);},
+      complete: () => {console.log('Los restaurante más valorados: ', this.listaRestaurantesRanking);}
+    });
+  }
+
+  restauranteMasValorados(){
+    this.restauranteService.getRestauranteMasValorados().subscribe({
+      next: (responseData) => {this.listaRestauranteMasValoracion = responseData;},
+      error: (error) => {console.error('Error al obtener datos:', error);},
+      complete: () => {console.log('Los restaurante por ranking: ', this.listaRestauranteMasValoracion);}
+    });
+  }
+
+  /*listarRankingRestaurante(){
     this.restauranteService.getRankingRestaurantes().subscribe( {
       next: (data) => { this.rankingRestauranteID = data; },
       error: (error) => { console.error('Error al el ranking de restaurantes', error); },
@@ -62,7 +79,7 @@ export class HomerestauranteComponent  implements OnInit {
         console.log('El ranking de restaurantes es: ', this.listaRestaurantesRanking)
       }
     });
-  }
+  }*/
 
   listarPorClase(idClase: number){
     this.idClase.id = idClase;
@@ -98,7 +115,11 @@ export class HomerestauranteComponent  implements OnInit {
 
     //Funciones externas
     this.listarTodosRestaurantes();
-    this.listarRankingRestaurante();
+    this.rankingRestaurante();
+    this.restauranteMasValorados();
+
+
+    //this.listarRankingRestaurante();
   }
 
 }

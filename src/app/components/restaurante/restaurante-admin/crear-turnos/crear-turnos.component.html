@@ -9,11 +9,13 @@
     <div class="gran_formulario">
         <mat-form-field class="formularios">
           <mat-label>Hora inicio</mat-label>
-          <input [ngxTimepicker]="picker">
-          <ngx-material-timepicker #picker></ngx-material-timepicker>        </mat-form-field>
+          <input matInput formControlName="horainicioForm" [format]=24 [ngxTimepicker]="pickerInicio" (change)="addSecondsToTime('horainicioForm')">
+          <ngx-material-timepicker #pickerInicio></ngx-material-timepicker>
+        </mat-form-field>
         <mat-form-field class="formularios">
           <mat-label>Hora fin</mat-label>
-          <input matInput formControlName="horafinForm" required>
+          <input matInput formControlName="horafinForm" [format]=24 [ngxTimepicker]="pickerFin" (change)="addSecondsToTime('horafinForm')">
+          <ngx-material-timepicker #pickerFin></ngx-material-timepicker>
         </mat-form-field>
     </div>
 

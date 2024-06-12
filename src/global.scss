@@ -114,3 +114,12 @@ md button in-toolbar ion-activatable ion-focusable {
 
 }
 
+.timepicker-overlay{
+  z-index: 10000000 !important;
+}
+
+.timepicker-backdrop-overlay{
+  z-index: 10000000 !important;
+}
+
+

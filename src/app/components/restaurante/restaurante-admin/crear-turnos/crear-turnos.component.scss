@@ -53,4 +53,13 @@ padding: 1rem;
 .dispo_dias{
   display:flex;
   flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+
+  input{
+    padding: 0 1rem;
+  }
+
 }

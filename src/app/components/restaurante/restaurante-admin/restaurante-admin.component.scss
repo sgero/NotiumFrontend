@@ -101,3 +101,46 @@ h5{margin:0}
   aling-items: center;
 }
 
+
+.turnosDisponibles{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  border-top: 1px solid black;
+  padding-top:1rem;
+  margin-top:1rem;
+  align-items: center;
+}
+
+.tamayo{
+  width:100%;
+  align-items: center;
+  justify-content:center;
+  display:flex;
+  flex-direction: column;
+
+}
+
+.bucleTurnos{
+  display:flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  width:100%;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.boton_turno{
+  border: 1px solid black;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.reserva{
+  display:flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  border: solid black;
+}
+

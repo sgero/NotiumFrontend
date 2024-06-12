@@ -1,12 +1,14 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import { CommonModule } from "@angular/common";
 import {ComentarioRestaurante} from "../../../models/ComentarioRestaurante";
 import {SharedService} from "../../../services/SharedService";
-import {MatDialog,
-        MatDialogActions,
-        MatDialogClose,
-        MatDialogContent,
-        MatDialogTitle} from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA, MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle
+} from "@angular/material/dialog";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule, FormGroup, FormBuilder, Validators, ReactiveFormsModule} from "@angular/forms";
@@ -56,7 +58,10 @@ export class HacerValoracionComponent  implements OnInit {
               private dialogRef: MatDialog,
               private formBuilder: FormBuilder,
               private toastController: ToastController,
-              private loadingCtrl: LoadingController,) {}
+              private loadingCtrl: LoadingController,
+              @Inject(MAT_DIALOG_DATA) public data: { id_restaurante: number }) {
+    console.log('ID restaurante', data.id_restaurante)
+  }
 
 
   traerIdRestaurante(){
@@ -85,7 +90,7 @@ export class HacerValoracionComponent  implements OnInit {
 
   validarCodigo(){
 
-    this.restauranteService.comprobarCodigoReservaRestaurante(this.id_restaurante, this.codigoReserva).subscribe( {
+    this.restauranteService.comprobarCodigoReservaRestaurante(this.data.id_restaurante, this.codigoReserva).subscribe( {
       next: (responseData) => {
         this.comprobacionCR = responseData;
       },

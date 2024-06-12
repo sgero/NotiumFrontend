@@ -24,6 +24,7 @@ import {Evento} from "../../models/Evento";
 import {MatDialog} from "@angular/material/dialog";
 import {ReservaService} from "../../services/reserva.service";
 import {SharedService} from "../../services/SharedService";
+import {HacerValoracionComponent} from "../restaurante/hacer-valoracion/hacer-valoracion.component";
 
 @Component({
   selector: 'app-mis-tickets-reservas',
@@ -50,6 +51,8 @@ export class MisTicketsReservasComponent  implements OnInit {
   id_usuario: any;
   entradasCompradas ?: ClienteEntradasCompradasDTO;
   restaurante?: boolean;
+  estado_reserva: string = '';
+  titulo_estado: boolean = false;
   ePasadas = false;
   eFuturas = false;
   rPasados = false;
@@ -64,11 +67,14 @@ export class MisTicketsReservasComponent  implements OnInit {
     private usuarioService: UsuarioService,
     private router: Router,
     private clienteService: ClienteService,
-    private pdfService : PdfService,
+    private pdfService: PdfService,
     public dialog: MatDialog,
     private reservaService: ReservaService,
-    private sharedService: SharedService) {
+    private sharedService: SharedService,
+    private dialogRef: MatDialog,
+  ) {
   }
+
 
   ngOnInit() {
     this.getUsuario();
@@ -86,6 +92,7 @@ export class MisTicketsReservasComponent  implements OnInit {
   }
 
   getDTO(usuario: any) {
+    this.id_usuario = usuario.id;
     if (usuario.rol == "CLIENTE") {
       this.clienteService.getByIdUsuario(usuario.id).subscribe({
         next: value => {
@@ -105,7 +112,7 @@ export class MisTicketsReservasComponent  implements OnInit {
   getEntradasCliente(id: number) {
     this.eventoService.entradasCompradasByIdCliente(id).subscribe({
       next: value => {
-        if (value){
+        if (value) {
           this.entradasCompradas = value;
           this.entradasCompradas?.entradasGeneralesCompradasPasadas!.forEach(m => {
             const fechaString = m.entradaOcioDTO?.eventoDTO!.fecha;
@@ -191,43 +198,43 @@ export class MisTicketsReservasComponent  implements OnInit {
     this.restaurante = b;
   }
 
-  actualizar(s : string) {
-    if (s == 'ep'){
+  actualizar(s: string) {
+    if (s == 'ep') {
       this.ePasadas = true;
       this.eFuturas = false;
       this.rPasados = false;
       this.rFuturos = false;
       this.lPasadas = false;
       this.lFuturos = false;
-    } else if (s == 'ef'){
+    } else if (s == 'ef') {
       this.ePasadas = false;
       this.eFuturas = true;
       this.rPasados = false;
       this.rFuturos = false;
       this.lPasadas = false;
       this.lFuturos = false;
-    } else if (s == 'rp'){
+    } else if (s == 'rp') {
       this.ePasadas = false;
       this.eFuturas = false;
       this.rPasados = true;
       this.rFuturos = false;
       this.lPasadas = false;
       this.lFuturos = false;
-    } else if (s == 'rf'){
+    } else if (s == 'rf') {
       this.ePasadas = false;
       this.eFuturas = false;
       this.rPasados = false;
       this.rFuturos = true;
       this.lPasadas = false;
       this.lFuturos = false;
-    } else if (s== 'lp'){
+    } else if (s == 'lp') {
       this.ePasadas = false;
       this.eFuturas = false;
       this.rPasados = false;
       this.rFuturos = false;
       this.lPasadas = true;
       this.lFuturos = false;
-    } else if (s == 'lf'){
+    } else if (s == 'lf') {
       this.ePasadas = false;
       this.eFuturas = false;
       this.rPasados = false;
@@ -248,7 +255,8 @@ export class MisTicketsReservasComponent  implements OnInit {
   descargarPdfListas(x: ListaOcioCliente) {
     this.pdfService.downloadPdf([], new ComprarReservadoDTO(), [x]);
   }
-  openChat(evento:Evento) {
+
+  openChat(evento: Evento) {
     if (evento) {
       this.dialog.open(ChatComponent, {
         data: {evento: evento!}
@@ -257,32 +265,57 @@ export class MisTicketsReservasComponent  implements OnInit {
   }
 
 
-  reserv(estado : string){
+  reserv(estado: string) {
 
-    this.id_usuario = this.sharedService.getUsuarioToken().id
+    this.estado_reserva = estado;
+    this.titulo_estado = true;
 
-    if (estado == 'pasadas'){
+    if (estado == 'pasadas') {
       this.rPasadas = true;
       this.rFuturas = false;
 
-      this.reservaService.getReservaUser(this.id_usuario, estado).subscribe( {
-        next: (data) => { this.reservasTiempo = data; },
-        error: (error) => { console.error('Error al obtener las reservas pasadas', error); },
-        complete: () => { console.log('Las reservas pasadas:', this.reservasTiempo); }
+      this.reservaService.getReservaUser(this.id_usuario, estado).subscribe({
+        next: (data) => {
+          this.reservasTiempo = data;
+        },
+        error: (error) => {
+          console.error('Error al obtener las reservas pasadas', error);
+        },
+        complete: () => {
+          console.log('Las reservas pasadas:', this.reservasTiempo);
+        }
       });
 
 
-    }else if(estado == 'futuras'){
+    } else if (estado == 'futuras') {
       this.rPasadas = false;
       this.rFuturas = true;
 
-      this.reservaService.getReservaUser(this.id_usuario, estado).subscribe( {
-        next: (data) => { this.reservasTiempo = data; },
-        error: (error) => { console.error('Error al obtener las reservas futuras:', error); },
-        complete: () => { console.log('Las reservas futuras:', this.reservasTiempo); }
+      this.reservaService.getReservaUser(this.id_usuario, estado).subscribe({
+        next: (data) => {
+          this.reservasTiempo = data;
+        },
+        error: (error) => {
+          console.error('Error al obtener las reservas futuras:', error);
+        },
+        complete: () => {
+          console.log('Las reservas futuras:', this.reservasTiempo);
+        }
       });
 
     }
   }
+
+  abrirModalValoraciones(id: any) {
+
+    const dialogRef = this.dialogRef.open(HacerValoracionComponent,{
+      data: {id_restaurante:id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Chat cerrado');
+    });
+  }
+
 
 }

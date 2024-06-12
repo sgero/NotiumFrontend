@@ -20,19 +20,39 @@
   @if (restaurante) {
     <ion-card>
       <ion-card-header>
-        <ion-card-title>Reservas de Restaurantes</ion-card-title>
         <div class="botones_reservas">
           <button mat-raised-button color="primary" style="width: 140px !important" (click)="reserv('pasadas')">Pasadas</button>
           <button mat-raised-button color="primary" style="width: 140px !important" (click)="reserv('futuras')">Futuras</button>
         </div>
       </ion-card-header>
       <ion-card-content>
+        <div *ngIf="titulo_estado==true" class="titulo_reserva"><h2>Tus reservas {{estado_reserva}} en restaurantes</h2></div>
         <ion-list>
           <ion-item *ngFor="let reserva of reservasTiempo">
             <ion-label>
-              <h2>{{ reserva.codigoReserva }}</h2>
-              <p>Hora: {{ reserva.clienteDTO }}</p>
-              <p>Fecha: {{ reserva.fecha }}</p>
+              <div class="reservaInfo">
+                <a class="card" href="/notium/restaurante/{{reserva.restauranteDTO?.id}}"><img src="{{reserva.restauranteDTO?.imagen_marca}}" alt="Imagen del restaurante"></a>
+                <div class="info">
+                  <div class="info_restaurante">
+                    <h3><b>Nombre del restaurante: </b>{{reserva.restauranteDTO?.nombre}}</h3>
+                    <h3><b>Contacto: </b>{{reserva.restauranteDTO?.telefono}}</h3>
+                    <h3><b>Dirección: </b>{{reserva.restauranteDTO?.direccionDTO?.calle}}, {{reserva.restauranteDTO?.direccionDTO?.numero}}, {{reserva.restauranteDTO?.direccionDTO?.codigoPostal}}, {{reserva.restauranteDTO?.direccionDTO?.ciudad}} ({{reserva.restauranteDTO?.direccionDTO?.provincia}})</h3>
+                  </div>
+
+                  <div class="info_reserva">
+                    <h3><b>Fecha: </b>{{reserva.fecha}}</h3>
+                    <h3><b>Número de personas: </b>{{reserva.numPersonas}}</h3>
+                    <h3><b>Código de reserva: </b>{{reserva.codigoReserva}}</h3>
+                  </div>
+
+                  <div class="boton_justificante">
+                    <button mat-raised-button color="primary" style="width: 200px !important">Decargar justificante</button>
+                    <div *ngIf="estado_reserva=='pasadas'" class="valoracion_botton">
+                      <button mat-raised-button color="primary" style="width: 200px !important" (click)="abrirModalValoraciones(reserva.restauranteDTO?.id)">Hacer valoración</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </ion-label>
           </ion-item>
         </ion-list>

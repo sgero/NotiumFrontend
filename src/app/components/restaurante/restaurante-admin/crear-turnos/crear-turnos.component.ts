@@ -58,11 +58,29 @@ import { Turno } from "../../../../models/Turno";
 })
 export class CrearTurnosComponent implements OnInit {
   isLinear = true;
-  hora_inicio: string = '';
-  hora_fin: string = '';
+  hora_inicio: any;
+  hora_fin: any;
   id_restaurante: any;
   diasARepetirTurno: string[] = Object.keys(DiasARepetirCicloEventoOcio).filter(key => isNaN(Number(key))) as string[];
-  diasSeleccionado:string[] = []
+  diasSeleccionado: string[] = [];
+
+  addSecondsToTime(controlName: string): void {
+    let timeValue = this.turno_nuevo.get(controlName)?.value;
+    if (timeValue) {
+      let timeParts = timeValue.split(':');
+      if (timeParts.length === 2) {
+        // Add seconds if they are not present
+        timeValue = `${timeParts[0]}:${timeParts[1]}:00`;
+        this.turno_nuevo.get(controlName)?.setValue(timeValue, { emitEvent: false });
+      } else if (timeParts.length === 3 && timeParts[2] === '00') {
+        // Ensure seconds are set to "00"
+        timeValue = `${timeParts[0]}:${timeParts[1]}:00`;
+        this.turno_nuevo.get(controlName)?.setValue(timeValue, { emitEvent: false });
+      }
+    }
+  }
+
+
 
 
   turno: Turno = new Turno();
@@ -98,29 +116,20 @@ export class CrearTurnosComponent implements OnInit {
 
   nuevoTurno() {
 
-    const formsValues = this.turno_nuevo.value
-    let d: any;
-    d = formsValues.diaForm
-    this.turno.diasARepetirTurno = d;
+    this.addSecondsToTime('horainicioForm');
+    this.addSecondsToTime('horafinForm');
 
-    console.log(this.diasSeleccionado);
+    // Get the formatted time values from the form
+    this.hora_inicio = this.turno_nuevo.get('horainicioForm')?.value;
+    this.hora_fin = this.turno_nuevo.get('horafinForm')?.value;
+
+    console.log('Dias', this.diasSeleccionado, 'hora inicio: ',this.hora_inicio,' hora fin: ', this.hora_fin);
+
+    this.turnoService.crearTurno(this.hora_inicio, this.hora_fin, this.id_restaurante, this.diasSeleccionado).subscribe( {
+      error: (error) => { console.error('Error al crear el turno:', error); },
+      complete: () => { console.log('Registrado el turno correctamente')}
+    });
 
 
-
-
-
-   /* const selectedDias = this.diasForm.value.diasARepetir
-      .map((checked, index) => checked ? this.diasARepetirTurno[index] : null)
-      .filter(value => value !== null);
-    console.log(selectedDias); // Días seleccionados
-
-    this.turno_nuevo.diasARepetirTurno = selectedDias;
-
-    console.log(this.turno_nuevo.diasARepetirTurno);
-
-    /*this.turnoService.crearTurno(this.hora_inicio, this.hora_fin, this.id_restaurante).subscribe({
-      error: (error) => { console.error('Error al crear el turno', error); },
-      complete: () => { console.log('Turno creado'); }
-    })*/
   }
 }

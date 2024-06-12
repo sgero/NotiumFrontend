@@ -100,6 +100,14 @@ export class RestauranteService {
       );
   }
 
+  getRankingRestaurante(): Observable<Restaurante[]>{
+    return this.http.get<Restaurante[]>(`${this.apiUrl}/restaurante/rankingRestaurante`)
+  }
+
+  getRestauranteMasValorados(): Observable<Restaurante[]>{
+    return this.http.get<Restaurante[]>(`${this.apiUrl}/restaurante/restauranteMasValorados`)
+  }
+
   getClientesComentarios(id: any): Observable<Cliente[]>{
   return this.http.get<Cliente[]>(`${this.apiUrl}/comentario/clientesPorComentario?id=${id}`);
 }
