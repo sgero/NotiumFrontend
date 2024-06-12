@@ -29,7 +29,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-
 }
 
 .buttons button {
@@ -77,11 +76,26 @@ ion-label, .staff ion-label{
   white-space: nowrap;
 }
 
-
 ion-modal{
   --width: 80%;
   --height: 80%;
 }
+
+.modalRpp{
+  --width: 80%;
+  --height: 46%;
+}
+
+.editModal{
+  --width: 80%;
+  --height: 36%;
+}
+
+.reasignModal{
+  --width: 40%;
+  --height: 18%;
+}
+
 body {
   font-family: "Noto Sans JP", sans-serif;
   letter-spacing: 0.5px;
@@ -137,4 +151,17 @@ body {
 .chat{
   display: flex;
   justify-content: center;
+}
+
+.cartel{
+  cursor: pointer;
+}
+
+.table-container td{
+  align-content: center;
+}
+
+.listas{
+  margin-top: 50px;
+  margin-bottom: 50px;
 }

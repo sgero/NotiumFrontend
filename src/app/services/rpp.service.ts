@@ -31,4 +31,6 @@ export class RppService {
   eliminarRpp(id:number){
     return this.http.delete(`${this.apiUrl}/rpps/${id}`);
   }
+
+
 }

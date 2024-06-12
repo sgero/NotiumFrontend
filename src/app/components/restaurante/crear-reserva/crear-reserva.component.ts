@@ -21,6 +21,9 @@ import {
   provideNativeDateAdapter
 } from '@angular/material/core';
 import {MatList, MatListItem} from "@angular/material/list";  // Importar MatNativeDateModule y MAT_DATE_LOCALE
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import autoTable from "jspdf-autotable";
 
 
 @Component({
@@ -60,6 +63,7 @@ export class CrearReservaComponent implements OnInit {
   clienteId?: any;
   minFecha: string;
   isLinear = true;
+  actualrest: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -79,6 +83,7 @@ export class CrearReservaComponent implements OnInit {
 
   ngOnInit() {
     this.restauranteId = this.data.restauranteId;
+    this.actualrest = this.data.actualrest;
     this.authService.getUsuarioToken().subscribe(
       (usuario) => {
         this.clienteId = usuario;
@@ -125,6 +130,7 @@ export class CrearReservaComponent implements OnInit {
 
           this.reservaService.crearReserva(reserva).subscribe(
             async (data) => {
+              this.generarPDFReserva(data.codigoReserva);
               const alert = await this.alertController.create({
                 header: 'Reserva Confirmada',
                 message: `Su reserva ha sido confirmada. Código de reserva: ${data.codigoReserva}`,
@@ -158,4 +164,42 @@ export class CrearReservaComponent implements OnInit {
   seleccionarTurno(turno: any) {
     this.turnoSeleccionado = turno;
   }
+
+  generarPDFReserva(codigo: string) {
+    const reserva = {
+      fecha: this.fechaForm.value.fecha,
+      numPersonas: Number(this.personasForm.value.numPersonas),
+      turnoDTO: this.turnoSeleccionado,
+      restauranteDTO: { id: this.restauranteId },
+      usuarioDTO: { id: this.clienteId.id }
+    };
+
+    const doc = new jsPDF();
+
+    // Título del PDF
+    doc.setFontSize(18);
+    doc.text('Reserva', 14, 22);
+
+    // Datos de la reserva en columnas
+    const columns = ['Campo', 'Valor'];
+    const rows = [
+      ['Código de Reserva', codigo],
+      ['Fecha', reserva.fecha],
+      ['Número de Personas', reserva.numPersonas],
+      ['Turno', this.turnoSeleccionado.hora_inicio + " a " + this.turnoSeleccionado.hora_fin],
+      ['Restaurante', this.actualrest.nombre],
+      ['Usuario', this.clienteId.username]
+    ];
+
+    // Generar la tabla
+    autoTable(doc, {
+      startY: 30,
+      head: [columns],
+      body: rows
+    });
+
+    // Guardar el PDF
+    doc.save('reserva.pdf');
+  }
+
 }

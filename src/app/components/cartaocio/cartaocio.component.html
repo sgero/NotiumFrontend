@@ -6,7 +6,8 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar Producto">
       </mat-form-field>
     </div>
-    <div><button mat-raised-button color="primary" style="width: 180px !important;margin-bottom: 20px" id="open-modal">Añadir producto</button></div>
+
+    <div><button mat-raised-button *ngIf="permisosParaEditar" color="primary" style="width: 180px !important;margin-bottom: 20px" (click)="productoModal(true)">Añadir producto</button></div>
   </div>
   <div class="table">
     <table mat-table [dataSource]="dataSourceProductos">
@@ -16,24 +17,25 @@
       </ng-container>
       <ng-container matColumnDef="nombre">
         <th mat-header-cell *matHeaderCellDef>Nombre</th>
-        <td mat-cell *matCellDef="let formatos">{{ formatos.productoDTO.nombre! }}</td>
+        <td mat-cell *matCellDef="let formatos">{{ formatos.productoDTO!.nombre! }}</td>
       </ng-container>
       <ng-container matColumnDef="precio">
         <th mat-header-cell *matHeaderCellDef>Precio</th>
-        <td mat-cell *matCellDef="let formatos">{{ formatos.precio! }} €</td>
+        <td mat-cell *matCellDef="let formatos" >{{ formatos.precio! }} €</td>
       </ng-container>
       <ng-container matColumnDef="formato">
         <th mat-header-cell *matHeaderCellDef>Formato</th>
         <td mat-cell *matCellDef="let formatos">{{ formatos.formatoDTO!.formato! }}</td>
       </ng-container>
       <ng-container matColumnDef="opciones">
-        <th mat-header-cell *matHeaderCellDef> Opciones</th>
+        <th mat-header-cell *matHeaderCellDef> <span *ngIf="permisosParaEditar">Opciones</span></th>
         <td mat-cell *matCellDef="let formatos">
 
-          <button mat-icon-button color="primary" (click)="edit(formatos.id)">
+          <button *ngIf="permisosParaEditar" mat-icon-button color="primary" (click)="editProducto(formatos.id)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteProductoFormato(formatos.id)">
+
+          <button *ngIf="permisosParaEditar" mat-icon-button color="warn" (click)="deleteProducto(formatos.id)">
             <mat-icon>delete</mat-icon>
           </button>
 
@@ -42,18 +44,18 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons=""></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons=""></mat-paginator>
   </div>
-    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ion-modal [isOpen]="isModalProductoOpen">
       <ng-template>
         <ion-header>
           <ion-toolbar>
             <ion-buttons slot="start">
-              <button mat-raised-button color="primary" style="width: 140px !important" (click)="cancelar()">Cancelar</button>
+              <button mat-raised-button color="primary" style="width: 140px !important" (click)="productoModal(false)">Cancelar</button>
             </ion-buttons>
             <ion-title>Registra tu Producto</ion-title>
             <ion-buttons slot="end">
-              <button mat-raised-button color="primary" style="width: 140px !important" (click)="agregar()">Agregar</button>
+              <button mat-raised-button color="primary" style="width: 140px !important" (click)="siguiente()">Siguiente</button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
@@ -63,6 +65,7 @@
               label="Nombre"
               labelPlacement="stacked"
               type="text"
+              name="nombre"
               [required]="true"
               [(ngModel)]="newProducto.nombre"
             ></ion-input>
@@ -76,25 +79,181 @@
               <ion-select-option value="COCTEL">CÓCTEL</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item>
-            <ion-input
-              label="Precio"
-              labelPlacement="stacked"
-              type="text"
-              [required]="true"
-              [(ngModel)]="newProductoFormato!.precio"
-            ></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">
-              <ion-select-option value="4">CHUPITO</ion-select-option>
-              <ion-select-option value="5">COPA</ion-select-option>
-              <ion-select-option value="10">BOTELLA</ion-select-option>
-            </ion-select>
-          </ion-item>
+<!--          <ion-item>-->
+<!--            <ion-input-->
+<!--              label="Precio"-->
+<!--              labelPlacement="stacked"-->
+<!--              type="text"-->
+<!--              [required]="true"-->
+<!--              [(ngModel)]="newProductoFormato!.precio"-->
+<!--            ></ion-input>-->
+<!--          </ion-item>-->
+<!--          <ion-item>-->
+<!--            <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">-->
+<!--              <ion-select-option value="4">CHUPITO</ion-select-option>-->
+<!--              <ion-select-option value="5">COPA</ion-select-option>-->
+<!--              <ion-select-option value="10">BOTELLA</ion-select-option>-->
+<!--            </ion-select>-->
+<!--          </ion-item>-->
+<!--          <ion-item>-->
+<!--            <ion-input-->
+<!--              label="Precio"-->
+<!--              labelPlacement="stacked"-->
+<!--              type="text"-->
+<!--              [required]="true"-->
+<!--              [(ngModel)]="newProductoFormato!.precio"-->
+<!--            ></ion-input>-->
+<!--          </ion-item>-->
+<!--          <ion-item>-->
+<!--            <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">-->
+<!--              <ion-select-option value="4">CHUPITO</ion-select-option>-->
+<!--              <ion-select-option value="5">COPA</ion-select-option>-->
+<!--              <ion-select-option value="10">BOTELLA</ion-select-option>-->
+<!--            </ion-select>-->
+<!--          </ion-item>-->
         </ion-content>
       </ng-template>
     </ion-modal>
+  <ion-modal [isOpen]="isModalFormatoOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <button mat-raised-button color="primary" style="width: 140px !important" (click)="formatoModal(false)">Cancelar</button>
+          </ion-buttons>
+          <ion-title>Dale formato</ion-title>
+          <ion-buttons slot="end">
+            <button mat-raised-button color="primary" style="width: 140px !important" (click)="agregar()">Agregar</button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label [(ngModel)]="newProductoFormato.formatoDTO!.id" [id]="10">Botella</ion-label>
+          <ion-input
+            labelPlacement="stacked"
+            placeholder="Precio"
+            type="text"
+            name="precio1"
+            [required]="true"
+            [(ngModel)]="precio1"
+          ></ion-input>
+        </ion-item>
+          <ion-item>
+          <ion-label [(ngModel)]="newProductoFormato.formatoDTO!.id" [id]="5">Copa</ion-label>
+          <ion-input
+            labelPlacement="stacked"
+            placeholder=" Precio"
+            type="text"
+            name="precio2"
+            [required]="true"
+            [(ngModel)]="precio2"
+          ></ion-input>
+          </ion-item>
+            <ion-item>
+          <ion-label [(ngModel)]="newProductoFormato.formatoDTO!.id" [id]="4">Chupito</ion-label>
+          <ion-input
+            placeholder="Precio"
+            labelPlacement="stacked"
+            type="text"
+            name="precio3"
+            [required]="true"
+            [(ngModel)]="precio3"
+          ></ion-input>
+        </ion-item>
+<!--        <ion-item>-->
+<!--          <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">-->
+<!--            <ion-select-option value="4">CHUPITO</ion-select-option>-->
+<!--            <ion-select-option value="5">COPA</ion-select-option>-->
+<!--            <ion-select-option value="10">BOTELLA</ion-select-option>-->
+<!--          </ion-select>-->
+<!--        </ion-item>-->
+<!--        <ion-item>-->
+<!--          <ion-input-->
+<!--            label="Precio"-->
+<!--            labelPlacement="stacked"-->
+<!--            type="text"-->
+<!--            [required]="true"-->
+<!--            [(ngModel)]="newProductoFormato!.precio"-->
+<!--          ></ion-input>-->
+<!--        </ion-item>-->
+<!--        <ion-item>-->
+<!--          <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">-->
+<!--            <ion-select-option value="4">CHUPITO</ion-select-option>-->
+<!--            <ion-select-option value="5">COPA</ion-select-option>-->
+<!--            <ion-select-option value="10">BOTELLA</ion-select-option>-->
+<!--          </ion-select>-->
+<!--        </ion-item>-->
+<!--        <ion-item>-->
+<!--          <ion-input-->
+<!--            label="Precio"-->
+<!--            labelPlacement="stacked"-->
+<!--            type="text"-->
+<!--            [required]="true"-->
+<!--            [(ngModel)]="newProductoFormato!.precio"-->
+<!--          ></ion-input>-->
+<!--        </ion-item>-->
+<!--        <ion-item>-->
+<!--          <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">-->
+<!--            <ion-select-option value="4">CHUPITO</ion-select-option>-->
+<!--            <ion-select-option value="5">COPA</ion-select-option>-->
+<!--            <ion-select-option value="10">BOTELLA</ion-select-option>-->
+<!--          </ion-select>-->
+<!--        </ion-item>-->
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-modal [isOpen]="isModalEditProductoOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <button mat-raised-button color="primary" style="width: 140px !important" (click)="cancelar()">Cancelar</button>
+          </ion-buttons>
+          <ion-title>Modifica tu Producto</ion-title>
+          <ion-buttons slot="end">
+            <button mat-raised-button color="primary" style="width: 140px !important" (click)="guardar(newProductoFormato!.productoDTO!.id!)">Agregar</button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-input
+            label="Nombre"
+            labelPlacement="stacked"
+            type="text"
+            [required]="true"
+            [(ngModel)]="newProducto.nombre"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select label="Categoria" [(ngModel)]="newProducto.tipoCategoria" [required]="true">
+            <ion-select-option value="REFRESCO">REFRESCO</ion-select-option>
+            <ion-select-option value="AGUA">AGUA</ion-select-option>
+            <ion-select-option value="CERVEZA">CERVEZA</ion-select-option>
+            <ion-select-option value="BEBIDA_ALCOHOLICA">BEBIDA ALCOHÓLICA</ion-select-option>
+            <ion-select-option value="COCTEL">CÓCTEL</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            label="Precio"
+            labelPlacement="stacked"
+            type="text"
+            [required]="true"
+            [(ngModel)]="newProductoFormato!.precio"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-select label="Formato" [(ngModel)]="newProductoFormato.formatoDTO!.id" [required]="true">
+            <ion-select-option value="4">CHUPITO</ion-select-option>
+            <ion-select-option value="5">COPA</ion-select-option>
+            <ion-select-option value="10">BOTELLA</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </div>
 
 
