@@ -11,6 +11,7 @@ import {RestauranteService} from "../../services/restaurante.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
+import {MapaComponent} from "../mapa/mapa.component";
 
 @Component({
   selector: 'app-restaurante',
@@ -24,7 +25,8 @@ import {FooterComponent} from "../footer/footer.component";
     RestauranteUserComponent,
     RestauranteAdminComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    MapaComponent
   ],
   standalone: true
 })
@@ -39,6 +41,7 @@ export class RestauranteComponent  implements OnInit {
   restauranteEnRanking: boolean = false;
   restaurante: any;
   userup = true;
+  direcion:any;
   constructor(private usuarioService: UsuarioService,
               private sharedService: SharedService,
               private restauranteService: RestauranteService,
@@ -51,6 +54,7 @@ export class RestauranteComponent  implements OnInit {
         this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
           next: (responseData) => {
             this.restaurante = responseData;
+            this.direcion = responseData.direccionDTO;
             this.sharedService.setRestaurante(this.restaurante);
             this.usuario = usuario;
             if (usuario.id == this.restaurante.userDTO.id){
