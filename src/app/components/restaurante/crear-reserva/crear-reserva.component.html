@@ -52,7 +52,7 @@
 
     <div>
 
-      <h2>Tu reserva es el día: {{ fechaForm.value?.fecha }}</h2>
+      <h2>Tu reserva es el día: {{ fechaForm.value?.fecha | date:'dd/MM/yyyy'}}</h2>
       <h2>En el turno de: {{ turnoSeleccionado?.hora_inicio }} a {{ turnoSeleccionado?.hora_fin }}</h2>
       <h2>Y para: {{ personasForm.value?.numPersonas }} personas.</h2>
 
