@@ -168,6 +168,11 @@
               </ion-item>
 
               <ion-item>
+                <ion-label class="labelspace">Aforo del restaurante</ion-label>
+                <ion-input type="number" [(ngModel)]="userRestaurante.aforo" required></ion-input>
+              </ion-item>
+
+              <ion-item>
                 <ion-label>Hora de apertura del restaurante</ion-label>
                 <ion-datetime
                   [(ngModel)]="userRestaurante.hora_apertura"
@@ -187,6 +192,13 @@
                   yearValues="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
                   minuteValues="0,15,30,45">
                 </ion-datetime>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">Clase de comida</ion-label>
+                <ion-select [(ngModel)]="userRestaurante.id_clase" placeholder="Selecciona una clase">
+                  <ion-select-option *ngFor="let clase of clases" [value]="clase.id">{{ clase.clase }}</ion-select-option>
+                </ion-select>
               </ion-item>
 
               <ion-item class="direccion">

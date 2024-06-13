@@ -15,6 +15,8 @@ export class UserRestaurante{
   hora_cierre?: string = '';
   valoracion?: boolean;
   disponible?: boolean;
+  id_clase?: number;
+  aforo?: number;
   imagen_marca?: string = '';
   direccionDTO: DireccionDTO = new DireccionDTO();
 }

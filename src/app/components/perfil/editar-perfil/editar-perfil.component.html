@@ -25,7 +25,7 @@
                 <ion-label class="labelspace">Email</ion-label>
                 <ion-input type="email" [(ngModel)]="usuario.email" required autocomplete></ion-input>
               </ion-item>
-            </ion-list>>
+            </ion-list>
 
           </ion-card-content>
 
@@ -65,26 +65,26 @@
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Calle</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.calle" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.calle" required></ion-input>
 
                 <ion-label class="labelspace">Número</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.numero" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.numero" required></ion-input>
               </ion-item>
 
               <ion-item class="direccion">
-                <ion-label class="labelspace">Puerta</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.puerta" required></ion-input>
+                <ion-label *ngIf="perfil.direccionDTO.puerta" class="labelspace">Puerta</ion-label>
+                <ion-input *ngIf="perfil.direccionDTO.puerta" type="text" [(ngModel)]="perfil.direccionDTO.puerta" required></ion-input>
 
                 <ion-label class="labelspace">Código Postal</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.codigoPostal" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.codigoPostal" required></ion-input>
               </ion-item>
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Ciudad</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.ciudad" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.ciudad" required></ion-input>
 
                 <ion-label class="labelspace">Provincia</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.provincia" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.provincia" required></ion-input>
               </ion-item>
             </ion-list>
 
@@ -107,6 +107,11 @@
               <ion-item>
                 <ion-label class="labelspace">Enlace del logo del restaurante</ion-label>
                 <ion-input type="text" [(ngModel)]="perfil.imagen_marca" required></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label class="labelspace">Aforo del restaurante</ion-label>
+                <ion-input type="number" [(ngModel)]="perfil.aforo" required></ion-input>
               </ion-item>
 
               <ion-item>
@@ -133,26 +138,26 @@
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Calle</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.calle" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.calle" required></ion-input>
 
                 <ion-label class="labelspace">Número</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.numero" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.numero" required></ion-input>
               </ion-item>
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Puerta</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.puerta" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.puerta" required></ion-input>
 
                 <ion-label class="labelspace">Código Postal</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.codigoPostal" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.codigoPostal" required></ion-input>
               </ion-item>
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Ciudad</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.ciudad" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.ciudad" required></ion-input>
 
                 <ion-label class="labelspace">Provincia</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.provincia" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.provincia" required></ion-input>
               </ion-item>
             </ion-list>
 
@@ -206,28 +211,27 @@
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Calle</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.calle" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.calle" required></ion-input>
 
                 <ion-label class="labelspace">Número</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.numero" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.numero" required></ion-input>
               </ion-item>
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Puerta</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.puerta" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.puerta" required></ion-input>
 
                 <ion-label class="labelspace">Código Postal</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.codigoPostal" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.codigoPostal" required></ion-input>
               </ion-item>
 
               <ion-item class="direccion">
                 <ion-label class="labelspace">Ciudad</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.ciudad" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.ciudad" required></ion-input>
 
                 <ion-label class="labelspace">Provincia</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.direccion.provincia" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.provincia" required></ion-input>
               </ion-item>
-
             </ion-list>
 
             <div class="botones">
