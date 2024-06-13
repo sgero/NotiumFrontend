@@ -180,7 +180,7 @@ export class RegistroComponent implements OnInit {
       this.userOcioNocturno.username = this.user.username;
       this.userOcioNocturno.password = this.user.password;
       this.userOcioNocturno.email = this.user.email;
-      this.userOcioNocturno.direccion = this.direccion;
+      this.userOcioNocturno.direccionDTO = this.direccion;
 
       this.userOcioNocturno.hora_apertura = this.extraerHoraYMinuto(this.userOcioNocturno.hora_apertura || '');
       this.userOcioNocturno.hora_cierre = this.extraerHoraYMinuto(this.userOcioNocturno.hora_cierre || '');
