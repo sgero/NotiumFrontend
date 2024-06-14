@@ -1,0 +1,11 @@
+<div class="resenas">
+  <div class="resena" *ngFor="let v of valoraciones">
+    <div class="info_resena">
+      <h2>{{v.clienteDTO.nombre}} {{v.clienteDTO.apellidos}}</h2>
+      <h2>{{v.fecha_comentario}}</h2>
+    </div>
+    <div><h2>{{v.texto}}</h2></div>
+    <div>{{v.valoracion}}/5</div>
+
+  </div>
+</div>
