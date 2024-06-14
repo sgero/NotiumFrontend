@@ -184,13 +184,13 @@
 
               <ion-item>
                 <ion-label class="labelspace">Enlace del logo del establecimiento nocturno</ion-label>
-                <ion-input type="text" [(ngModel)]="perfil.imagen_marca" required></ion-input>
+                <ion-input type="text" [(ngModel)]="perfil.imagenMarca" required></ion-input>
               </ion-item>
 
               <ion-item>
                 <ion-label>Hora de apertura</ion-label>
                 <ion-datetime
-                  [(ngModel)]="perfil.hora_apertura"
+                  [(ngModel)]="perfil.horaApertura"
                   required
                   presentation="time"
                   yearValues="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"
@@ -201,7 +201,7 @@
               <ion-item>
                 <ion-label>Hora de cierre</ion-label>
                 <ion-datetime
-                  [(ngModel)]="perfil.hora_cierre"
+                  [(ngModel)]="perfil.horaCierre"
                   required
                   presentation="time"
                   yearValues="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24"

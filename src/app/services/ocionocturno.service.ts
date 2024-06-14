@@ -18,7 +18,7 @@ export class OcionocturnoService {
 
   crearOcioNocturno(userOcioNocturno: UserOcioNocturno) {
 
-    return this.http.post<any>(`${this.apiUrl}/ocio_nocturno/crear`, UserOcioNocturno);
+    return this.http.post<any>(`${this.apiUrl}/ocioNocturno/crear`, userOcioNocturno);
 
   }
 

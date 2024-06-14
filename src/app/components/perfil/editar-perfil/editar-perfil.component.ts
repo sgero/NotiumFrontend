@@ -79,7 +79,7 @@ export class EditarPerfilComponent  implements OnInit {
         userCliente.email = this.usuario.email;
         userCliente.nombre = this.perfil.nombre;
         userCliente.telefono = this.perfil.telefono;
-        userCliente.dni = this.perfil.cif;
+        userCliente.dni = this.perfil.dni;
         userCliente.direccionDTO.calle = this.perfil.direccionDTO.calle;
         userCliente.direccionDTO.numero = this.perfil.direccionDTO.numero;
         userCliente.direccionDTO.puerta = this.perfil.direccionDTO.puerta;
@@ -140,10 +140,10 @@ export class EditarPerfilComponent  implements OnInit {
         userOcioNocturno.nombre = this.perfil.nombre;
         userOcioNocturno.telefono = this.perfil.telefono;
         userOcioNocturno.cif = this.perfil.cif;
-        userOcioNocturno.imagen_marca = this.perfil.imagen_marca;
+        userOcioNocturno.imagenMarca = this.perfil.imagen_marca;
         userOcioNocturno.aforo = this.perfil.aforo;
-        userOcioNocturno.hora_apertura = this.perfil.hora_apertura;
-        userOcioNocturno.hora_cierre = this.perfil.hora_cierre;
+        userOcioNocturno.horaApertura = this.perfil.hora_apertura;
+        userOcioNocturno.horaCierre = this.perfil.hora_cierre;
         userOcioNocturno.direccionDTO.calle = this.perfil.direccionDTO.calle;
         userOcioNocturno.direccionDTO.numero = this.perfil.direccionDTO.numero;
         userOcioNocturno.direccionDTO.puerta = this.perfil.direccionDTO.puerta;
