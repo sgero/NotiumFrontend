@@ -23,6 +23,8 @@ export class LoginComponent {
   usuario = new Usuario();
   isToastOpen = false;
   mensaje = '';
+  usuarioLogueado :any;
+  perfil :any;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -47,12 +49,47 @@ export class LoginComponent {
 
         localStorage.setItem('token', data['token']);
         this.sharedService.setUsuarioToken(this.usuario);
-        this.dismissModal();
-        window.location.reload();
+        this.traerUsuario();
 
       }
 
     });
+
+  }
+
+  traerUsuario() {
+
+    this.usuarioService.getUsuarioToken().subscribe(data => {
+
+      this.usuarioLogueado = data;
+      this.traerPerfil(this.usuarioLogueado);
+
+    }, error => {
+
+    });
+
+  }
+
+  traerPerfil(user:Usuario){
+
+    this.usuarioService.traerPerfil(user).subscribe(data=>{
+
+      this.perfil = data;
+
+      if (this.usuarioLogueado.rol == 'RESTAURANTE'){
+
+        this.dismissModal();
+        this.router.navigate(['/notium/restaurante/' + this.perfil.id]);
+
+
+      }else if(this.usuarioLogueado.rol == 'OCIONOCTURNO'){
+
+        this.dismissModal();
+        this.router.navigate(['/notium/ocionocturno/' + this.perfil.id]);
+
+      }
+
+    })
 
   }
 

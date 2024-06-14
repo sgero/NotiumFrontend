@@ -7,6 +7,7 @@ import {UsuarioService} from "../../services/usuario.service";
 import {Router} from "@angular/router";
 // @ts-ignore
 import {EditarPerfilComponent} from "../perfil/editar-perfil/editar-perfil.component";
+import {Usuario} from "../../models/Usuario";
 
 
 @Component({
@@ -28,6 +29,7 @@ export class MenuLateralComponent implements OnInit {
 
   usuarioLogueado:any;
   username:any;
+  perfil:any;
 
 
   constructor(private authService: AuthService,
@@ -53,6 +55,7 @@ export class MenuLateralComponent implements OnInit {
       this.usuarioLogueado = data;
       this.username = this.usuarioLogueado.username;
       this.userRole = this.usuarioLogueado.rol;
+      this.traerPerfil(this.usuarioLogueado);
       localStorage.setItem('username', this.username);
 
     }, error => {
@@ -61,9 +64,31 @@ export class MenuLateralComponent implements OnInit {
 
   }
 
+  traerPerfil(user:Usuario){
+
+    this.userService.traerPerfil(user).subscribe(data=>{
+
+      this.perfil = data;
+
+    })
+
+  }
+
   visualizarPerfil(){
 
     this.router.navigate(['/notium/perfil']);
+
+  }
+
+  miRestaurante(){
+
+    this.router.navigate(['/notium/restaurante/' + this.perfil.id]);
+
+  }
+
+  miOcioNocturno(){
+
+    this.router.navigate(['/notium/ocionocturno/' + this.perfil.id]);
 
   }
 
@@ -95,6 +120,7 @@ export class MenuLateralComponent implements OnInit {
     this.authService.logout();
     this.isLoggedIn = false;
     this.userRole = null;
+    this.router.navigate(['/notium']);
   }
 
 

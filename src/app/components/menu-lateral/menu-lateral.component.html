@@ -38,6 +38,9 @@
         <ion-item button (click)="visualizarPerfil()">
           <ion-label>MI PERFIL</ion-label>
         </ion-item>
+        <ion-item button (click)="miRestaurante()">
+          <ion-label>MI RESTAURANTE</ion-label>
+        </ion-item>
         <ion-item button>
           <ion-label>Mis Menús</ion-label>
         </ion-item>
@@ -45,6 +48,9 @@
       <div *ngIf="userRole === 'OCIONOCTURNO'">
         <ion-item button (click)="visualizarPerfil()">
           <ion-label>MI PERFIL</ion-label>
+        </ion-item>
+        <ion-item button (click)="miOcioNocturno()">
+          <ion-label>MI OCIO NOCTURNO</ion-label>
         </ion-item>
         <ion-item button>
           <ion-label>Mis Eventos</ion-label>
