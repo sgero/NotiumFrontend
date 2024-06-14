@@ -11,6 +11,11 @@ import {RestauranteService} from "../../services/restaurante.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
+import {MatIconModule} from '@angular/material/icon';
+import {CrearMesasComponent} from "./restaurante-admin/crear-mesas/crear-mesas.component";
+import {MatDialog} from "@angular/material/dialog";
+import {ListarValoracionesComponent} from "./listar-valoraciones/listar-valoraciones.component";
+
 
 @Component({
   selector: 'app-restaurante',
@@ -24,7 +29,8 @@ import {FooterComponent} from "../footer/footer.component";
     RestauranteUserComponent,
     RestauranteAdminComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    MatIconModule
   ],
   standalone: true
 })
@@ -38,12 +44,21 @@ export class RestauranteComponent  implements OnInit {
   rankingRestaurante: number[] = [];
   restauranteEnRanking: boolean = false;
   restaurante: any;
+  numValoraciones: any;
   userup = true;
   constructor(private usuarioService: UsuarioService,
               private sharedService: SharedService,
               private restauranteService: RestauranteService,
               private router : Router,
-              private _route: ActivatedRoute) {this.id_restaurante = this._route.snapshot.paramMap.get('id');}
+              private _route: ActivatedRoute,
+              private dialogRef: MatDialog,
+  ) {this.id_restaurante = this._route.snapshot.paramMap.get('id');}
+
+  listadoValoraciones(){ this.dialogRef.open(ListarValoracionesComponent, {
+    width: '510px',
+    height:'250px'})
+  }
+
 
   getUsuarioPorToken(){
     this.usuarioService.getUsuarioToken().subscribe( {
@@ -65,16 +80,17 @@ export class RestauranteComponent  implements OnInit {
       complete: () => { console.log('Usuario', this.usuario); }
     });
   }
-
- /* valoracionRestaurante(){
+  valoracionRestaurante(){
     this.restauranteService.getValoracionRestauranteByID(Number(this.id_restaurante)).subscribe( {
       next: (valoracion_capada) => { this.valoracion_restaurante = valoracion_capada; },
       error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
       complete: () => { console.log('Valoración del restaurante', this.valoracion_restaurante); }
     });
-  }*/
 
- /* rankingRestaurantes(){
+    this.numValoraciones = this.sharedService.getNumValoraciones();
+  }
+
+ rankingRestaurantes(){
     this.restauranteService.getRankingRestaurantes().subscribe( {
       next: (data) => { this.rankingRestaurante = data; },
       error: (error) => { console.error('Error al el ranking de restaurantes', error); },
@@ -89,7 +105,7 @@ export class RestauranteComponent  implements OnInit {
         }
       }
     });
-  }*/
+  }
   setearIDParams(){ this.sharedService.setIdParamsRestaurante(Number(this.id_restaurante)); }
 
   captarRestaurantePorId(){
@@ -109,6 +125,7 @@ export class RestauranteComponent  implements OnInit {
     }
   }
 
+
   ngOnInit() {
 
     if (localStorage.length === 0){
@@ -118,6 +135,8 @@ export class RestauranteComponent  implements OnInit {
 
     this.getUsuarioPorToken();
     this.setearIDParams();
+    this.valoracionRestaurante()
+    this.rankingRestaurantes()
 
 
   }

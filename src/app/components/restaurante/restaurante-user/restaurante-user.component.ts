@@ -41,7 +41,7 @@ import {Cliente} from "../../../models/Cliente";
 
 export class RestauranteUserComponent  implements OnInit {
 
-  info: string = 'info';
+  //info: string = 'info';
   valoracion: string = '';
   carta: string= '';
   estilo1_info: boolean = false;
@@ -74,16 +74,6 @@ export class RestauranteUserComponent  implements OnInit {
   }
 
   //Funciones modales
-  abrirModalValoraciones(){
-    if (this.usuarioCli){
-     const dialogRef = this.dialogRef.open(HacerValoracionComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Chat cerrado');
-    });
-    }
-  }
-
 
   abrirModalReserva() {
     if (this.usuarioCli){
@@ -94,12 +84,11 @@ export class RestauranteUserComponent  implements OnInit {
         actualrest: this.restaurante
       }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('El modal de reserva se ha cerrado');
-      // Puedes realizar acciones después de cerrar el modal si es necesario
-    });
     }
+  }
+
+  Carta(){
+    //Modal de carta
   }
 
   valoracionRestaurante(){
@@ -141,6 +130,7 @@ export class RestauranteUserComponent  implements OnInit {
       complete: () => {
         console.log('Las valoraciones del restaurante', this.valoraciones);
         this.numValoraciones = this.valoraciones.length;
+        this.sharedService.setNumValoraciones(this.numValoraciones)
       }
     });
   }
@@ -173,41 +163,6 @@ export class RestauranteUserComponent  implements OnInit {
     this.valoracionesRestaurante();
     this.valoracionRestaurante();
     this.rankingRestaurantes();
-  }
-
-  Info(){
-    this.estilo2_info = true;
-    this.estilo2_valoraciones = false;
-    this.estilo2_carta = false;
-    this.info = 'info';
-    this.valoracion = '';
-    this.carta = '';
-  }
-
-  Valoracion(){
-    this.valoracion = 'valoracion';
-    this.estilo1_valoraciones = false;
-    this.estilo2_valoraciones = true;
-    this.estilo1_info=true;
-    this.estilo2_info=false;
-    this.estilo1_carta=true;
-    this.estilo2_carta=false;
-    this.info='nope';
-    this.carta = '';
-
-  }
-
-  Carta(){
-    this.estilo1_info = true;
-    this.estilo2_info = false;
-    this.estilo2_valoraciones = false;
-
-    this.estilo1_carta = false;
-    this.estilo2_carta = true
-    this.carta = 'carta';
-    this.valoracion='';
-    this.info='';
-
   }
 }
 

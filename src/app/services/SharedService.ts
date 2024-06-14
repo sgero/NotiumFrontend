@@ -12,6 +12,7 @@ export class SharedService {
   id_restaurante: number | undefined;
   id_ocio: number | undefined;
   usuario: Usuario = new Usuario();
+  numValoraciones: any;
 
   constructor() {}
 
@@ -49,6 +50,15 @@ export class SharedService {
 
   getUsuarioToken(){
     return this.usuario;
+  }
+
+  //Numero valoraciones
+  setNumValoraciones(data: any){
+    this.numValoraciones = data;
+  }
+
+  getNumValoraciones(){
+    return this.numValoraciones;
   }
 
 }

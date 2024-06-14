@@ -62,7 +62,11 @@ export class RestauranteService {
 
   getValoracionRestauranteByID(id: number): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/restaurante/notaMedia?id=${id}`).pipe(
-      map(valoracion_capada => parseFloat(valoracion_capada.toFixed(2)))
+      map(valoracion_capada => {
+        const parteEntera = Math.floor(valoracion_capada);
+        const primerDecimal = Math.floor((valoracion_capada - parteEntera) * 10);
+        return parseFloat(`${parteEntera}.${primerDecimal}`);
+      })
     );
   }
 

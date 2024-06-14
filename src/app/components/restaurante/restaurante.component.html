@@ -2,7 +2,12 @@
   <app-header></app-header>
   <div class="contenedor-restaurante">
     <div class="container48">
-      <div class='banner-img' [style.background-image]="'url('+ restaurante?.imagen_marca +')'"></div>
+      <div class='banner-img' [style.background-image]="'url('+ restaurante?.imagen_marca +')'">
+        <div class="info_valoraciones">
+          <a (click)="listadoValoraciones()"><h2>{{numValoraciones}} num val</h2></a>
+          <a><h2>{{ valoracion_restaurante }}</h2></a><mat-icon aria-hidden="false" class="estrella" fontIcon="star"></mat-icon>
+        </div>
+      </div>
       <div class="info-concreta">
         <div *ngIf="userup; else vistaAdmin">
           <app-restaurante-user></app-restaurante-user>
