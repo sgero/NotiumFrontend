@@ -3,13 +3,13 @@
   <mat-step label="Comprobacion" [stepControl]="firstStepFormGroup">
     <form [formGroup]="firstStepFormGroup">
       <mat-form-field class="formularios">
-        <mat-label >Indique su código de reserva</mat-label>
-        <input matInput formControlName="codigoReservaForm" [(ngModel)]="codigoReserva" name="codigoReserva" id="codigoReserva" required>
+        <mat-label >Código de compra</mat-label>
+        <input matInput formControlName="codigoReservaForm" [(ngModel)]="codigoReserva" name="codigoReserva" id="codigoReserva" readonly>
       </mat-form-field>
     </form>
 
     <div>
-      <button mat-button type="submit" (click)="validarCodigo()">Comprobar</button>
+      <button mat-button type="submit" (click)="validarCodigo()">Continuar</button>
       <button mat-button mat-dialog-close>Cancelar</button>
     </div>
 
@@ -18,21 +18,20 @@
     <mat-dialog-content class="container-valoracion">
       <form [formGroup]="secondStepFormGroup">
         <mat-form-field class="formularios">
-          <mat-label>Diganos como fue su experiencia</mat-label>
+          <mat-label>Díganos como fue su experiencia</mat-label>
           <input matInput formControlName="textoForm" [(ngModel)]="texto" name="texto" id="texto" required>
         </mat-form-field>
       </form>
       <form [formGroup]="secondStepFormGroup">
         <mat-form-field class="formularios">
-          <mat-label>Evalue de 0 a 5 su experiencia</mat-label>
-          <input matInput formControlName="n_valoracionForm" [(ngModel)]="n_valoracion" name="n_valoracion" id="n_valoracion"required>
+          <mat-label>Evalúe de 0 a 5 su experiencia</mat-label>
+          <input matInput formControlName="n_valoracionForm" [(ngModel)]="n_valoracion" name="n_valoracion" id="n_valoracion" required type="number" min="0" max="5">
         </mat-form-field>
       </form>
     </mat-dialog-content>
     <div>
       <button mat-button matStepperPrevious>Volver</button>
       <button mat-button matStepperNext type="submit" (click)="next()">Continuar</button>
-
     </div>
 
   </mat-step>
@@ -40,7 +39,7 @@
     <mat-dialog-actions>
       <div class="colum">
         <span>Esta será su valoración: {{texto}}</span>
-        <span>Y de 0 a 5 ha valorado al restaurante con: {{n_valoracion}}</span>
+        <span>Y de 0 a 5 ha valorado al establecimiento con: {{n_valoracion}}</span>
         <div>
           <button mat-button matStepperPrevious>Volver</button>
           <button mat-button cdkFocusInitial (click)="mandarValoracion()" (click)="cerrarModal()">Ok</button>

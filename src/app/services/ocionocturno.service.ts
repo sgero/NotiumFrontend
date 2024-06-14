@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {UserOcioNocturno} from "../models/UserOcioNocturno";
 import {OcioNocturno} from "../models/OcioNocturno";
 import {Observable} from "rxjs";
+import {Evento} from "../models/Evento";
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,9 @@ export class OcionocturnoService {
     return this.http.get<OcioNocturno>(`${this.apiUrl}/ocioNocturno/usuario/${idUsuario}`);
   }
 
-  comprobarCodigoOcio(id: number, codigoReserva: any): Observable<any> {
+  comprobarCodigoOcio(evento:any,id: number, codigoReserva: any): Observable<any> {
     let codigoReser = {
+      idEvento: evento.id!,
       codigoReserva: codigoReserva,
       id_ocio: id
     };
@@ -44,13 +46,14 @@ export class OcionocturnoService {
     return this.http.post<any>(`${this.apiUrl}/comentario/comprobarCodigoOcioNocturno`, codigoReser)
   }
 
-  enviarValoracionOcio(id: number, codigoReserva: string, experiencia: string, evaluacion: number): Observable<any> {
+  enviarValoracionOcio(id: number, codigoReserva: string, experiencia: string, evaluacion: number, cliente:any): Observable<any> {
     let valoracion = {
       codigoReserva: codigoReserva,
       "ocioDTO":
         {"id":id},
       texto: experiencia,
-      valoracion: evaluacion
+      valoracion: evaluacion,
+      clienteDTO: cliente
     };
 
     return this.http.post<any>(`${this.apiUrl}/comentario/crearOcioNocturno`, valoracion)

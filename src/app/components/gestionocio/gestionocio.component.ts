@@ -78,6 +78,8 @@ import {SharedService} from "../../services/SharedService";
 import {trigger} from "@angular/animations";
 import {Producto} from "../../models/Producto";
 import {ProductoFormato} from "../../models/ProductoFormato";
+import {HacerValoracionComponent} from "../restaurante/hacer-valoracion/hacer-valoracion.component";
+import {ListarValoracionesOcioComponent} from "./listar-valoraciones-ocio/listar-valoraciones-ocio.component";
 
 const IonIcons = {
   shirtOutline,
@@ -172,7 +174,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   isModalEditRppOpen = false;
   idRppOriginal: number | null = null;
   idRppDestino: number | null = null;
-  isModalReasignOpen= false;
+  isModalReasignOpen = false;
 
 
   firstFormGroup = this.formBuilder.group({
@@ -247,9 +249,9 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   iterable = false;
   listaActivada = false;
   opcionesEventoCiclicoBool = false;
-  fechaSeleccionada?: Date ;
+  fechaSeleccionada?: Date;
   fecha: Date = new Date();
-  noHayEventosSeleccionado?:boolean;
+  noHayEventosSeleccionado?: boolean;
   noHayEventos = true;
   fechaActual = new Date().toString();
 
@@ -266,7 +268,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     private usuarioService: UsuarioService,
     private toastController: ToastController,
     private loadingCtrl: LoadingController,
-    private chatService : ChatService,
+    private chatService: ChatService,
     private dialogRef: MatDialog,
     private sharedService: SharedService
   ) {
@@ -329,7 +331,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     })
   }
 
-  getRpps(){
+  getRpps() {
     this.route.params.subscribe(params => {
       const ocioID = +params['id'];
       this.sharedService.setIdParamsOcio(ocioID);
@@ -350,7 +352,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   }
 
 
-  async getListas(id:number){
+  async getListas(id: number) {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando Listas...',
       duration: 3000,
@@ -377,7 +379,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       }
     })
   }
-  showList(){
+
+  showList() {
     this.mostrarListas = true;
   }
 
@@ -436,7 +439,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     if (!this.newRpp.userDTO) {
       this.newRpp.userDTO = new Usuario();
     }
-    this.route.params.subscribe( params => {
+    this.route.params.subscribe(params => {
       const ocioID = +params['id'];
       if (ocioID) {
         this.rppService.guardarRpp(ocioID, this.newRpp).subscribe({
@@ -449,13 +452,12 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
           },
           error: async e => {
             await toast.present();
-            console.error( e);
+            console.error(e);
           }
         })
       }
     })
   }
-
 
 
   confirmar() {
@@ -686,7 +688,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     }
     this.listaEnviada.push(indice);
     this.totalEntradasLista += nuevaLista.total_invitaciones!;
-    this.disponibilidadRestante =  this.eventoAforoNuevo - (this.capacidadTotalReservados + this.totalEntradas + this.totalEntradasLista);
+    this.disponibilidadRestante = this.eventoAforoNuevo - (this.capacidadTotalReservados + this.totalEntradas + this.totalEntradasLista);
 
   }
 
@@ -854,7 +856,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
       if (n - 1 >= 0 && n - 1 < this.crearEvento.listaOcioDTO.length) {
         this.crearEvento.listaOcioDTO[n - 1].activo = true;
       }
-    } else if (!this.unico && this.crearEventoCiclico.listaOcioDTO){
+    } else if (!this.unico && this.crearEventoCiclico.listaOcioDTO) {
       if (n - 1 >= 0 && n - 1 < this.crearEventoCiclico.listaOcioDTO.length) {
         this.crearEventoCiclico.listaOcioDTO[n - 1].activo = true;
       }
@@ -876,7 +878,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     } else if ('SEIS_MESES' == con) {
       e = RepetirCicloEventoOcio.SEIS_MESES;
     }
-    if (!this.unico){
+    if (!this.unico) {
       this.crearEventoCiclico.repetirCicloEventoOcio = e;
       let d: any;
       d = formValues.diasARepetirCicloEventoOcioList
@@ -884,7 +886,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     }
     this.opcionesEventoCiclicoBool = true;
   }
-  getEventosEntreFechas(fecha:Date){
+
+  getEventosEntreFechas(fecha: Date) {
     let fechaInicio = this.convertirFechaAStringFormatoYYYYMMDD(fecha.toString());
     let fechaFin = this.obtenerSiguienteDia(fechaInicio);
     let fechaFinal = this.formatDate(fechaFin);
@@ -909,7 +912,8 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     });
 
   }
-  convertirFechaAStringFormatoYYYYMMDD(fecha:string): string{
+
+  convertirFechaAStringFormatoYYYYMMDD(fecha: string): string {
     fecha = fecha.substring(0, 10);
     fecha = fecha.replace(/-/g, '/');
 
@@ -922,6 +926,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
     return fechaSiguiente;
   }
+
   formatDate(date: Date): string {
     const year = date.getFullYear();
     const month = this.padZero(date.getMonth() + 1);
@@ -929,9 +934,11 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
     return `${year}/${month}/${day}`;
   }
+
   padZero(num: number): string {
     return num < 10 ? `0${num}` : `${num}`;
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -945,7 +952,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.isModalRppOpen = b;
   }
 
-  Valoraciones(){
+  Valoraciones() {
     const dialogRef = this.dialogRef.open(ValoacionOcioComponent);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -963,15 +970,16 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
         this.newRpp = value as Rpp;
         this.rppEditModal(true);
       },
-          error: e => {
-            console.error(e);
-          }
-        })
+      error: e => {
+        console.error(e);
       }
+    })
+  }
 
   async guardar(id: number) {
     if (!this.newRpp.direccionDTO) {
-      this.newRpp.direccionDTO = new DireccionDTO();}
+      this.newRpp.direccionDTO = new DireccionDTO();
+    }
     const loading = await this.loadingCtrl.create({
       message: 'Editando Rpp...',
       duration: 1000,
@@ -1044,4 +1052,15 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   accept() {
     this.reasignarListas();
   }
+
+  openValoraciones(ocio: OcioNocturno) {
+    if (ocio) {
+      this.dialogRef.open(ValoacionOcioComponent, {
+        data: {
+          ocio: ocio!
+        }
+      });
+    }
+  }
+
 }

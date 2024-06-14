@@ -22,6 +22,8 @@ import {ReservadoOcioCliente} from "../../models/ReservadoOcioCliente";
 import {ChatComponent} from "../gestionocio/chat/chat.component";
 import {Evento} from "../../models/Evento";
 import {MatDialog} from "@angular/material/dialog";
+import {ValoacionOcioComponent} from "../gestionocio/valoacion-ocio/valoacion-ocio.component";
+import {Cliente} from "../../models/Cliente";
 
 @Component({
   selector: 'app-mis-tickets-reservas',
@@ -53,6 +55,7 @@ export class MisTicketsReservasComponent  implements OnInit {
   rFuturos = false;
   lPasadas = false;
   lFuturos = false;
+  cliente!: Cliente;
 
   constructor(
     private eventoService: EventoService,
@@ -84,6 +87,7 @@ export class MisTicketsReservasComponent  implements OnInit {
       this.clienteService.getByIdUsuario(usuario.id).subscribe({
         next: value => {
           if (value) {
+            this.cliente = value;
             this.getEntradasCliente(value.id!);
           }
         },
@@ -249,5 +253,18 @@ export class MisTicketsReservasComponent  implements OnInit {
       });
     }
   }
+
+  openValorar(evento: Evento, codigo: string) {
+    if (evento && codigo && this.cliente) {
+      this.dialog.open(ValoacionOcioComponent, {
+        data: {
+          evento: evento!,
+          codigoValoracion: codigo!,
+          cliente: this.cliente
+        }
+      });
+    }
+  }
+
 
 }
