@@ -130,3 +130,8 @@ md button in-toolbar ion-activatable ion-focusable {
 }
 
 
+.p-hidden-accessible{
+  display:flex !important;
+  width:0 !important;
+  height:0 !important;
+}

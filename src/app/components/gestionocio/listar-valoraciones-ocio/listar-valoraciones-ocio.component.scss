@@ -1,0 +1,32 @@
+.resenas{
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  margin: 2rem;
+}
+
+.resena{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  border-bottom: #cdcdcd 1px solid;
+  padding: 1rem 0;
+}
+h2{
+  margin: 0
+}
+.info{
+  display: flex;
+  align-items: center;
+}
+.info div{
+  display: flex;
+  margin: 3px;
+}
+.fecha{
+  margin-top : 5px;
+  margin-left:5px;
+}
+.comentario{
+  margin-right:2px
+}

@@ -20,6 +20,8 @@ import {OcionocturnoService} from "../../../services/ocionocturno.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ToastController} from "@ionic/angular";
 import {ComentarioOcio} from "../../../models/ComentarioOcio";
+import {OcioNocturno} from "../../../models/OcioNocturno";
+import {ListarValoracionesOcioComponent} from "../listar-valoraciones-ocio/listar-valoraciones-ocio.component";
 
 @Component({
   selector: 'app-valoacion-ocio',
@@ -153,6 +155,7 @@ export class ValoacionOcioComponent  implements OnInit {
             color: 'success',
           });
           await toast.present();
+          this.openValoraciones(this.data.evento.ocioNocturnoDTO);
         }
       },
       error: (error) => { console.error('Error al realizar la valoración del restaurante', error); },
@@ -160,19 +163,15 @@ export class ValoacionOcioComponent  implements OnInit {
     });
   }
 
-  listarValoraciones(){
-
-    this.id_usuario = this.sharedService.getUsuarioToken().id;
-
-    this.ocioNocturnoService.valorcionesPorRestaurante(Number(this.id_ocio)).subscribe( {
-      next: (data) => { this.comentariosOcio = data; },
-      error: (error) => { console.error('Error al listar las valoraciones del ocio', error); },
-      complete: () => { console.log('Las valoraciones del ocio:', this.comentariosOcio); }
-    });
+  openValoraciones(ocio: OcioNocturno) {
+    if (ocio) {
+      this.dialogRef.open(ListarValoracionesOcioComponent, {
+        data: {
+          ocio: ocio!
+        }
+      });
+    }
   }
-
-
-
 
 
 }

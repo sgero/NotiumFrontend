@@ -1055,7 +1055,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
 
   openValoraciones(ocio: OcioNocturno) {
     if (ocio) {
-      this.dialogRef.open(ValoacionOcioComponent, {
+      this.dialogRef.open(ListarValoracionesOcioComponent, {
         data: {
           ocio: ocio!
         }

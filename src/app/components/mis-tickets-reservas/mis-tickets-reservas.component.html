@@ -31,7 +31,7 @@
           <ion-item *ngFor="let reserva of reservasTiempo">
             <ion-label>
               <div class="reservaInfo">
-                <a class="card" href="/notium/restaurante/{{reserva.restauranteDTO?.id}}"><img src="{{reserva.restauranteDTO?.imagen_marca}}" alt="Imagen del restaurante"></a>
+                <a class="card-restaurante" href="/notium/restaurante/{{reserva.restauranteDTO?.id}}"><img src="{{reserva.restauranteDTO?.imagen_marca}}" alt="Imagen del restaurante"></a>
                 <div class="info">
                   <div class="info_restaurante">
                     <h3><b>Nombre del restaurante: </b>{{reserva.restauranteDTO?.nombre}}</h3>
@@ -61,7 +61,6 @@
   } @else if (!restaurante) {
     <div class="card-content">
       <ion-card-header>
-        <ion-card-title>Entradas de Eventos de Ocios Nocturnos</ion-card-title>
         <div class="ocio">
           <button mat-raised-button color="primary" [matMenuTriggerFor]="menuEntradas" style="width: 140px !important">
             Entradas

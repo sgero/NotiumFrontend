@@ -1,11 +1,24 @@
 <div class="resenas">
+  <h1>Reseñas del establecimiento {{ ocio.nombre }}</h1>
   <div class="resena" *ngFor="let v of valoraciones">
-    <div class="info_resena">
-      <h2>{{v.clienteDTO.nombre}} {{v.clienteDTO.apellidos}}</h2>
-      <h2>{{v.fecha_comentario}}</h2>
+    <div class="info">
+      <div>
+        <mat-icon aria-hidden="false" class="icon-display" fontIcon="account_circle"></mat-icon>
+      </div>
+      <div>
+        <h2>{{ v.clienteDTO.nombre }} {{ v.clienteDTO.apellidos }}</h2>
+      </div>
     </div>
-    <div><h2>{{v.texto}}</h2></div>
-    <div>{{v.valoracion}}/5</div>
-
+    <div>
+      <div class="comentario">
+        <p-rating style="display: inline-block;" [(ngModel)]="v.valoracion" [readonly]="true" [cancel]="false">
+          <ng-template pTemplate="onicon">
+            <mat-icon aria-hidden="false" fontIcon="star" style="color:#ffcd3c"></mat-icon>
+          </ng-template>
+        </p-rating>
+      </div>
+      <div style="margin-left:5px;"><h2>{{ v.texto }}</h2></div>
+    </div>
+    <div class="fecha">Valorado el {{ v.fecha_comentario }}</div>
   </div>
 </div>
