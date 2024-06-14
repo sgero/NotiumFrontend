@@ -67,6 +67,12 @@ export class MenuLateralComponent implements OnInit {
 
   }
 
+  panelAdmin(){
+
+    this.router.navigate(['/notium/admin-panel']);
+
+  }
+
   async editarPerfil(){
 
     const modal = await this.modalController.create({

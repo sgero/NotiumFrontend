@@ -1,5 +1,80 @@
-<!-- admin-panel.component.html -->
-<ion-button (click)="toggleAdminPanel()">Admin</ion-button>
-<ion-list *ngIf="isAdminPanelOpen">
-  <ion-item *ngFor="let option of adminOptions">{{ option }}</ion-item>
-</ion-list>
+<ion-content>
+  <div class="button-group">
+    <ion-button id="cliente" (click)="elegirRol('CLIENTE')">CLIENTE</ion-button>
+    <ion-button id="restaurante" (click)="elegirRol('RESTAURANTE')">RESTAURANTE</ion-button>
+    <ion-button id="ocio_nocturno" (click)="elegirRol('OCIO NOCTURNO')">OCIO NOCTURNO</ion-button>
+    <ion-button id="rpp" (click)="elegirRol('RPP')">RPP</ion-button>
+  </div>
+
+  <ion-spinner *ngIf="isLoading"></ion-spinner>
+
+  <table *ngIf="!isLoading">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Otros campos específicos según el rol</th>
+      <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Cliente -->
+    <ng-container *ngIf="rol === 'CLIENTE'">
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.id }}</td>
+        <td>{{ cliente.nombre }}</td>
+        <td>{{ cliente.apellidos }}</td>
+        <td>{{ cliente.dni }}</td>
+        <td>
+          <ion-button size="small">Editar</ion-button>
+          <ion-button size="small" color="danger" (click)="eliminarCuenta(cliente)">Eliminar</ion-button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <!-- Restaurante -->
+    <ng-container *ngIf="rol === 'RESTAURANTE'">
+      <tr *ngFor="let restaurante of restaurantes">
+        <td>{{ restaurante.id }}</td>
+        <td>{{ restaurante.nombre }}</td>
+        <td>{{ restaurante.hora_apertura }}</td>
+        <td>{{ restaurante.hora_cierre }}</td>
+        <td>
+          <ion-button size="small">Editar</ion-button>
+          <ion-button size="small" color="danger" (click)="eliminarCuenta(restaurante)">Eliminar</ion-button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <!-- OCIO NOCTURNO -->
+    <ng-container *ngIf="rol === 'OCIO NOCTURNO'">
+      <tr *ngFor="let ocio of ocios_nocturnos">
+        <td>{{ ocio.id }}</td>
+        <td>{{ ocio.nombre }}</td>
+        <!-- Incluir los campos específicos de ocio nocturno según necesidad -->
+        <td>{{ ocio.horaApertura }}</td>
+        <td>{{ ocio.horaCierre }}</td>
+        <td>
+          <ion-button size="small">Editar</ion-button>
+          <ion-button size="small" color="danger" (click)="eliminarCuenta(ocio)">Eliminar</ion-button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <!-- RPP -->
+    <ng-container *ngIf="rol === 'RPP'">
+      <tr *ngFor="let rpp of rpps">
+        <td>{{ rpp.id }}</td>
+        <td>{{ rpp.nombre }}</td>
+        <!-- Incluir los campos específicos de RPP según necesidad -->
+        <td>{{ rpp.fechaNacimiento }}</td>
+        <!-- Aquí puedes seguir agregando los campos necesarios -->
+        <td>
+          <ion-button size="small">Editar</ion-button>
+          <ion-button size="small" color="danger" (click)="eliminarCuenta(rpp)">Eliminar</ion-button>
+        </td>
+      </tr>
+    </ng-container>
+    </tbody>
+  </table>
+</ion-content>
