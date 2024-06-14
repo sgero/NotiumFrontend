@@ -16,6 +16,7 @@ import {CrearMesasComponent} from "./restaurante-admin/crear-mesas/crear-mesas.c
 import {MatDialog} from "@angular/material/dialog";
 import {ListarValoracionesComponent} from "./listar-valoraciones/listar-valoraciones.component";
 
+import {MapaComponent} from "../mapa/mapa.component";
 
 @Component({
   selector: 'app-restaurante',
@@ -29,6 +30,7 @@ import {ListarValoracionesComponent} from "./listar-valoraciones/listar-valoraci
     RestauranteUserComponent,
     RestauranteAdminComponent,
     HeaderComponent,
+    MapaComponent,
     FooterComponent,
     MatIconModule
   ],
@@ -46,6 +48,7 @@ export class RestauranteComponent  implements OnInit {
   restaurante: any;
   numValoraciones: any;
   userup = true;
+  direcion:any;
   constructor(private usuarioService: UsuarioService,
               private sharedService: SharedService,
               private restauranteService: RestauranteService,
@@ -66,6 +69,7 @@ export class RestauranteComponent  implements OnInit {
         this.restauranteService.getRestauranteByID(Number(this.id_restaurante)).subscribe( {
           next: (responseData) => {
             this.restaurante = responseData;
+            this.direcion = responseData.direccionDTO;
             this.sharedService.setRestaurante(this.restaurante);
             this.usuario = usuario;
             if (usuario.id == this.restaurante.userDTO.id){
@@ -124,7 +128,6 @@ export class RestauranteComponent  implements OnInit {
       this.userup = false;
     }
   }
-
 
   ngOnInit() {
 

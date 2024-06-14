@@ -19,27 +19,45 @@
         <ion-row>
           <ion-col size="6">
             <ion-list>
-              <ion-item>
+              <ion-item *ngIf="usuario.username">
                 <ion-label><strong>Username:</strong></ion-label>
                 <ion-text>{{usuario.username}}</ion-text>
               </ion-item>
-              <ion-item>
+              <ion-item *ngIf="usuario.email">
                 <ion-label><strong>Email:</strong></ion-label>
                 <ion-text>{{usuario.email}}</ion-text>
               </ion-item>
-              <ion-item>
-                <ion-label><strong>Nombre:</strong></ion-label>
+              <ion-item *ngIf="perfil?.nombre">
+                <ion-label *ngIf="usuario.rol === 'CLIENTE'"><strong>Nombre:</strong></ion-label>
+                <ion-label *ngIf="usuario.rol === 'RESTAURANTE'"><strong>Nombre del restaurante:</strong></ion-label>
+                <ion-label *ngIf="usuario.rol === 'OCIO_NOCTURNO'"><strong>Nombre del ocio nocturno:</strong></ion-label>
                 <ion-text>{{perfil?.nombre}}</ion-text>
               </ion-item>
-              <ion-item>
+              <ion-item *ngIf="perfil?.apellidos">
                 <ion-label><strong>Apellidos:</strong></ion-label>
                 <ion-text>{{perfil?.apellidos}}</ion-text>
               </ion-item>
-              <ion-item>
+              <ion-item *ngIf="perfil?.dni">
                 <ion-label><strong>DNI:</strong></ion-label>
                 <ion-text>{{perfil?.dni}}</ion-text>
               </ion-item>
-              <ion-item>
+              <ion-item *ngIf="perfil?.cif">
+                <ion-label><strong>CIF:</strong></ion-label>
+                <ion-text>{{perfil?.cif}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="perfil?.telefono">
+                <ion-label><strong>Teléfono:</strong></ion-label>
+                <ion-text>{{perfil?.telefono}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="perfil?.hora_apertura">
+                <ion-label><strong>Hora de apertura:</strong></ion-label>
+                <ion-text>{{perfil?.hora_apertura}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="perfil?.hora_cierre">
+                <ion-label><strong>Hora de cierre:</strong></ion-label>
+                <ion-text>{{perfil?.hora_cierre}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="perfil?.fechaNacimiento">
                 <ion-label><strong>Fecha Nacimiento:</strong></ion-label>
                 <ion-text>{{perfil?.fechaNacimiento}}</ion-text>
               </ion-item>
@@ -82,7 +100,7 @@
 
       <div class="botones">
         <ion-button id="boton_editar" expand="full" (click)="openEditProfileModal()">Editar Perfil</ion-button>
-        <ion-button id="boton_eliminar" expand="full" (click)="eliminarCuenta()">Eliminar Cuenta</ion-button>
+        <ion-button color="danger" id="boton_eliminar" expand="full" (click)="eliminarCuenta()">Eliminar Cuenta</ion-button>
       </div>
 
     </ion-card-content>

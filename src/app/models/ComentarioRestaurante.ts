@@ -1,5 +1,6 @@
 import {Restaurante} from "./Restaurante";
 import {Cliente} from "./Cliente";
+import {OcioNocturno} from "./OcioNocturno";
 
 export class ComentarioRestaurante {
   id?: number;

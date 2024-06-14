@@ -14,6 +14,8 @@ import {OcionocturnoService} from "../../services/ocionocturno.service";
 import {DireccionDTO} from "../../models/DireccionDTO";
 import {LoginComponent} from "../login/login.component";
 import {Observable} from "rxjs";
+import {Clase} from "../../models/Clase";
+import {ClaseService} from "../../services/clase.service";
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -36,9 +38,10 @@ export class RegistroComponent implements OnInit {
   selectedRole: string = '';
   repiteContrasena: string = '';
   repiteEmailUsername : boolean = true;
+  clases: Clase[] = [];
 
   ngOnInit() {
-    return null;
+    this.getAllClases();
   }
 
   maxDate: string;
@@ -48,7 +51,8 @@ export class RegistroComponent implements OnInit {
               private restauranteService: RestauranteService,
               private ocioNocturnoService: OcionocturnoService,
               private modalController: ModalController,
-              private toastController: ToastController,) {
+              private toastController: ToastController,
+              private claseService: ClaseService,) {
 
     this.maxDate = new Date().toISOString();
 
@@ -86,6 +90,14 @@ export class RegistroComponent implements OnInit {
   validaUsernameEmailExistentes(): Observable<boolean> {
     return this.usuarioService.validaUsernameEmailExistentes(this.user);
   }
+
+  getAllClases() {
+    this.claseService.getAllClases().subscribe(data=>{
+
+      this.clases = data;
+
+    })
+  };
 
   validarFormularioGenerico(): boolean {
     if (!this.user.username || !this.user.email || !this.user.password || !this.repiteContrasena) {
@@ -128,9 +140,7 @@ export class RegistroComponent implements OnInit {
   }
 
   registrar() {
-    this.direccion.ciudad = 'Sevilla';
     this.direccion.pais = 'España';
-    this.direccion.provincia = 'Sevilla';
 
     if (this.selectedRole=="cliente"){
 
@@ -170,10 +180,10 @@ export class RegistroComponent implements OnInit {
       this.userOcioNocturno.username = this.user.username;
       this.userOcioNocturno.password = this.user.password;
       this.userOcioNocturno.email = this.user.email;
-      this.userOcioNocturno.direccion = this.direccion;
+      this.userOcioNocturno.direccionDTO = this.direccion;
 
-      this.userOcioNocturno.hora_apertura = this.extraerHoraYMinuto(this.userOcioNocturno.hora_apertura || '');
-      this.userOcioNocturno.hora_cierre = this.extraerHoraYMinuto(this.userOcioNocturno.hora_cierre || '');
+      this.userOcioNocturno.horaApertura = this.extraerHoraYMinuto(this.userOcioNocturno.horaApertura || '') + ':00';
+      this.userOcioNocturno.horaCierre = this.extraerHoraYMinuto(this.userOcioNocturno.horaCierre || '') + ':00';
 
       this.userOcioNocturno.rol = 3;
 
@@ -181,6 +191,10 @@ export class RegistroComponent implements OnInit {
         console.log(data);
         this.login();
         this.dismissModal();
+      },error => {
+
+        console.log(error)
+
       });
     }
   }
@@ -199,6 +213,6 @@ function extraerHoraYMinuto(timeString: string): string {
   if (match) {
     return match[1];
   } else {
-    throw new Error("Invalid time format");
+    return timeString;
   }
 }

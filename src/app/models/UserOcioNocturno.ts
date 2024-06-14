@@ -11,9 +11,9 @@ export class UserOcioNocturno{
   nombre: string = '';
   telefono?: string = '';
   cif?: string = '';
-  hora_apertura?: string = '';
-  hora_cierre?: string = '';
+  horaApertura?: string = '';
+  horaCierre?: string = '';
   aforo?: number;
-  imagen_marca?: string = '';
-  direccion: DireccionDTO = new DireccionDTO();
+  imagenMarca?: string = '';
+  direccionDTO: DireccionDTO = new DireccionDTO();
 }
