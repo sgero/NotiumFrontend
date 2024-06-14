@@ -182,8 +182,8 @@ export class RegistroComponent implements OnInit {
       this.userOcioNocturno.email = this.user.email;
       this.userOcioNocturno.direccionDTO = this.direccion;
 
-      this.userOcioNocturno.hora_apertura = this.extraerHoraYMinuto(this.userOcioNocturno.hora_apertura || '');
-      this.userOcioNocturno.hora_cierre = this.extraerHoraYMinuto(this.userOcioNocturno.hora_cierre || '');
+      this.userOcioNocturno.horaApertura = this.extraerHoraYMinuto(this.userOcioNocturno.horaApertura || '') + ':00';
+      this.userOcioNocturno.horaCierre = this.extraerHoraYMinuto(this.userOcioNocturno.horaCierre || '') + ':00';
 
       this.userOcioNocturno.rol = 3;
 
@@ -191,6 +191,10 @@ export class RegistroComponent implements OnInit {
         console.log(data);
         this.login();
         this.dismissModal();
+      },error => {
+
+        console.log(error)
+
       });
     }
   }
