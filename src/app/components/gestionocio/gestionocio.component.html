@@ -4,12 +4,9 @@
 
 
   <div class="banner-container">
-    <!-- Banner de fondo con la imagen de la marca de la discoteca -->
     <div class="banner" [style.background-image]="'url('+ ocio.imagenMarca +')'">
-      <!-- Contenido opcional dentro del banner -->
-      <!--      <h1> {{ocio.nombre}} </h1>-->
-      <!--      <p>{{ocio.direccionDTO.ciudad}}</p>-->
     </div>
+    <mat-icon aria-hidden="false" class="estrella" fontIcon="star" (click)="openValoraciones(ocio)"></mat-icon>
   </div>
   <div class="buttons">
     <button mat-raised-button color="primary" style="width: 140px !important" (click)="Eventos()">Ver Eventos</button>

@@ -22,6 +22,8 @@ import {ReservadoOcioCliente} from "../../models/ReservadoOcioCliente";
 import {ChatComponent} from "../gestionocio/chat/chat.component";
 import {Evento} from "../../models/Evento";
 import {MatDialog} from "@angular/material/dialog";
+import {ValoacionOcioComponent} from "../gestionocio/valoacion-ocio/valoacion-ocio.component";
+import {Cliente} from "../../models/Cliente";
 import {ReservaService} from "../../services/reserva.service";
 import {SharedService} from "../../services/SharedService";
 import {HacerValoracionComponent} from "../restaurante/hacer-valoracion/hacer-valoracion.component";
@@ -49,6 +51,7 @@ export class MisTicketsReservasComponent  implements OnInit {
 
   reservasTiempo: Reserva[] = [];
   id_usuario: any;
+  reservas: Reserva[] = [];
   entradasCompradas ?: ClienteEntradasCompradasDTO;
   restaurante?: boolean;
   estado_reserva: string = '';
@@ -59,6 +62,7 @@ export class MisTicketsReservasComponent  implements OnInit {
   rFuturos = false;
   lPasadas = false;
   lFuturos = false;
+  cliente!: Cliente;
   rPasadas = false;
   rFuturas = false;
 
@@ -74,7 +78,6 @@ export class MisTicketsReservasComponent  implements OnInit {
     private dialogRef: MatDialog,
   ) {
   }
-
 
   ngOnInit() {
     this.getUsuario();
@@ -97,6 +100,7 @@ export class MisTicketsReservasComponent  implements OnInit {
       this.clienteService.getByIdUsuario(usuario.id).subscribe({
         next: value => {
           if (value) {
+            this.cliente = value;
             this.getEntradasCliente(value.id!);
           }
         },
@@ -263,6 +267,19 @@ export class MisTicketsReservasComponent  implements OnInit {
       });
     }
   }
+
+  openValorar(evento: Evento, codigo: string) {
+    if (evento && codigo && this.cliente) {
+      this.dialog.open(ValoacionOcioComponent, {
+        data: {
+          evento: evento!,
+          codigoValoracion: codigo!,
+          cliente: this.cliente
+        }
+      });
+    }
+  }
+
 
 
   reserv(estado: string) {

@@ -113,6 +113,13 @@ md button in-toolbar ion-activatable ion-focusable {
   padding: 0 !important;
 
 }
+.mat-mdc-dialog-surface{
+  width: 100% !important;
+  height: auto !important;
+}
+.custom-toast {
+  z-index: 9999 !important;
+}
 
 .timepicker-overlay{
   z-index: 10000000 !important;
@@ -123,3 +130,8 @@ md button in-toolbar ion-activatable ion-focusable {
 }
 
 
+.p-hidden-accessible{
+  display:flex !important;
+  width:0 !important;
+  height:0 !important;
+}
