@@ -1,194 +1,4 @@
-<!--&lt;!&ndash;<ion-menu contentId="main-content">&ndash;&gt;-->
-<!--&lt;!&ndash;  <ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;    <ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;      <ion-title>Usuario</ion-title>&ndash;&gt;-->
-<!--&lt;!&ndash;    </ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;  </ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;  <ion-content class="ion-padding">This is the menu content.</ion-content>&ndash;&gt;-->
-<!--&lt;!&ndash;</ion-menu>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="ion-page" id="main-content">&ndash;&gt;-->
-<!--&lt;!&ndash;  <ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;    <ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;      <ion-buttons slot="start">&ndash;&gt;-->
-<!--&lt;!&ndash;        <ion-menu-button></ion-menu-button>&ndash;&gt;-->
-<!--&lt;!&ndash;      </ion-buttons>&ndash;&gt;-->
-<!--&lt;!&ndash;      <ion-title>Panel de admin</ion-title>&ndash;&gt;-->
-<!--&lt;!&ndash;    </ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;  </ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;  <ion-content class="ion-padding"> Pulsa en la esquina superior para desplegar el panel de administración </ion-content>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-
-<!--&lt;!&ndash;<div class="menu-lateral">&ndash;&gt;-->
-<!--&lt;!&ndash;  <ion-menu contentId="main-content">&ndash;&gt;-->
-<!--&lt;!&ndash;    <ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;      <ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;        <ion-title>Menu Content</ion-title>&ndash;&gt;-->
-<!--&lt;!&ndash;      </ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;    </ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;    <ion-content class="ion-padding">&ndash;&gt;-->
-<!--&lt;!&ndash;      <div *ngIf="(isLoggedIn$ | async) === false">&ndash;&gt;-->
-<!--&lt;!&ndash;        <ion-item button (click)="login()">&ndash;&gt;-->
-<!--&lt;!&ndash;          <ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;            <h3>Iniciar Sesión</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;          </ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;        </ion-item>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--&lt;!&ndash;      <div *ngIf="isLoggedIn$ | async">&ndash;&gt;-->
-<!--&lt;!&ndash;        <ion-item button (click)="logout()">&ndash;&gt;-->
-<!--&lt;!&ndash;          <ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;            <h3>Cerrar Sesión</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;          </ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;        </ion-item>&ndash;&gt;-->
-<!--&lt;!&ndash;        <ion-item>&ndash;&gt;-->
-<!--&lt;!&ndash;          <ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;            <h3>{{ (userRole$ | async) }}</h3>&ndash;&gt;-->
-<!--&lt;!&ndash;          </ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;        </ion-item>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--&lt;!&ndash;    </ion-content>&ndash;&gt;-->
-<!--&lt;!&ndash;  </ion-menu>&ndash;&gt;-->
-<!--&lt;!&ndash;  <div class="ion-page" id="main-content">&ndash;&gt;-->
-<!--&lt;!&ndash;    <ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;      <ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;        <ion-buttons slot="start">&ndash;&gt;-->
-<!--&lt;!&ndash;          <ion-menu-button></ion-menu-button>&ndash;&gt;-->
-<!--&lt;!&ndash;        </ion-buttons>&ndash;&gt;-->
-<!--&lt;!&ndash;        <ion-title>Menu</ion-title>&ndash;&gt;-->
-<!--&lt;!&ndash;      </ion-toolbar>&ndash;&gt;-->
-<!--&lt;!&ndash;    </ion-header>&ndash;&gt;-->
-<!--&lt;!&ndash;    <ion-content class="ion-padding">&ndash;&gt;-->
-<!--&lt;!&ndash;      Tap the button in the toolbar to open the menu.&ndash;&gt;-->
-<!--&lt;!&ndash;    </ion-content>&ndash;&gt;-->
-<!--&lt;!&ndash;  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-
-<!--<div class="menu-lateral">-->
-<!--  <ion-menu contentId="main-content">-->
-<!--    <ion-header>-->
-<!--      <ion-toolbar>-->
-<!--        <ion-title>Contenido del Panel</ion-title>-->
-<!--      </ion-toolbar>-->
-<!--    </ion-header>-->
-<!--    <ion-content class="ion-padding">-->
-<!--      <div *ngIf="!isLoggedIn">-->
-
-<!--        <p>Necesita iniciar sesión para acceder a su panel de administración.</p>-->
-<!--        <br>-->
-
-<!--        <ion-item button (click)="login()">-->
-<!--          <ion-label>-->
-<!--            <h3>Iniciar Sesión</h3>-->
-<!--          </ion-label>-->
-
-<!--        </ion-item>-->
-<!--      </div>-->
-<!--      &lt;!&ndash;      <div *ngIf="isLoggedIn">&ndash;&gt;-->
-<!--      &lt;!&ndash;        <ion-item button (click)="logout()">&ndash;&gt;-->
-<!--      &lt;!&ndash;          <ion-label>&ndash;&gt;-->
-<!--      &lt;!&ndash;            <h3>Cerrar Sesión</h3>&ndash;&gt;-->
-<!--      &lt;!&ndash;          </ion-label>&ndash;&gt;-->
-<!--      &lt;!&ndash;        </ion-item>&ndash;&gt;-->
-<!--      &lt;!&ndash;        <ion-item>&ndash;&gt;-->
-<!--      &lt;!&ndash;          <ion-label>&ndash;&gt;-->
-<!--      &lt;!&ndash;            <h3>{{ userRole }}</h3>&ndash;&gt;-->
-<!--      &lt;!&ndash;          </ion-label>&ndash;&gt;-->
-<!--      &lt;!&ndash;        </ion-item>&ndash;&gt;-->
-<!--      &lt;!&ndash;      </div>&ndash;&gt;-->
-
-
-<!--      <div class="ion-page" id="main-content">-->
-<!--        <ion-header>-->
-<!--          <ion-toolbar>-->
-<!--            <ion-buttons slot="start">-->
-<!--              <ion-menu-button></ion-menu-button>-->
-<!--            </ion-buttons>-->
-<!--            <ion-title>Panel de Admin</ion-title>-->
-<!--          </ion-toolbar>-->
-<!--        </ion-header>-->
-<!--        <ion-content class="ion-padding">-->
-<!--          Click en el icono de la esquina superior para desplegar el panel de administración.-->
-<!--        </ion-content>-->
-<!--      </div>-->
-
-
-<!--    </ion-content>-->
-<!--  </ion-menu>-->
-
-
-<!--  <div *ngIf="isLoggedIn">-->
-
-<!--    &lt;!&ndash; Menús específicos según el rol &ndash;&gt;-->
-<!--    <div *ngIf="userRole === 'ADMIN'">-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Admin Dashboard</ion-label>-->
-<!--      </ion-item>-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Manage Users</ion-label>-->
-<!--      </ion-item>-->
-<!--    </div>-->
-
-<!--    <div *ngIf="userRole === 'CLIENTE'">-->
-<!--      <ion-item button>-->
-<!--        <ion-label class="text-dark">Client Dashboard</ion-label>-->
-<!--      </ion-item>-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Actualiza tu Perfil</ion-label>-->
-<!--      </ion-item>-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Mi Cuenta</ion-label>-->
-<!--      </ion-item>-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Mis Tickets y Reservas</ion-label>-->
-<!--      </ion-item>-->
-<!--    </div>-->
-
-<!--    <div *ngIf="userRole === 'RESTAURANTE'">-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Restaurant Dashboard</ion-label>-->
-<!--      </ion-item>-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Mis Menús</ion-label>-->
-<!--      </ion-item>-->
-<!--    </div>-->
-
-<!--    <div *ngIf="userRole === 'OCIONOCTURNO'">-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Ocio Nocturno Dashboard</ion-label>-->
-<!--      </ion-item>-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Mis Eventos</ion-label>-->
-<!--      </ion-item>-->
-<!--    </div>-->
-
-<!--    <div *ngIf="userRole === 'RPP'">-->
-<!--      <ion-item button>-->
-<!--        <ion-label>RPP Dashboard</ion-label>-->
-<!--      </ion-item>-->
-<!--      <ion-item button>-->
-<!--        <ion-label>Mis Listas</ion-label>-->
-<!--      </ion-item>-->
-<!--    </div>-->
-
-<!--    <ion-item>-->
-<!--      <ion-label>-->
-<!--        <h3>{{ userRole }}</h3>-->
-<!--      </ion-label>-->
-<!--    </ion-item>-->
-
-<!--    <ion-item button (click)="logout()">-->
-<!--      <ion-label>-->
-<!--        <h3>Cerrar Sesión</h3>-->
-<!--      </ion-label>-->
-<!--    </ion-item>-->
-
-<!--  </div>-->
-
-<!--</div>-->
-
-
-<ion-menu contentId="main-content">
+<ion-menu side="end" contentId="main-content" menuId="main-menu">
   <ion-header>
     <ion-toolbar>
       <ion-title>PANEL DE {{ userRole }}</ion-title>
@@ -206,8 +16,8 @@
     </div>
     <div *ngIf="isLoggedIn">
       <div *ngIf="userRole === 'ADMIN'">
-        <ion-item button>
-          <ion-label>Admin Dashboard</ion-label>
+        <ion-item button (click)="visualizarPerfil()">
+          <ion-label>MI PERFIL</ion-label>
         </ion-item>
         <ion-item button>
           <ion-label>Administración de usuarios</ion-label>
@@ -225,24 +35,24 @@
         </ion-item>
       </div>
       <div *ngIf="userRole === 'RESTAURANTE'">
-        <ion-item button>
-          <ion-label>Restaurant Dashboard</ion-label>
+        <ion-item button (click)="visualizarPerfil()">
+          <ion-label>MI PERFIL</ion-label>
         </ion-item>
         <ion-item button>
           <ion-label>Mis Menús</ion-label>
         </ion-item>
       </div>
       <div *ngIf="userRole === 'OCIONOCTURNO'">
-        <ion-item button>
-          <ion-label>Ocio Nocturno Dashboard</ion-label>
+        <ion-item button (click)="visualizarPerfil()">
+          <ion-label>MI PERFIL</ion-label>
         </ion-item>
         <ion-item button>
           <ion-label>Mis Eventos</ion-label>
         </ion-item>
       </div>
       <div *ngIf="userRole === 'RPP'">
-        <ion-item button>
-          <ion-label>RPP Dashboard</ion-label>
+        <ion-item button (click)="visualizarPerfil()">
+          <ion-label>MI PERFIL</ion-label>
         </ion-item>
         <ion-item button>
           <ion-label>Mis Listas</ion-label>
@@ -258,14 +68,6 @@
 </ion-menu>
 
 <div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Panel de Admin</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <ion-content class="ion-padding">
     Click en el icono de la esquina superior para desplegar el panel de administración.
   </ion-content>
