@@ -2,7 +2,7 @@
   <div class="button-group">
     <ion-button id="cliente" (click)="elegirRol('CLIENTE')">CLIENTE</ion-button>
     <ion-button id="restaurante" (click)="elegirRol('RESTAURANTE')">RESTAURANTE</ion-button>
-    <ion-button id="ocio_nocturno" (click)="elegirRol('OCIO NOCTURNO')">OCIO NOCTURNO</ion-button>
+    <ion-button id="ocio_nocturno" (click)="elegirRol('OCIO_NOCTURNO')">OCIO NOCTURNO</ion-button>
     <ion-button id="rpp" (click)="elegirRol('RPP')">RPP</ion-button>
   </div>
 
@@ -10,15 +10,36 @@
 
   <table *ngIf="!isLoading">
     <thead>
-    <tr>
+    <tr *ngIf="rol === 'CLIENTE'">
       <th>Id</th>
       <th>Nombre</th>
-      <th>Otros campos específicos según el rol</th>
+      <th>Apellidos</th>
+      <th>Dni</th>
+      <th>Acciones</th>
+    </tr>
+    <tr *ngIf="rol === 'RESTAURANTE'">
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Hora de apertura</th>
+      <th>Hora de cierre</th>
+      <th>Acciones</th>
+    </tr>
+    <tr *ngIf="rol === 'OCIO_NOCTURNO'">
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Hora de apertura</th>
+      <th>Hora de cierre</th>
+      <th>Acciones</th>
+    </tr>
+    <tr *ngIf="rol === 'RPP'">
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Fecha de Nacimiento</th>
       <th>Acciones</th>
     </tr>
     </thead>
     <tbody>
-    <!-- Cliente -->
+
     <ng-container *ngIf="rol === 'CLIENTE'">
       <tr *ngFor="let cliente of clientes">
         <td>{{ cliente.id }}</td>
@@ -32,7 +53,6 @@
       </tr>
     </ng-container>
 
-    <!-- Restaurante -->
     <ng-container *ngIf="rol === 'RESTAURANTE'">
       <tr *ngFor="let restaurante of restaurantes">
         <td>{{ restaurante.id }}</td>
@@ -46,12 +66,10 @@
       </tr>
     </ng-container>
 
-    <!-- OCIO NOCTURNO -->
-    <ng-container *ngIf="rol === 'OCIO NOCTURNO'">
+    <ng-container *ngIf="rol === 'OCIO_NOCTURNO'">
       <tr *ngFor="let ocio of ocios_nocturnos">
         <td>{{ ocio.id }}</td>
         <td>{{ ocio.nombre }}</td>
-        <!-- Incluir los campos específicos de ocio nocturno según necesidad -->
         <td>{{ ocio.horaApertura }}</td>
         <td>{{ ocio.horaCierre }}</td>
         <td>
@@ -61,14 +79,11 @@
       </tr>
     </ng-container>
 
-    <!-- RPP -->
     <ng-container *ngIf="rol === 'RPP'">
       <tr *ngFor="let rpp of rpps">
         <td>{{ rpp.id }}</td>
         <td>{{ rpp.nombre }}</td>
-        <!-- Incluir los campos específicos de RPP según necesidad -->
         <td>{{ rpp.fechaNacimiento }}</td>
-        <!-- Aquí puedes seguir agregando los campos necesarios -->
         <td>
           <ion-button size="small">Editar</ion-button>
           <ion-button size="small" color="danger" (click)="eliminarCuenta(rpp)">Eliminar</ion-button>
