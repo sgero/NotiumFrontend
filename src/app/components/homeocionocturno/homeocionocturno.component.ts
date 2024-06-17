@@ -179,6 +179,7 @@ export class HomeocionocturnoComponent  implements OnInit {
     } else if (usuario.rol == "OCIONOCTURNO"){
       this.esCliente = false;
     }
+    // Si eres ADMIN o RESTAURANTE te redirije a la página de error.
     else {
       this.router.navigate(["notium/error"])
     }

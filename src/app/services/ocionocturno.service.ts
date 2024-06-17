@@ -5,6 +5,7 @@ import {OcioNocturno} from "../models/OcioNocturno";
 import {Observable} from "rxjs";
 import {ComentarioOcio} from "../models/ComentarioOcio";
 import {Evento} from "../models/Evento";
+import {Restaurante} from "../models/Restaurante";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,10 @@ export class OcionocturnoService {
 
     return this.http.post<any>(`${this.apiUrl}/ocioNocturno/crear`, userOcioNocturno);
 
+  }
+
+  verificarOcio(ocioNocturno: OcioNocturno) {
+    return this.http.post<any>(`${this.apiUrl}/ocioNocturno/verificar`, ocioNocturno);
   }
 
   listarOcioNocturno(){

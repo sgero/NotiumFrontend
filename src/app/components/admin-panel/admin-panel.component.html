@@ -11,28 +11,29 @@
   <table *ngIf="!isLoading">
     <thead>
     <tr *ngIf="rol === 'CLIENTE'">
-      <th>Id</th>
+      <th>Id ({{clientes.length}} clientes)</th>
       <th>Nombre</th>
       <th>Apellidos</th>
+      <th>Fecha de Nacimiento</th>
       <th>Dni</th>
       <th>Acciones</th>
     </tr>
     <tr *ngIf="rol === 'RESTAURANTE'">
-      <th>Id</th>
+      <th>Id ({{restaurantes.length}} restaurantes)</th>
       <th>Nombre</th>
       <th>Hora de apertura</th>
       <th>Hora de cierre</th>
       <th>Acciones</th>
     </tr>
     <tr *ngIf="rol === 'OCIO_NOCTURNO'">
-      <th>Id</th>
+      <th>Id ({{ocios_nocturnos.length}} ocios nocturnos)</th>
       <th>Nombre</th>
       <th>Hora de apertura</th>
       <th>Hora de cierre</th>
       <th>Acciones</th>
     </tr>
     <tr *ngIf="rol === 'RPP'">
-      <th>Id</th>
+      <th>Id ({{rpps.length}} rpps)</th>
       <th>Nombre</th>
       <th>Fecha de Nacimiento</th>
       <th>Acciones</th>
@@ -45,10 +46,12 @@
         <td>{{ cliente.id }}</td>
         <td>{{ cliente.nombre }}</td>
         <td>{{ cliente.apellidos }}</td>
+        <td>{{ convertirFecha(cliente.fechaNacimiento) }}</td>
         <td>{{ cliente.dni }}</td>
-        <td>
+        <td style="display:flex;justify-content:space-around">
           <ion-button size="small">Editar</ion-button>
-          <ion-button size="small" color="danger" (click)="eliminarCuenta(cliente)">Eliminar</ion-button>
+          <ion-button *ngIf="cliente.activo" size="small" color="danger" (click)="eliminarCuenta(cliente.userDTO)">Dar de baja</ion-button>
+          <ion-button *ngIf="!cliente.activo" size="small" color="success" (click)="activarCuenta(cliente.userDTO)">Activar</ion-button>
         </td>
       </tr>
     </ng-container>
@@ -59,9 +62,11 @@
         <td>{{ restaurante.nombre }}</td>
         <td>{{ restaurante.hora_apertura }}</td>
         <td>{{ restaurante.hora_cierre }}</td>
-        <td>
+        <td style="display:flex;justify-content:space-around">
           <ion-button size="small">Editar</ion-button>
-          <ion-button size="small" color="danger" (click)="eliminarCuenta(restaurante)">Eliminar</ion-button>
+          <ion-button *ngIf="restaurante.activo" size="small" color="danger" (click)="eliminarCuenta(restaurante.userDTO)">Dar de baja</ion-button>
+          <ion-button *ngIf="!restaurante.activo" size="small" color="success" (click)="activarCuenta(restaurante.userDTO)">Activar</ion-button>
+          <ion-button *ngIf="!restaurante.verificado" size="small" color="success" (click)="verificar(restaurante)">Verificar</ion-button>
         </td>
       </tr>
     </ng-container>
@@ -72,9 +77,11 @@
         <td>{{ ocio.nombre }}</td>
         <td>{{ ocio.horaApertura }}</td>
         <td>{{ ocio.horaCierre }}</td>
-        <td>
+        <td style="display:flex;justify-content:space-around">
           <ion-button size="small">Editar</ion-button>
-          <ion-button size="small" color="danger" (click)="eliminarCuenta(ocio)">Eliminar</ion-button>
+          <ion-button *ngIf="ocio.activo" size="small" color="danger" (click)="eliminarCuenta(ocio.userDTO)">Dar de baja</ion-button>
+          <ion-button *ngIf="!ocio.activo" size="small" color="success" (click)="activarCuenta(ocio.userDTO)">Activar</ion-button>
+          <ion-button *ngIf="!ocio.verificado" size="small" color="success" (click)="verificar(ocio)">Verificar</ion-button>
         </td>
       </tr>
     </ng-container>
@@ -83,10 +90,12 @@
       <tr *ngFor="let rpp of rpps">
         <td>{{ rpp.id }}</td>
         <td>{{ rpp.nombre }}</td>
-        <td>{{ rpp.fechaNacimiento }}</td>
-        <td>
+        <td>{{ convertirFecha(rpp.fechaNacimiento) }}</td>
+        <td style="display:flex;justify-content:space-around">
           <ion-button size="small">Editar</ion-button>
-          <ion-button size="small" color="danger" (click)="eliminarCuenta(rpp)">Eliminar</ion-button>
+          <ion-button *ngIf="rpp.activo" size="small" color="danger" (click)="eliminarCuenta(rpp.userDTO)">Dar de baja</ion-button>
+          <ion-button *ngIf="!rpp.activo" size="small" color="success" (click)="activarCuenta(rpp.userDTO)">Activar</ion-button>
+          <ion-button *ngIf="!rpp.verificado" size="small" color="success" (click)="verificar(rpp)">Verificar</ion-button>
         </td>
       </tr>
     </ng-container>

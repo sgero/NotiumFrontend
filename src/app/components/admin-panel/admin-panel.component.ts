@@ -64,6 +64,25 @@ export class AdminPanelComponent implements OnInit{
     }
   }
 
+  recargarDependiendoRol() {
+    switch (this.rol) {
+      case 'CLIENTE':
+        this.traerClientes();
+        break;
+      case 'RESTAURANTE':
+        this.traerRestaurantes();
+        break;
+      case 'OCIO_NOCTURNO':
+        this.traerOciosNocturnos();
+        break;
+      case 'RPP':
+        this.traerRpps();
+        break;
+      default:
+        break;
+    }
+  }
+
   getUsuario(){
 
     this.usuarioService.getUsuarioToken().subscribe(data=>{
@@ -97,9 +116,81 @@ export class AdminPanelComponent implements OnInit{
         color: 'danger'
       }).then(toast => toast.present());
 
-      this.traerUsuarios();
+      this.recargarDependiendoRol();
 
     });
+
+  }
+
+  activarCuenta(usuario){
+
+    this.usuarioService.activarCuenta(usuario).subscribe(data=>{
+
+      this.mensaje = data['message'];
+      this.toastController.create({
+        message: this.mensaje,
+        duration: 3000,
+        position: 'top',
+        color: 'success'
+      }).then(toast => toast.present());
+
+      this.recargarDependiendoRol();
+
+    });
+
+  }
+
+  verificar(data){
+
+    if (data.userDTO.rol === "RESTAURANTE"){
+
+      this.restauranteService.verificarRestaurante(data).subscribe(data=>{
+
+        this.mensaje = data['message'];
+        this.toastController.create({
+          message: this.mensaje,
+          duration: 3000,
+          position: 'top',
+          color: 'success'
+        }).then(toast => toast.present());
+
+        this.recargarDependiendoRol();
+
+      })
+
+    }else if (data.userDTO.rol === "OCIONOCTURNO"){
+
+      this.ocionocturnoService.verificarOcio(data).subscribe(data=>{
+
+        this.mensaje = data['message'];
+        this.toastController.create({
+          message: this.mensaje,
+          duration: 3000,
+          position: 'top',
+          color: 'success'
+        }).then(toast => toast.present());
+
+        this.recargarDependiendoRol();
+
+      })
+
+    }else if (data.userDTO.rol === "RPP"){
+
+      this.rppService.verificarRpp(data).subscribe(data=>{
+
+        this.mensaje = data['message'];
+        this.toastController.create({
+          message: this.mensaje,
+          duration: 3000,
+          position: 'top',
+          color: 'success'
+        }).then(toast => toast.present());
+
+        this.recargarDependiendoRol();
+
+      })
+
+    }
 
   }
 
@@ -183,4 +274,22 @@ export class AdminPanelComponent implements OnInit{
     })
   }
 
+  protected readonly convertirFecha = convertirFecha;
+}
+
+function convertirFecha(fechaISO: string): string {
+  const fecha = new Date(fechaISO);
+
+  if (isNaN(fecha.getTime())) {
+    throw new Error('Fecha no válida');
+  }
+
+  const dia = fecha.getUTCDate();
+  const mes = fecha.getUTCMonth() + 1;
+  const anyo = fecha.getUTCFullYear();
+
+  const diaFormateado = dia < 10 ? `0${dia}` : dia.toString();
+  const mesFormateado = mes < 10 ? `0${mes}` : mes.toString();
+
+  return `${diaFormateado}/${mesFormateado}/${anyo}`;
 }

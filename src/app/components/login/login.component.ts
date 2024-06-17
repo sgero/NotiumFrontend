@@ -41,9 +41,6 @@ export class LoginComponent {
 
         this.isToastOpen = true;
         this.mensaje = data['message'];
-        setTimeout(() => {
-          this.dismissModal();
-        }, 5000);
 
       }else{
 
@@ -86,6 +83,11 @@ export class LoginComponent {
 
         this.dismissModal();
         this.router.navigate(['/notium/ocionocturno/' + this.perfil.id]);
+
+      }else if(this.usuarioLogueado.rol == 'ADMIN' || this.usuarioLogueado.rol == 'CLIENTE'){
+
+        this.dismissModal();
+        window.location.reload()
 
       }
 
