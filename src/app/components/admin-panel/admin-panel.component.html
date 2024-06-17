@@ -1,9 +1,13 @@
 <ion-content>
   <div class="button-group">
-    <ion-button id="cliente" (click)="elegirRol('CLIENTE')">CLIENTE</ion-button>
-    <ion-button id="restaurante" (click)="elegirRol('RESTAURANTE')">RESTAURANTE</ion-button>
-    <ion-button id="ocio_nocturno" (click)="elegirRol('OCIO_NOCTURNO')">OCIO NOCTURNO</ion-button>
-    <ion-button id="rpp" (click)="elegirRol('RPP')">RPP</ion-button>
+    <ion-button *ngIf="rol === 'CLIENTE'" color="tertiary" id="cliente" (click)="elegirRol('CLIENTE')">CLIENTE</ion-button>
+    <ion-button *ngIf="rol !== 'CLIENTE'" id="cliente1" (click)="elegirRol('CLIENTE')">CLIENTE</ion-button>
+    <ion-button *ngIf="rol === 'RESTAURANTE'" color="tertiary" id="restaurante" (click)="elegirRol('RESTAURANTE')">RESTAURANTE</ion-button>
+    <ion-button *ngIf="rol !== 'RESTAURANTE'" id="restaurante1" (click)="elegirRol('RESTAURANTE')">RESTAURANTE</ion-button>
+    <ion-button *ngIf="rol === 'OCIO_NOCTURNO'" color="tertiary" id="ocio_nocturno" (click)="elegirRol('OCIO_NOCTURNO')">OCIO NOCTURNO</ion-button>
+    <ion-button *ngIf="rol !== 'OCIO_NOCTURNO'" id="ocio_nocturno1" (click)="elegirRol('OCIO_NOCTURNO')">OCIO NOCTURNO</ion-button>
+    <ion-button *ngIf="rol === 'RPP'" color="tertiary" id="rpp" (click)="elegirRol('RPP')">RPP</ion-button>
+    <ion-button *ngIf="rol !== 'RPP'" id="rpp1" (click)="elegirRol('RPP')">RPP</ion-button>
   </div>
 
   <ion-spinner *ngIf="isLoading"></ion-spinner>
