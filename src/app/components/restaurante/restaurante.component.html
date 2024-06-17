@@ -9,9 +9,8 @@
         </div>
       </div>
       <div class="info-concreta">
-        <app-mapa [direccion] = "direcion"></app-mapa>
         <div *ngIf="userup; else vistaAdmin">
-          <app-restaurante-user></app-restaurante-user>
+          <app-restaurante-user [direccion] = "direcion"></app-restaurante-user>
         </div>
        <ng-template #vistaAdmin>
          <app-restaurante-admin></app-restaurante-admin>

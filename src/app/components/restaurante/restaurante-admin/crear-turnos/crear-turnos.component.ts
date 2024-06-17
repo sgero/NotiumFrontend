@@ -63,6 +63,8 @@ export class CrearTurnosComponent implements OnInit {
   id_restaurante: any;
   diasARepetirTurno: string[] = Object.keys(DiasARepetirCicloEventoOcio).filter(key => isNaN(Number(key))) as string[];
   diasSeleccionado: string[] = [];
+ // minHoraFin: string = '';
+
 
   addSecondsToTime(controlName: string): void {
     let timeValue = this.turno_nuevo.get(controlName)?.value;
@@ -80,9 +82,6 @@ export class CrearTurnosComponent implements OnInit {
     }
   }
 
-
-
-
   turno: Turno = new Turno();
   turno_nuevo = this.formBuilder.group({
     diaForm: ["", Validators.required],
@@ -96,6 +95,30 @@ export class CrearTurnosComponent implements OnInit {
               private dialogRef: MatDialog,
               private formBuilder: FormBuilder) {
   }
+
+  /*onHoraInicioChange():void{
+    const horaInicio = this.turno_nuevo.get('horainicioForm')?.value;
+    const horaFin = this.turno_nuevo.get('horafinForm')?.value;
+
+    if (horaInicio && horaFin && horaFin < horaInicio) {
+      this.turno_nuevo.get('horafinForm')?.setErrors({ 'minValue': true });
+    } else {
+      this.turno_nuevo.get('horafinForm')?.setErrors(null);
+    }
+
+  }
+
+  onHoraFinChange(): void {
+    const horaInicio = this.turno_nuevo.get('horainicioForm')?.value;
+    const horaFin = this.turno_nuevo.get('horafinForm')?.value;
+
+    if (horaInicio && horaFin && horaFin < horaInicio) {
+      this.turno_nuevo.get('horafinForm')?.setErrors({ 'minValue': true });
+    } else {
+      this.turno_nuevo.get('horafinForm')?.setErrors(null);
+    }
+  }*/
+
 
   ngOnInit(): void {
 

@@ -9,12 +9,12 @@
     <div class="gran_formulario">
         <mat-form-field class="formularios">
           <mat-label>Hora inicio</mat-label>
-          <input matInput formControlName="horainicioForm" [format]=24 [ngxTimepicker]="pickerInicio" (change)="addSecondsToTime('horainicioForm')">
+          <input matInput formControlName="horainicioForm" [format]=24 [ngxTimepicker]="pickerInicio">
           <ngx-material-timepicker #pickerInicio></ngx-material-timepicker>
         </mat-form-field>
         <mat-form-field class="formularios">
           <mat-label>Hora fin</mat-label>
-          <input matInput formControlName="horafinForm" [format]=24 [ngxTimepicker]="pickerFin" (change)="addSecondsToTime('horafinForm')">
+          <input matInput formControlName="horafinForm" [format]=24 [ngxTimepicker]="pickerFin">
           <ngx-material-timepicker #pickerFin></ngx-material-timepicker>
         </mat-form-field>
     </div>
@@ -22,10 +22,13 @@
     <div class="dias_dispo">
       <mat-label>Elija los dias en los se habilitará el turno:</mat-label>
       <div class="dispo_dias">
-          @for (dia of diasARepetirTurno; track dia ) {
+        <div *ngFor="let dia of diasARepetirTurno">
+          <div class="dia_lista">
             <input type="checkbox" formControlName="diaForm" [value]="dia" [checked]="dia" (change)="diaElegido($event)">{{ dia }}
-          }
+          </div>
+        </div>
       </div>
+
     </div>
 
   </form>

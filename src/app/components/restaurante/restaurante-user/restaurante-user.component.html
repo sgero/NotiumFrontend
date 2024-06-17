@@ -2,25 +2,18 @@
 <div class="info-rest-user" *ngIf="inicio">
   <div class="restaurante_user">
     <div class="dispo_info">
-      <h3>Calle: {{restaurante.direccionDTO.calle}}.</h3>
-      <h3>{{restaurante.direccionDTO.ciudad}} ({{restaurante.direccionDTO.provincia}})</h3>
-      <h3>Código postal: {{restaurante.direccionDTO.codigoPostal}}.</h3>
-      <h3>Teléfono: {{restaurante.telefono}}</h3>
-      <h3>Horario: {{restaurante.hora_apertura}} - {{restaurante.hora_cierre}}</h3>
+      <app-mapa [direccion] = "direccion"></app-mapa>
     </div>
     <div class="posicion_btn">
       <button mat-raised-button color="primary" style="width: 160px !important" (click)="abrirModalReserva()"><h2>¡Reserva ya!</h2></button>
       <button mat-raised-button color="primary" style="width: 160px !important" (click)="Carta()"><h2>Ver carta</h2></button>
     </div>
-    <div class="info-direccion">
-      <div class="dispo_info_val">
-        <div *ngIf="valoracion_restaurante!=10; else sinValoraciones">
-          <h3>La valoración media de este restaurante es: {{valoracion_restaurante}}/5.</h3>
-          <h3>Ha sido valorado por {{numValoraciones}} usuarios.</h3>
-          <div *ngIf="restauranteEnRanking==true"><h3 class="blinck">¡Este restaurante está en el top 3 de mejor valorados!</h3></div>
-        </div>
-        <ng-template #sinValoraciones><h3>Este restaurante aun no ha sido valorado.</h3></ng-template>
-      </div>
+    <div class="dispo_info">
+      <h3>Calle: {{restaurante.direccionDTO.calle}}.</h3>
+      <h3>{{restaurante.direccionDTO.ciudad}} ({{restaurante.direccionDTO.provincia}})</h3>
+      <h3>Código postal: {{restaurante.direccionDTO.codigoPostal}}.</h3>
+      <h3>Teléfono: {{restaurante.telefono}}</h3>
+      <h3>Horario: {{restaurante.hora_apertura}} - {{restaurante.hora_cierre}}</h3>
     </div>
   </div>
 </div>

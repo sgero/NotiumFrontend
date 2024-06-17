@@ -17,6 +17,8 @@
   flex-direction:row;
   justify-content: center;
   align-items: center;
+  padding: 2rem 0rem;
+
 
 
   button:last-child{
@@ -25,7 +27,6 @@
 
 }
 .big{
-  margin: 2em 1em 0em 0em;
   display:flex;
   flex-direction: column;
   justify-content: center;
@@ -58,8 +59,14 @@ padding: 1rem;
   align-items: center;
   margin-top: 1rem;
 
-  input{
-    padding: 0 1rem;
+  div:last-child{
+    margin-right: 1rem;
   }
+
+}
+
+.dia_lista{
+  margin-left:1rem;
+
 
 }

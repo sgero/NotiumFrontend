@@ -22,6 +22,8 @@ import {UsuarioService} from "../../../services/usuario.service";
 import {CartaclienterestauranteComponent} from "../../cartaclienterestaurante/cartaclienterestaurante.component";
 import {ComentarioRestaurante} from "../../../models/ComentarioRestaurante";
 import {Cliente} from "../../../models/Cliente";
+import {MapaComponent} from "../../mapa/mapa.component";
+import {DireccionDTO} from "../../../models/DireccionDTO";
 
 @Component({
   selector: 'app-restaurante-user',
@@ -32,7 +34,8 @@ import {Cliente} from "../../../models/Cliente";
     IonicModule,
     CommonModule,
     MatDialogModule,
-    MatButton
+    MatButton,
+    MapaComponent
   ],
   standalone: true
 })
@@ -44,12 +47,7 @@ export class RestauranteUserComponent  implements OnInit {
   //info: string = 'info';
   valoracion: string = '';
   carta: string= '';
-  estilo1_info: boolean = false;
-  estilo2_info: boolean = true;
-  estilo1_carta: boolean = true;
-  estilo2_carta: boolean = false;
-  estilo1_valoraciones: boolean = true;
-  estilo2_valoraciones: boolean = false;
+
 
   //Variabales
   restaurante = new Restaurante();
@@ -62,6 +60,8 @@ export class RestauranteUserComponent  implements OnInit {
   valoracion_restaurante: number = 0.0;
   rankingRestaurante: number[] = [];
   restauranteEnRanking: boolean = false;
+
+  @Input() direccion!: DireccionDTO;
 
   constructor(private modalController: ModalController,
               private sharedService: SharedService,

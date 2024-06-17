@@ -82,6 +82,11 @@ ion-label p {
   cursor: pointer;
   margin-left: 20px;
   min-width: 300px;
+
+  img{
+    width:415px;
+  }
+
 }
 .card:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);

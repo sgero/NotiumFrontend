@@ -53,7 +53,7 @@ export class AdminPanelComponent implements OnInit{
       case 'RESTAURANTE':
         this.traerRestaurantes();
         break;
-      case 'OCIO NOCTURNO':
+      case 'OCIO_NOCTURNO':
         this.traerOciosNocturnos();
         break;
       case 'RPP':

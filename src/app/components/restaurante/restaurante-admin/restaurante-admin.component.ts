@@ -73,10 +73,12 @@ export class RestauranteAdminComponent  implements OnInit {
   //Funciones modales
   abrirModalCrearMesa(){ this.dialogRef.open(CrearMesasComponent, {
     width: '510px',
-    height:'250px'})
-  }
+    height:'250px'}
+  )}
 
-  abrirModalCrearTurno(){ this.dialogRef.open(CrearTurnosComponent)}
+  abrirModalCrearTurno(){ this.dialogRef.open(CrearTurnosComponent,{
+    height:'auto'}
+  )}
 
 
   ngOnInit() {

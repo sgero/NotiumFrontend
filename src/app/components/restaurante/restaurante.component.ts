@@ -58,8 +58,8 @@ export class RestauranteComponent  implements OnInit {
   ) {this.id_restaurante = this._route.snapshot.paramMap.get('id');}
 
   listadoValoraciones(){ this.dialogRef.open(ListarValoracionesComponent, {
-    width: '510px',
-    height:'250px'})
+    width: '600px',
+    height:'400px'})
   }
 
 
