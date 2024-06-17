@@ -26,6 +26,12 @@ export class AuthService {
 
   isUserLoggedIn(): boolean {
     const token = localStorage.getItem('token');
+    if (token === null || token == ""){
+
+      this.isLoggedIn = false;
+      return this.isLoggedIn;
+
+    }
     this.isLoggedIn = !!token;
     return this.isLoggedIn;
   }

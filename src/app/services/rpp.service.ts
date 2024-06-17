@@ -16,6 +16,12 @@ export class RppService {
     return this.http.get<Rpp[]>(`${this.apiUrl}/rpps/listar`)
   }
 
+  verificarRpp(rpp: Rpp){
+
+    return this.http.post<any>(`${this.apiUrl}/rpps/verificar`, rpp);
+
+  }
+
   rppPorId(id: number){
     return this.http.get<Rpp>(`${this.apiUrl}/rpps/${id}`)
   }

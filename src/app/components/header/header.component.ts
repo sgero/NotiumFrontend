@@ -54,9 +54,9 @@ export class HeaderComponent  implements OnInit {
   }
 
   logout() {
+
     this.authService.logout();
-    window.location.reload();
-    this.router.navigate(['/login']).then(r => console.log('Logged out'));
+    this.router.navigate(['/notium']).then(r => console.log('Logged out'));
 
   }
 

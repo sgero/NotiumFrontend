@@ -50,4 +50,8 @@ export class UsuarioService{
     return this.http.post<any>(`${this.apiUrl}/users/eliminar`, usuario);
   }
 
+  activarCuenta(usuario: Usuario){
+    return this.http.post<any>(`${this.apiUrl}/users/activar`, usuario);
+  }
+
 }

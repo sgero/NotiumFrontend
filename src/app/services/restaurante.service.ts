@@ -29,6 +29,10 @@ export class RestauranteService {
     return this.http.post<any>(`${this.apiUrl}/restaurante/crear`, userRestaurante);
   }
 
+  verificarRestaurante(restaurante: Restaurante) {
+    return this.http.post<any>(`${this.apiUrl}/restaurante/verificar`, restaurante);
+  }
+
   listarRestaurantes(): Observable<Restaurante[]> {
     return this.http.get<Restaurante[]>(`${this.apiUrl}/restaurante/listar`);
   }
