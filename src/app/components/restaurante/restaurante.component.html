@@ -4,8 +4,13 @@
     <div class="container48">
       <div class='banner-img' [style.background-image]="'url('+ restaurante?.imagen_marca +')'">
         <div class="info_valoraciones">
-          <a (click)="listadoValoraciones()"><h2>{{numValoraciones}} num val</h2></a>
-          <a><h2>{{ valoracion_restaurante }}</h2></a><mat-icon class="estrella"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M0 0h24v24H0z" fill="none"/><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></mat-icon>
+          <a (click)="listadoValoraciones()"><h2>{{numValoraciones}}</h2>
+          <p-rating style="display: inline-block;" [(ngModel)]="valoracion_restaurante" [readonly]="true" [cancel]="false">
+            <ng-template pTemplate="onicon">
+              <mat-icon aria-hidden="false" fontIcon="star" style="color:#ffcd3c"></mat-icon>
+            </ng-template>
+          </p-rating>
+          </a>
         </div>
       </div>
       <div class="info-concreta">
@@ -24,3 +29,4 @@
 
 
 </body>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
