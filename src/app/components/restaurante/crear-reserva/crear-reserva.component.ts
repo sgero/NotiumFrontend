@@ -64,6 +64,7 @@ export class CrearReservaComponent implements OnInit {
   minFecha: string;
   isLinear = true;
   actualrest: any;
+  fechaFormateada: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -131,21 +132,23 @@ export class CrearReservaComponent implements OnInit {
           this.reservaService.crearReserva(reserva).subscribe(
             async (data) => {
               this.generarPDFReserva(data.codigoReserva);
-              const alert = await this.alertController.create({
-                header: 'Reserva Confirmada',
-                message: `Su reserva ha sido confirmada. Código de reserva: ${data.codigoReserva}`,
-                buttons: ['OK'],
+              const toast1 = await this.toastController.create({
+                message: '¡Reserva realizada con éxito!',
+                duration: 3000,
+                position: "top",
+                color:"success"
               });
-              await alert.present();
+              await toast1.present();
               this.dialog.closeAll();
             },
             async (error) => {
-              const alert = await this.alertController.create({
-                header: 'Error',
-                message: 'Hubo un problema al realizar la reserva.',
-                buttons: ['OK'],
+              const toast1 = await this.toastController.create({
+                message: 'La reserva no se ha podido llevar acabo',
+                duration: 3000,
+                position: "top",
+                color:"danger"
               });
-              await alert.present();
+              await toast1.present();
               console.error('Error al crear la reserva:', error);
             }
           );
@@ -163,11 +166,15 @@ export class CrearReservaComponent implements OnInit {
 
   seleccionarTurno(turno: any) {
     this.turnoSeleccionado = turno;
+    this.fechaFormateada = this.getFormattedDate();
   }
 
   generarPDFReserva(codigo: string) {
+
+    this.fechaFormateada = this.getFormattedDate();
+
     const reserva = {
-      fecha: this.fechaForm.value.fecha,
+      fecha: this.fechaFormateada,
       numPersonas: Number(this.personasForm.value.numPersonas),
       turnoDTO: this.turnoSeleccionado,
       restauranteDTO: { id: this.restauranteId },
@@ -199,7 +206,20 @@ export class CrearReservaComponent implements OnInit {
     });
 
     // Guardar el PDF
-    doc.save('reserva.pdf');
+    doc.save('Justificate-reserva.pdf');
+  }
+
+
+  getFormattedDate(): string {
+    const fecha = this.fechaForm.get('fecha')?.value;
+    if (fecha) {
+      const date = new Date(fecha);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${day}-${month}-${year}`;
+    }
+    return '';
   }
 
 }

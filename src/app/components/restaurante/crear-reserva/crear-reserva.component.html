@@ -51,10 +51,9 @@
     <ng-template matStepLabel>Datos de confirmación de reserva</ng-template>
 
     <div>
-
-      <h2>Tu reserva es el día: {{ fechaForm.value?.fecha }}</h2>
-      <h2>En el turno de: {{ turnoSeleccionado?.hora_inicio }} a {{ turnoSeleccionado?.hora_fin }}</h2>
-      <h2>Y para: {{ personasForm.value?.numPersonas }} personas.</h2>
+      <h2>- Fecha: {{ fechaFormateada }}</h2>
+      <h2>- Turno: {{ turnoSeleccionado?.hora_inicio }} a {{ turnoSeleccionado?.hora_fin }}</h2>
+      <h2>- Número de comensales: {{ personasForm.value?.numPersonas }} personas.</h2>
 
     </div>
     <div class="posicion_boton">

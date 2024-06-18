@@ -105,7 +105,8 @@ export class HacerValoracionComponent  implements OnInit {
             const toast1 = await this.toastController.create({
               message: 'Este código no existe.',
               duration: 3000,
-              position: "top"
+              position: "top",
+              color:"danger"
             });
             await toast1.present();
             break;
@@ -114,7 +115,8 @@ export class HacerValoracionComponent  implements OnInit {
             const toast2 = await this.toastController.create({
               message: 'Este código no es valido. No pertenece a este restaurante',
               duration: 3000,
-              position: "top"
+              position: "top",
+              color:"danger"
             });
             await toast2.present();
             break;
@@ -123,7 +125,8 @@ export class HacerValoracionComponent  implements OnInit {
             const toast3 = await this.toastController.create({
               message: 'Este código no es valido. Ya has hecho una valoración.',
               duration: 3000,
-              position: "top"
+              position: "top",
+              color:"danger"
             });
             await toast3.present();
             break;
@@ -136,7 +139,8 @@ export class HacerValoracionComponent  implements OnInit {
             const toast5 = await this.toastController.create({
               message: 'Este código no es valido. La reserva aún no se ha efectuado',
               duration: 3000,
-              position: "top"
+              position: "top",
+              color:"danger"
             });
             await toast5.present();
             break;
@@ -145,7 +149,8 @@ export class HacerValoracionComponent  implements OnInit {
             const toast6 = await this.toastController.create({
               message: 'Este código no es valido.',
               duration: 3000,
-              position: "top"
+              position: "top",
+              color:"danger"
             });
             await toast6.present();
             break;
@@ -171,8 +176,13 @@ export class HacerValoracionComponent  implements OnInit {
     this.restauranteService.enviarValoracion(this.id_restaurante, this.codigoReserva, this.texto, Number(this.n_valoracion), this.id_usuario).subscribe( {
       error: (error) => { console.error('Error al realizar la valoración del restaurante', error); },
       complete: async () => {
-        console.log('Valoracion realizada:', this.comprobacionCR);
-        const loading = await this.loadingCtrl.create({
+        const toast6 = await this.toastController.create({
+          message: 'Este código no es valido.',
+          duration: 3000,
+          position: "top",
+          color:"success"
+        });
+        await toast6.present();        const loading = await this.loadingCtrl.create({
           message: 'Enviando valoración...',
           duration: 500,
         });

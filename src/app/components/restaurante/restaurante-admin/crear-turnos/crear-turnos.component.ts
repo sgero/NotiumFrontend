@@ -21,8 +21,9 @@ import {
   FormsModule,
   ReactiveFormsModule
 } from "@angular/forms";
+import * as moment from 'moment';
 import { TurnosService } from "../../../../services/turnos.service";
-import { IonicModule } from "@ionic/angular";
+import {IonicModule, ToastController} from "@ionic/angular";
 import { MatIconModule } from "@angular/material/icon";
 import { NgxMaterialTimepickerModule } from "ngx-material-timepicker"
 import { MatStepperNext } from "@angular/material/stepper";
@@ -93,31 +94,9 @@ export class CrearTurnosComponent implements OnInit {
   constructor(private sharedService: SharedService,
               private turnoService: TurnosService,
               private dialogRef: MatDialog,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private toastController: ToastController) {
   }
-
-  /*onHoraInicioChange():void{
-    const horaInicio = this.turno_nuevo.get('horainicioForm')?.value;
-    const horaFin = this.turno_nuevo.get('horafinForm')?.value;
-
-    if (horaInicio && horaFin && horaFin < horaInicio) {
-      this.turno_nuevo.get('horafinForm')?.setErrors({ 'minValue': true });
-    } else {
-      this.turno_nuevo.get('horafinForm')?.setErrors(null);
-    }
-
-  }
-
-  onHoraFinChange(): void {
-    const horaInicio = this.turno_nuevo.get('horainicioForm')?.value;
-    const horaFin = this.turno_nuevo.get('horafinForm')?.value;
-
-    if (horaInicio && horaFin && horaFin < horaInicio) {
-      this.turno_nuevo.get('horafinForm')?.setErrors({ 'minValue': true });
-    } else {
-      this.turno_nuevo.get('horafinForm')?.setErrors(null);
-    }
-  }*/
 
 
   ngOnInit(): void {
@@ -137,7 +116,7 @@ export class CrearTurnosComponent implements OnInit {
     }
   }
 
-  nuevoTurno() {
+  async nuevoTurno() {
 
     this.addSecondsToTime('horainicioForm');
     this.addSecondsToTime('horafinForm');
@@ -146,13 +125,42 @@ export class CrearTurnosComponent implements OnInit {
     this.hora_inicio = this.turno_nuevo.get('horainicioForm')?.value;
     this.hora_fin = this.turno_nuevo.get('horafinForm')?.value;
 
-    console.log('Dias', this.diasSeleccionado, 'hora inicio: ',this.hora_inicio,' hora fin: ', this.hora_fin);
+    if (this.hora_inicio && this.hora_fin) {
+      const inicio = moment(this.hora_inicio, 'HH:mm:ss');
+      const fin = moment(this.hora_fin, 'HH:mm:ss');
 
-    this.turnoService.crearTurno(this.hora_inicio, this.hora_fin, this.id_restaurante, this.diasSeleccionado).subscribe( {
-      error: (error) => { console.error('Error al crear el turno:', error); },
-      complete: () => { console.log('Registrado el turno correctamente')}
-    });
-
-
+      if (inicio.isBefore(fin) || inicio.isSame(fin)) {
+        const toast1 = await this.toastController.create({
+          message: 'Error. La hora de fin es inferior a la inicio.',
+          duration: 5000,
+          position: "bottom"
+        });
+        await toast1.present();
+      } else {
+        this.turnoService.crearTurno(this.hora_inicio, this.hora_fin, this.id_restaurante, this.diasSeleccionado).subscribe({
+          error: async (error) => {
+            console.error('Error al crear el turno:', error);
+            const toast1 = await this.toastController.create({
+              message: 'Este turno no se ha podido registrar.',
+              duration: 3000,
+              position: "bottom"
+            });
+            await toast1.present();
+          },
+          complete: async () => {
+            console.log('Registrado el turno correctamente')
+            const toast1 = await this.toastController.create({
+              message: 'Turno registrado correctamente.',
+              duration: 3000,
+              position: "top"
+            });
+            await toast1.present();
+          }
+        });
+      }
+    } else {
+      console.log('Faltan datos de hora.');
+      // Aquí puedes manejar el caso de error
+    }
   }
 }

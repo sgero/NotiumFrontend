@@ -15,7 +15,7 @@ import {MatInputModule} from "@angular/material/input"
 import {MatButtonModule} from "@angular/material/button";
 import {CommonModule} from "@angular/common";
 import {MatCheckbox} from "@angular/material/checkbox";
-import {IonicModule} from "@ionic/angular";
+import {IonicModule, ToastController} from "@ionic/angular";
 import {MatIconModule} from "@angular/material/icon";
 
 @Component({
@@ -46,7 +46,8 @@ export class CrearMesasComponent  implements OnInit {
 
   constructor(private sharedService: SharedService,
               private mesaService: MesaService,
-              private dialogRef: MatDialog) { }
+              private dialogRef: MatDialog,
+              private toastController: ToastController) { }
 
   ngOnInit() {
 
@@ -57,8 +58,24 @@ export class CrearMesasComponent  implements OnInit {
   nuevaMesaCreada() {
 
     this.mesaService.crearMesa(Number(this.numeroPlazas), this.reservada, this.id_restaurante).subscribe({
-      error: (error) => {console.error('Error al realizar la valoración del restaurante', error);},
-      complete: () => {console.log('Mesa creada');}
+      error: async (error) => {
+        console.error('Error al realizar la valoración del restaurante', error);
+        const toast1 = await this.toastController.create({
+          message: 'La mesa no se ha podido crear.',
+          duration: 3000,
+          position: "bottom"
+        });
+        await toast1.present();
+      },
+      complete: async () => {
+        console.log('Mesa creada');
+        const toast1 = await this.toastController.create({
+          message: '¡Mesa creada con éxito!',
+          duration: 3000,
+          position: "top"
+        });
+        await toast1.present();
+      }
     })
     this.cerrar()
   }

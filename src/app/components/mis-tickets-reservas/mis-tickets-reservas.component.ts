@@ -27,6 +27,8 @@ import {Cliente} from "../../models/Cliente";
 import {ReservaService} from "../../services/reserva.service";
 import {SharedService} from "../../services/SharedService";
 import {HacerValoracionComponent} from "../restaurante/hacer-valoracion/hacer-valoracion.component";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 @Component({
   selector: 'app-mis-tickets-reservas',
@@ -65,6 +67,8 @@ export class MisTicketsReservasComponent  implements OnInit {
   cliente!: Cliente;
   rPasadas = false;
   rFuturas = false;
+  fechaFormateada: any;
+
 
   constructor(
     private eventoService: EventoService,
@@ -81,6 +85,7 @@ export class MisTicketsReservasComponent  implements OnInit {
 
   ngOnInit() {
     this.getUsuario();
+
   }
 
   getUsuario() {
@@ -332,6 +337,58 @@ export class MisTicketsReservasComponent  implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Chat cerrado');
     });
+  }
+
+  generarPDFReserva(reserva: Reserva) {
+
+    this.fechaFormateada = this.getFormattedDate(reserva.fecha);
+
+    const reservaPDF = {
+      fecha: this.fechaFormateada,
+      numPersonas: reserva.numPersonas,
+      turnoDTO: reserva.turnoDTO,
+      restauranteDTO: { id: reserva.restauranteDTO?.id },
+      usuarioDTO: { id: reserva.restauranteDTO?.id }
+    };
+    const doc = new jsPDF();
+
+    // Título del PDF
+    doc.setFontSize(18);
+    doc.text('Reserva', 14, 22);
+
+    // Datos de la reserva en columnas
+    const columns = ['Campo', 'Valor'];
+    const rows = [
+      ['Código de Reserva', reserva.codigoReserva ?? ''],
+      ['Fecha', reserva.fecha ?? ''],
+      ['Número de Personas', reserva.numPersonas ?? ''],
+      ['Turno', (reserva.turnoDTO?.hora_inicio ?? '') + " a " + (reserva.turnoDTO?.hora_fin ?? '')],
+      ['Restaurante', reserva.restauranteDTO?.nombre ?? ''],
+      ['Usuario', (reserva.clienteDTO?.nombre ?? '') + " " + (reserva.clienteDTO?.apellidos ?? '')]
+    ];
+
+    // Generar la tabla
+    autoTable(doc, {
+      startY: 30,
+      head: [columns],
+      body: rows as unknown as any[][]
+    });
+
+    // Guardar el PDF
+    doc.save('Justificante-reserva.pdf');
+  }
+
+
+  getFormattedDate(date: any): string {
+    const fecha = date;
+    if (fecha) {
+      const date = new Date(fecha);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${day}-${month}-${year}`;
+    }
+    return '';
   }
 
 

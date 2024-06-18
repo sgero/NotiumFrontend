@@ -10,20 +10,20 @@
     <div class="form1">
       <form [formGroup]="fecha_reservas">
         <mat-form-field>
-          <mat-label>Choose a date</mat-label>
+          <mat-label>Elije una fecha</mat-label>
           <input matInput formControlName="fechaForm" [matDatepicker]="picker">
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </form>
-      <button mat-raised-button color="primary" style="width: 200px !important" (click)="listarTurnos()"><h2>Visualizar turnos</h2></button>
+      <button mat-raised-button color="primary" style="width: 200px !important" (click)="listarTurnosReservados()"><h2>Visualizar turnos</h2></button>
     </div>
 
     <div class="turnosDisponibles" *ngIf="turnosOK == true">
-      <div *ngIf="turnosDisponibles.length!=0; else sinTurnos" class="tamayo">
+      <div *ngIf="turnosReservados.length!=0; else sinTurnos" class="tamayo">
         <h2>Los turnos reservados para el dia: {{fechaTexto}} </h2>
-        <div *ngFor="let turno of turnosDisponibles" class="bucleTurnos">
+        <div *ngFor="let turno of turnosReservados" class="bucleTurnos">
           <button mat-raised-button color="primary" style="width: 200px !important"(click)="listarReservas(turno)">{{turno.hora_inicio}} - {{turno.hora_fin}}</button>
         </div>
       </div>
@@ -53,4 +53,55 @@
 
 
   </div>
+
+  <div class="step-reserva">
+    <h2>MIS TURNOS Y MESAS</h2>
+    <div class="form1">
+      <form [formGroup]="fecha_turnos">
+        <mat-form-field>
+          <mat-label>Elije una fecha</mat-label>
+          <input matInput formControlName="fechaFormMesas" [matDatepicker]="pickerMesas">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerMesas"></mat-datepicker-toggle>
+          <mat-datepicker #pickerMesas></mat-datepicker>
+        </mat-form-field>
+      </form>
+      <button mat-raised-button color="primary" style="width: 200px !important" (click)="listarTurnos()"><h2>Visualizar turnos</h2></button>
+    </div>
+
+    <div class="turnosDisponibles" *ngIf="turnosOK == true">
+      <div *ngIf="turnosReservados.length!=0; else sinTurnos" class="tamayo">
+        <h2>Los turnos reservados para el dia: {{fechaTexto}} </h2>
+        <div *ngFor="let turno of turnosReservados" class="bucleTurnos">
+          <button mat-raised-button color="primary" style="width: 200px !important"(click)="listarReservas(turno)">{{turno.hora_inicio}} - {{turno.hora_fin}}</button>
+        </div>
+      </div>
+      <ng-template #sinTurnos>
+        <h2>No hay turnos con reserva para este dia.</h2>
+      </ng-template>
+    </div>
+
+    <div class="turnosDisponibles" *ngIf="reservasOK == true">
+      <div *ngIf="reservasDisponibles.length!=0; else sinTurnos">
+        <h2>Las reservas de ese turno</h2>
+        <div *ngFor="let reserva of reservasDisponibles" class="bucleTurnos">
+          <div class="reserva">
+            <div ></div>
+            <h4><b>Nombre cliente:</b> {{reserva.clienteDTO?.nombre}}</h4>
+            <h4><b>Código de reserva:</b> {{reserva.codigoReserva}}</h4>
+            <h4><b>Comensales:</b> {{reserva.numPersonas}}</h4>
+            <h4><b>Mesa:</b> {{reserva.mesaDTO?.id}}</h4>
+          </div>
+        </div>
+      </div>
+      <ng-template #sinTurnos>
+        <h2>No hay turnos con reserva para este dia.</h2>
+      </ng-template>
+    </div>
+
+
+
+  </div>
+
+
 </div>

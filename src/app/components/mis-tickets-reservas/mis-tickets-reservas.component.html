@@ -41,12 +41,12 @@
 
                   <div class="info_reserva">
                     <h3><b>Fecha: </b>{{reserva.fecha}}</h3>
-                    <h3><b>Número de personas: </b>{{reserva.numPersonas}}</h3>
+                    <h3><b>Número de personas: </b>{{reserva.mesaDTO?.numPlazas}}</h3>
                     <h3><b>Código de reserva: </b>{{reserva.codigoReserva}}</h3>
                   </div>
 
                   <div class="boton_justificante">
-                    <button mat-raised-button color="primary" style="width: 200px !important">Decargar justificante</button>
+                    <button mat-raised-button color="primary" style="width: 200px !important" (click)="generarPDFReserva(reserva)">Decargar justificante</button>
                     <div *ngIf="estado_reserva=='pasadas'" class="valoracion_botton">
                       <button mat-raised-button color="primary" style="width: 200px !important" (click)="abrirModalValoraciones(reserva.restauranteDTO?.id)">Hacer valoración</button>
                     </div>

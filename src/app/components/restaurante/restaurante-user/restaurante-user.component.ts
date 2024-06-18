@@ -44,12 +44,8 @@ import {DireccionDTO} from "../../../models/DireccionDTO";
 
 export class RestauranteUserComponent  implements OnInit {
 
-  //info: string = 'info';
   valoracion: string = '';
   carta: string= '';
-
-
-  //Variabales
   restaurante = new Restaurante();
   id_restaurante: any;
   usuario: any;
@@ -74,7 +70,6 @@ export class RestauranteUserComponent  implements OnInit {
   }
 
   //Funciones modales
-
   abrirModalReserva() {
     if (this.usuarioCli){
     const dialogRef = this.dialogRef.open(CrearReservaComponent, {

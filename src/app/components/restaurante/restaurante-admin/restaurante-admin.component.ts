@@ -43,19 +43,25 @@ import {provideNativeDateAdapter} from "@angular/material/core";
 })
 export class RestauranteAdminComponent  implements OnInit {
 
-  turnosDisponibles: Turno[] = [];
+  turnosReservados: Turno[] = [];
+  turnosCompletos: Turno[] = [];
   turnosOK: boolean = false;
   reservasDisponibles: Reserva[] = [];
   reservasOK: boolean = false;
 
   mesas: Mesa[] = [];
   reservas: Reserva[] = [];
-  numReservas: number | undefined;
+  numTurnosReservas: number | undefined;
   usuario={username: ''};
   id_restaurante: any;
   fecha_reservas = this.formBuilder.group({
     fechaForm: ["", Validators.required],
   })
+
+  fecha_turnos= this.formBuilder.group({
+    fechaFormMesas: ["", Validators.required],
+  })
+
   fechaFormateada:any;
   fechaTexto:any;
 
@@ -87,6 +93,46 @@ export class RestauranteAdminComponent  implements OnInit {
     });
   }
 
+  getFormattedDateAll(): string {
+    const fecha = this.fecha_turnos.get('fechaFormMesas')?.value;
+    if (fecha) {
+      const date = new Date(fecha);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+    return '';
+  }
+
+  getFormattedDateHTMLAll(): string {
+    const fecha = this.fecha_turnos.get('fechaFormMesas')?.value;
+    if (fecha) {
+      const date = new Date(fecha);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${day}-${month}-${year}`;
+    }
+    return '';
+  }
+
+  listarTurnos(){
+
+    //Datos necesario
+    this.fechaFormateada = this.getFormattedDateAll();
+    this.fechaTexto = this.getFormattedDateHTMLAll();
+    this.id_restaurante = this.sharedService.getIdParamsRestaurante();
+
+    this.turnosService.getTurnoFecha(this.id_restaurante, this.fechaFormateada).subscribe( {
+      next: (responseData) => {this.turnosCompletos = responseData;},
+      error: (error) => { console.error('Error al obtener los turnos disponibles', error); },
+      complete: () => { console.log('Los turnos disponibles: ', this.turnosCompletos);}
+    });
+
+    this.listarTurnosReservados();
+  }
+
   getFormattedDate(): string {
     const fecha = this.fecha_reservas.get('fechaForm')?.value;
     if (fecha) {
@@ -111,22 +157,22 @@ export class RestauranteAdminComponent  implements OnInit {
     return '';
   }
 
-  listarTurnos(){
 
-    console.log(this.fecha_reservas.value.fechaForm)
+  listarTurnosReservados(){
+
+    //Datos necesario
     this.fechaFormateada = this.getFormattedDate();
-    console.log('Fecha formateada:', this.fechaFormateada);
-
     this.fechaTexto = this.getFormattedDateHTML();
-
-
     this.id_restaurante = this.sharedService.getIdParamsRestaurante();
 
-    this.turnosService.getTurnoFecha(this.id_restaurante, this.fechaFormateada).subscribe( {
-      next: (responseData) => {this.turnosDisponibles = responseData;},
+
+    this.turnosService.getTurnoReservadoFecha(this.id_restaurante, this.fechaFormateada).subscribe( {
+      next: (responseData) => {this.turnosReservados = responseData;},
       error: (error) => { console.error('Error al obtener los turnos disponibles', error); },
-      complete: () => { console.log('Los turnos disponibles: ', this.turnosDisponibles);}
+      complete: () => { console.log('Los turnos reservados: ', this.turnosReservados);}
     });
+
+    this.numTurnosReservas = this.turnosReservados.length;
 
     this.turnosOK = true;
     this.reservasOK=false;

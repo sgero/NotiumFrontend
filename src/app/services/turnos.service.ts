@@ -39,13 +39,24 @@ export class TurnosService {
     return this.http.get<Turno[]>(`${this.apiUrl}/turno/listar`);
   }
 
-  getTurnoFecha(id_restaurante:number, fecha:any): Observable<Turno[]> {
+  getTurnoReservadoFecha(id_restaurante:number, fecha:any): Observable<Turno[]> {
     let info = {
       id_restaurante:id_restaurante,
       fecha:fecha
     }
 
     return this.http.post<Turno[]>(`${this.apiUrl}/turno/turnosReservaFecha`,info);
+  }
+
+
+
+  getTurnoFecha(id_restaurante:number, fecha:any): Observable<Turno[]> {
+    let info = {
+      id_restaurante:id_restaurante,
+      fecha:fecha
+    }
+
+    return this.http.post<Turno[]>(`${this.apiUrl}/turno/turnosPorFecha`,info);
   }
 
 }
