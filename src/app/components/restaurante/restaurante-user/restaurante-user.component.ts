@@ -84,6 +84,7 @@ export class RestauranteUserComponent  implements OnInit {
 
   Carta(){
     //Modal de carta
+    this.carta = 'carta';
   }
 
   valoracionRestaurante(){

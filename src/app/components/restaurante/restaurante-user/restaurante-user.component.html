@@ -16,4 +16,7 @@
       <h3>Horario: {{restaurante.hora_apertura}} - {{restaurante.hora_cierre}}</h3>
     </div>
   </div>
+  <div *ngIf="carta == 'carta'">
+    <app-cartaclienterestaurante [restaurante]="restaurante"></app-cartaclienterestaurante>
+  </div>
 </div>

@@ -4,8 +4,13 @@
     <div class="container48">
       <div class='banner-img' [style.background-image]="'url('+ restaurante?.imagen_marca +')'">
         <div class="info_valoraciones">
-          <a (click)="listadoValoraciones()"><h2>{{numValoraciones}} num val</h2></a>
-          <a><h2>{{ valoracion_restaurante }}</h2></a><mat-icon aria-hidden="false" class="estrella" fontIcon="star"></mat-icon>
+          <a (click)="listadoValoraciones()"><h2>{{numValoraciones}}</h2>
+          <p-rating style="display: inline-block;" [(ngModel)]="valoracion_restaurante" [readonly]="true" [cancel]="false">
+            <ng-template pTemplate="onicon">
+              <mat-icon aria-hidden="false" fontIcon="star" style="color:#ffcd3c"></mat-icon>
+            </ng-template>
+          </p-rating>
+          </a>
         </div>
       </div>
       <div class="info-concreta">
@@ -24,3 +29,4 @@
 
 
 </body>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

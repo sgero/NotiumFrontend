@@ -50,6 +50,7 @@ export class RestauranteAdminComponent  implements OnInit {
   reservasOK: boolean = false;
 
   mesas: Mesa[] = [];
+  mesasById: Mesa[] = [];
   reservas: Reserva[] = [];
   numTurnosReservas: number | undefined;
   usuario={username: ''};
@@ -200,5 +201,26 @@ export class RestauranteAdminComponent  implements OnInit {
     });
     this.router.navigate(['/cartaRestaurante']);
   }
+
+  getReservas(){
+    this.listarTurnos();
+    this.listarMesas();
+    this.reservaService.getReservas(this.id_restaurante, this.fechaFormateada).subscribe( {
+      next: (responseData) => {this.reservasDisponibles = responseData;},
+      error: (error) => { console.error('Error al obtener las reservas', error); },
+      complete: () => { console.log('Las reservas disponibles: ', this.reservasDisponibles);}
+    });
+  }
+
+  listarMesas(){
+    this.mesaService.getAllMesasById(this.id_restaurante).subscribe({
+      next: value => {
+        if (value){
+          this.mesasById = value;
+        }
+      }
+    })
+  }
+
 
 }

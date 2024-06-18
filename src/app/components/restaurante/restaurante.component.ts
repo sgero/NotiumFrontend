@@ -11,12 +11,15 @@ import {RestauranteService} from "../../services/restaurante.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HeaderComponent} from "../header/header.component";
 import {FooterComponent} from "../footer/footer.component";
-import {MatIconModule} from '@angular/material/icon';
+import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {CrearMesasComponent} from "./restaurante-admin/crear-mesas/crear-mesas.component";
 import {MatDialog} from "@angular/material/dialog";
 import {ListarValoracionesComponent} from "./listar-valoraciones/listar-valoraciones.component";
 
 import {MapaComponent} from "../mapa/mapa.component";
+import {PrimeTemplate} from "primeng/api";
+import {RatingModule} from "primeng/rating";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-restaurante',
@@ -32,7 +35,11 @@ import {MapaComponent} from "../mapa/mapa.component";
     HeaderComponent,
     MapaComponent,
     FooterComponent,
-    MatIconModule
+    MatIconModule,
+    PrimeTemplate,
+    RatingModule,
+    FormsModule,
+    MatIcon,
   ],
   standalone: true
 })

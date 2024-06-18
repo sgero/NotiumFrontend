@@ -15,6 +15,9 @@ export class MesaService {
   getAllMesas(): Observable<Mesa[]> {
     return this.http.get<Mesa[]>(`${this.apiUrl}/mesa/listar`);
   }
+  getAllMesasById(id:number) {
+    return this.http.get<Mesa[]>(`${this.apiUrl}/mesa/listar/${id}`,);
+  }
 
   crearMesa(n_plazas: number,r: boolean, id: number ): Observable<any>{
     let mesa={
