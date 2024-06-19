@@ -36,10 +36,33 @@ th {
 
 ion-spinner{
 
-  display:flex;
+  display: flex;
   justify-content: center;
-  align-content: center;
   align-items: center;
   text-align: center;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 80px;
+  height: 80px;
 
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+td.action-buttons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+td.action-buttons ion-button {
+  margin: 5px;
+  flex: 1;
 }
