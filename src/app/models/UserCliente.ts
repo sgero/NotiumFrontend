@@ -12,7 +12,7 @@ export class UserCliente{
   apellidos?: string = '';
   dni?: string = '';
   telefono?: string = '';
-  fecha_nacimiento?: string = '';
+  fechaNacimiento?: string = '';
   ubicacion_actual?: string = '';
   direccionDTO: DireccionDTO = new DireccionDTO();
   activo?: boolean = true;

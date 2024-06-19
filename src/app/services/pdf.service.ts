@@ -53,7 +53,7 @@ export class PdfService {
 
     const addCenteredImage = (imgSrc: string, y: number, width: number, height: number) => {
       const x = (pageWidth - width) / 2;
-      doc.addImage(imgSrc, 'PNG', x, y, width, height);
+      doc.addImage(imgSrc, 'JPEG', x, y, width, height);
       return y + height + 10;
     };
 

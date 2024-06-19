@@ -80,6 +80,7 @@ export class EditarPerfilComponent  implements OnInit {
         userCliente.nombre = this.perfil.nombre;
         userCliente.telefono = this.perfil.telefono;
         userCliente.dni = this.perfil.dni;
+        userCliente.fechaNacimiento = this.perfil.fechaNacimiento;
         userCliente.direccionDTO.calle = this.perfil.direccionDTO.calle;
         userCliente.direccionDTO.numero = this.perfil.direccionDTO.numero;
         userCliente.direccionDTO.puerta = this.perfil.direccionDTO.puerta;
