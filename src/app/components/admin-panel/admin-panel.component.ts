@@ -40,8 +40,11 @@ export class AdminPanelComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.traerUsuarios();
+    // this.traerUsuarios();
+
+    this.elegirRol('CLIENTE');
     this.getUsuario();
+
   }
 
   elegirRol(rol: string) {

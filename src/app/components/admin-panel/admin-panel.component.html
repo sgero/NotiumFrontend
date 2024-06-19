@@ -20,26 +20,34 @@
       <th>Apellidos</th>
       <th>Fecha de Nacimiento</th>
       <th>Dni</th>
+      <th>Teléfono</th>
       <th>Acciones</th>
     </tr>
     <tr *ngIf="rol === 'RESTAURANTE'">
       <th>Id ({{restaurantes.length}} restaurantes)</th>
       <th>Nombre</th>
-      <th>Hora de apertura</th>
-      <th>Hora de cierre</th>
+      <th>Horario</th>
+      <th>Teléfono</th>
+      <th>Cif</th>
+      <th>Aforo</th>
       <th>Acciones</th>
     </tr>
     <tr *ngIf="rol === 'OCIO_NOCTURNO'">
       <th>Id ({{ocios_nocturnos.length}} ocios nocturnos)</th>
       <th>Nombre</th>
-      <th>Hora de apertura</th>
-      <th>Hora de cierre</th>
+      <th>Horario</th>
+      <th>Teléfono</th>
+      <th>Cif</th>
+      <th>Aforo</th>
       <th>Acciones</th>
     </tr>
     <tr *ngIf="rol === 'RPP'">
       <th>Id ({{rpps.length}} rpps)</th>
       <th>Nombre</th>
+      <th>Apellidos</th>
       <th>Fecha de Nacimiento</th>
+      <th>Dni</th>
+      <th>Teléfono</th>
       <th>Acciones</th>
     </tr>
     </thead>
@@ -52,8 +60,8 @@
         <td>{{ cliente.apellidos }}</td>
         <td>{{ convertirFecha(cliente.fechaNacimiento) }}</td>
         <td>{{ cliente.dni }}</td>
-        <td style="display:flex;justify-content:space-around">
-          <ion-button size="small">Editar</ion-button>
+        <td>{{ cliente.telefono }}</td>
+        <td class="action-buttons">
           <ion-button *ngIf="cliente.activo" size="small" color="danger" (click)="eliminarCuenta(cliente.userDTO)">Dar de baja</ion-button>
           <ion-button *ngIf="!cliente.activo" size="small" color="success" (click)="activarCuenta(cliente.userDTO)">Activar</ion-button>
         </td>
@@ -64,10 +72,12 @@
       <tr *ngFor="let restaurante of restaurantes">
         <td>{{ restaurante.id }}</td>
         <td>{{ restaurante.nombre }}</td>
-        <td>{{ restaurante.hora_apertura }}</td>
-        <td>{{ restaurante.hora_cierre }}</td>
-        <td style="display:flex;justify-content:space-around">
-          <ion-button size="small">Editar</ion-button>
+        <td>{{ restaurante.hora_apertura }} - {{ restaurante.hora_cierre }}</td>
+        <td>{{ restaurante.telefono}}</td>
+        <td>{{ restaurante.cif}}</td>
+        <td *ngIf="restaurante.aforo !== null" >{{ restaurante.aforo}}</td>
+        <td *ngIf="restaurante.aforo === null" >-</td>
+        <td class="action-buttons">
           <ion-button *ngIf="restaurante.activo" size="small" color="danger" (click)="eliminarCuenta(restaurante.userDTO)">Dar de baja</ion-button>
           <ion-button *ngIf="!restaurante.activo" size="small" color="success" (click)="activarCuenta(restaurante.userDTO)">Activar</ion-button>
           <ion-button *ngIf="!restaurante.verificado" size="small" color="success" (click)="verificar(restaurante)">Verificar</ion-button>
@@ -79,10 +89,11 @@
       <tr *ngFor="let ocio of ocios_nocturnos">
         <td>{{ ocio.id }}</td>
         <td>{{ ocio.nombre }}</td>
-        <td>{{ ocio.horaApertura }}</td>
-        <td>{{ ocio.horaCierre }}</td>
-        <td style="display:flex;justify-content:space-around">
-          <ion-button size="small">Editar</ion-button>
+        <td>{{ ocio.horaApertura }} - {{ ocio.horaCierre }}</td>
+        <td>{{ ocio.telefono}}</td>
+        <td>{{ ocio.cif}}</td>
+        <td>{{ ocio.aforo}}</td>
+        <td class="action-buttons">
           <ion-button *ngIf="ocio.activo" size="small" color="danger" (click)="eliminarCuenta(ocio.userDTO)">Dar de baja</ion-button>
           <ion-button *ngIf="!ocio.activo" size="small" color="success" (click)="activarCuenta(ocio.userDTO)">Activar</ion-button>
           <ion-button *ngIf="!ocio.verificado" size="small" color="success" (click)="verificar(ocio)">Verificar</ion-button>
@@ -94,9 +105,11 @@
       <tr *ngFor="let rpp of rpps">
         <td>{{ rpp.id }}</td>
         <td>{{ rpp.nombre }}</td>
+        <td>{{ rpp.apellidos }}</td>
         <td>{{ convertirFecha(rpp.fechaNacimiento) }}</td>
-        <td style="display:flex;justify-content:space-around">
-          <ion-button size="small">Editar</ion-button>
+        <td>{{ rpp.dni }}</td>
+        <td>{{ rpp.telefono }}</td>
+        <td class="action-buttons">
           <ion-button *ngIf="rpp.activo" size="small" color="danger" (click)="eliminarCuenta(rpp.userDTO)">Dar de baja</ion-button>
           <ion-button *ngIf="!rpp.activo" size="small" color="success" (click)="activarCuenta(rpp.userDTO)">Activar</ion-button>
           <ion-button *ngIf="!rpp.verificado" size="small" color="success" (click)="verificar(rpp)">Verificar</ion-button>

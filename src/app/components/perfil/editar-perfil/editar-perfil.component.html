@@ -72,8 +72,8 @@
               </ion-item>
 
               <ion-item class="direccion">
-                <ion-label *ngIf="perfil.direccionDTO.puerta" class="labelspace">Puerta</ion-label>
-                <ion-input *ngIf="perfil.direccionDTO.puerta" type="text" [(ngModel)]="perfil.direccionDTO.puerta" required></ion-input>
+                <ion-label class="labelspace">Puerta</ion-label>
+                <ion-input type="text" [(ngModel)]="perfil.direccionDTO.puerta" required></ion-input>
 
                 <ion-label class="labelspace">Código Postal</ion-label>
                 <ion-input type="text" [(ngModel)]="perfil.direccionDTO.codigoPostal" required></ion-input>
