@@ -9,7 +9,7 @@
       <ng-template matStepLabel>Seleccionar Fecha</ng-template>
       <mat-form-field class="formularios">
         <mat-label>Fecha</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fecha">
+        <input matInput [matDatepicker]="picker" formControlName="fecha" [min]="today" >
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -35,6 +35,7 @@
 
   <mat-step>
     <ng-template matStepLabel>Confirmar Reserva</ng-template>
+    <h2 *ngIf="turnosDisponibles.length === 0">No hay turnos disponibles</h2>
     <mat-list *ngIf="turnosDisponibles.length > 0" class="formularios">
       <mat-list-item *ngFor="let turno of turnosDisponibles" [class.selected]="turnoSeleccionado === turno" (click)="seleccionarTurno(turno)">
         {{ turno.hora_inicio }} a {{ turno.hora_fin }}

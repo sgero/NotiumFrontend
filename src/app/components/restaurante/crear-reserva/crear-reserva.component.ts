@@ -65,6 +65,7 @@ export class CrearReservaComponent implements OnInit {
   isLinear = true;
   actualrest: any;
   fechaFormateada: string = '';
+  today =  new Date();
 
   constructor(
     private route: ActivatedRoute,
