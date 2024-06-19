@@ -35,5 +35,13 @@ export class ReservaService {
     return this.http.post<Reserva[]>(`${this.apiUrl}/reserva/ReservaFechaTurno`, datos);
   }
 
+  getReservas(id_restaurante: number, fecha:any): Observable<Reserva[]> {
+    let datos = {
+      "restauranteDTO":{"id":id_restaurante},
+      "fecha":fecha,
+    };
+    return this.http.post<Reserva[]>(`${this.apiUrl}/reserva/fecha`, datos);
+  }
+
 
 }
