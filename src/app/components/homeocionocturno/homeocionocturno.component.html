@@ -70,7 +70,7 @@
           <div class="container py-5" style="max-width: 1644px !important;">
             <div class="row card-row">
               <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " *ngFor="let x of eventosEntreFechas">
-                <img src="{{x.cartel}}" class="card-img-top" alt="...">
+                <img src="{{x.cartel}}" class="card-img-top" alt="..." style="min-height: 357px;">
                 <div class="card-body event">
                   <h5 class="card-title">{{ x.ocioNocturnoDTO?.nombre }}</h5>
                   <p class=" text">{{ x.nombre }}</p>
@@ -103,7 +103,7 @@
               </div>
             } @else {
               <div class="card detail  col-12 col-md-12 col-lg-3 my-3 " *ngFor="let x of eventosPopulares">
-                <img src="{{x.cartel}}" class="card-img-top" alt="...">
+                <img src="{{x.cartel}}" class="card-img-top" alt="..." style="min-height: 357px;">
                 <div class="card-body event">
                   <h5 class="card-title">{{ x.ocioNocturnoDTO?.nombre }}</h5>
                   <p class=" text">{{ x.nombre }}</p>
