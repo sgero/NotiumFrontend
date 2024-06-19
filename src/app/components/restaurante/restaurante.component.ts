@@ -126,14 +126,7 @@ export class RestauranteComponent  implements OnInit {
         this.sharedService.setRestaurante(this.restaurante)
       },
       error: (error) => { console.error('Error al obtener el restaurante por ID:', error); },
-      complete: () => { console.log('Restaurante captado por id', this.restaurante);}
     });
-  }
-
-  adminuser(){
-    if (this.usuario.id == this.restaurante.userDTO.id){
-      this.userup = false;
-    }
   }
 
   ngOnInit() {

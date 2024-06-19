@@ -44,7 +44,7 @@ import {provideNativeDateAdapter} from "@angular/material/core";
 export class RestauranteAdminComponent  implements OnInit {
 
   turnosReservados: Turno[] = [];
-  turnosCompletos: Turno[] = [];
+  turnosDisponibles: Turno[] = [];
   turnosOK: boolean = false;
   reservasDisponibles: Reserva[] = [];
   reservasOK: boolean = false;
@@ -59,9 +59,6 @@ export class RestauranteAdminComponent  implements OnInit {
     fechaForm: ["", Validators.required],
   })
 
-  fecha_turnos= this.formBuilder.group({
-    fechaFormMesas: ["", Validators.required],
-  })
 
   fechaFormateada:any;
   fechaTexto:any;
@@ -94,41 +91,18 @@ export class RestauranteAdminComponent  implements OnInit {
     });
   }
 
-  getFormattedDateAll(): string {
-    const fecha = this.fecha_turnos.get('fechaFormMesas')?.value;
-    if (fecha) {
-      const date = new Date(fecha);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-    return '';
-  }
 
-  getFormattedDateHTMLAll(): string {
-    const fecha = this.fecha_turnos.get('fechaFormMesas')?.value;
-    if (fecha) {
-      const date = new Date(fecha);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const day = date.getDate().toString().padStart(2, '0');
-      return `${day}-${month}-${year}`;
-    }
-    return '';
-  }
 
   listarTurnos(){
 
     //Datos necesario
-    this.fechaFormateada = this.getFormattedDateAll();
-    this.fechaTexto = this.getFormattedDateHTMLAll();
+    this.fechaFormateada = this.getFormattedDate();
+    this.fechaTexto = this.getFormattedDateHTML();
     this.id_restaurante = this.sharedService.getIdParamsRestaurante();
 
     this.turnosService.getTurnoFecha(this.id_restaurante, this.fechaFormateada).subscribe( {
-      next: (responseData) => {this.turnosCompletos = responseData;},
+      next: (responseData) => {this.turnosDisponibles = responseData;},
       error: (error) => { console.error('Error al obtener los turnos disponibles', error); },
-      complete: () => { console.log('Los turnos disponibles: ', this.turnosCompletos);}
     });
 
     this.listarTurnosReservados();
@@ -170,7 +144,6 @@ export class RestauranteAdminComponent  implements OnInit {
     this.turnosService.getTurnoReservadoFecha(this.id_restaurante, this.fechaFormateada).subscribe( {
       next: (responseData) => {this.turnosReservados = responseData;},
       error: (error) => { console.error('Error al obtener los turnos disponibles', error); },
-      complete: () => { console.log('Los turnos reservados: ', this.turnosReservados);}
     });
 
     this.numTurnosReservas = this.turnosReservados.length;
@@ -179,21 +152,6 @@ export class RestauranteAdminComponent  implements OnInit {
     this.reservasOK=false;
 
   }
-
-
-  listarReservas(turnoElegido: Turno){
-    console.log(turnoElegido)
-
-
-    this.reservaService.getReservaFechaTurno(turnoElegido.id ,this.id_restaurante, this.fechaFormateada).subscribe( {
-      next: (responseData) => {this.reservasDisponibles = responseData;},
-      error: (error) => { console.error('Error al obtener las reservas', error); },
-      complete: () => { console.log('Las reservas disponibles: ', this.reservasDisponibles);}
-    });
-
-    this.reservasOK = true;
-  }
-
 
   crearCartaRes(){
     this.cartaservice.crearCartaRes(this.usuario).subscribe(data =>{
@@ -208,7 +166,6 @@ export class RestauranteAdminComponent  implements OnInit {
     this.reservaService.getReservas(this.id_restaurante, this.fechaFormateada).subscribe( {
       next: (responseData) => {this.reservasDisponibles = responseData;},
       error: (error) => { console.error('Error al obtener las reservas', error); },
-      complete: () => { console.log('Las reservas disponibles: ', this.reservasDisponibles);}
     });
   }
 
@@ -221,6 +178,4 @@ export class RestauranteAdminComponent  implements OnInit {
       }
     })
   }
-
-
 }

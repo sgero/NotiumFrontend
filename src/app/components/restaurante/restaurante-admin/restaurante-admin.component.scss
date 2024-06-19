@@ -106,10 +106,22 @@ h5{margin:0}
   display:flex;
   flex-direction:column;
   width:100%;
-  border-top: 1px solid black;
   padding-top:1rem;
   margin-top:1rem;
   align-items: center;
+
+  table{
+    width:90%;
+    border-collapse: collapse;
+    align-items:center;
+
+    td, th {
+      text-align: center;
+      padding: 8px;
+    }
+
+  }
+
 }
 
 .tamayo{
@@ -144,3 +156,15 @@ h5{margin:0}
   border: solid black;
 }
 
+.filas-sup{
+  background-color: #91734f;
+}
+
+.reserva-encontrada{
+  background-color: #cc3636;
+
+}
+
+.datos{
+  border: 1px solid black;
+}

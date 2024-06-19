@@ -1,11 +1,8 @@
 <div class="container-admin">
   <div class="step">
-    <button mat-raised-button color="primary" style="width: 200px !important" (click)="crearCartaRes()"><h2>Crea tu
-      carta</h2></button>
-    <button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearTurno()"><h2>Crear
-      turno</h2></button>
-    <button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearMesa()"><h2>Crear
-      mesa</h2></button>
+    <button mat-raised-button color="primary" style="width: 200px !important" (click)="crearCartaRes()"><h2>Crea tu carta</h2></button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearTurno()"><h2>Crear turno</h2></button>
+    <button mat-raised-button color="primary" style="width: 140px !important" (click)="abrirModalCrearMesa()"><h2>Crear mesa</h2></button>
   </div>
 
   <div class="step-reserva">
@@ -20,71 +17,38 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </form>
-      <button mat-raised-button color="primary" style="width: 200px !important" (click)="getReservas()"><h2>Visualizar
-        turnos</h2></button>
+      <button mat-raised-button color="primary" style="width: 200px !important" (click)="getReservas()"><h2>Visualizar turnos</h2></button>
     </div>
 
     <div class="turnosDisponibles" *ngIf="turnosOK == true">
-      <div *ngIf="turnosDisponibles.length!=0; else sinTurnos" class="tamayo">
-        <h2>Los turnos reservados para el dia: {{ fechaTexto }} </h2>
-        <div *ngFor="let turno of turnosDisponibles" class="bucleTurnos">
-          <button mat-raised-button color="primary" style="width: 200px !important"
-                  (click)="listarReservas(turno)">{{ turno.hora_inicio }} - {{ turno.hora_fin }}
-          </button>
-        </div>
-      </div>
-      <ng-template #sinTurnos>
-        <h2>No hay turnos con reserva para este dia.</h2>
-      </ng-template>
+      <table>
+        <tr class="datos">
+          <th>TURNOS
+            @for (t of turnosDisponibles; track t) {
+              <tr >
+                {{ t.hora_inicio }}
+                {{ t.hora_fin }}
+              </tr>
+            }
+          </th>
+          @for (m of mesasById; track m; let  i = $index) {
+            <th>
+              MESA {{ i + 1}}
+              @for (r of reservasDisponibles; track r) {
+                @if (m.id == r.mesaDTO?.id) {
+                  <tr>
+                    {{ r.codigoReserva }}
+                  </tr>
+                } @else {
+                  <tr>-</tr>
+                }
+              }
+              }
+      </table>
+
+
     </div>
-
-    <div class="turnosDisponibles" *ngIf="reservasOK == true">
-      <div *ngIf="reservasDisponibles.length!=0; else sinTurnos">
-        <h2>Las reservas de ese turno</h2>
-        <div *ngFor="let reserva of reservasDisponibles" class="bucleTurnos">
-          <div class="reserva">
-            <div></div>
-            <h4><b>Nombre cliente:</b> {{ reserva.clienteDTO?.nombre }}</h4>
-            <h4><b>Código de reserva:</b> {{ reserva.codigoReserva }}</h4>
-            <h4><b>Comensales:</b> {{ reserva.numPersonas }}</h4>
-            <h4><b>Mesa:</b> {{ reserva.mesaDTO?.id }}</h4>
-          </div>
-        </div>
-      </div>
-      <ng-template #sinTurnos>
-        <h2>No hay turnos con reserva para este dia.</h2>
-      </ng-template>
-    </div>
-
-
-
   </div>
-
-
 </div>
 
 
-<table>
-  <tr>
-    <th>TURNOS
-    @for (t of turnosDisponibles; track t) {
-      <tr>
-        {{ t.hora_inicio }}
-        {{ t.hora_fin }}
-      </tr>
-    }
-    </th>
-    @for (m of mesasById; track m) {
-      <th>
-        MESA {{ m.id }}
-        @for (r of reservasDisponibles; track r) {
-          @if (m.id == r.mesaDTO?.id) {
-            <tr>
-              {{ r.codigoReserva }}
-            </tr>
-          } @else {
-            <tr>-</tr>
-          }
-        }
-        }
-</table>
