@@ -169,6 +169,7 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
   isDisable = true;
   isDisabled = false;
   cartaOcio: CartaOcio = new CartaOcio();
+  ociodecarta= {id:+''};
   isModalOpen = false;
   isModalRppOpen = false;
   isModalEditRppOpen = false;
@@ -468,9 +469,9 @@ export class GestionocioComponent implements OnInit, AfterViewInit {
     this.route.params.subscribe(params => {
       const ocioID = +params['id'];
       if (ocioID) {
-        this.cartaOcioService.guardarCarta(ocioID, this.cartaOcio).subscribe({
+        this.ociodecarta.id = ocioID;
+        this.cartaOcioService.guardarCarta(this.ociodecarta).subscribe({
           next: value => {
-            this.cartaOcio.ocioNocturno.id = ocioID;
             this.cartaOcio = value as CartaOcio;
           },
           error: e => {

@@ -4,6 +4,7 @@ import {CartaOcio} from "../models/CartaOcio";
 import {Producto} from "../models/Producto";
 import {Token} from "../models/Token";
 import {ProductoFormato} from "../models/ProductoFormato";
+import {OcioNocturno} from "../models/OcioNocturno";
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,8 @@ export class CartaOcioService {
   cartaByOcio(idOcio:number){
     return this.http.get<CartaOcio>(`${this.apiUrl}/cartasOcio/listarByOcio${idOcio}`);
   }
-  guardarCarta(id:number, cartaOcio : CartaOcio){
-    return this.http.post<CartaOcio>(`${this.apiUrl}/cartasOcio/guardar/${id}`, cartaOcio);
+  guardarCarta(cartaOcio : OcioNocturno){
+    return this.http.post<CartaOcio>(`${this.apiUrl}/cartasOcio/guardar`, cartaOcio);
   }
   eliminarCarta(id:number){
     return this.http.delete<CartaOcio>(`${this.apiUrl}/cartasOcio/${id}`);
