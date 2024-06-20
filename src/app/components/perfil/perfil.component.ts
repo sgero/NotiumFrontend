@@ -69,9 +69,6 @@ export class PerfilComponent  implements OnInit {
     this.usuarioService.traerPerfil(user).subscribe(data=>{
 
       this.perfil = data;
-      console.log(this.perfil)
-      this.perfil.fechaNacimiento = convertirFecha(this.perfil?.fechaNacimiento);
-      console.log(this.perfil)
 
     })
 
@@ -104,6 +101,7 @@ export class PerfilComponent  implements OnInit {
 
   }
 
+  protected readonly convertirFecha = convertirFecha;
 }
 
 function convertirFecha(fechaISO: string): string {

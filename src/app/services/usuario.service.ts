@@ -54,4 +54,8 @@ export class UsuarioService{
     return this.http.post<any>(`${this.apiUrl}/users/activar`, usuario);
   }
 
+  editarUsuario(usuario: Usuario){
+    return this.http.post<any>(`${this.apiUrl}/users/editar`, usuario);
+  }
+
 }

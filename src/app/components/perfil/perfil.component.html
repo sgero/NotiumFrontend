@@ -17,7 +17,19 @@
     <ion-card-content>
       <ion-grid>
         <ion-row>
-          <ion-col size="6">
+          <ion-col size="12" *ngIf="usuario.rol === 'ADMIN'">
+            <ion-list>
+              <ion-item *ngIf="usuario.username">
+                <ion-label><strong>Username:</strong></ion-label>
+                <ion-text>{{usuario.username}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="usuario.email">
+                <ion-label><strong>Email:</strong></ion-label>
+                <ion-text>{{usuario.email}}</ion-text>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+          <ion-col size="6" *ngIf="usuario.rol === 'CLIENTE' || usuario.rol === 'RESTAURANTE' || usuario.rol === 'OCIONOCTURNO'">
             <ion-list>
               <ion-item *ngIf="usuario.username">
                 <ion-label><strong>Username:</strong></ion-label>
@@ -30,7 +42,7 @@
               <ion-item *ngIf="perfil?.nombre">
                 <ion-label *ngIf="usuario.rol === 'CLIENTE'"><strong>Nombre:</strong></ion-label>
                 <ion-label *ngIf="usuario.rol === 'RESTAURANTE'"><strong>Nombre del restaurante:</strong></ion-label>
-                <ion-label *ngIf="usuario.rol === 'OCIO_NOCTURNO'"><strong>Nombre del ocio nocturno:</strong></ion-label>
+                <ion-label *ngIf="usuario.rol === 'OCIONOCTURNO'"><strong>Nombre del ocio nocturno:</strong></ion-label>
                 <ion-text>{{perfil?.nombre}}</ion-text>
               </ion-item>
               <ion-item *ngIf="perfil?.apellidos">
@@ -49,21 +61,25 @@
                 <ion-label><strong>Teléfono:</strong></ion-label>
                 <ion-text>{{perfil?.telefono}}</ion-text>
               </ion-item>
-              <ion-item *ngIf="perfil?.hora_apertura">
-                <ion-label><strong>Hora de apertura:</strong></ion-label>
-                <ion-text>{{perfil?.hora_apertura}}</ion-text>
+              <ion-item *ngIf="perfil?.horaApertura && perfil?.horaCierre">
+                <ion-label><strong>Horario:</strong></ion-label>
+                <ion-text>{{perfil?.horaApertura}} - {{perfil?.horaCierre}}</ion-text>
               </ion-item>
-              <ion-item *ngIf="perfil?.hora_cierre">
-                <ion-label><strong>Hora de cierre:</strong></ion-label>
-                <ion-text>{{perfil?.hora_cierre}}</ion-text>
+              <ion-item *ngIf="perfil?.hora_apertura && perfil?.hora_cierre">
+                <ion-label><strong>Horario:</strong></ion-label>
+                <ion-text>{{perfil?.hora_apertura}} - {{perfil?.hora_cierre}}</ion-text>
+              </ion-item>
+              <ion-item *ngIf="perfil?.aforo">
+                <ion-label><strong>Aforo:</strong></ion-label>
+                <ion-text>{{perfil?.aforo}}</ion-text>
               </ion-item>
               <ion-item *ngIf="perfil?.fechaNacimiento">
                 <ion-label><strong>Fecha Nacimiento:</strong></ion-label>
-                <ion-text>{{perfil?.fechaNacimiento}}</ion-text>
+                <ion-text>{{convertirFecha(perfil?.fechaNacimiento)}}</ion-text>
               </ion-item>
             </ion-list>
           </ion-col>
-          <ion-col size="6">
+          <ion-col size="6" *ngIf="perfil?.direccionDTO">
             <ion-list>
               <ion-item>
                 <ion-label><strong>Calle:</strong></ion-label>

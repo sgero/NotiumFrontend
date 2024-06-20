@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {IonicModule, ModalController} from "@ionic/angular";
+import {IonicModule, ModalController, ToastController} from "@ionic/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {Usuario} from "../../../models/Usuario";
 import {UsuarioService} from "../../../services/usuario.service";
@@ -38,6 +38,7 @@ export class EditarPerfilComponent  implements OnInit {
     private router: Router,
     private modalController: ModalController,
     private sharedService: SharedService,
+    private toastController: ToastController,
   ) { }
 
   ngOnInit() {
@@ -52,7 +53,9 @@ export class EditarPerfilComponent  implements OnInit {
 
       this.usuario = data;
       console.log(this.usuario);
-      this.traerPerfil(this.usuario);
+      if (this.usuario.rol !== 'ADMIN'){
+        this.traerPerfil(this.usuario);
+      }
 
     })
 
@@ -78,6 +81,7 @@ export class EditarPerfilComponent  implements OnInit {
         userCliente.username = this.usuario.username;
         userCliente.email = this.usuario.email;
         userCliente.nombre = this.perfil.nombre;
+        userCliente.apellidos = this.perfil.apellidos;
         userCliente.telefono = this.perfil.telefono;
         userCliente.dni = this.perfil.dni;
         userCliente.fechaNacimiento = this.perfil.fechaNacimiento;
@@ -92,7 +96,13 @@ export class EditarPerfilComponent  implements OnInit {
         this.clienteService.crearYModificarCliente(userCliente).subscribe(data=>{
 
           console.log(data);
-
+          this.toastController.create({
+            message: 'Se ha modificado correctamente.',
+            duration: 4000,
+            position: 'top',
+            color: "success"
+          }).then(toast => toast.present());
+          window.location.reload();
 
         }, error => {
 
@@ -124,7 +134,13 @@ export class EditarPerfilComponent  implements OnInit {
         this.restauranteService.crearRestaurante(userRestaurante).subscribe(data=>{
 
           console.log(data);
-
+          this.toastController.create({
+            message: 'Se ha modificado correctamente.',
+            duration: 4000,
+            position: 'top',
+            color: "success"
+          }).then(toast => toast.present());
+          window.location.reload();
 
         }, error => {
 
@@ -132,7 +148,7 @@ export class EditarPerfilComponent  implements OnInit {
 
         })
 
-      }else if(this.usuario.rol == "OCIO_NOCTURNO"){
+      }else if(this.usuario.rol == "OCIONOCTURNO"){
 
         let userOcioNocturno = new UserOcioNocturno();
         userOcioNocturno.id = this.perfil.id;
@@ -141,10 +157,17 @@ export class EditarPerfilComponent  implements OnInit {
         userOcioNocturno.nombre = this.perfil.nombre;
         userOcioNocturno.telefono = this.perfil.telefono;
         userOcioNocturno.cif = this.perfil.cif;
-        userOcioNocturno.imagenMarca = this.perfil.imagen_marca;
+        userOcioNocturno.imagenMarca = this.perfil.imagenMarca;
         userOcioNocturno.aforo = this.perfil.aforo;
-        userOcioNocturno.horaApertura = this.perfil.hora_apertura;
-        userOcioNocturno.horaCierre = this.perfil.hora_cierre;
+        userOcioNocturno.horaApertura = this.perfil.horaApertura;
+        userOcioNocturno.horaCierre = this.perfil.horaCierre;
+
+        userOcioNocturno.horaApertura = extraerHoraYMinuto(userOcioNocturno.horaApertura || '');
+        userOcioNocturno.horaCierre = extraerHoraYMinuto(userOcioNocturno.horaCierre || '');
+
+        userOcioNocturno.horaApertura = anyadirSegundos(userOcioNocturno.horaApertura);
+        userOcioNocturno.horaCierre = anyadirSegundos(userOcioNocturno.horaCierre);
+
         userOcioNocturno.direccionDTO.calle = this.perfil.direccionDTO.calle;
         userOcioNocturno.direccionDTO.numero = this.perfil.direccionDTO.numero;
         userOcioNocturno.direccionDTO.puerta = this.perfil.direccionDTO.puerta;
@@ -156,6 +179,38 @@ export class EditarPerfilComponent  implements OnInit {
         this.ocionocturnoService.crearOcioNocturno(userOcioNocturno).subscribe(data=>{
 
           console.log(data);
+          this.toastController.create({
+            message: 'Se ha modificado correctamente.',
+            duration: 4000,
+            position: 'top',
+            color: "success"
+          }).then(toast => toast.present());
+          window.location.reload();
+
+        }, error => {
+
+          console.log(error);
+
+        })
+
+      }else if(this.usuario.rol == "ADMIN"){
+
+        let usuario = new Usuario();
+        usuario.id = this.usuario.id;
+        usuario.username = this.usuario.username;
+        usuario.email = this.usuario.email;
+        usuario.rol = this.usuario.rol;
+
+        this.usuarioService.editarUsuario(usuario).subscribe(data=>{
+
+          console.log(data);
+          this.toastController.create({
+            message: 'Se ha modificado correctamente.',
+            duration: 4000,
+            position: 'top',
+            color: "success"
+          }).then(toast => toast.present());
+          window.location.reload();
 
 
         }, error => {
@@ -172,4 +227,32 @@ export class EditarPerfilComponent  implements OnInit {
     this.modalController.dismiss();
   }
 
+}
+
+function extraerHoraYMinuto(timeString: string): string {
+  const timeRegex = /T(\d{2}:\d{2}):\d{2}/;
+  const match = timeString.match(timeRegex);
+  if (match) {
+    return match[1];
+  } else {
+    return timeString;
+  }
+}
+
+function anyadirSegundos(time: string): string {
+  // Verificamos si la cadena ya incluye los segundos
+  const timeParts = time.split(':');
+
+  // Si hay tres partes (hora, minuto, segundos), devolvemos la cadena tal cual
+  if (timeParts.length === 3) {
+    return time;
+  }
+
+  // Si hay dos partes (hora, minuto), agregamos ":00" al final
+  if (timeParts.length === 2) {
+    return `${time}:00`;
+  }
+
+  // Si el formato no es correcto, lanzamos un error
+  throw new Error('Formato de tiempo no válido. Use "HH:MM" o "HH:MM:SS".');
 }

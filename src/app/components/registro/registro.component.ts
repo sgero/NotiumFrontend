@@ -182,8 +182,11 @@ export class RegistroComponent implements OnInit {
       this.userOcioNocturno.email = this.user.email;
       this.userOcioNocturno.direccionDTO = this.direccion;
 
-      this.userOcioNocturno.horaApertura = this.extraerHoraYMinuto(this.userOcioNocturno.horaApertura || '') + ':00';
-      this.userOcioNocturno.horaCierre = this.extraerHoraYMinuto(this.userOcioNocturno.horaCierre || '') + ':00';
+      this.userOcioNocturno.horaApertura = this.extraerHoraYMinuto(this.userOcioNocturno.horaApertura || '');
+      this.userOcioNocturno.horaCierre = this.extraerHoraYMinuto(this.userOcioNocturno.horaCierre || '');
+
+      this.userOcioNocturno.horaApertura = this.anyadirSegundos(this.userOcioNocturno.horaApertura);
+      this.userOcioNocturno.horaCierre = this.anyadirSegundos(this.userOcioNocturno.horaCierre);
 
       this.userOcioNocturno.rol = 3;
 
@@ -205,6 +208,7 @@ export class RegistroComponent implements OnInit {
 
 
   protected readonly extraerHoraYMinuto = extraerHoraYMinuto;
+  protected readonly anyadirSegundos = anyadirSegundos;
 }
 
 function extraerHoraYMinuto(timeString: string): string {
@@ -215,4 +219,22 @@ function extraerHoraYMinuto(timeString: string): string {
   } else {
     return timeString;
   }
+}
+
+function anyadirSegundos(time: string): string {
+  // Verificamos si la cadena ya incluye los segundos
+  const timeParts = time.split(':');
+
+  // Si hay tres partes (hora, minuto, segundos), devolvemos la cadena tal cual
+  if (timeParts.length === 3) {
+    return time;
+  }
+
+  // Si hay dos partes (hora, minuto), agregamos ":00" al final
+  if (timeParts.length === 2) {
+    return `${time}:00`;
+  }
+
+  // Si el formato no es correcto, lanzamos un error
+  throw new Error('Formato de tiempo no válido. Use "HH:MM" o "HH:MM:SS".');
 }
